@@ -12,8 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YoYoIq">
         <activity
+            android:name=".RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".FrontActivity"
+            android:exported="true" />
+        <activity
             android:name=".SearchActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "845911525259",
+    "project_id": "yoyo-iq",
+    "storage_bucket": "yoyo-iq.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845911525259:android:4219589537a3a048ec518e",
+        "android_client_info": {
+          "package_name": "com.example.yoyoiq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845911525259-808c73tqg9lpb18rh49kvkgbisv4bk6o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yoyoiq",
+            "certificate_hash": "e92e09009f31682ab615b7f95433bab189cec4f1"
+          }
+        },
+        {
+          "client_id": "845911525259-95kts8m61qfo2u2jmm5kk8chi5hejd69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5_lvoC5GD5NDnFQjXtAmQI4zNubRw25E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845911525259-95kts8m61qfo2u2jmm5kk8chi5hejd69.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
