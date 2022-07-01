@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,19 +26,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
     LinearLayout mainActivityLayout;
-    TextView textView,notification;
+    TextView textView, notification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView=findViewById(R.id.walletTV);
-        notification=findViewById(R.id.notification);
+        textView = findViewById(R.id.walletTV);
+        notification = findViewById(R.id.notification);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,AddCash.class);
+                Intent intent = new Intent(MainActivity.this, AddCash.class);
                 startActivity(intent);
             }
         });
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,NotificationActivity.class);
+                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
             }
         });
@@ -123,20 +124,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.profile:
-                Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(intent);
                 break;
             case R.id.wallet_item:
                 Toast.makeText(this, "Wallet", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.search:
-                Toast.makeText(this, "Find People", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.howToPlay:
                 Toast.makeText(this, "How To Play", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.infoSettings:
-                Intent intent1=new Intent(MainActivity.this,SettingsActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.aboutUs:

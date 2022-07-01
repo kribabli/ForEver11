@@ -16,7 +16,6 @@
             android:orientation="horizontal"
             android:weightSum="10">
 
-
             <TextView
                 android:id="@+id/backPress"
                 android:layout_width="wrap_content"
@@ -24,21 +23,25 @@
                 android:background="@drawable/ic_baseline_arrow_back_24"
                 android:gravity="left" />
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
+                android:layout_weight="6"
                 android:gravity="center"
+                android:drawableLeft="@drawable/ic_baseline_search_24"
                 android:hint="Search by Team Name"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/notification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_baseline_notifications_none_24"
-                android:gravity="right" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
 
         </LinearLayout>
 
