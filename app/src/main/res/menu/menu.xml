@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:enabled="true"
+        android:title="@string/title_home" />
+    <item
+        android:id="@+id/my_matches"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_wine_bar_24"
+        android:title="@string/title_my_matches" />
+    <item
+        android:id="@+id/winners"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_attractions_24"
+        android:title="@string/title_winners" />
+
+    <item
+        android:id="@+id/chat"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_chat_bubble_24"
+        android:title="@string/title_chat" />
+    <item
+        android:id="@+id/rewards"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_card_giftcard_24"
+        android:title="@string/title_Rewards" />
+</menu>

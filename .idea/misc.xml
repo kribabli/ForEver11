@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/BabliOffice/YoYoIq/app/src/main/res/drawable/indian_rupiya_symbol.xml" value="0.2015" />
+        <entry key="..\:/BabliOffice/YoYoIq/app/src/main/res/layout/activity_add_cash.xml" value="0.33" />
+        <entry key="..\:/BabliOffice/YoYoIq/app/src/main/res/layout/activity_fantasy_ipl.xml" value="0.358695652173913" />
+        <entry key="..\:/BabliOffice/YoYoIq/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/BabliOffice/YoYoIq/app/src/main/res/layout/activity_my_coupons.xml" value="0.33" />
+        <entry key="..\:/BabliOffice/YoYoIq/app/src/main/res/layout/activity_point_system.xml" value="0.33" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/border.xml" value="0.1025" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/border1_green.xml" value="0.1025" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/border2_black.xml" value="0.1025" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/border_red.xml" value="0.1025" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/facebook.xml" value="0.1" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1555" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/ic_baseline_arrow_forward_ios_24.xml" value="0.1555" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/ic_baseline_attractions_24.xml" value="0.1555" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/ic_baseline_description_24.xml" value="0.112" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/ic_google_pay.xml" value="0.1025" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/ic_google_pay_logo_2020.xml" value="0.1025" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/ic_group_506.xml" value="0.1025" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/ic_phonepe_logo.xml" value="0.1025" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/ic_upi_payment.xml" value="0.1025" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/ic_upi_payment_1.xml" value="0.1025" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/drawable/indian_rupiya_symbol.xml" value="0.106" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_add_cash.xml" value="0.2" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_add_cash2.xml" value="0.2" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_contest_winners.xml" value="0.25" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_custom_dialog.xml" value="0.22" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_fantasy_ipl.xml" value="0.25" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_my_coupons.xml" value="0.25" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_notification.xml" value="0.25" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_payment_options.xml" value="0.25" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_point_system.xml" value="0.25" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_profile.xml" value="0.25" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_recent_transactions.xml" value="0.22" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_register_and_play.xml" value="0.18" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_search.xml" value="0.22708333333333333" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_select_teams.xml" value="0.33" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_settings.xml" value="0.22" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_splash.xml" value="0.2" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/activity_team_preview.xml" value="0.22" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/contest_winners_cardview.xml" value="0.3087378640776699" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/fragment_chat.xml" value="0.22708333333333333" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/fragment_home.xml" value="0.22708333333333333" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/fragment_my_matches.xml" value="0.22" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/fragment_rewards.xml" value="0.22708333333333333" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/fragment_winners.xml" value="0.22708333333333333" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/layout/team_preview.xml" value="0.33" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/menu/menu.xml" value="0.22708333333333333" />
+        <entry key="..\:/BabliOfficeWork/BabliOffice/YoYoIq/app/src/main/res/menu/navigation_drawer.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
