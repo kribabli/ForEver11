@@ -41,13 +41,14 @@ public class DatabaseConnectivity {
             single_instance = new DatabaseConnectivity();
         return single_instance;
     }
+
     // Realtime Firebase Connectivity
     public DatabaseReference getDatabasePath(Context context) {
         DatabaseReference databaseReferencePath = FirebaseDatabase.getInstance().getReference();
         return databaseReferencePath;
     }
 
-//  FireBase Storage Path
+    //  FireBase Storage Path
     public StorageReference getDatabaseStorage(Context context) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference().child("YoyoIq/");

@@ -31,6 +31,13 @@
                 android:weightSum="10">
 
                 <TextView
+                    android:id="@+id/profileView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_baseline_person_24"
+                    android:gravity="left" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
@@ -85,19 +92,19 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_bannerItem"
                 android:layout_width="match_parent"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
                 android:layout_height="160dp"
-                android:layout_gravity="top" />
+                android:layout_gravity="top"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="5dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/vendorsImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
                 android:layout_below="@+id/view_pager"
                 android:layout_gravity="bottom"
+                android:layout_margin="5dp"
                 tools:ignore="InvalidId" />
 
         </LinearLayout>

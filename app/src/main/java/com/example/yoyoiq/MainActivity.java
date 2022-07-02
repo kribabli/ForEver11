@@ -3,7 +3,6 @@ package com.example.yoyoiq;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -112,12 +111,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             });
-
         });
-
-
     }
 
     public class The_slide_timer extends TimerTask {
@@ -198,7 +193,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.wallet_item:
-                Toast.makeText(this, "Wallet", Toast.LENGTH_SHORT).show();
+                Intent intent3 = new Intent(MainActivity.this, AddCash.class);
+                startActivity(intent3);
                 break;
             case R.id.search:
                 Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
@@ -231,6 +227,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
     }
-
-
 }
