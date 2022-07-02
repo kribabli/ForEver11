@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YoYoIq">
         <activity
+            android:name=".WalletPackage.KYCActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterDetails"
             android:exported="false" />
         <activity
@@ -54,7 +57,7 @@
             android:name=".LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".RecentTransactions"
+            android:name=".WalletPackage.RecentTransactions"
             android:exported="false" />
         <activity
             android:name=".NotificationActivity"
@@ -63,7 +66,7 @@
             android:name=".SettingsActivity"
             android:exported="true" />
         <activity
-            android:name=".AddCash"
+            android:name=".WalletPackage.AddCash"
             android:exported="true" />
         <activity
             android:name=".SelectTeams"
