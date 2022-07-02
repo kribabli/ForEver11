@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.yoyoiq.Modal.SharedPrefManager;
+import com.example.yoyoiq.Modal.UserData;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,12 +28,14 @@ public class RegisterDetails extends AppCompatActivity {
     TextView emailId;
     TextView password;
     ProgressDialog progressDialog;
+    SharedPrefManager sharedPrefManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_details);
+        sharedPrefManager = new SharedPrefManager(getApplicationContext());
         initMethod();
         setAction();
         progressDialog = new ProgressDialog(this);
@@ -102,6 +106,9 @@ public class RegisterDetails extends AppCompatActivity {
         data.put("mobileNo", mobileNo.getText().toString());
         data.put("emailId", emailId.getText().toString());
         data.put("password", password.getText().toString());
+
+        UserData userData = new UserData(userName.getText().toString(), mobileNo.getText().toString(), emailId.getText().toString(), password.getText().toString());
+        sharedPrefManager.saveUser(userData);
         databaseConnectivity.getDatabasePath(this).child("RegisterDetails").push().setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

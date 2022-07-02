@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.yoyoiq.Modal.SharedPrefManager;
+import com.example.yoyoiq.Modal.UserData;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,11 +24,13 @@ public class LoginActivity extends AppCompatActivity {
     TextView login,backPress;
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     String password, alreadyRegisterMobile;
+    SharedPrefManager sharedPrefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPrefManager=new SharedPrefManager(getApplicationContext());
         initMethod();
         setAction();
         DownloadData();
@@ -107,7 +111,10 @@ public class LoginActivity extends AppCompatActivity {
     private void LoginValidation() {
         String mobile = mobileNo.getText().toString().trim();
         String password1 = userPassword.getText().toString().trim();
-
+        String userName="";
+        String emailId="";
+        UserData userData=new UserData(userName,mobile,emailId,password1);
+        sharedPrefManager.saveUser(userData);
         if (alreadyRegisterMobile.equals(mobile)) {
             if (password.equals(password1)) {
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
