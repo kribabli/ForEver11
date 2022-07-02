@@ -85,6 +85,9 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_bannerItem"
                 android:layout_width="match_parent"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_height="160dp"
                 android:layout_gravity="top" />
 
@@ -92,6 +95,7 @@
                 android:id="@+id/vendorsImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_below="@+id/view_pager"
                 android:layout_gravity="bottom"
                 tools:ignore="InvalidId" />
