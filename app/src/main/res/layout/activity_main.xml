@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
@@ -34,7 +34,7 @@
                     android:id="@+id/profileView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_baseline_person_24"
+                    android:background="@drawable/white_person"
                     android:gravity="left" />
 
                 <TextView
@@ -43,14 +43,14 @@
                     android:layout_weight="8"
                     android:gravity="center"
                     android:text="YoYo Iq"
-                    android:textColor="@color/black"
+                    android:textColor="#ffff"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/notification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_baseline_notifications_none_24"
+                    android:background="@drawable/white_notification"
                     android:gravity="right" />
 
                 <View
@@ -62,7 +62,7 @@
                     android:id="@+id/walletTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_baseline_account_balance_wallet_24"
+                    android:background="@drawable/white_wallet"
                     android:gravity="right" />
 
             </LinearLayout>
@@ -95,7 +95,7 @@
                 android:layout_height="160dp"
                 android:layout_gravity="top"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp" />
 
             <androidx.recyclerview.widget.RecyclerView

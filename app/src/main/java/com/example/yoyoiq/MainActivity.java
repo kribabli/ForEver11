@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
     LinearLayout mainActivityLayout;
-    TextView textView, notification;
+    TextView textView, notification,profileView;
     ViewPager view_bannerItem;
     private List<The_Slide_Items_Model_Class> listItems;
     DatabaseConnectivity databaseConnectivity;
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
             startActivity(intent);
         });
+        profileView=findViewById(R.id.profileView);
         selectedFragment = fragment;
         new Thread(this::mBottomNavigationBar).start();
         mainActivityLayout = findViewById(R.id.mainActivityLayout);
@@ -96,8 +99,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        setAction();
 //        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setAction() {
+        profileView.setOnClickListener(v -> {
+            if(!drawerLayout.isDrawerOpen(GravityCompat.START)) drawerLayout.openDrawer(GravityCompat.START);
+            else drawerLayout.closeDrawer(GravityCompat.END);
+        });
     }
 
     private void setAutoSliderBanner() {
@@ -199,9 +210,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else{
+            super.onBackPressed();
+            finish();
+
+        }
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
