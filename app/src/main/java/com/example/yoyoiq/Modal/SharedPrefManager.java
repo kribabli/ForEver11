@@ -17,7 +17,10 @@ public class SharedPrefManager {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editor.putString("userName", userData.getUserName());
+        editor.putString("mobileNo", userData.getMobileNo());
+        editor.putString("emailId", userData.getEmailId());
         editor.putString("userPassword", userData.getPassword());
+
         editor.putBoolean("logged", true);
         editor.apply();
 
@@ -35,6 +38,4 @@ public class SharedPrefManager {
         editor.clear();
         editor.apply();
     }
-
-
 }

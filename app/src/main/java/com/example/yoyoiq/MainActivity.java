@@ -16,15 +16,20 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.BannerAdapter;
 import com.example.yoyoiq.Modal.SharedPrefManager;
 import com.example.yoyoiq.Modal.The_Slide_Items_Model_Class;
+import com.example.yoyoiq.POJO.MatchListResponse;
+import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.WalletPackage.AddCash;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +39,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Fragment selectedFragment = null;
@@ -48,16 +57,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DatabaseConnectivity databaseConnectivity;
     SharedPreferences pathSharedPreferences;
     SharedPrefManager sharedPrefManager;
+    RecyclerView recyclerView;
+    AllMatchAdapter allMatchAdapter;
+    ArrayList<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getAllMatches();
+        recyclerView = findViewById(R.id.recyclerViewMatchList);
+
+
         textView = findViewById(R.id.walletTV);
         pathSharedPreferences = getSharedPreferences("YoyoIq", MODE_PRIVATE);
         notification = findViewById(R.id.notification);
         view_bannerItem = findViewById(R.id.view_bannerItem);
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
+
         textView.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, AddCash.class);
             startActivity(intent);
@@ -96,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        Log.d("Amit ", "Value 111 " + jsonObject.getString("bannerImageUri"));
                     }
                     listItems = new ArrayList<>();
                     listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner2));
@@ -228,4 +245,65 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
     }
+
+    private void getAllMatches() {
+
+        Call<MatchListResponse> call = ApiClient
+                .getInstance()
+                .getApi()
+                .getMatchList();
+
+        call.enqueue(new Callback<MatchListResponse>() {
+            @Override
+            public void onResponse(Call<MatchListResponse> call, Response<MatchListResponse> response) {
+                MatchListResponse matchList = response.body();
+                Log.d("TAG", "onResponse77: " + matchList);
+
+                Log.e("Hulk", "Hulk: " + response.raw().request().url());
+                Log.e("Hulk", "Hulk: " + response.body().getResponse().getItems().size());
+                if (response.isSuccessful()) {
+                    matchList.getResponse();
+                    String jsonArray = new Gson().toJson(matchList.getResponse());
+                    String jsonArray11 = new Gson().toJson(matchList.getResponse().getItems());
+                    Log.d("TAG", "onResponse: " + jsonArray);
+                    Log.d("TAG", "onResponseAA: " + jsonArray11);
+
+//                    Log.e("ResponseRR", String.valueOf(response.body().getAsJsonObject("response").getAsJsonObject("teama").get("team_id")));
+//                    Log.e("ResponseRR", String.valueOf(response.body().getAsJsonObject("response").getAsJsonObject("teamb").get("team_id")));
+
+//                    teamA = String.valueOf(response.body().getAsJsonObject("response").getAsJsonObject("teama").get("team_id"));
+//                    teamB = String.valueOf(response.body().getAsJsonObject("response").getAsJsonObject("teamb").get("team_id"));
+
+                    JSONArray jsonArray1 = null;
+                    try {
+                        jsonArray1 = new JSONArray(jsonArray);
+                        Log.d("TAG", "jsonArray1: " + jsonArray1);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray1.getJSONObject(i);
+                            String match_id = jsonObject.getString("match_id");
+                            String title = jsonObject.getString("title");
+                            String teama = jsonObject.getString("teama");
+                            Log.d("TAG", "onResponse: 0" + match_id);
+                            Log.d("TAG", "onResponse: 1" + title);
+
+                            list.add(title);
+                            allMatchAdapter.notifyDataSetChanged();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<MatchListResponse> call, Throwable t) {
+                Log.e("Hulk-err", "onFailure: " + t);
+            }
+        });
+    }
+
 }
