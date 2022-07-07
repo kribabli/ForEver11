@@ -2,6 +2,7 @@ package com.example.yoyoiq;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity {
     Button sign_In_FB;
     EditText mobileNo, userPassword;
@@ -25,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     String password, alreadyRegisterMobile;
     SharedPrefManager sharedPrefManager;
+    ArrayList<String> allPhoneNumber=new ArrayList<>();
+    ArrayList<String> allPassword=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +80,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (snapshot.getValue() != null) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         alreadyRegisterMobile = dataSnapshot.child("mobileNo").getValue().toString();
+                        allPhoneNumber.add(alreadyRegisterMobile);
                         password = dataSnapshot.child("password").getValue().toString();
+                        allPassword.add(password);
+
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -115,8 +122,8 @@ public class LoginActivity extends AppCompatActivity {
         String emailId="";
         UserData userData=new UserData(userName,mobile,emailId,password1);
         sharedPrefManager.saveUser(userData);
-        if (alreadyRegisterMobile.equals(mobile)) {
-            if (password.equals(password1)) {
+        if (allPhoneNumber.contains(mobile)) {
+            if (allPassword.contains(password1)) {
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();

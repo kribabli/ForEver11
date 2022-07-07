@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return true;
     }
-
     @SuppressLint("NonConstantResourceId")
+
     private void mBottomNavigationBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -207,7 +207,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return bool;
         });
     }
-
     @Override
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
@@ -265,7 +264,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void getAllMatches() {
-
         Call<MatchListResponse> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -275,16 +273,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onResponse(Call<MatchListResponse> call, Response<MatchListResponse> response) {
                 MatchListResponse matchList = response.body();
-                Log.d("TAG", "onResponse77: " + matchList);
-
-                Log.e("Hulk", "Hulk: " + response.raw().request().url());
-                Log.e("Hulk", "Hulk: " + response.body().getResponse().getItems().size());
                 if (response.isSuccessful()) {
                     matchList.getResponse();
                     String jsonArray = new Gson().toJson(matchList.getResponse());
                     String jsonArray11 = new Gson().toJson(matchList.getResponse().getItems());
-                    Log.d("TAG", "onResponse: " + jsonArray);
-                    Log.d("TAG", "onResponseAA: " + jsonArray11);
+
 
 //                    Log.e("ResponseRR", String.valueOf(response.body().getAsJsonObject("response").getAsJsonObject("teama").get("team_id")));
 //                    Log.e("ResponseRR", String.valueOf(response.body().getAsJsonObject("response").getAsJsonObject("teamb").get("team_id")));
@@ -294,18 +287,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     JSONArray jsonArray1 = null;
                     try {
-                        jsonArray1 = new JSONArray(jsonArray);
-                        Log.d("TAG", "jsonArray1: " + jsonArray1);
-                        for (int i = 0; i < jsonArray.length(); i++) {
+                        jsonArray1 = new JSONArray(jsonArray11);
+                        Log.d("Amit","Check here "+jsonArray1);
+                        for (int i = 0; i < jsonArray11.length(); i++) {
                             JSONObject jsonObject = jsonArray1.getJSONObject(i);
                             String match_id = jsonObject.getString("match_id");
                             String title = jsonObject.getString("title");
                             String teama = jsonObject.getString("teama");
-                            Log.d("TAG", "onResponse: 0" + match_id);
-                            Log.d("TAG", "onResponse: 1" + title);
+                            String teamb = jsonObject.getString("teamb");
+                            JSONObject jsonObject1=new JSONObject(teama);
+                            String imageUrl=jsonObject1.getString("logo_url");
+                            Log.d("Amit","Value check 112 "+teamb);
+                            Log.d("Amit","Value check 113 "+teama);
+                            JSONObject jsonObject2=new JSONObject(teamb);
 
                             list.add(title);
-                            allMatchAdapter.notifyDataSetChanged();
+//                            allMatchAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -313,13 +310,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 } else {
                 }
-
-
             }
-
             @Override
             public void onFailure(Call<MatchListResponse> call, Throwable t) {
-                Log.e("Hulk-err", "onFailure: " + t);
             }
         });
     }
