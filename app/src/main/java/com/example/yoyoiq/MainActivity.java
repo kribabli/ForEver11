@@ -26,6 +26,7 @@ import com.example.yoyoiq.Modal.SharedPrefManager;
 import com.example.yoyoiq.Modal.The_Slide_Items_Model_Class;
 import com.example.yoyoiq.Modal.TotalHomeData;
 import com.example.yoyoiq.POJO.MatchListResponse;
+import com.example.yoyoiq.PrivacyPolicy.AboutUsActivity;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.WalletPackage.AddCash;
 import com.example.yoyoiq.common.DatabaseConnectivity;
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
-    LinearLayout mainActivityLayout,LinearLayout;
-    TextView textView, notification, profileView,imageCricket;
+    LinearLayout mainActivityLayout, LinearLayout;
+    TextView textView, notification, profileView, imageCricket;
     ViewPager view_bannerItem;
     private List<The_Slide_Items_Model_Class> listItems;
     DatabaseConnectivity databaseConnectivity;
@@ -68,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LinearLayout=findViewById(R.id.LinearLayout);
+        LinearLayout = findViewById(R.id.LinearLayout);
         LinearLayout.setVisibility(View.VISIBLE);
-        imageCricket=findViewById(R.id.imageCricket);
+        imageCricket = findViewById(R.id.imageCricket);
         imageCricket.setVisibility(View.VISIBLE);
         getAllMatches();
         recyclerView = findViewById(R.id.recyclerViewMatchList);
@@ -85,10 +86,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, AddCash.class);
             startActivity(intent);
         });
+
         notification.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
             startActivity(intent);
         });
+
         profileView = findViewById(R.id.profileView);
         selectedFragment = fragment;
         new Thread(this::mBottomNavigationBar).start();
@@ -223,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -247,10 +249,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent1);
                 break;
             case R.id.aboutUs:
-                Toast.makeText(this, "About Us", Toast.LENGTH_SHORT).show();
+                Intent intent5 = new Intent(MainActivity.this, AboutUsActivity.class);
+                startActivity(intent5);
                 break;
             case R.id.termsAndConditions:
-                Toast.makeText(this, "Terms & Conditions", Toast.LENGTH_SHORT).show();
+                Intent intent4 = new Intent(MainActivity.this, AboutUsActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.logOut:
                 userLogout();
@@ -286,6 +290,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray1.getJSONObject(i);
                             String title = jsonObject.getString("title");
+                            String match_id = jsonObject.getString("match_id");
 
                             String teama = jsonObject.getString("teama");
                             String teamb = jsonObject.getString("teamb");
@@ -309,7 +314,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                             recyclerView.setAdapter(allMatchAdapter);
                             allMatchAdapter.notifyDataSetChanged();
-
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

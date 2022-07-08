@@ -56,7 +56,7 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle, matchATv, matchBTv,shortNameA,shortNameB;
+        TextView textViewTitle, matchATv, matchBTv, shortNameA, shortNameB;
         ImageView matchAImage, matchBImage;
 
         public MyViewHolder(@NonNull View itemView) {

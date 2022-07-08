@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YoYoIq">
         <activity
+            android:name=".PrivacyPolicy.AboutUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ContestActivity"
+            android:exported="true" />
+        <activity
             android:name=".WalletPackage.KYCActivity"
             android:exported="false" />
         <activity
