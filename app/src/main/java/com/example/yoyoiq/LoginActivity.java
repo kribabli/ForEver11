@@ -2,7 +2,6 @@ package com.example.yoyoiq;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,18 +23,18 @@ import java.util.ArrayList;
 public class LoginActivity extends AppCompatActivity {
     Button sign_In_FB;
     EditText mobileNo, userPassword;
-    TextView login,backPress;
+    TextView login, backPress;
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     String password, alreadyRegisterMobile;
     SharedPrefManager sharedPrefManager;
-    ArrayList<String> allPhoneNumber=new ArrayList<>();
-    ArrayList<String> allPassword=new ArrayList<>();
+    ArrayList<String> allPhoneNumber = new ArrayList<>();
+    ArrayList<String> allPassword = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        sharedPrefManager=new SharedPrefManager(getApplicationContext());
+        sharedPrefManager = new SharedPrefManager(getApplicationContext());
         initMethod();
         setAction();
         DownloadData();
@@ -50,15 +49,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setAction() {
-        sign_In_FB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -118,9 +109,9 @@ public class LoginActivity extends AppCompatActivity {
     private void LoginValidation() {
         String mobile = mobileNo.getText().toString().trim();
         String password1 = userPassword.getText().toString().trim();
-        String userName="";
-        String emailId="";
-        UserData userData=new UserData(userName,mobile,emailId,password1);
+        String userName = "";
+        String emailId = "";
+        UserData userData = new UserData(userName, mobile, emailId, password1);
         sharedPrefManager.saveUser(userData);
         if (allPhoneNumber.contains(mobile)) {
             if (allPassword.contains(password1)) {
