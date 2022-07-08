@@ -121,6 +121,9 @@ public class ItemsItem{
 	@SerializedName("status")
 	private int status;
 
+	public ItemsItem(String title) {
+	}
+
 	public void setStatusNote(String statusNote){
 		this.statusNote = statusNote;
 	}

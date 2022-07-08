@@ -25,6 +25,16 @@ public class Teamb{
 	@SerializedName("scores_full")
 	private String scoresFull;
 
+	public Teamb(String logoUrl, String scores, String name, String shortName, int teamId, String overs, String scoresFull) {
+		this.logoUrl = logoUrl;
+		this.scores = scores;
+		this.name = name;
+		this.shortName = shortName;
+		this.teamId = teamId;
+		this.overs = overs;
+		this.scoresFull = scoresFull;
+	}
+
 	public void setLogoUrl(String logoUrl){
 		this.logoUrl = logoUrl;
 	}

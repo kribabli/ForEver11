@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -25,6 +24,7 @@ import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.BannerAdapter;
 import com.example.yoyoiq.Modal.SharedPrefManager;
 import com.example.yoyoiq.Modal.The_Slide_Items_Model_Class;
+import com.example.yoyoiq.Modal.TotalHomeData;
 import com.example.yoyoiq.POJO.MatchListResponse;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.WalletPackage.AddCash;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
     LinearLayout mainActivityLayout;
-    TextView textView, notification,profileView;
+    TextView textView, notification, profileView;
     ViewPager view_bannerItem;
     private List<The_Slide_Items_Model_Class> listItems;
     DatabaseConnectivity databaseConnectivity;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPrefManager sharedPrefManager;
     RecyclerView recyclerView;
     AllMatchAdapter allMatchAdapter;
-    ArrayList<String> list = new ArrayList<>();
+    ArrayList<TotalHomeData> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
             startActivity(intent);
         });
-        profileView=findViewById(R.id.profileView);
+        profileView = findViewById(R.id.profileView);
         selectedFragment = fragment;
         new Thread(this::mBottomNavigationBar).start();
         mainActivityLayout = findViewById(R.id.mainActivityLayout);
@@ -106,7 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setAction() {
         profileView.setOnClickListener(v -> {
-            if(!drawerLayout.isDrawerOpen(GravityCompat.START)) drawerLayout.openDrawer(GravityCompat.START);
+            if (!drawerLayout.isDrawerOpen(GravityCompat.START))
+                drawerLayout.openDrawer(GravityCompat.START);
             else drawerLayout.closeDrawer(GravityCompat.END);
         });
     }
@@ -166,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return true;
     }
+
     @SuppressLint("NonConstantResourceId")
 
     private void mBottomNavigationBar() {
@@ -207,12 +209,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return bool;
         });
     }
+
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else{
+        } else {
             super.onBackPressed();
             finish();
 
@@ -275,34 +277,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 MatchListResponse matchList = response.body();
                 if (response.isSuccessful()) {
                     matchList.getResponse();
-                    String jsonArray = new Gson().toJson(matchList.getResponse());
-                    String jsonArray11 = new Gson().toJson(matchList.getResponse().getItems());
-
-
-//                    Log.e("ResponseRR", String.valueOf(response.body().getAsJsonObject("response").getAsJsonObject("teama").get("team_id")));
-//                    Log.e("ResponseRR", String.valueOf(response.body().getAsJsonObject("response").getAsJsonObject("teamb").get("team_id")));
-
-//                    teamA = String.valueOf(response.body().getAsJsonObject("response").getAsJsonObject("teama").get("team_id"));
-//                    teamB = String.valueOf(response.body().getAsJsonObject("response").getAsJsonObject("teamb").get("team_id"));
-
+                    String jsonArray = new Gson().toJson(matchList.getResponse().getItems());
                     JSONArray jsonArray1 = null;
                     try {
-                        jsonArray1 = new JSONArray(jsonArray11);
-                        Log.d("Amit","Check here "+jsonArray1);
-                        for (int i = 0; i < jsonArray11.length(); i++) {
+                        jsonArray1 = new JSONArray(jsonArray);
+                        for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray1.getJSONObject(i);
-                            String match_id = jsonObject.getString("match_id");
                             String title = jsonObject.getString("title");
+
                             String teama = jsonObject.getString("teama");
                             String teamb = jsonObject.getString("teamb");
-                            JSONObject jsonObject1=new JSONObject(teama);
-                            String imageUrl=jsonObject1.getString("logo_url");
-                            Log.d("Amit","Value check 112 "+teamb);
-                            Log.d("Amit","Value check 113 "+teama);
-                            JSONObject jsonObject2=new JSONObject(teamb);
 
-                            list.add(title);
-//                            allMatchAdapter.notifyDataSetChanged();
+                            JSONObject jsonObject1 = new JSONObject(teama);
+                            String logo_url_a = jsonObject1.getString("logo_url");
+                            String name_a = jsonObject1.getString("name");
+                            String short_name_a = jsonObject1.getString("short_name");
+                            int teamIda = Integer.parseInt(jsonObject1.getString("team_id"));
+
+                            JSONObject jsonObject2 = new JSONObject(teamb);
+                            String logo_url_b = jsonObject2.getString("logo_url");
+                            String name_b = jsonObject2.getString("name");
+                            String short_name_b = jsonObject2.getString("short_name");
+                            int teamIdb = Integer.parseInt(jsonObject1.getString("team_id"));
+
+                            TotalHomeData totalHomeData = new TotalHomeData(title, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b);
+                            list.add(totalHomeData);
+
+                            allMatchAdapter = new AllMatchAdapter(getApplicationContext(), list);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                            recyclerView.setAdapter(allMatchAdapter);
+                            allMatchAdapter.notifyDataSetChanged();
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -311,6 +316,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else {
                 }
             }
+
             @Override
             public void onFailure(Call<MatchListResponse> call, Throwable t) {
             }
