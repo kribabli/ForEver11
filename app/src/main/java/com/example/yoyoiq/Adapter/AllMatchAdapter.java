@@ -1,7 +1,6 @@
 package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.yoyoiq.Modal.TotalHomeData;
-import com.example.yoyoiq.POJO.ItemsItem;
-import com.example.yoyoiq.POJO.Teama;
-import com.example.yoyoiq.POJO.Teamb;
 import com.example.yoyoiq.R;
 
 import java.util.ArrayList;
@@ -38,34 +34,38 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull AllMatchAdapter.MyViewHolder holder, int position) {
-        TotalHomeData titleList = list.get(position);
+        TotalHomeData listData = list.get(position);
         holder.textViewTitle.setText(list.get(position).getTitle());
 
-        holder.matchATv.setText(titleList.getName_a());
+        holder.matchATv.setText(listData.getName_a());
+        holder.shortNameA.setText(listData.getShort_name_a());
         Glide.with(context)
-                .load(titleList.getLogo_url_a())
+                .load(listData.getLogo_url_a())
                 .into(holder.matchAImage);
 
-        holder.matchBTv.setText(titleList.getName_b());
+        holder.matchBTv.setText(listData.getName_b());
+        holder.shortNameB.setText(listData.getShort_name_b());
         Glide.with(context)
-                .load(titleList.getLogo_url_b())
+                .load(listData.getLogo_url_b())
                 .into(holder.matchBImage);
     }
 
     @Override
     public int getItemCount() {
-        return list.size() ;
+        return list.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle,matchATv, matchBTv;
-        ImageView matchAImage,matchBImage;
+        TextView textViewTitle, matchATv, matchBTv,shortNameA,shortNameB;
+        ImageView matchAImage, matchBImage;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.matchTitle);
             matchATv = itemView.findViewById(R.id.matcha);
             matchBTv = itemView.findViewById(R.id.matchb);
+            shortNameA = itemView.findViewById(R.id.shortNameA);
+            shortNameB = itemView.findViewById(R.id.shortNameB);
             matchAImage = itemView.findViewById(R.id.matchaImage);
             matchBImage = itemView.findViewById(R.id.matchbImage);
         }

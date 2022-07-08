@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getAllMatches();
         recyclerView = findViewById(R.id.recyclerViewMatchList);
 
-
         textView = findViewById(R.id.walletTV);
         pathSharedPreferences = getSharedPreferences("YoyoIq", MODE_PRIVATE);
         notification = findViewById(R.id.notification);
@@ -217,7 +216,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
             finish();
-
         }
     }
 

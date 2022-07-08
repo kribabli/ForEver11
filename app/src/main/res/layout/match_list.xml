@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/border4_green"
     android:orientation="vertical">
 
@@ -13,8 +13,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        app:cardCornerRadius="6dp"
         android:layout_marginBottom="10dp"
+        app:cardCornerRadius="6dp"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -22,18 +22,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:orientation="horizontal"
+            android:padding="2dp"
             android:weightSum="10">
 
             <TextView
                 android:id="@+id/matchTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="4" />
+                android:layout_gravity="center"
+                android:layout_weight="9"
+                android:gravity="left"
+                android:textColor="@color/black" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="6" />
+            <TextView
+                android:id="@+id/lineUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Lineups Out"
+                android:textColor="@color/green"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -42,13 +52,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:orientation="horizontal"
+            android:padding="5dp"
             android:weightSum="10">
 
             <TextView
                 android:id="@+id/matcha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2" />
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:gravity="left"
+                android:textColor="@color/black" />
 
             <View
                 android:layout_width="0dp"
@@ -59,7 +73,10 @@
                 android:id="@+id/matchb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2" />
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -68,24 +85,45 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:orientation="horizontal"
+            android:padding="5dp"
             android:weightSum="10">
 
             <ImageView
                 android:id="@+id/matchaImage"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:layout_weight="2" />
+                android:layout_gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/shortNameA"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="6" />
+                android:layout_weight="8" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/shortNameB"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/matchbImage"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:layout_weight="2" />
+                android:layout_gravity="center" />
 
         </LinearLayout>
 
@@ -93,21 +131,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="120dp"
-            android:backgroundTint="#57DBDBDB"
+            android:background="#57DBDBDB"
             android:orientation="horizontal"
+            android:padding="5dp"
             android:weightSum="10">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Mega" />
+                android:gravity="left"
+                android:text="Mega"
+                android:textColor="@color/green" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="" />
+                android:textStyle="bold"
+                android:drawableLeft="@drawable/indian_rupiya_symbol"
+                android:drawablePadding="4dp"
+                android:text=""
+                android:textColor="@color/black" />
 
             <View
                 android:layout_width="0dp"
