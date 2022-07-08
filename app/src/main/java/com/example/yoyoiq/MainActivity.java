@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
-    LinearLayout mainActivityLayout;
-    TextView textView, notification, profileView;
+    LinearLayout mainActivityLayout,LinearLayout;
+    TextView textView, notification, profileView,imageCricket;
     ViewPager view_bannerItem;
     private List<The_Slide_Items_Model_Class> listItems;
     DatabaseConnectivity databaseConnectivity;
@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        LinearLayout=findViewById(R.id.LinearLayout);
+        LinearLayout.setVisibility(View.VISIBLE);
+        imageCricket=findViewById(R.id.imageCricket);
+        imageCricket.setVisibility(View.VISIBLE);
         getAllMatches();
         recyclerView = findViewById(R.id.recyclerViewMatchList);
 
