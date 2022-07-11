@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
-    LinearLayout mainActivityLayout, LinearLayout;
-    TextView textView, notification, profileView, imageCricket;
+    LinearLayout mainActivityLayout;
+    TextView textView, notification, profileView;
     ViewPager view_bannerItem;
     private List<The_Slide_Items_Model_Class> listItems;
     DatabaseConnectivity databaseConnectivity;
@@ -69,10 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LinearLayout = findViewById(R.id.LinearLayout);
-        LinearLayout.setVisibility(View.VISIBLE);
-        imageCricket = findViewById(R.id.imageCricket);
-        imageCricket.setVisibility(View.VISIBLE);
         getAllMatches();
         recyclerView = findViewById(R.id.recyclerViewMatchList);
 
@@ -134,11 +130,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     }
                     listItems = new ArrayList<>();
-                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner2));
-                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner3));
-                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner4));
-                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner5));
-                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner6));
+                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group1));
+                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group2));
+                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group3));
+                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group4));
+                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group5));
                     BannerAdapter bannerAdapter = new BannerAdapter(this, listItems);
                     java.util.Timer timer = new java.util.Timer();
                     timer.scheduleAtFixedRate(new The_slide_timer(), 1000, 2000);

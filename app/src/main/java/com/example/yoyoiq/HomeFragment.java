@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +33,8 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
+    LinearLayout LinearLayout;
+    TextView imageCricket;
     ArrayList<TotalHomeData> list = new ArrayList<>();
     ViewPager view_bannerItem;
     private List<The_Slide_Items_Model_Class> listItems;
@@ -64,16 +68,22 @@ public class HomeFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerViewMatchList);
         view_bannerItem = root.findViewById(R.id.view_bannerItem);
         view_bannerItem.setAdapter(bannerAdapter);
+
+        LinearLayout = root.findViewById(R.id.LinearLayout);
+        LinearLayout.setVisibility(View.VISIBLE);
+        imageCricket = root.findViewById(R.id.imageCricket);
+        imageCricket.setVisibility(View.VISIBLE);
+
         return root;
     }
 
     private void setAutoSliderBanner() {
         listItems = new ArrayList<>();
-        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner2));
-        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner3));
-        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner4));
-        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner5));
-        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner6));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.group1));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.group2));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.group3));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.group4));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.group5));
         bannerAdapter = new BannerAdapter(getContext(), listItems);
         bannerAdapter.notifyDataSetChanged();
     }
