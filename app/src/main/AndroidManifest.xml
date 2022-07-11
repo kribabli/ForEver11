@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YoYoIq">
         <activity
+            android:name=".CreateTeamActvity"
+            android:exported="false" />
+        <activity
             android:name=".PrivacyPolicy.AboutUsActivity"
             android:exported="false" />
         <activity

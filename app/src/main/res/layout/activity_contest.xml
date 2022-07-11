@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +11,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black">
+        android:background="@color/black"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,5 +88,47 @@
         android:layout_gravity="top"
         android:layout_margin="5dp"
         tools:ignore="InvalidId" />
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:id="@+id/createTeamLayout"
+        android:layout_gravity="center_horizontal"
+        android:gravity="bottom"
+        android:background="@drawable/border2_black"
+        android:weightSum="10"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:paddingTop="5dp"
+            android:text="Match List"
+            android:textColor="#ffff"
+            android:layout_weight="5"
+            android:id="@+id/matchList"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            android:layout_weight="5"
+            android:textColor="#ffff"
+            android:textAlignment="center"
+            android:text="Create Team"
+            android:id="@+id/createTeam"/>
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
 
 </LinearLayout>
