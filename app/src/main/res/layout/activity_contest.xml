@@ -20,18 +20,45 @@
             android:weightSum="10">
 
             <TextView
-                android:id="@+id/profileView"
+                android:id="@+id/backPress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/arrow_back_white"
                 android:gravity="left" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/matchATv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center"
+                android:textColor="#ffff"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
                 android:gravity="center"
-                android:text=""
+                android:text="Vs"
+                android:textColor="#ffff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/matchBTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center"
                 android:textColor="#ffff"
                 android:textSize="15sp" />
 
@@ -44,6 +71,7 @@
                 android:id="@+id/walletTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/white_wallet"
                 android:gravity="right" />
 

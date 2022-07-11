@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewMatchList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -95,11 +96,11 @@
                 android:layout_gravity="center" />
 
             <TextView
+                android:id="@+id/shortNameA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/shortNameA"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
@@ -110,12 +111,12 @@
                 android:layout_weight="8" />
 
             <TextView
+                android:id="@+id/shortNameB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:id="@+id/shortNameB"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -149,11 +150,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textStyle="bold"
                 android:drawableLeft="@drawable/indian_rupiya_symbol"
                 android:drawablePadding="4dp"
                 android:text=""
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="0dp"
