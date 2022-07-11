@@ -6,25 +6,15 @@
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
-
-
     <com.google.android.material.tabs.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tabLayout"/>
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_bannerItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp" />
-
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/recyclerViewMatchList"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@+id/view_bannerItem"-->
-    <!--        android:layout_margin="5dp"-->
-    <!--        tools:ignore="InvalidId" />-->
 
 </LinearLayout>

@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -71,10 +69,8 @@ public class HomeFragment extends Fragment {
         myFragment = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = myFragment.findViewById(R.id.recyclerViewMatchList);
         view_bannerItem = myFragment.findViewById(R.id.view_bannerItem);
-        tabLayout=myFragment.findViewById(R.id.tabLayout);
+        tabLayout = myFragment.findViewById(R.id.tabLayout);
         view_bannerItem.setAdapter(bannerAdapter);
-
-
         return myFragment;
     }
 
@@ -103,9 +99,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setUpViewPager(ViewPager view_bannerItem) {
-        FragmentAdapter fragmentAdapter=new FragmentAdapter(getChildFragmentManager());
-        fragmentAdapter.addFragment(new CricketFragment(),"Cricket");
-
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getChildFragmentManager());
+        fragmentAdapter.addFragment(new CricketFragment(), "Cricket");
         view_bannerItem.setAdapter(fragmentAdapter);
     }
 

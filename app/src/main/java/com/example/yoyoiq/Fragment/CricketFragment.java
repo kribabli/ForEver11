@@ -1,17 +1,14 @@
 package com.example.yoyoiq.Fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.BannerAdapter;
@@ -36,9 +33,6 @@ import retrofit2.Response;
 public class CricketFragment extends Fragment {
     ViewPager view_bannerItem;
     RecyclerView recyclerView;
-    BannerAdapter bannerAdapter;
-    AllMatchAdapter allMatchAdapter;
-
     ArrayList<TotalHomeData> list = new ArrayList<>();
     private List<The_Slide_Items_Model_Class> listItems;
 
@@ -61,14 +55,15 @@ public class CricketFragment extends Fragment {
         return new CricketFragment();
     }
 
-
-
+    BannerAdapter bannerAdapter;
+    AllMatchAdapter allMatchAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_cricket, container, false);
         view_bannerItem = root.findViewById(R.id.view_bannerItem);
         recyclerView = root.findViewById(R.id.recyclerViewMatchList);
+        view_bannerItem.setAdapter(bannerAdapter);
         return root;
     }
 
@@ -122,7 +117,6 @@ public class CricketFragment extends Fragment {
                             list.add(totalHomeData);
 
                             allMatchAdapter = new AllMatchAdapter(requireContext(), list);
-                            Log.d("Amit","Value 11 "+list.get(0));
                             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
                             recyclerView.setAdapter(allMatchAdapter);
                             allMatchAdapter.notifyDataSetChanged();
@@ -135,6 +129,7 @@ public class CricketFragment extends Fragment {
                 } else {
                 }
             }
+
             @Override
             public void onFailure(Call<MatchListResponse> call, Throwable t) {
             }
