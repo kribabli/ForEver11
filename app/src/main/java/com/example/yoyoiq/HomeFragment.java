@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.AllMatchAdapter;
+import com.example.yoyoiq.Adapter.BannerAdapter;
+import com.example.yoyoiq.Modal.The_Slide_Items_Model_Class;
 import com.example.yoyoiq.Modal.TotalHomeData;
 import com.example.yoyoiq.POJO.MatchListResponse;
 import com.example.yoyoiq.Retrofit.ApiClient;
@@ -20,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +32,8 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<TotalHomeData> list = new ArrayList<>();
+    ViewPager view_bannerItem;
+    private List<The_Slide_Items_Model_Class> listItems;
 
     public HomeFragment() {
     }
@@ -43,10 +49,12 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getAllMatches();
+        setAutoSliderBanner();
         if (getArguments() != null) {
         }
     }
 
+    BannerAdapter bannerAdapter;
     AllMatchAdapter allMatchAdapter;
 
     @Override
@@ -54,7 +62,20 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = root.findViewById(R.id.recyclerViewMatchList);
+        view_bannerItem = root.findViewById(R.id.view_bannerItem);
+        view_bannerItem.setAdapter(bannerAdapter);
         return root;
+    }
+
+    private void setAutoSliderBanner() {
+        listItems = new ArrayList<>();
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner2));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner3));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner4));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner5));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner6));
+        bannerAdapter = new BannerAdapter(getContext(), listItems);
+        bannerAdapter.notifyDataSetChanged();
     }
 
     private void getAllMatches() {
