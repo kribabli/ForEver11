@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyViewHolder> {
     Context context;
     ArrayList<TotalHomeData> list;
+    //This Adapter is use for MatchList(Means Upcoming Match)
 
     public AllMatchAdapter(Context context, ArrayList<TotalHomeData> list) {
         this.context = context;

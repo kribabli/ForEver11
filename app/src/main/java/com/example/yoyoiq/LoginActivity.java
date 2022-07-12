@@ -1,8 +1,8 @@
 package com.example.yoyoiq;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,12 +29,14 @@ public class LoginActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     ArrayList<String> allPhoneNumber = new ArrayList<>();
     ArrayList<String> allPassword = new ArrayList<>();
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
+        sharedPreferences = getSharedPreferences("path", MODE_PRIVATE);
         initMethod();
         setAction();
         DownloadData();
@@ -49,18 +51,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setAction() {
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dataValidation();
-            }
-        });
-        backPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        login.setOnClickListener(view -> dataValidation());
+
+        backPress.setOnClickListener(view -> onBackPressed());
     }
 
     private void DownloadData() {
@@ -73,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                         allPhoneNumber.add(alreadyRegisterMobile);
                         password = dataSnapshot.child("password").getValue().toString();
                         allPassword.add(password);
-
                     }
                 }
             }
@@ -115,6 +107,31 @@ public class LoginActivity extends AppCompatActivity {
         sharedPrefManager.saveUser(userData);
         if (allPhoneNumber.contains(mobile)) {
             if (allPassword.contains(password1)) {
+
+                //here we get particular user data for profileActivity.
+                databaseConnectivity.getDatabasePath(this).child("RegisterDetails").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.getValue() != null) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                String mobile1 = dataSnapshot.child("mobileNo").getValue().toString();
+                                String password11 = dataSnapshot.child("password").getValue().toString();
+                                if (mobile1.contains(mobile) && password11.contains(password1)) {
+                                    String userName1 = dataSnapshot.child("userName").getValue().toString();
+                                    String emailId1 = dataSnapshot.child("emailId").getValue().toString();
+                                    sharedPreferences.edit().putString("userName", userName1).apply();
+                                    sharedPreferences.edit().putString("emailId", emailId1).apply();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -123,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
             showDialog("Invalid Mobile or Password", false);
         }
     }
-
 
     public void showDialog(String message, Boolean isFinish) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

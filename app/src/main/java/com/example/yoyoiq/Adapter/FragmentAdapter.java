@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
+    //This Adapter is use for TabLayout(Like Cricket,Football etc.)
 
     private List<Fragment> fragmentList = new ArrayList<>();
     private List<String> titlelist = new ArrayList<>();
