@@ -19,8 +19,7 @@ public class NotificationActivity extends AppCompatActivity {
         backPress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(NotificationActivity.this,MainActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
     }

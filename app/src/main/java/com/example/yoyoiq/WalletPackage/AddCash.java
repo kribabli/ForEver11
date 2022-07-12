@@ -7,17 +7,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.yoyoiq.NotificationActivity;
 import com.example.yoyoiq.PaymentOptions;
 import com.example.yoyoiq.R;
 
 public class AddCash extends AppCompatActivity {
-    TextView addCash, backPress, myRecentPay, KYCDetails;
+    TextView addCash, backPress, myRecentPay, KYCDetails,notification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cash2);
 
+        notification=findViewById(R.id.notification);
         addCash = findViewById(R.id.addCash);
         backPress = findViewById(R.id.backPress);
         myRecentPay = findViewById(R.id.myRecentPay);
@@ -51,6 +53,14 @@ public class AddCash extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddCash.this, NotificationActivity.class);
+                startActivity(intent);
             }
         });
     }
