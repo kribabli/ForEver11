@@ -5,18 +5,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context=".CreateTeamActvity">
+    tools:context=".CreateTeamActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#373737"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:id="@+id/backPress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/arrow_back_white"
+                android:gravity="left" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Left Time"
+                android:textColor="#ffff"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
         android:background="@drawable/bacl_splash">
 
         <include
             android:id="@+id/ohhBhai"
             layout="@layout/single_grounder" />
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/incl_vs_bck"
@@ -25,9 +70,7 @@
             android:background="@color/header_black"
             android:paddingVertical="20dp">
 
-
             <TextView
-
                 android:id="@+id/tv_ContestTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:maxLines="1"
-                android:text="Max 7 Players from a team"
+                android:text="Max 7 players from a team"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="12sp"
@@ -63,7 +106,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/drak_round_rectangle"
-
                 android:drawableLeft="@drawable/watch_icon_cont"
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/white"
@@ -133,7 +175,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ball_recyclerView">
 
-
                 <LinearLayout
                     android:id="@+id/playerPosition"
                     android:layout_width="wrap_content"
@@ -170,43 +211,6 @@
                         android:layout_margin="1dp"
                         android:background="@drawable/circle_shape"
                         android:gravity="center"
-
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@drawable/circle_shape"
-                        android:gravity="center"
-
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@drawable/circle_shape"
-                        android:gravity="center"
-
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@drawable/circle_shape"
-                        android:gravity="center"
-
                         android:textAlignment="center"
                         android:textColor="#ffff"
                         android:textSize="14sp" />
@@ -251,7 +255,6 @@
                         android:layout_margin="1dp"
                         android:background="@drawable/circle_shape"
                         android:gravity="center"
-
                         android:textAlignment="center"
                         android:textColor="#ffff"
                         android:textSize="14sp" />
@@ -262,13 +265,43 @@
                         android:layout_gravity="center"
                         android:layout_margin="1dp"
                         android:background="@drawable/circle_shape"
-
                         android:gravity="center"
-
                         android:textAlignment="center"
                         android:textColor="#ffff"
                         android:textSize="14sp" />
 
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@drawable/circle_shape"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="#ffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@drawable/circle_shape"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="#ffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@drawable/circle_shape"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="#ffff"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -451,7 +484,6 @@
                     android:gravity="center"
                     android:text="Select 1-4"
                     android:textStyle="bold"
-
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -638,6 +670,46 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:weightSum="7.5">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:id="@+id/teamPreview"
+                android:backgroundTint="@color/green"
+                android:text="Team Preview" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:id="@+id/Continue"
+                android:backgroundTint="@color/green"
+                android:text="Continue" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

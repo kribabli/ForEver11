@@ -14,7 +14,7 @@ public class ContestActivity extends AppCompatActivity {
     TextView walletTV, backPress, matchATv, matchBTv;
     String matchA = "", matchB = "";
     LinearLayout createTeamLayout;
-    TextView matchList,createTeam;
+    TextView matchList, createTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +24,9 @@ public class ContestActivity extends AppCompatActivity {
         backPress = findViewById(R.id.backPress);
         matchATv = findViewById(R.id.matchATv);
         matchBTv = findViewById(R.id.matchBTv);
-        createTeamLayout=findViewById(R.id.createTeamLayout);
-        matchList=findViewById(R.id.matchList);
-        createTeam=findViewById(R.id.createTeam);
+        createTeamLayout = findViewById(R.id.createTeamLayout);
+        matchList = findViewById(R.id.matchList);
+        createTeam = findViewById(R.id.createTeam);
 
         matchA = getIntent().getStringExtra("shortNameA");
         matchB = getIntent().getStringExtra("shortNameB");
@@ -49,7 +49,7 @@ public class ContestActivity extends AppCompatActivity {
         });
 
         createTeam.setOnClickListener(view -> {
-            Intent intent=new Intent(ContestActivity.this,CreateTeamActvity.class);
+            Intent intent = new Intent(ContestActivity.this, CreateTeamActivity.class);
             startActivity(intent);
 
         });

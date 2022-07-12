@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -90,45 +89,45 @@
         tools:ignore="InvalidId" />
 
     <LinearLayout
+        android:id="@+id/createTeamLayout"
         android:layout_width="250dp"
         android:layout_height="30dp"
-        android:id="@+id/createTeamLayout"
-        android:layout_gravity="center_horizontal"
-        android:gravity="bottom"
+        android:layout_gravity="center"
+        android:layout_marginTop="400dp"
         android:background="@drawable/border2_black"
-        android:weightSum="10"
-        android:orientation="horizontal">
-
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <TextView
+            android:id="@+id/matchList"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:textAlignment="center"
+            android:layout_weight="4.5"
             android:paddingTop="5dp"
             android:text="Match List"
-            android:textColor="#ffff"
-            android:layout_weight="5"
-            android:id="@+id/matchList"/>
+            android:textAlignment="center"
+            android:textColor="#ffff" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:paddingTop="5dp"
-            android:layout_weight="5"
-            android:textColor="#ffff"
+            android:text="/"
             android:textAlignment="center"
+            android:textColor="#ffff" />
+
+        <TextView
+            android:id="@+id/createTeam"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5"
+            android:paddingTop="5dp"
             android:text="Create Team"
-            android:id="@+id/createTeam"/>
-
-
-
-
-
+            android:textAlignment="center"
+            android:textColor="#ffff" />
 
     </LinearLayout>
-
-
-
-
 
 </LinearLayout>
