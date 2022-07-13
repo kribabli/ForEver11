@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.yoyoiq.NotificationActivity;
 import com.example.yoyoiq.PaymentOptions;
 import com.example.yoyoiq.R;
+import com.razorpay.Checkout;
 
 public class AddCash extends AppCompatActivity {
     TextView addCash, backPress, myRecentPay, KYCDetails,notification;
@@ -18,6 +19,8 @@ public class AddCash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cash2);
+
+        Checkout.preload(getApplicationContext());
 
         notification=findViewById(R.id.notification);
         addCash = findViewById(R.id.addCash);
