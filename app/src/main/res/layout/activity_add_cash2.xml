@@ -176,6 +176,7 @@
             android:textSize="16sp" />
 
         <EditText
+            android:id="@+id/amount"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="8"
@@ -249,12 +250,12 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/addCash"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/border_red"
             android:gravity="center"
             android:text="Add"
-            android:id="@+id/addCash"
             android:textColor="@color/white"
             android:textStyle="bold" />
     </LinearLayout>

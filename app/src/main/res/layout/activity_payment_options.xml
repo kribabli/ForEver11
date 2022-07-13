@@ -56,6 +56,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/passAmount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -65,7 +66,6 @@
             android:drawablePadding="4dp"
             android:gravity="left"
             android:padding="7dp"
-            android:text="100"
             android:textColorHint="#555555"
             android:textSize="16sp" />
 
@@ -80,11 +80,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/light_gray"
-            android:text="Recommended"
-            android:paddingStart="7dp"
             android:layout_gravity="center"
+            android:background="@color/light_gray"
             android:gravity="center_vertical"
+            android:paddingStart="7dp"
+            android:text="Recommended"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -92,11 +92,11 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_google_pay_logo_2020"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
             android:gravity="center"
             android:paddingStart="7dp"
             android:paddingEnd="7dp"
-            android:drawableLeft="@drawable/ic_google_pay_logo_2020"
-            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
             android:text="Google Pay"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -104,12 +104,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:gravity="center"
-            android:paddingStart="7dp"
-            android:paddingEnd="7dp"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_phonepe_logo"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:gravity="center"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
             android:text="PhonePe"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -117,12 +117,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:gravity="center"
-            android:paddingStart="7dp"
-            android:paddingEnd="7dp"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_pay"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:gravity="center"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
             android:text="Amazon Pay"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -138,11 +138,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/light_gray"
-            android:text="Other Option"
-            android:paddingStart="7dp"
             android:layout_gravity="center"
+            android:background="@color/light_gray"
             android:gravity="center_vertical"
+            android:paddingStart="7dp"
+            android:text="Other Option"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
