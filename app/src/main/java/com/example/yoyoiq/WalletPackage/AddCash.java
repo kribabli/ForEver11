@@ -21,25 +21,27 @@ import org.json.JSONObject;
 public class AddCash extends AppCompatActivity implements PaymentResultListener {
     TextView addCash, backPress, myRecentPay, KYCDetails, notification;
     EditText amount;
-    String amount1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cash2);
-
-        addCash = findViewById(R.id.addCash);
-        amount = findViewById(R.id.amount);
-        amount1 = amount.getText().toString();
-        addCash.setText(amount1);
-
         Checkout.preload(getApplicationContext());
 
+        initMethod();
+        setAction();
+    }
+
+    private void initMethod() {
+        addCash = findViewById(R.id.addCash);
+        amount = findViewById(R.id.amount);
         notification = findViewById(R.id.notification);
         backPress = findViewById(R.id.backPress);
         myRecentPay = findViewById(R.id.myRecentPay);
         KYCDetails = findViewById(R.id.KYCDetails);
+    }
 
+    private void setAction() {
         myRecentPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,35 +55,6 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
             public void onClick(View view) {
                 Intent intent = new Intent(AddCash.this, KYCActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        String sAmount = "100";
-        int amount = Math.round(Float.parseFloat(sAmount) * 100);
-
-        addCash.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(AddCash.this, PaymentOptions.class);
-//                intent.putExtra("amount", amount.getText().toString());
-//                startActivity(intent);
-                Checkout checkout = new Checkout();
-                checkout.setKeyID("ZOWulQ5AH9ssOxyn1mAPeqIn");
-                checkout.setImage(R.drawable.facebook);
-
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("name", "YoYoIq");
-                    jsonObject.put("description", "Test Payment");
-                    jsonObject.put("theme.color", "#0093DD");
-                    jsonObject.put("currency", "INR");
-                    jsonObject.put("amount", amount);
-                    jsonObject.put("contact", "6201623832");
-                    jsonObject.put("meratemplate", "mtteam.suraj@gmail.com");
-                    checkout.open(AddCash.this, jsonObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
         });
 
@@ -99,6 +72,57 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
                 startActivity(intent);
             }
         });
+
+        addCash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(AddCash.this, PaymentOptions.class);
+//                intent.putExtra("amount", amount.getText().toString());
+//                startActivity(intent);
+                addAmountValidation();
+            }
+        });
+    }
+
+    private boolean addAmountValidation() {
+        boolean isValid = true;
+        try {
+            if (amount.getText().toString().trim().length() == 0
+                    || amount.getText().toString().startsWith("0")
+                    ||amount.getText().toString().startsWith("00")) {
+                amount.setError("Please enter amount");
+                amount.requestFocus();
+                isValid = false;
+            } else {
+                paymentMethod();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isValid;
+    }
+
+    private void paymentMethod() {
+        String sAmount = "100";
+        int amount = Math.round(Float.parseFloat(sAmount) * 100);
+
+        Checkout checkout = new Checkout();
+        checkout.setKeyID("rzp_test_jBetacTbV0YhJN");
+        checkout.setImage(R.drawable.cricket_player);
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", "YoYoIq");
+            jsonObject.put("description", "Test Payment");
+            jsonObject.put("theme.color", "#0093DD");
+            jsonObject.put("currency", "INR");
+            jsonObject.put("amount", amount);
+            jsonObject.put("contact", "xxxxxxxx32");
+            jsonObject.put("meratemplate", "mtteam.suraj@gmail.com");
+            checkout.open(AddCash.this, jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
