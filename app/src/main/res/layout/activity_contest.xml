@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -80,54 +81,41 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewMatchList"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:layout_margin="5dp"
-        tools:ignore="InvalidId" />
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/createTeamLayout"
-        android:layout_width="250dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="400dp"
-        android:background="@drawable/border2_black"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        android:weightSum="10">
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/contests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contests"
+            app:tabSelectedTextColor="@color/green"
+            app:tabTextColor="@color/black" />
 
-        <TextView
-            android:id="@+id/matchList"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4.5"
-            android:paddingTop="5dp"
-            android:text="Match List"
-            android:textAlignment="center"
-            android:textColor="#ffff" />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/myContests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Contests"
+            app:tabSelectedTextColor="@color/green"
+            app:tabTextColor="@color/black" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingTop="5dp"
-            android:text="/"
-            android:textAlignment="center"
-            android:textColor="#ffff" />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/myTeams"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Teams"
+            app:tabSelectedTextColor="@color/green"
+            app:tabTextColor="@color/black" />
 
-        <TextView
-            android:id="@+id/createTeam"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4.5"
-            android:paddingTop="5dp"
-            android:text="Create Team"
-            android:textAlignment="center"
-            android:textColor="#ffff" />
+    </com.google.android.material.tabs.TabLayout>
 
-    </LinearLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp" />
 
 </LinearLayout>
