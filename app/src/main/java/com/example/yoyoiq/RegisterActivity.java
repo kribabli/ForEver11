@@ -40,31 +40,25 @@ public class RegisterActivity extends AppCompatActivity {
         initMethod();
         setAction();
 
-        registerUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(mobileNo.getText().toString())) {
-                    Toast.makeText(RegisterActivity.this, "Please enter a valid phone number.", Toast.LENGTH_LONG).show();
-                } else {
-                    String phone = "+91" + mobileNo.getText().toString();
-                    sendVerificationCode(phone);
-                    enterOTP.setVisibility(View.VISIBLE);
-                    verify.setVisibility(View.VISIBLE);
+        registerUser.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(mobileNo.getText().toString())) {
+                Toast.makeText(RegisterActivity.this, "Please enter a valid phone number.", Toast.LENGTH_LONG).show();
+            } else {
+                String phone = "+91" + mobileNo.getText().toString();
+                sendVerificationCode(phone);
+                enterOTP.setVisibility(View.VISIBLE);
+                verify.setVisibility(View.VISIBLE);
 
-                    mobileNo.setVisibility(View.GONE);
-                    registerUser.setVisibility(View.GONE);
+                mobileNo.setVisibility(View.GONE);
+                registerUser.setVisibility(View.GONE);
 
-                    verify.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (TextUtils.isEmpty(enterOTP.getText().toString())) {
-                                Toast.makeText(RegisterActivity.this, "Please Enter OTP", Toast.LENGTH_LONG).show();
-                            } else {
-                                verifyCode(enterOTP.getText().toString());
-                            }
-                        }
-                    });
-                }
+                verify.setOnClickListener(view -> {
+                    if (TextUtils.isEmpty(enterOTP.getText().toString())) {
+                        Toast.makeText(RegisterActivity.this, "Please Enter OTP", Toast.LENGTH_LONG).show();
+                    } else {
+                        verifyCode(enterOTP.getText().toString());
+                    }
+                });
             }
         });
 
@@ -82,27 +76,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setAction() {
-        backPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        backPress.setOnClickListener(view -> onBackPressed());
 
     }
 
     private void signInWithCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Intent i = new Intent(RegisterActivity.this, RegisterDetails.class);
-                            startActivity(i);
-                            finish();
-                        } else {
-                            Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Intent i = new Intent(RegisterActivity.this, RegisterDetails.class);
+                        startActivity(i);
+                        finish();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -116,7 +102,6 @@ public class RegisterActivity extends AppCompatActivity {
                         .setCallbacks(mCallBack)
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
-        Log.d(TAG, "sendVerificationCode: " + options);
     }
 
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
@@ -149,7 +134,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void verifyCode(String code) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         signInWithCredential(credential);
-        Log.d("TAG", "verifyCode: " + credential);
+        if(enterOTP.getText().toString().equals(code)){
+            signInWithCredential(credential);
+        }
+
     }
 
 }
