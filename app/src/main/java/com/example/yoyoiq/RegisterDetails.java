@@ -106,7 +106,6 @@ public class RegisterDetails extends AppCompatActivity {
         data.put("mobileNo", mobileNo.getText().toString());
         data.put("emailId", emailId.getText().toString());
         data.put("password", password.getText().toString());
-
         UserData userData = new UserData(userName.getText().toString(), mobileNo.getText().toString(), emailId.getText().toString(), password.getText().toString());
         sharedPrefManager.saveUser(userData);
         databaseConnectivity.getDatabasePath(this).child("RegisterDetails").push().setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {

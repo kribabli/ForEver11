@@ -1,8 +1,8 @@
 package com.example.yoyoiq;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,7 +12,6 @@ import com.example.yoyoiq.Modal.SharedPrefManager;
 
 public class ProfileActivity extends AppCompatActivity {
     TextView backPress;
-    SharedPreferences sharedPreferences;
     SharedPrefManager sharedPrefManager;
 
     @Override
@@ -22,8 +21,12 @@ public class ProfileActivity extends AppCompatActivity {
         backPress = findViewById(R.id.backPress);
 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
+        Log.d("Amit","Value "+ sharedPrefManager.getUserData().getEmailId());
+        Log.d("Amit","Value "+ sharedPrefManager.getUserData().getUserName());
+        Log.d("Amit","Value "+ sharedPrefManager.getUserData().getMobileNo());
+        Log.d("Amit","Value "+ sharedPrefManager.getUserData().getPassword());
 
-        sharedPreferences = getSharedPreferences("YoyoIqUserDetails", Context.MODE_PRIVATE);
+
 
         backPress.setOnClickListener(new View.OnClickListener() {
             @Override

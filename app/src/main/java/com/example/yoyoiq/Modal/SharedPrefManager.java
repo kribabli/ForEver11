@@ -26,6 +26,13 @@ public class SharedPrefManager {
 
     }
 
+    public UserData getUserData(){
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return new UserData(sharedPreferences.getString("userName",""),sharedPreferences.getString("mobileNo",""),
+                sharedPreferences.getString("emailId",""),sharedPreferences.getString("userPassword",""));
+
+    }
+
     public boolean isLoggedIn() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean("logged", false);
