@@ -44,7 +44,7 @@ public class CricketFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAllMatches();
+//        getAllMatches();
         setAutoSliderBanner();
         if (getArguments() != null) {
         }
@@ -78,61 +78,61 @@ public class CricketFragment extends Fragment {
         bannerAdapter.notifyDataSetChanged();
     }
 
-    private void getAllMatches() {
-        Call<MatchListResponse> call = ApiClient
-                .getInstance()
-                .getApi()
-                .getMatchList();
-
-        call.enqueue(new Callback<MatchListResponse>() {
-            @Override
-            public void onResponse(Call<MatchListResponse> call, Response<MatchListResponse> response) {
-                MatchListResponse matchList = response.body();
-                if (response.isSuccessful()) {
-                    matchList.getResponse();
-                    String jsonArray = new Gson().toJson(matchList.getResponse().getItems());
-                    JSONArray jsonArray1 = null;
-                    try {
-                        jsonArray1 = new JSONArray(jsonArray);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray1.getJSONObject(i);
-                            String title = jsonObject.getString("title");
-
-                            String teama = jsonObject.getString("teama");
-                            String teamb = jsonObject.getString("teamb");
-
-                            JSONObject jsonObject1 = new JSONObject(teama);
-                            String logo_url_a = jsonObject1.getString("logo_url");
-                            String name_a = jsonObject1.getString("name");
-                            String short_name_a = jsonObject1.getString("short_name");
-                            int teamIda = Integer.parseInt(jsonObject1.getString("team_id"));
-
-                            JSONObject jsonObject2 = new JSONObject(teamb);
-                            String logo_url_b = jsonObject2.getString("logo_url");
-                            String name_b = jsonObject2.getString("name");
-                            String short_name_b = jsonObject2.getString("short_name");
-                            int teamIdb = Integer.parseInt(jsonObject1.getString("team_id"));
-
-                            TotalHomeData totalHomeData = new TotalHomeData(title, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b);
-                            list.add(totalHomeData);
-
-                            allMatchAdapter = new AllMatchAdapter(requireContext(), list);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-                            recyclerView.setAdapter(allMatchAdapter);
-                            allMatchAdapter.notifyDataSetChanged();
-
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MatchListResponse> call, Throwable t) {
-            }
-        });
-    }
+//    private void getAllMatches() {
+//        Call<MatchListResponse> call = ApiClient
+//                .getInstance()
+//                .getApi()
+//                .getMatchList();
+//
+//        call.enqueue(new Callback<MatchListResponse>() {
+//            @Override
+//            public void onResponse(Call<MatchListResponse> call, Response<MatchListResponse> response) {
+//                MatchListResponse matchList = response.body();
+//                if (response.isSuccessful()) {
+//                    matchList.getResponse();
+//                    String jsonArray = new Gson().toJson(matchList.getResponse().getItems());
+//                    JSONArray jsonArray1 = null;
+//                    try {
+//                        jsonArray1 = new JSONArray(jsonArray);
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            JSONObject jsonObject = jsonArray1.getJSONObject(i);
+//                            String title = jsonObject.getString("title");
+//
+//                            String teama = jsonObject.getString("teama");
+//                            String teamb = jsonObject.getString("teamb");
+//
+//                            JSONObject jsonObject1 = new JSONObject(teama);
+//                            String logo_url_a = jsonObject1.getString("logo_url");
+//                            String name_a = jsonObject1.getString("name");
+//                            String short_name_a = jsonObject1.getString("short_name");
+//                            int teamIda = Integer.parseInt(jsonObject1.getString("team_id"));
+//
+//                            JSONObject jsonObject2 = new JSONObject(teamb);
+//                            String logo_url_b = jsonObject2.getString("logo_url");
+//                            String name_b = jsonObject2.getString("name");
+//                            String short_name_b = jsonObject2.getString("short_name");
+//                            int teamIdb = Integer.parseInt(jsonObject1.getString("team_id"));
+//
+//                            TotalHomeData totalHomeData = new TotalHomeData(title, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b);
+//                            list.add(totalHomeData);
+//
+//                            allMatchAdapter = new AllMatchAdapter(requireContext(), list);
+//                            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+//                            recyclerView.setAdapter(allMatchAdapter);
+//                            allMatchAdapter.notifyDataSetChanged();
+//
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                } else {
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MatchListResponse> call, Throwable t) {
+//            }
+//        });
+//    }
 }
