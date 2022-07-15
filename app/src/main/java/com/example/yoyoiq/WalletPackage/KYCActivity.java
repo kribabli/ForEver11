@@ -12,9 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,22 +20,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.yoyoiq.MainActivity;
 import com.example.yoyoiq.Modal.SharedPrefManager;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
@@ -46,27 +39,22 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class KYCActivity extends AppCompatActivity {
-    private static final int PICK_FROM_CAMERA = 1;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
-    private static final int REQUEST_ID_MULTIPLE_PERMISSIONS2 = 102;
-    TextView backPress, camera1, camera2;
+    TextView backPress, camera1;
     EditText fullName, accountNo, retypeAccount, bankName, ifscCode, panCard, aadharNo;
     Button submit;
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     SharedPrefManager sharedPrefManager;
     String loggedInUserNumber;
-    ImageView imageViewAadhar, imageViewPan;
-    Bitmap bitmap;
-    String outPutfileUri;
+    ImageView imageViewPan;
+    Bitmap selectedImage, bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +69,6 @@ public class KYCActivity extends AppCompatActivity {
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         backPress = findViewById(R.id.backPress);
         camera1 = findViewById(R.id.camera1);
-        camera2 = findViewById(R.id.camera2);
-        imageViewAadhar = findViewById(R.id.aadharImage);
         imageViewPan = findViewById(R.id.pancard_img);
         fullName = findViewById(R.id.fullNameEt);
         accountNo = findViewById(R.id.accountNoEt);
@@ -105,11 +91,9 @@ public class KYCActivity extends AppCompatActivity {
         camera1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkAndRequestPermissions(KYCActivity.this)){
+                if (checkAndRequestPermissions(KYCActivity.this)) {
                     chooseImage(KYCActivity.this);
-
                 }
-
             }
         });
 
@@ -119,33 +103,6 @@ public class KYCActivity extends AppCompatActivity {
                 buttonValidation();
             }
         });
-    }
-
-    private void chooseImage(Context context) {
-
-        final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
-        // create a dialog for showing the optionsMenu
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        // set the items in builder
-        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(optionsMenu[i].equals("Take Photo")){
-                    // Open the camera and get the photo
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
-                }
-                else if(optionsMenu[i].equals("Choose from Gallery")){
-                    // choose from  external storage
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto , 1);
-                }
-                else if (optionsMenu[i].equals("Exit")) {
-                    dialogInterface.dismiss();
-                }
-            }
-        });
-        builder.show();
     }
 
     private boolean checkAndRequestPermissions(final Activity context) {
@@ -170,11 +127,34 @@ public class KYCActivity extends AppCompatActivity {
         return true;
     }
 
-
+    private void chooseImage(Context context) {
+        // create a menuOption Array
+        final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit"};
+        // create a dialog for showing the optionsMenu
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        // set the items in builder
+        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (optionsMenu[i].equals("Take Photo")) {
+                    // Open the camera and get the photo
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, 0);
+                } else if (optionsMenu[i].equals("Choose from Gallery")) {
+                    // choose from  external storage
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto, 1);
+                } else if (optionsMenu[i].equals("Exit")) {
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
 
     @SuppressLint("MissingSuperCall")
     @Override
-    public void onRequestPermissionsResult(int requestCode,String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case REQUEST_ID_MULTIPLE_PERMISSIONS:
                 if (ContextCompat.checkSelfPermission(KYCActivity.this,
@@ -191,23 +171,19 @@ public class KYCActivity extends AppCompatActivity {
                     chooseImage(KYCActivity.this);
                 }
                 break;
-
-
         }
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("Amit","Value 11 "+requestCode+ ""+resultCode);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        selectedImage = (Bitmap) data.getExtras().get("data");
                         imageViewPan.setImageBitmap(selectedImage);
+                        imageUpload(String.valueOf(selectedImage));
                     }
                     break;
                 case 1:
@@ -222,15 +198,14 @@ public class KYCActivity extends AppCompatActivity {
                                 String picturePath = cursor.getString(columnIndex);
                                 imageViewPan.setImageBitmap(BitmapFactory.decodeFile(picturePath));
                                 cursor.close();
+                                imageUpload(picturePath);
                             }
                         }
                     }
                     break;
-
             }
         }
     }
-
 
     private void imageUpload(String imageName) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -242,8 +217,6 @@ public class KYCActivity extends AppCompatActivity {
         uploader.putBytes(result).addOnSuccessListener(taskSnapshot -> uploader.getDownloadUrl().addOnSuccessListener(uri -> {
         }));
     }
-
-
 
     private boolean buttonValidation() {
         boolean isValid = true;
@@ -280,9 +253,6 @@ public class KYCActivity extends AppCompatActivity {
                 aadharNo.setError("Please enter Aadhar");
                 aadharNo.requestFocus();
                 isValid = false;
-            } else if (imageViewAadhar.getDrawable() == null) {
-                databaseConnectivity.showAlertDialog("Alert", "Click Picture of Aadhar", false, this);
-                isValid = false;
             } else {
                 insertKYCDetails();
             }
@@ -313,7 +283,6 @@ public class KYCActivity extends AppCompatActivity {
                 .setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        imageUpload(imageViewAadhar.getTransitionName());
                         imageUpload(imageViewPan.getTransitionName());
                         showDialog("Details Saved..", true);
                     }

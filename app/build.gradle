@@ -49,5 +49,4 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.razorpay:checkout:1.6.20'
-    implementation 'com.github.Drjacky:Imagepicker:2.1.14'
 }
