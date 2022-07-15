@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,8 +40,10 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +57,8 @@ public class KYCActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     String loggedInUserNumber;
     ImageView imageViewPan;
-    Bitmap selectedImage, bitmap;
+    Bitmap  bitmap;
+    String fileName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,9 +185,10 @@ public class KYCActivity extends AppCompatActivity {
             switch (requestCode) {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
-                        selectedImage = (Bitmap) data.getExtras().get("data");
-                        imageViewPan.setImageBitmap(selectedImage);
-                        imageUpload(String.valueOf(selectedImage));
+                        bitmap = (Bitmap) data.getExtras().get("data");
+                        fileName="KycPanImage.jpg";
+                        imageViewPan.setImageBitmap(bitmap);
+                        imageUpload();
                     }
                     break;
                 case 1:
@@ -196,9 +201,19 @@ public class KYCActivity extends AppCompatActivity {
                                 cursor.moveToFirst();
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
+                                String[] file =picturePath.toString().split("/");
+                                fileName = file[file.length - 1];
                                 imageViewPan.setImageBitmap(BitmapFactory.decodeFile(picturePath));
                                 cursor.close();
-                                imageUpload(picturePath);
+                                InputStream inputStream = null;
+                                try {
+                                    inputStream = getContentResolver().openInputStream(selectedImage);
+                                    bitmap = BitmapFactory.decodeStream(inputStream);
+                                    imageUpload();
+
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -207,9 +222,9 @@ public class KYCActivity extends AppCompatActivity {
         }
     }
 
-    private void imageUpload(String imageName) {
+    private void imageUpload() {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference uploader = storage.getReference("KYCDetailsImage/" + loggedInUserNumber + "/" + imageName);
+        StorageReference uploader = storage.getReference("KYCDetailsImage/" + loggedInUserNumber + "/"+fileName);
         ByteArrayOutputStream toUpload = new ByteArrayOutputStream();
         Bitmap.createScaledBitmap(bitmap, 400, 600, false)
                 .compress(Bitmap.CompressFormat.JPEG, 100, toUpload);
@@ -283,7 +298,6 @@ public class KYCActivity extends AppCompatActivity {
                 .setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        imageUpload(imageViewPan.getTransitionName());
                         showDialog("Details Saved..", true);
                     }
                 });
