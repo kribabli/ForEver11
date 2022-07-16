@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        getAllMatches();
         getAllMatches();
         recyclerView = findViewById(R.id.recyclerViewMatchList);
 
@@ -269,65 +267,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
     }
 
-//    private void getAllMatches() {
-//        Call<MatchListResponse> call = ApiClient
-//                .getInstance()
-//                .getApi()
-//                .getMatchList();
-//
-//        call.enqueue(new Callback<MatchListResponse>() {
-//            @Override
-//            public void onResponse(Call<MatchListResponse> call, Response<MatchListResponse> response) {
-//                MatchListResponse matchList = response.body();
-//                if (response.isSuccessful()) {
-//                    matchList.getResponse();
-//                    String jsonArray = new Gson().toJson(matchList.getResponse().getItems());
-//                    Log.d("TAG", "onResponse: "+jsonArray);
-//                    JSONArray jsonArray1 = null;
-//                    try {
-//                        jsonArray1 = new JSONArray(jsonArray);
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            JSONObject jsonObject = jsonArray1.getJSONObject(i);
-//                            String title = jsonObject.getString("title");
-//                            String match_id = jsonObject.getString("match_id");
-//
-//                            String teama = jsonObject.getString("teama");
-//                            String teamb = jsonObject.getString("teamb");
-//
-//                            JSONObject jsonObject1 = new JSONObject(teama);
-//                            String logo_url_a = jsonObject1.getString("logo_url");
-//                            String name_a = jsonObject1.getString("name");
-//                            String short_name_a = jsonObject1.getString("short_name");
-//                            int teamIda = Integer.parseInt(jsonObject1.getString("team_id"));
-//
-//                            JSONObject jsonObject2 = new JSONObject(teamb);
-//                            String logo_url_b = jsonObject2.getString("logo_url");
-//                            String name_b = jsonObject2.getString("name");
-//                            String short_name_b = jsonObject2.getString("short_name");
-//                            int teamIdb = Integer.parseInt(jsonObject1.getString("team_id"));
-//
-//                            TotalHomeData totalHomeData = new TotalHomeData(title, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b);
-//                            list.add(totalHomeData);
-//
-//                            allMatchAdapter = new AllMatchAdapter(getApplicationContext(), list);
-//                            recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-//                            recyclerView.setAdapter(allMatchAdapter);
-//                            allMatchAdapter.notifyDataSetChanged();
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                } else {
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MatchListResponse> call, Throwable t) {
-//            }
-//        });
-//    }
-
     private void getAllMatches() {
         Call<Status> call = ApiClient
                 .getInstance()
@@ -341,24 +280,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (response.isSuccessful()) {
                     status.getResponseClass();
                     String jsonArray = new Gson().toJson(status.getResponseClass().getItems());
-                    Log.d("TAG", "onResponse1: " + jsonArray);
-                    Log.d("TAG", "onResponse2: " + jsonArray.length());
                     JSONArray jsonArray1 = null;
                     try {
                         jsonArray1 = new JSONArray(jsonArray);
-                        Log.d("TAG", "onResponse3: " + jsonArray1.length());
                         for (int i = 0; i < jsonArray1.length(); i++) {
-                            Log.d("TAG", "onResponse4: " + i);
                             JSONObject jsonObject = jsonArray1.getJSONObject(i);
                             String title = jsonObject.getString("title");
                             String match_id = jsonObject.getString("match_id");
 
-
                             JSONArray teama1 = jsonObject.getJSONArray("teama");
                             JSONArray teamb1 = jsonObject.getJSONArray("teamb");
 
-                            JSONObject jsonObject11 = teama1.getJSONObject(i);
-                            JSONObject jsonObject22 = teamb1.getJSONObject(i);
+                            JSONObject jsonObject11 = teama1.getJSONObject(0);
+                            JSONObject jsonObject22 = teamb1.getJSONObject(0);
 
                             String logo_url_a = jsonObject11.getString("logo_url");
                             String name_a = jsonObject11.getString("name");
