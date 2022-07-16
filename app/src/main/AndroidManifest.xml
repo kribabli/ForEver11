@@ -17,6 +17,9 @@
         android:theme="@style/Theme.YoYoIq"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".WalletPackage.ShowKYCDetails"
+            android:exported="false" />
+        <activity
             android:name=".CreateTeamActivity"
             android:exported="false" />
         <activity

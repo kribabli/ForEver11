@@ -2,16 +2,21 @@ package com.example.yoyoiq.WalletPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.yoyoiq.Modal.SharedPrefManager;
 import com.example.yoyoiq.NotificationActivity;
 import com.example.yoyoiq.R;
+import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
@@ -21,13 +26,15 @@ import org.json.JSONObject;
 public class AddCash extends AppCompatActivity implements PaymentResultListener {
     TextView addCash, backPress, myRecentPay, KYCDetails, notification;
     EditText amount;
+    DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
+    String loggedInUserNumber;
+    SharedPrefManager sharedPrefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cash2);
         Checkout.preload(getApplicationContext());
-
         initMethod();
         setAction();
     }
@@ -39,48 +46,30 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         backPress = findViewById(R.id.backPress);
         myRecentPay = findViewById(R.id.myRecentPay);
         KYCDetails = findViewById(R.id.KYCDetails);
+        sharedPrefManager = new SharedPrefManager(getApplicationContext());
+        loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
     }
 
     private void setAction() {
-        myRecentPay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddCash.this, RecentTransactions.class);
-                startActivity(intent);
-            }
+        myRecentPay.setOnClickListener(view -> {
+            Intent intent = new Intent(AddCash.this, RecentTransactions.class);
+            startActivity(intent);
         });
 
-        KYCDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddCash.this, KYCActivity.class);
-                startActivity(intent);
-            }
+        KYCDetails.setOnClickListener(view -> checkKYCDoneOrNot());
+
+        backPress.setOnClickListener(view -> onBackPressed());
+
+        notification.setOnClickListener(view -> {
+            Intent intent = new Intent(AddCash.this, NotificationActivity.class);
+            startActivity(intent);
         });
 
-        backPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-        notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddCash.this, NotificationActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        addCash.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        addCash.setOnClickListener(view -> {
 //                Intent intent = new Intent(AddCash.this, PaymentOptions.class);
 //                intent.putExtra("amount", amount.getText().toString());
 //                startActivity(intent);
-                addAmountValidation();
-            }
+            addAmountValidation();
         });
     }
 
@@ -89,7 +78,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         try {
             if (amount.getText().toString().trim().length() == 0
                     || amount.getText().toString().startsWith("0")
-                    ||amount.getText().toString().startsWith("00")) {
+                    || amount.getText().toString().startsWith("00")) {
                 amount.setError("Please enter amount");
                 amount.requestFocus();
                 isValid = false;
@@ -136,5 +125,27 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     @Override
     public void onPaymentError(int i, String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    public void checkKYCDoneOrNot() {
+        databaseConnectivity.getDatabasePath(AddCash.this).child("KYCDetails")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (dataSnapshot.getKey().equals(loggedInUserNumber)) {
+                                Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(AddCash.this, KYCActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
     }
 }

@@ -13,8 +13,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,16 +31,10 @@ import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +49,7 @@ public class KYCActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     String loggedInUserNumber;
     ImageView imageViewPan;
-    Bitmap  bitmap;
+    Bitmap bitmap;
     String fileName = "";
 
     @Override
@@ -85,28 +77,15 @@ public class KYCActivity extends AppCompatActivity {
     }
 
     private void setAction() {
-        backPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
+        backPress.setOnClickListener(view -> onBackPressed());
+
+        camera1.setOnClickListener(view -> {
+            if (checkAndRequestPermissions(KYCActivity.this)) {
+                chooseImage(KYCActivity.this);
             }
         });
 
-        camera1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkAndRequestPermissions(KYCActivity.this)) {
-                    chooseImage(KYCActivity.this);
-                }
-            }
-        });
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonValidation();
-            }
-        });
+        submit.setOnClickListener(view -> buttonValidation());
     }
 
     private boolean checkAndRequestPermissions(final Activity context) {
@@ -186,7 +165,7 @@ public class KYCActivity extends AppCompatActivity {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
                         bitmap = (Bitmap) data.getExtras().get("data");
-                        fileName="KycPanImage.jpg";
+                        fileName = "KycPanImage.jpg";
                         imageViewPan.setImageBitmap(bitmap);
                         imageUpload();
                     }
@@ -201,7 +180,7 @@ public class KYCActivity extends AppCompatActivity {
                                 cursor.moveToFirst();
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
-                                String[] file =picturePath.toString().split("/");
+                                String[] file = picturePath.toString().split("/");
                                 fileName = file[file.length - 1];
                                 imageViewPan.setImageBitmap(BitmapFactory.decodeFile(picturePath));
                                 cursor.close();
@@ -224,7 +203,7 @@ public class KYCActivity extends AppCompatActivity {
 
     private void imageUpload() {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference uploader = storage.getReference("KYCDetailsImage/" + loggedInUserNumber + "/"+fileName);
+        StorageReference uploader = storage.getReference("KYCDetailsImage/" + loggedInUserNumber + "/" + fileName);
         ByteArrayOutputStream toUpload = new ByteArrayOutputStream();
         Bitmap.createScaledBitmap(bitmap, 400, 600, false)
                 .compress(Bitmap.CompressFormat.JPEG, 100, toUpload);
@@ -301,25 +280,6 @@ public class KYCActivity extends AppCompatActivity {
                         showDialog("Details Saved..", true);
                     }
                 });
-    }
-
-    private void upLoadToStorage(JSONObject expenseList) throws IOException {
-        File output = File.createTempFile(String.valueOf(loggedInUserNumber), ".json");
-        try (FileWriter writer = new FileWriter(output)) {
-            writer.write(expenseList.toString());
-            Uri uri = Uri.fromFile(output);
-            StorageMetadata metadata = new StorageMetadata.Builder().setContentType("json").build();
-            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-            firebaseStorage.getReference().child("Common/Expenses").child(loggedInUserNumber + ".json").putFile(uri, metadata).
-                    addOnSuccessListener(task -> {
-                        if (task.getTask().isSuccessful()) {
-//                            showDialog(" Entry Successfully...", true);
-
-                        }
-                    });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void showDialog(String message, Boolean isFinish) {
