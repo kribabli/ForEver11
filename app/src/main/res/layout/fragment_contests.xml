@@ -19,7 +19,7 @@
         android:layout_width="250dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="500dp"
         android:background="@drawable/border2_black"
         android:gravity="bottom"
         android:orientation="horizontal"
