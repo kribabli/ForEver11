@@ -1,8 +1,5 @@
 package com.example.yoyoiq;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -10,20 +7,27 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.yoyoiq.Modal.SharedPrefManager;
 import com.example.yoyoiq.common.DatabaseConnectivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SplashActivity extends AppCompatActivity {
     Handler handler;
     SharedPrefManager sharedPrefManager;
+    DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //get version and other info..
         PackageManager manager = this.getPackageManager();
@@ -40,15 +44,10 @@ public class SplashActivity extends AppCompatActivity {
         }
 
 
-        DatabaseConnectivity databaseConnectivity=new DatabaseConnectivity();
-        databaseConnectivity.getDatabasePath(this).child("VersionNameYoYoIq").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-            }
+        databaseConnectivity.getDatabasePath(this).child("VersionNameYoYoIq").setValue(info.versionName).addOnCompleteListener(new OnCompleteListener<Void>() {
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onComplete(@NonNull Task<Void> task) {
 
             }
         });
