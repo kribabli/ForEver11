@@ -2,8 +2,6 @@ package com.example.yoyoiq.WalletPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +32,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     String loggedInUserNumber;
     SharedPrefManager sharedPrefManager;
-    List<String> checkId = new ArrayList<String>();
+    List<String> checkId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,30 +42,25 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         initMethod();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
-        Log.d("Amit","Value 111 "+loggedInUserNumber);
         databaseConnectivity.getDatabasePath(AddCash.this).child("KYCDetails")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            for(DataSnapshot ds: snapshot.getChildren()){
-                                String key= ds.getKey();
+                        if (snapshot.exists()) {
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                String key = ds.getKey();
                                 checkId.add(key);
                             }
                         }
                         KYCDetails.setOnClickListener(view -> {
-                            if(checkId.contains(loggedInUserNumber)){
-                                Intent intent=new Intent(AddCash.this,ShowKYCDetails.class);
-                                Log.d("Amit","Value 111 "+checkId);
+                            if (checkId.contains(loggedInUserNumber)) {
+                                Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
                                 startActivity(intent);
                                 finish();
-                            }
-                            else {
-                                Log.d("Amit","yaha check  "+checkId);
-                                Intent intent1 =new Intent(AddCash.this,KYCActivity.class);
+                            } else {
+                                Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
                                 startActivity(intent1);
                                 finish();
-
                             }
 
                         });
@@ -78,8 +71,6 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
-         
-
 
         setAction();
     }
@@ -91,7 +82,6 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         backPress = findViewById(R.id.backPress);
         myRecentPay = findViewById(R.id.myRecentPay);
         KYCDetails = findViewById(R.id.KYCDetails);
-
     }
 
     private void setAction() {
@@ -100,7 +90,6 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
             startActivity(intent);
         });
 
-
         backPress.setOnClickListener(view -> onBackPressed());
 
         notification.setOnClickListener(view -> {
@@ -108,12 +97,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
             startActivity(intent);
         });
 
-        addCash.setOnClickListener(view -> {
-//                Intent intent = new Intent(AddCash.this, PaymentOptions.class);
-//                intent.putExtra("amount", amount.getText().toString());
-//                startActivity(intent);
-            addAmountValidation();
-        });
+        addCash.setOnClickListener(view -> addAmountValidation());
     }
 
     private boolean addAmountValidation() {
@@ -168,24 +152,5 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     @Override
     public void onPaymentError(int i, String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
-
-    public void checkKYCDoneOrNot() {
-        databaseConnectivity.getDatabasePath(AddCash.this).child("KYCDetails")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                       if(snapshot.exists()){
-                           for(DataSnapshot ds: snapshot.getChildren()){
-                               String key= ds.getKey();
-                               checkId.add(key);
-                           }
-                       }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
     }
 }

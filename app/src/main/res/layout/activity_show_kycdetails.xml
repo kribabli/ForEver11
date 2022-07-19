@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WalletPackage.ShowKYCDetails"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".WalletPackage.ShowKYCDetails">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -40,9 +40,9 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cardView1"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp">
@@ -56,13 +56,11 @@
             android:padding="5dp">
 
 
-
             <ImageView
+                android:id="@+id/mobileLogo"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_baseline_tablet_android_24"
-                android:id="@+id/mobileLogo"
-                />
+                android:src="@drawable/ic_baseline_tablet_android_24" />
 
             <TextView
                 android:id="@+id/mobileNumber"
@@ -86,9 +84,9 @@
                 android:id="@+id/mobileNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/mobileNumber"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="5dp"
-                android:layout_below="@+id/mobileNumber"
                 android:textSize="15sp" />
 
         </RelativeLayout>
@@ -96,8 +94,8 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
         android:id="@+id/cardView2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
@@ -111,11 +109,10 @@
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/emailLogo"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_baseline_email_24"
-                android:id="@+id/emailLogo"
-                />
+                android:src="@drawable/ic_baseline_email_24" />
 
             <TextView
                 android:id="@+id/emailAddress"
@@ -128,11 +125,11 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/emailStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/emailAddress"
                 android:layout_marginLeft="0dp"
-                android:id="@+id/emailStatus"/>
+                android:layout_toRightOf="@+id/emailAddress" />
 
             <TextView
                 android:id="@+id/email"
@@ -148,8 +145,8 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
         android:id="@+id/cardView3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp">
@@ -162,11 +159,10 @@
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/panlogo"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_baseline_perm_identity_24"
-                android:id="@+id/panlogo"
-                />
+                android:src="@drawable/ic_baseline_perm_identity_24" />
 
             <TextView
                 android:id="@+id/panCard"
@@ -179,11 +175,11 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/panStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/panCard"
                 android:layout_marginLeft="0dp"
-                android:id="@+id/panStatus"/>
+                android:layout_toRightOf="@+id/panCard" />
 
             <TextView
                 android:id="@+id/panCardNumber"
@@ -199,8 +195,8 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
         android:id="@+id/cardView4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp">
@@ -213,11 +209,10 @@
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/banklogo"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_baseline_house_siding_24"
-                android:id="@+id/banklogo"
-                />
+                android:src="@drawable/ic_baseline_house_siding_24" />
 
 
             <TextView
@@ -231,11 +226,11 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/accountStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/bankAccount"
                 android:layout_marginLeft="0dp"
-                android:id="@+id/accountStatus"/>
+                android:layout_toRightOf="@+id/bankAccount" />
 
 
             <TextView
