@@ -1,4 +1,4 @@
-package com.example.yoyoiq.Modal;
+package com.example.yoyoiq.Model;
 
 public class The_Slide_Items_Model_Class {
     int Uri;

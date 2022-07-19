@@ -1,10 +1,5 @@
-package com.example.yoyoiq.NewPoJo;
+package com.example.yoyoiq.UpComingMatchPOJO;
 
-import com.example.yoyoiq.POJO.Competition;
-import com.example.yoyoiq.POJO.Teama;
-import com.example.yoyoiq.POJO.Teamb;
-import com.example.yoyoiq.POJO.Toss;
-import com.example.yoyoiq.POJO.Venue;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

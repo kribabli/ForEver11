@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.example.yoyoiq.Modal.The_Slide_Items_Model_Class;
+import com.example.yoyoiq.Model.The_Slide_Items_Model_Class;
 import com.example.yoyoiq.R;
 
 import java.util.List;

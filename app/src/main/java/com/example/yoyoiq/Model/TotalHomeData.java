@@ -1,7 +1,8 @@
-package com.example.yoyoiq.Modal;
+package com.example.yoyoiq.Model;
 
 public class TotalHomeData {
     String title;
+    String match_id;
     String logo_url_a;
     String name_a;
     String short_name_a;
@@ -9,8 +10,9 @@ public class TotalHomeData {
     String name_b;
     String short_name_b;
 
-    public TotalHomeData(String title, String logo_url_a, String name_a, String short_name_a, String logo_url_b, String name_b, String short_name_b) {
+    public TotalHomeData(String title, String match_id, String logo_url_a, String name_a, String short_name_a, String logo_url_b, String name_b, String short_name_b) {
         this.title = title;
+        this.match_id = match_id;
         this.logo_url_a = logo_url_a;
         this.name_a = name_a;
         this.short_name_a = short_name_a;
@@ -25,6 +27,14 @@ public class TotalHomeData {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getMatch_id() {
+        return match_id;
+    }
+
+    public void setMatch_id(String match_id) {
+        this.match_id = match_id;
     }
 
     public String getLogo_url_a() {

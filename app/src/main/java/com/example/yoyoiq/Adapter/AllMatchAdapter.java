@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.yoyoiq.ContestActivity;
-import com.example.yoyoiq.Modal.TotalHomeData;
+import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.R;
 
 import java.util.ArrayList;
@@ -47,6 +47,7 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
                 Intent intent = new Intent(context, ContestActivity.class);
                 intent.putExtra("shortNameA", listData.getShort_name_a());
                 intent.putExtra("shortNameB", listData.getShort_name_b());
+                intent.putExtra("match_id", listData.getMatch_id());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

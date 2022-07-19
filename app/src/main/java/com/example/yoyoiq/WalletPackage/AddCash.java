@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.yoyoiq.Modal.SharedPrefManager;
+import com.example.yoyoiq.common.SharedPrefManager;
 import com.example.yoyoiq.NotificationActivity;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.DatabaseConnectivity;

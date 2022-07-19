@@ -3,13 +3,12 @@ package com.example.yoyoiq.WalletPackage;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.yoyoiq.Modal.SharedPrefManager;
+import com.example.yoyoiq.common.SharedPrefManager;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.google.firebase.database.DataSnapshot;

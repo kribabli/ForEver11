@@ -10,7 +10,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.yoyoiq.Modal.SharedPrefManager;
+import com.example.yoyoiq.common.SharedPrefManager;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

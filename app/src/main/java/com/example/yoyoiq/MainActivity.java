@@ -22,14 +22,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.BannerAdapter;
-import com.example.yoyoiq.Modal.SharedPrefManager;
-import com.example.yoyoiq.Modal.The_Slide_Items_Model_Class;
-import com.example.yoyoiq.Modal.TotalHomeData;
-import com.example.yoyoiq.NewPoJo.Status;
+import com.example.yoyoiq.Model.The_Slide_Items_Model_Class;
+import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.PrivacyPolicy.AboutUsActivity;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.example.yoyoiq.UpComingMatchPOJO.Status;
 import com.example.yoyoiq.WalletPackage.AddCash;
 import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.example.yoyoiq.common.SharedPrefManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -305,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String short_name_b = jsonObject22.getString("short_name");
                             int teamIdb = Integer.parseInt(jsonObject22.getString("team_id"));
 
-                            TotalHomeData totalHomeData = new TotalHomeData(title, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b);
+                            TotalHomeData totalHomeData = new TotalHomeData(title, match_id, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b);
                             list.add(totalHomeData);
 
                             allMatchAdapter = new AllMatchAdapter(getApplicationContext(), list);
@@ -326,4 +326,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
 }

@@ -3,7 +3,6 @@ package com.example.yoyoiq;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.yoyoiq.Modal.SharedPrefManager;
-import com.example.yoyoiq.Modal.UserData;
+import com.example.yoyoiq.common.SharedPrefManager;
+import com.example.yoyoiq.Model.UserData;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -14,8 +14,8 @@ import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.BannerAdapter;
 import com.example.yoyoiq.Adapter.FragmentAdapter;
 import com.example.yoyoiq.Fragment.CricketFragment;
-import com.example.yoyoiq.Modal.The_Slide_Items_Model_Class;
-import com.example.yoyoiq.Modal.TotalHomeData;
+import com.example.yoyoiq.Model.The_Slide_Items_Model_Class;
+import com.example.yoyoiq.Model.TotalHomeData;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;

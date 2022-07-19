@@ -1,4 +1,4 @@
-package com.example.yoyoiq.Modal;
+package com.example.yoyoiq.Model;
 
 public class UserData {
     String userName;

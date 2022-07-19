@@ -1,4 +1,4 @@
-package com.example.yoyoiq.NewPoJo;
+package com.example.yoyoiq.UpComingMatchPOJO;
 
 import com.google.gson.annotations.SerializedName;
 

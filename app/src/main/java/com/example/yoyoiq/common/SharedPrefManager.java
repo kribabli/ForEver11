@@ -1,7 +1,9 @@
-package com.example.yoyoiq.Modal;
+package com.example.yoyoiq.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.example.yoyoiq.Model.UserData;
 
 public class SharedPrefManager {
     private static String SHARED_PREF_NAME = "YoyoIqUserDetails";
