@@ -52,21 +52,42 @@
             android:layout_height="60dp"
             android:layout_marginStart="5dp"
             android:orientation="horizontal"
+
             android:padding="5dp">
+
+
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_baseline_tablet_android_24"
+                android:id="@+id/mobileLogo"
+                />
 
             <TextView
                 android:id="@+id/mobileNumber"
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_baseline_tablet_android_24"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/mobileLogo"
                 android:text="Mobile Number"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="13sp" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:id="@+id/mobileNo"
+                android:id="@+id/mobileStatus"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_toRightOf="@+id/mobileNumber" />
+
+
+            <TextView
+                android:id="@+id/mobileNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/mobileNumber"
                 android:textSize="15sp" />
 
@@ -89,20 +110,37 @@
             android:orientation="horizontal"
             android:padding="5dp">
 
-            <TextView
-                android:id="@+id/emailAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_baseline_email_24"
-                android:text="Email Address"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_baseline_email_24"
+                android:id="@+id/emailLogo"
+                />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/emailAddress"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/emailLogo"
+                android:text="Email Address"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/emailAddress"
+                android:layout_marginLeft="0dp"
+                android:id="@+id/emailStatus"/>
+
+            <TextView
                 android:id="@+id/email"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/emailAddress"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:textSize="15sp" />
 
         </RelativeLayout>
@@ -123,21 +161,37 @@
             android:orientation="horizontal"
             android:padding="5dp">
 
-            <TextView
-                android:id="@+id/panCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_baseline_perm_identity_24"
-                android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
-                android:text="PAN Card"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_baseline_perm_identity_24"
+                android:id="@+id/panlogo"
+                />
 
             <TextView
+                android:id="@+id/panCard"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/panlogo"
+                android:text="PAN Card"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/panCard"
+                android:layout_marginLeft="0dp"
+                android:id="@+id/panStatus"/>
+
+            <TextView
+                android:id="@+id/panCardNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/panCard"
-                android:id="@+id/panCardNumber"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:textSize="15sp" />
 
         </RelativeLayout>
@@ -158,21 +212,39 @@
             android:orientation="vertical"
             android:padding="5dp">
 
-            <TextView
-                android:id="@+id/bankAccount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_baseline_house_siding_24"
-                android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
-                android:text="Bank Account"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_baseline_house_siding_24"
+                android:id="@+id/banklogo"
+                />
+
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/bankAccount"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/banklogo"
+                android:text="Bank Account"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/bankAccount"
+                android:layout_marginLeft="0dp"
+                android:id="@+id/accountStatus"/>
+
+
+            <TextView
                 android:id="@+id/bankAccountNo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/bankAccount"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:textSize="15sp" />
         </RelativeLayout>
 

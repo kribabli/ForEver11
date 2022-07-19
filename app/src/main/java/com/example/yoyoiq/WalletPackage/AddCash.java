@@ -2,6 +2,8 @@ package com.example.yoyoiq.WalletPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,19 +25,62 @@ import com.razorpay.PaymentResultListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddCash extends AppCompatActivity implements PaymentResultListener {
     TextView addCash, backPress, myRecentPay, KYCDetails, notification;
     EditText amount;
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     String loggedInUserNumber;
     SharedPrefManager sharedPrefManager;
+    List<String> checkId = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cash2);
         Checkout.preload(getApplicationContext());
+        sharedPrefManager = new SharedPrefManager(getApplicationContext());
         initMethod();
+        loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
+        Log.d("Amit","Value 111 "+loggedInUserNumber);
+        databaseConnectivity.getDatabasePath(AddCash.this).child("KYCDetails")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            for(DataSnapshot ds: snapshot.getChildren()){
+                                String key= ds.getKey();
+                                checkId.add(key);
+                            }
+                        }
+                        KYCDetails.setOnClickListener(view -> {
+                            if(checkId.contains(loggedInUserNumber)){
+                                Intent intent=new Intent(AddCash.this,ShowKYCDetails.class);
+                                Log.d("Amit","Value 111 "+checkId);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else {
+                                Log.d("Amit","yaha check  "+checkId);
+                                Intent intent1 =new Intent(AddCash.this,KYCActivity.class);
+                                startActivity(intent1);
+                                finish();
+
+                            }
+
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+         
+
+
         setAction();
     }
 
@@ -46,8 +91,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         backPress = findViewById(R.id.backPress);
         myRecentPay = findViewById(R.id.myRecentPay);
         KYCDetails = findViewById(R.id.KYCDetails);
-        sharedPrefManager = new SharedPrefManager(getApplicationContext());
-        loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
+
     }
 
     private void setAction() {
@@ -56,7 +100,6 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
             startActivity(intent);
         });
 
-        KYCDetails.setOnClickListener(view -> checkKYCDoneOrNot());
 
         backPress.setOnClickListener(view -> onBackPressed());
 
@@ -132,15 +175,12 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            if (dataSnapshot.getKey().equals(loggedInUserNumber)) {
-                                Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
-                                startActivity(intent);
-                            } else {
-                                Intent intent = new Intent(AddCash.this, KYCActivity.class);
-                                startActivity(intent);
-                            }
-                        }
+                       if(snapshot.exists()){
+                           for(DataSnapshot ds: snapshot.getChildren()){
+                               String key= ds.getKey();
+                               checkId.add(key);
+                           }
+                       }
                     }
 
                     @Override

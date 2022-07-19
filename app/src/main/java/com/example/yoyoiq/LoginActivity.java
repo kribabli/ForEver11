@@ -3,6 +3,7 @@ package com.example.yoyoiq;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -121,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String emailId1 = dataSnapshot.child("emailId").getValue().toString();
                                     sharedPreferences.edit().putString("userName", userName1).apply();
                                     sharedPreferences.edit().putString("emailId", emailId1).apply();
+
                                 }
                             }
                         }

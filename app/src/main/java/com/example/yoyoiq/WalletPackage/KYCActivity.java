@@ -224,7 +224,7 @@ public class KYCActivity extends AppCompatActivity {
                 accountNo.requestFocus();
                 isValid = false;
             } else if (retypeAccount.getText().toString().trim().length() == 0
-                    || accountNo.getText().toString().trim().equals(retypeAccount.getText().toString().trim())) {
+                    || retypeAccount.getText().toString().trim() == accountNo.getText().toString().trim()) {
                 retypeAccount.setError("Re-Enter account no.");
                 retypeAccount.requestFocus();
                 isValid = false;
@@ -272,6 +272,7 @@ public class KYCActivity extends AppCompatActivity {
         data.put("ifscCode", ifscCode1);
         data.put("panCard", panCard1);
         data.put("aadharNo", aadharNo1);
+        data.put("status", 1);
 
         databaseConnectivity.getDatabasePath(this).child("KYCDetails").child(loggedInUserNumber)
                 .setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
