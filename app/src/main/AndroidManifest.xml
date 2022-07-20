@@ -17,7 +17,7 @@
         android:theme="@style/Theme.YoYoIq"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".WalletPackage.ShowKYCDetails"
+            android:name=".KYC.ShowKYCDetails"
             android:exported="false" />
         <activity
             android:name=".CreateTeamActivity"
@@ -29,7 +29,7 @@
             android:name=".ContestActivity"
             android:exported="true" />
         <activity
-            android:name=".WalletPackage.KYCActivity"
+            android:name=".KYC.KYCActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterDetails"

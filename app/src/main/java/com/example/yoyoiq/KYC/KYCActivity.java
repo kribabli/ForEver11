@@ -1,4 +1,4 @@
-package com.example.yoyoiq.WalletPackage;
+package com.example.yoyoiq.KYC;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -25,9 +25,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.yoyoiq.common.SharedPrefManager;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.example.yoyoiq.common.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;

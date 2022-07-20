@@ -16,6 +16,7 @@ import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.WalletPackage.AddCash;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,7 +98,6 @@ public class ContestActivity extends AppCompatActivity {
     }
 
     private void getAllPlayer() {
-        Log.d("TAG", "getAllPlayer: " + match_id);
         Call<ResponsePlayer> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -107,12 +107,18 @@ public class ContestActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponsePlayer> call, Response<ResponsePlayer> response) {
                 ResponsePlayer responsePlayer = response.body();
-                Log.d("TAG", "onResponse0: " + responsePlayer.getResponsePlay());
+                String jsonArray = new Gson().toJson(responsePlayer.getResponsePlay().getTeama());
+                String jsonArray1 = new Gson().toJson(responsePlayer.getResponsePlay().getTeamb());
+                String jsonArray2 = new Gson().toJson(responsePlayer.getResponsePlay().getTeams());
+                String jsonArray3 = new Gson().toJson(responsePlayer.getResponsePlay().getPlayers());
+                Log.d("TAG", "onResponse7: " + jsonArray);
+                Log.d("TAG", "onResponse72: " + jsonArray1);
+                Log.d("TAG", "onResponse73: " + jsonArray2);
+                Log.d("TAG", "onResponse74: " + jsonArray3);
             }
 
             @Override
             public void onFailure(Call<ResponsePlayer> call, Throwable t) {
-                Log.d("TAG", "onResponse1: " + t);
 
             }
         });

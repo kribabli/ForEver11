@@ -1,4 +1,4 @@
-package com.example.yoyoiq.WalletPackage;
+package com.example.yoyoiq.KYC;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -8,15 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.yoyoiq.common.SharedPrefManager;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.example.yoyoiq.common.SharedPrefManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class ShowKYCDetails extends AppCompatActivity {
-    TextView mobileNo, emailId, panCardNo, bankAccountNo, backPress,mobileStatus,emailStatus,panStatus,accountStatus;
+    TextView mobileNo, emailId, panCardNo, bankAccountNo, backPress, mobileStatus, emailStatus, panStatus, accountStatus;
     SharedPrefManager sharedPrefManager;
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     String loggedInUserNumber, loggedInUserEmail;
@@ -27,7 +27,7 @@ public class ShowKYCDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_kycdetails);
-        sharedPreferences=getSharedPreferences("path", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("path", MODE_PRIVATE);
         initMethod();
         setAction();
         showKYCDetails();
@@ -62,14 +62,14 @@ public class ShowKYCDetails extends AppCompatActivity {
                             if (dataSnapshot.getKey().equals(loggedInUserNumber)) {
                                 String panCard = dataSnapshot.child("panCard").getValue().toString();
                                 String accountNo = dataSnapshot.child("accountNo").getValue().toString();
-                                status= Integer.parseInt(dataSnapshot.child("status").getValue().toString());
+                                status = Integer.parseInt(dataSnapshot.child("status").getValue().toString());
                                 mobileNo.setText(loggedInUserNumber);
-                                emailId.setText(sharedPreferences.getString("emailId",""));
+                                emailId.setText(sharedPreferences.getString("emailId", ""));
                                 panCardNo.setText(panCard);
                                 bankAccountNo.setText(accountNo);
                             }
                         }
-                        if(status==1){
+                        if (status == 1) {
                             mobileStatus.setTextColor(Color.parseColor("#ECBD15"));
                             mobileStatus.setText("Pending");
                             emailStatus.setTextColor(Color.parseColor("#ECBD15"));
@@ -80,8 +80,7 @@ public class ShowKYCDetails extends AppCompatActivity {
                             accountStatus.setText("Pending");
 
 
-                        }
-                        else if(status==2){
+                        } else if (status == 2) {
                             mobileStatus.setTextColor(Color.parseColor("#109E38"));
                             mobileStatus.setText("Verified");
                             emailStatus.setTextColor(Color.parseColor("#109E38"));
