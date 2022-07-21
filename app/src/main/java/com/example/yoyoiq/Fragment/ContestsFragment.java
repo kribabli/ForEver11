@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.yoyoiq.ContestActivity;
 import com.example.yoyoiq.CreateTeamActivity;
 import com.example.yoyoiq.R;
 
@@ -17,6 +16,7 @@ public class ContestsFragment extends Fragment {
     TextView matchList, createTeam;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    String match_id;
 
 
     private String mParam1;
@@ -52,8 +52,17 @@ public class ContestsFragment extends Fragment {
         matchList = root.findViewById(R.id.matchList);
         createTeam = root.findViewById(R.id.createTeam);
 
+        //get bundle values in Fragment
+        //Bundle bundle=getArguments();
+        //String match_id = bundle.getString("match_id");
+
+        if (getArguments() != null) {
+            match_id = getArguments().getString("match_id");
+        }
+
         createTeam.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), CreateTeamActivity.class);
+            intent.putExtra("match_id", getArguments().getString("match_id"));
             startActivity(intent);
 
         });

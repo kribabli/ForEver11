@@ -18,7 +18,7 @@ public class ResponsePlay {
     @SerializedName("players")
     private ArrayList<players> players;
 
-    public ResponsePlay(TeamA teama, TeamB teamb, ArrayList<com.example.yoyoiq.PlayerPOJO.teams> teams, ArrayList<com.example.yoyoiq.PlayerPOJO.players> players) {
+    public ResponsePlay(TeamA teama, TeamB teamb, ArrayList<teams> teams, ArrayList<players> players) {
         this.teama = teama;
         this.teamb = teamb;
         this.teams = teams;
@@ -41,19 +41,19 @@ public class ResponsePlay {
         this.teamb = teamb;
     }
 
-    public ArrayList<com.example.yoyoiq.PlayerPOJO.teams> getTeams() {
+    public ArrayList<teams> getTeams() {
         return teams;
     }
 
-    public void setTeams(ArrayList<com.example.yoyoiq.PlayerPOJO.teams> teams) {
+    public void setTeams(ArrayList<teams> teams) {
         this.teams = teams;
     }
 
-    public ArrayList<com.example.yoyoiq.PlayerPOJO.players> getPlayers() {
+    public ArrayList<players> getPlayers() {
         return players;
     }
 
-    public void setPlayers(ArrayList<com.example.yoyoiq.PlayerPOJO.players> players) {
+    public void setPlayers(ArrayList<players> players) {
         this.players = players;
     }
 }

@@ -2,8 +2,6 @@ package com.example.yoyoiq;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,16 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.PageAdapter;
-import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
-import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.WalletPackage.AddCash;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ContestActivity extends AppCompatActivity {
     TextView walletTV, backPress, matchATv, matchBTv;
@@ -53,7 +44,8 @@ public class ContestActivity extends AppCompatActivity {
         tabItem3 = findViewById(R.id.myTeams);
         viewPager = findViewById(R.id.viewPager);
 
-        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id);
         viewPager.setAdapter(pageAdapter);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -63,12 +55,10 @@ public class ContestActivity extends AppCompatActivity {
                 if (tab.getPosition() == 0 || tab.getPosition() == 1 || tab.getPosition() == 2) {
                     pageAdapter.notifyDataSetChanged();
                 }
-
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
@@ -79,49 +69,11 @@ public class ContestActivity extends AppCompatActivity {
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        walletTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ContestActivity.this, AddCash.class);
-                startActivity(intent);
-            }
+        walletTV.setOnClickListener(view -> {
+            Intent intent = new Intent(ContestActivity.this, AddCash.class);
+            startActivity(intent);
         });
 
-        backPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-        getAllPlayer();
-    }
-
-    private void getAllPlayer() {
-        Call<ResponsePlayer> call = ApiClient
-                .getInstance()
-                .getApi()
-                .getMatchPlaying11(match_id);
-
-        call.enqueue(new Callback<ResponsePlayer>() {
-            @Override
-            public void onResponse(Call<ResponsePlayer> call, Response<ResponsePlayer> response) {
-                ResponsePlayer responsePlayer = response.body();
-                String jsonArray = new Gson().toJson(responsePlayer.getResponsePlay().getTeama());
-                String jsonArray1 = new Gson().toJson(responsePlayer.getResponsePlay().getTeamb());
-                String jsonArray2 = new Gson().toJson(responsePlayer.getResponsePlay().getTeams());
-                String jsonArray3 = new Gson().toJson(responsePlayer.getResponsePlay().getPlayers());
-                Log.d("TAG", "onResponse7: " + jsonArray);
-                Log.d("TAG", "onResponse72: " + jsonArray1);
-                Log.d("TAG", "onResponse73: " + jsonArray2);
-                Log.d("TAG", "onResponse74: " + jsonArray3);
-            }
-
-            @Override
-            public void onFailure(Call<ResponsePlayer> call, Throwable t) {
-
-            }
-        });
-
+        backPress.setOnClickListener(view -> onBackPressed());
     }
 }
