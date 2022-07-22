@@ -10,12 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.BannerAdapter;
 import com.example.yoyoiq.Adapter.FragmentAdapter;
 import com.example.yoyoiq.Fragment.CricketFragment;
 import com.example.yoyoiq.Model.The_Slide_Items_Model_Class;
-import com.example.yoyoiq.Model.TotalHomeData;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
-    ArrayList<TotalHomeData> list = new ArrayList<>();
     ViewPager view_bannerItem;
     TabLayout tabLayout;
     View myFragment;
@@ -48,7 +45,6 @@ public class HomeFragment extends Fragment {
     }
 
     BannerAdapter bannerAdapter;
-    AllMatchAdapter allMatchAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,7 +78,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
     }
 
     private void setUpViewPager(ViewPager view_bannerItem) {
@@ -90,7 +85,6 @@ public class HomeFragment extends Fragment {
         fragmentAdapter.addFragment(new CricketFragment(), "Cricket");
         view_bannerItem.setAdapter(fragmentAdapter);
     }
-
 
     private void setAutoSliderBanner() {
         listItems = new ArrayList<>();

@@ -1,7 +1,6 @@
 package com.example.yoyoiq.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,7 @@ public class ARFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     RecyclerView recyclerView;
     ArrayList<SquadsA> list = new ArrayList<>();
+    String matchA, matchB;
 
     private String mParam1;
     private String mParam2;
@@ -70,6 +70,9 @@ public class ARFragment extends Fragment {
     }
 
     private void getAllPlayer() {
+        matchA = getArguments().getString("matchA");
+        matchB = getArguments().getString("matchB");
+
         Call<ResponsePlayer> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -88,10 +91,6 @@ public class ARFragment extends Fragment {
 
                     String jsonArray2 = new Gson().toJson(responsePlayer.getResponsePlay().getTeams());
                     String jsonArray3 = new Gson().toJson(responsePlayer.getResponsePlay().getPlayers());
-                    Log.d("TAG", "onResponse7: " + jsonArray);
-                    Log.d("TAG", "onResponse72: " + jsonArray1);
-                    Log.d("TAG", "onResponse73: " + jsonArray2);
-                    Log.d("TAG", "onResponse74: " + jsonArray3);
 
                     //----------------------for TeamA----------------------------
                     JSONObject jsonObjectTeamA = null;
@@ -117,7 +116,7 @@ public class ARFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("all")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA);
                                 list.add(squadsA);
 
                                 arAdapter = new ARAdapter(getContext(), list);
@@ -155,7 +154,7 @@ public class ARFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("all")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB);
                                 list.add(squadsA);
 
                                 arAdapter = new ARAdapter(getContext(), list);

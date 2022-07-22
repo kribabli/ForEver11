@@ -31,6 +31,7 @@ public class WKFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     ArrayList<SquadsA> list = new ArrayList<>();
     RecyclerView recyclerView;
+    String team_idA, team_idB, matchA, matchB;
 
     private String mParam1;
     private String mParam2;
@@ -71,6 +72,9 @@ public class WKFragment extends Fragment {
     }
 
     private void getAllPlayer() {
+        matchA = getArguments().getString("matchA");
+        matchB = getArguments().getString("matchB");
+
         Call<ResponsePlayer> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -89,17 +93,19 @@ public class WKFragment extends Fragment {
 
                     String jsonArray2 = new Gson().toJson(responsePlayer.getResponsePlay().getTeams());
                     String jsonArray3 = new Gson().toJson(responsePlayer.getResponsePlay().getPlayers());
-                    Log.d("TAG", "onResponse7: " + jsonArray);
-                    Log.d("TAG", "onResponse72: " + jsonArray1);
-                    Log.d("TAG", "onResponse73: " + jsonArray2);
-                    Log.d("TAG", "onResponse74: " + jsonArray3);
+
+                    Log.d("TAG", "onResponse1: " + jsonArray);
+                    Log.d("TAG", "onResponse2: " + jsonArray1);
+                    Log.d("TAG", "onResponse3: " + jsonArray2);
+                    Log.d("TAG", "onResponse4: " + jsonArray3);
+
 
                     //----------------------for TeamA----------------------------
                     JSONObject jsonObjectTeamA = null;
                     try {
                         jsonObjectTeamA = new JSONObject(jsonArray);
                         for (int i = 0; i < jsonObjectTeamA.length(); i++) {
-                            String team_id = jsonObjectTeamA.getString("team_id");
+                            team_idA = jsonObjectTeamA.getString("team_id");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -118,7 +124,7 @@ public class WKFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("wk")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA);
                                 list.add(squadsA);
 
                                 squadsAAdapter = new SquadsAAdapter(getContext(), list);
@@ -137,7 +143,7 @@ public class WKFragment extends Fragment {
                     try {
                         jsonObjectTeamB = new JSONObject(jsonArray1);
                         for (int i = 0; i < jsonObjectTeamB.length(); i++) {
-                            String team_id = jsonObjectTeamB.getString("team_id");
+                            team_idB = jsonObjectTeamB.getString("team_id");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -156,13 +162,29 @@ public class WKFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("wk")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB);
                                 list.add(squadsA);
 
                                 squadsAAdapter = new SquadsAAdapter(getContext(), list);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                 recyclerView.setAdapter(squadsAAdapter);
                                 squadsAAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                    //----------------------for TeamS----------------------------
+                    JSONArray jsonArrayS = null;
+                    try {
+                        jsonArrayS = new JSONArray(jsonArray2);
+                        for (int i = 0; i < jsonArrayS.length(); i++) {
+                            JSONObject jsonObject = jsonArrayS.getJSONObject(i);
+                            String tid = jsonObject.getString("tid");
+                            if (tid.equals(team_idA) || tid.equals(team_idB)) {
+                                String country = jsonObject.getString("country");
                             }
                         }
                     } catch (Exception e) {

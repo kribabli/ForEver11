@@ -35,6 +35,7 @@ public class SquadsBAdapter extends RecyclerView.Adapter<SquadsBAdapter.MyViewHo
     public void onBindViewHolder(@NonNull SquadsBAdapter.MyViewHolder holder, int position) {
         SquadsA listData = list.get(position);
         holder.playerName.setText(listData.getName());
+        holder.country.setText(listData.getMatchAB());
     }
 
     @Override

@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="#373737"
         tools:ignore="MissingConstraints">
 
@@ -57,7 +57,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:layout_below="@+id/toolbar"
         android:background="@drawable/bacl_splash">
 
@@ -76,7 +76,6 @@
                 android:id="@+id/tv_ContestTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="5dp"
                 android:text=""
@@ -101,24 +100,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_ContestTimer" />
-
-            <TextView
-                android:id="@+id/tv_ContestTimer1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/drak_round_rectangle"
-                android:drawableLeft="@drawable/watch_icon_cont"
-                android:drawablePadding="5dp"
-                android:drawableTint="@color/white"
-                android:padding="5dp"
-                android:text="14:09:54"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/lbl_player"
@@ -150,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="8dp"
                 android:text="Credit"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -161,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="8dp"
                 android:text="100/100"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -334,7 +315,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"
                 android:padding="5dp"
-                android:src="@drawable/ind"
                 app:civ_border_color="@color/black"
                 app:layout_constraintStart_toEndOf="@id/tv_TotalSelectedPlayer"
                 app:layout_constraintTop_toBottomOf="@id/lbl_max_player" />
@@ -345,7 +325,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:maxLines="1"
-                android:text="IND"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
@@ -380,7 +359,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:maxLines="1"
-                android:text="AUS"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
@@ -412,7 +390,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"
                 android:padding="5dp"
-                android:src="@drawable/aus"
                 app:civ_border_color="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/tv_TotalCredit"
                 app:layout_constraintTop_toBottomOf="@id/lbl_max_player" />
@@ -460,6 +437,94 @@
             app:tabTextColor="@color/black" />
 
     </com.google.android.material.tabs.TabLayout>
+
+    <LinearLayout
+        android:id="@+id/linerLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:background="@color/light_gray"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="5"
+                android:text="Select 1-4 Wicket-Keepers"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="13">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Selected By"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Points"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Credits"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"

@@ -48,6 +48,8 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
                 intent.putExtra("shortNameA", listData.getShort_name_a());
                 intent.putExtra("shortNameB", listData.getShort_name_b());
                 intent.putExtra("match_id", listData.getMatch_id());
+                intent.putExtra("logo_url_a", listData.getLogo_url_a());
+                intent.putExtra("logo_url_b", listData.getLogo_url_b());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

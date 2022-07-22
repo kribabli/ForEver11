@@ -1,6 +1,7 @@
 package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,14 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ARAdapter.MyViewHolder holder, int position) {
         SquadsA listData = list.get(position);
+        Log.d("TAG", "onBindViewHolder: " + listData.getName());
+        String playerName = listData.getName();
+
+        String player = playerName.substring(0,1);
+        Log.d("TAG", "onBindViewHolder3: " + player+    "   " +playerName.split(" "));
+
         holder.playerName.setText(listData.getName());
+        holder.country.setText(listData.getMatchAB());
     }
 
     @Override

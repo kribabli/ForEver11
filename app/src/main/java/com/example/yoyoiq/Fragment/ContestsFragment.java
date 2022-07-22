@@ -63,6 +63,10 @@ public class ContestsFragment extends Fragment {
         createTeam.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), CreateTeamActivity.class);
             intent.putExtra("match_id", getArguments().getString("match_id"));
+            intent.putExtra("matchA", getArguments().getString("matchA"));
+            intent.putExtra("matchB", getArguments().getString("matchB"));
+            intent.putExtra("logo_url_a", getArguments().getString("logo_url_a"));
+            intent.putExtra("logo_url_b", getArguments().getString("logo_url_b"));
             startActivity(intent);
 
         });

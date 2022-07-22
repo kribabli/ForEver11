@@ -7,14 +7,16 @@ public class SquadsA {
     String role_str;
     String playing11;
     String name;
+    String matchAB;
 
-    public SquadsA(String player_id, String role, String substitute, String role_str, String playing11, String name) {
+    public SquadsA(String player_id, String role, String substitute, String role_str, String playing11, String name,String matchAB) {
         this.player_id = player_id;
         this.role = role;
         this.substitute = substitute;
         this.role_str = role_str;
         this.playing11 = playing11;
         this.name = name;
+        this.matchAB = matchAB;
     }
 
     public String getPlayer_id() {
@@ -63,5 +65,13 @@ public class SquadsA {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMatchAB() {
+        return matchAB;
+    }
+
+    public void setMatchAB(String matchAB) {
+        this.matchAB = matchAB;
     }
 }

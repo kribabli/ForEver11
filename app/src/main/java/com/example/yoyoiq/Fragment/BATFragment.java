@@ -1,7 +1,6 @@
 package com.example.yoyoiq.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,7 @@ public class BATFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     ArrayList<SquadsA> list = new ArrayList<>();
     RecyclerView recyclerView;
+    String matchA, matchB;
 
     private String mParam1;
     private String mParam2;
@@ -69,6 +69,9 @@ public class BATFragment extends Fragment {
     }
 
     private void getAllPlayer() {
+        matchA = getArguments().getString("matchA");
+        matchB = getArguments().getString("matchB");
+
         Call<ResponsePlayer> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -87,10 +90,6 @@ public class BATFragment extends Fragment {
 
                     String jsonArray2 = new Gson().toJson(responsePlayer.getResponsePlay().getTeams());
                     String jsonArray3 = new Gson().toJson(responsePlayer.getResponsePlay().getPlayers());
-                    Log.d("TAG", "onResponse7: " + jsonArray);
-                    Log.d("TAG", "onResponse72: " + jsonArray1);
-                    Log.d("TAG", "onResponse73: " + jsonArray2);
-                    Log.d("TAG", "onResponse74: " + jsonArray3);
 
                     //----------------------for TeamA----------------------------
                     JSONObject jsonObjectTeamA = null;
@@ -116,7 +115,7 @@ public class BATFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("bat")) {
-                                com.example.yoyoiq.Model.SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name);
+                                com.example.yoyoiq.Model.SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA);
                                 list.add(squadsA);
 
                                 squadsBAdapter = new SquadsBAdapter(getContext(), list);
@@ -154,7 +153,7 @@ public class BATFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("bat")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB);
                                 list.add(squadsA);
 
                                 squadsBAdapter = new SquadsBAdapter(getContext(), list);
@@ -169,7 +168,6 @@ public class BATFragment extends Fragment {
 
 
                 } else {
-
                 }
             }
 

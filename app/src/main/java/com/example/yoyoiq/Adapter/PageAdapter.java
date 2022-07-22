@@ -14,11 +14,19 @@ import com.example.yoyoiq.Fragment.MyTeamsFragment;
 public class PageAdapter extends FragmentPagerAdapter {
     int tabCount;
     String match_id = "";
+    String matchA = "";
+    String matchB = "";
+    String logo_url_a = "";
+    String logo_url_b = "";
 
-    public PageAdapter(@NonNull FragmentManager fm, int behavior, String match_id) {
+    public PageAdapter(@NonNull FragmentManager fm, int behavior, String match_id, String matchA, String matchB, String logo_url_a, String logo_url_b) {
         super(fm, behavior);
         tabCount = behavior;
         this.match_id = match_id;
+        this.matchA = matchA;
+        this.matchB = matchB;
+        this.logo_url_a = logo_url_a;
+        this.logo_url_b = logo_url_b;
     }
 
     @NonNull
@@ -28,6 +36,10 @@ public class PageAdapter extends FragmentPagerAdapter {
             case 0:
                 Bundle bundle = new Bundle();
                 bundle.putString("match_id", match_id);
+                bundle.putString("matchA", matchA);
+                bundle.putString("matchB", matchB);
+                bundle.putString("logo_url_a", logo_url_a);
+                bundle.putString("logo_url_b", logo_url_b);
                 ContestsFragment contestsFragment = new ContestsFragment();
                 contestsFragment.setArguments(bundle);
                 return contestsFragment;
