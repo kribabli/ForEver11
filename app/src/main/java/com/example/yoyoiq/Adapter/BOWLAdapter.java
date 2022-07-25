@@ -34,7 +34,14 @@ public class BOWLAdapter extends RecyclerView.Adapter<BOWLAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull BOWLAdapter.MyViewHolder holder, int position) {
         SquadsA listData = list.get(position);
-        holder.playerName.setText(listData.getName());
+
+        String fullPlayerName = listData.getName();
+//        String playerFChar = fullPlayerName.substring(0, 1);
+//        String[] separated = fullPlayerName.split(" ");
+//        String separated1stChar = separated[0];
+//        String separated2ndChar = separated[1];
+
+        holder.playerName.setText(fullPlayerName);
         holder.country.setText(listData.getMatchAB());
     }
 

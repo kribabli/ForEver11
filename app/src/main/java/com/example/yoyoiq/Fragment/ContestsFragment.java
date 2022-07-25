@@ -67,6 +67,8 @@ public class ContestsFragment extends Fragment {
             intent.putExtra("matchB", getArguments().getString("matchB"));
             intent.putExtra("logo_url_a", getArguments().getString("logo_url_a"));
             intent.putExtra("logo_url_b", getArguments().getString("logo_url_b"));
+            intent.putExtra("date_start", getArguments().getString("date_start"));
+            intent.putExtra("date_end", getArguments().getString("date_end"));
             startActivity(intent);
 
         });

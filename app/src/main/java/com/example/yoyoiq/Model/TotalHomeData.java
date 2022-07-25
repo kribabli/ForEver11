@@ -9,8 +9,10 @@ public class TotalHomeData {
     String logo_url_b;
     String name_b;
     String short_name_b;
+    String date_start;
+    String date_end;
 
-    public TotalHomeData(String title, String match_id, String logo_url_a, String name_a, String short_name_a, String logo_url_b, String name_b, String short_name_b) {
+    public TotalHomeData(String title, String match_id, String logo_url_a, String name_a, String short_name_a, String logo_url_b, String name_b, String short_name_b, String date_start, String date_end) {
         this.title = title;
         this.match_id = match_id;
         this.logo_url_a = logo_url_a;
@@ -19,6 +21,8 @@ public class TotalHomeData {
         this.logo_url_b = logo_url_b;
         this.name_b = name_b;
         this.short_name_b = short_name_b;
+        this.date_start = date_start;
+        this.date_end = date_end;
     }
 
     public String getTitle() {
@@ -83,5 +87,21 @@ public class TotalHomeData {
 
     public void setShort_name_b(String short_name_b) {
         this.short_name_b = short_name_b;
+    }
+
+    public String getDate_start() {
+        return date_start;
+    }
+
+    public void setDate_start(String date_start) {
+        this.date_start = date_start;
+    }
+
+    public String getDate_end() {
+        return date_end;
+    }
+
+    public void setDate_end(String date_end) {
+        this.date_end = date_end;
     }
 }

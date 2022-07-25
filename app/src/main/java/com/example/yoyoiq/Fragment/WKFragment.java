@@ -75,6 +75,7 @@ public class WKFragment extends Fragment {
         matchA = getArguments().getString("matchA");
         matchB = getArguments().getString("matchB");
 
+        Log.d("TAG", "getAllPlayer: " + getArguments().getString("match_id"));
         Call<ResponsePlayer> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -185,6 +186,30 @@ public class WKFragment extends Fragment {
                             String tid = jsonObject.getString("tid");
                             if (tid.equals(team_idA) || tid.equals(team_idB)) {
                                 String country = jsonObject.getString("country");
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                    //----------------------for Players----------------------------
+                    JSONArray jsonArrayPlayers = null;
+                    try {
+                        jsonArrayPlayers = new JSONArray(jsonArray3);
+                        for (int i = 0; i < jsonArrayPlayers.length(); i++) {
+                            JSONObject jsonObject = jsonArrayPlayers.getJSONObject(i);
+                            Log.d("TAG", "onResponse22: " + jsonObject);
+                            String tid = jsonObject.getString("fantasy_player_rating");
+                            String pid = jsonObject.getString("pid");
+                            if (tid.equals(team_idA) || tid.equals(team_idB)) {
+                                String country = jsonObject.getString("country");
+
+//                                recyclerView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, list));
+//                                recyclerView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+//                                recyclerView.setItemChecked(2, true);
+//                                recyclerView.setOnItemClickListener(this);
+
                             }
                         }
                     } catch (Exception e) {

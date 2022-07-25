@@ -1,6 +1,8 @@
 package com.example.yoyoiq;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,12 +15,16 @@ import com.example.yoyoiq.Adapter.PageAdapterPlayer;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CreateTeamActivity extends AppCompatActivity {
     TextView backPress;
     Button continueBtn;
-    String match_id, matchA, matchB, logo_url_a, logo_url_b;
+    String match_id, matchA, matchB, logo_url_a, logo_url_b, date_start, date_end;
     ViewPager viewPager;
     TabLayout tabLayout;
     TabItem tabItem1, tabItem2, tabItem3, tabItem4;
@@ -26,6 +32,11 @@ public class CreateTeamActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     CircleImageView imageViewA, imageViewB;
     TextView textViewA, textViewB;
+    private String EVENT_DATE_TIME = "2022-07-23 18:08:00";
+    private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private TextView tv_days, tv_done;
+    private Handler handler = new Handler();
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +44,13 @@ public class CreateTeamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_team_actvity);
         initMethod();
         setAction();
+        countDownStart();
+
+        String currentDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+        String[] separatedTime = date_start.split(" ");
+        String separated1stChar = separatedTime[0];
+        String separated2ndChar = separatedTime[1];
+
         linearLayout = findViewById(R.id.linerLayout1);
 
         pageAdapterPlayer = new PageAdapterPlayer(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b);
@@ -60,6 +78,9 @@ public class CreateTeamActivity extends AppCompatActivity {
     }
 
     private void initMethod() {
+        tv_days = findViewById(R.id.tv_days);
+        tv_done = findViewById(R.id.done);
+
         backPress = findViewById(R.id.backPress);
         continueBtn = findViewById(R.id.Continue);
 
@@ -68,6 +89,8 @@ public class CreateTeamActivity extends AppCompatActivity {
         matchB = getIntent().getStringExtra("matchB");
         logo_url_a = getIntent().getStringExtra("logo_url_a");
         logo_url_b = getIntent().getStringExtra("logo_url_b");
+        date_start = getIntent().getStringExtra("date_start");
+        date_end = getIntent().getStringExtra("date_end");
 
         tabLayout = findViewById(R.id.tabLayout);
         tabItem1 = findViewById(R.id.WK);
@@ -95,6 +118,41 @@ public class CreateTeamActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(logo_url_b)
                 .into(imageViewB);
+    }
+
+    private void countDownStart() {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    handler.postDelayed(this, 1000);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+                    Date event_date = dateFormat.parse(date_start);
+                    Date current_date = new Date();
+                    if (!current_date.after(event_date)) {
+                        long diff = event_date.getTime() - current_date.getTime();
+                        long Days = diff / (24 * 60 * 60 * 1000);
+                        long Hours = diff / (60 * 60 * 1000) % 24;
+                        long Minutes = diff / (60 * 1000) % 60;
+                        long Seconds = diff / 1000 % 60;
+                        tv_days.setText(String.format("%02d", Days) + " " + String.format("%02d", Hours) + "h " + String.format("%02d", Minutes) + "m " + String.format("%02d", Seconds) + "s " + " left");
+                    } else {
+                        tv_days.setVisibility(View.GONE);
+                        tv_done.setVisibility(View.VISIBLE);
+                        tv_done.setText("Done!");
+                        handler.removeCallbacks(runnable);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        handler.postDelayed(runnable, 0);
+    }
+
+    protected void onStop() {
+        super.onStop();
+        handler.removeCallbacks(runnable);
     }
 
 }

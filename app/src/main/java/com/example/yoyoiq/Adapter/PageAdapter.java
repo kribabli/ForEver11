@@ -18,8 +18,10 @@ public class PageAdapter extends FragmentPagerAdapter {
     String matchB = "";
     String logo_url_a = "";
     String logo_url_b = "";
+    String date_start = "";
+    String date_end = "";
 
-    public PageAdapter(@NonNull FragmentManager fm, int behavior, String match_id, String matchA, String matchB, String logo_url_a, String logo_url_b) {
+    public PageAdapter(@NonNull FragmentManager fm, int behavior, String match_id, String matchA, String matchB, String logo_url_a, String logo_url_b, String date_start, String date_end) {
         super(fm, behavior);
         tabCount = behavior;
         this.match_id = match_id;
@@ -27,6 +29,8 @@ public class PageAdapter extends FragmentPagerAdapter {
         this.matchB = matchB;
         this.logo_url_a = logo_url_a;
         this.logo_url_b = logo_url_b;
+        this.date_start = date_start;
+        this.date_end = date_end;
     }
 
     @NonNull
@@ -40,6 +44,8 @@ public class PageAdapter extends FragmentPagerAdapter {
                 bundle.putString("matchB", matchB);
                 bundle.putString("logo_url_a", logo_url_a);
                 bundle.putString("logo_url_b", logo_url_b);
+                bundle.putString("date_start", date_start);
+                bundle.putString("date_end", date_end);
                 ContestsFragment contestsFragment = new ContestsFragment();
                 contestsFragment.setArguments(bundle);
                 return contestsFragment;

@@ -15,7 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class ContestActivity extends AppCompatActivity {
     TextView walletTV, backPress, matchATv, matchBTv;
-    String matchA = "", matchB = "", match_id, logo_url_a, logo_url_b;
+    String matchA = "", matchB = "", match_id, logo_url_a, logo_url_b,date_start,date_end;
     LinearLayout createTeamLayout;
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -37,6 +37,8 @@ public class ContestActivity extends AppCompatActivity {
         match_id = getIntent().getStringExtra("match_id");
         logo_url_a = getIntent().getStringExtra("logo_url_a");
         logo_url_b = getIntent().getStringExtra("logo_url_b");
+        date_start = getIntent().getStringExtra("date_start");
+        date_end = getIntent().getStringExtra("date_end");
         matchATv.setText(matchA);
         matchBTv.setText(matchB);
 
@@ -47,7 +49,7 @@ public class ContestActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
 
 
-        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b);
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b,date_start,date_end);
         viewPager.setAdapter(pageAdapter);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

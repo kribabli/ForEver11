@@ -1,7 +1,6 @@
 package com.example.yoyoiq.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ public class BOWLFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     RecyclerView recyclerView;
     ArrayList<SquadsA> list = new ArrayList<>();
-    String matchA,matchB;
+    String matchA, matchB;
 
     private String mParam1;
     private String mParam2;
@@ -70,8 +69,8 @@ public class BOWLFragment extends Fragment {
     }
 
     private void getAllPlayer() {
-        matchA=getArguments().getString("matchA");
-        matchB=getArguments().getString("matchB");
+        matchA = getArguments().getString("matchA");
+        matchB = getArguments().getString("matchB");
 
         Call<ResponsePlayer> call = ApiClient
                 .getInstance()
@@ -116,7 +115,7 @@ public class BOWLFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("bowl")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name,matchA);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA);
                                 list.add(squadsA);
 
                                 bowlAdapter = new BOWLAdapter(getContext(), list);
@@ -154,7 +153,7 @@ public class BOWLFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("bowl")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name,matchB);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB);
                                 list.add(squadsA);
 
                                 bowlAdapter = new BOWLAdapter(getContext(), list);

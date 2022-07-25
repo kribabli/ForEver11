@@ -3,6 +3,7 @@ package com.example.yoyoiq.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,16 @@ import com.example.yoyoiq.ContestActivity;
 import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyViewHolder> {
     Context context;
     ArrayList<TotalHomeData> list;
+    private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private Handler handler = new Handler();
+    private Runnable runnable;
     //This Adapter is use for MatchList(Means Upcoming Match)
 
     public AllMatchAdapter(Context context, ArrayList<TotalHomeData> list) {
@@ -50,6 +56,8 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
                 intent.putExtra("match_id", listData.getMatch_id());
                 intent.putExtra("logo_url_a", listData.getLogo_url_a());
                 intent.putExtra("logo_url_b", listData.getLogo_url_b());
+                intent.putExtra("date_start", listData.getDate_start());
+                intent.putExtra("date_end", listData.getDate_end());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -68,6 +76,35 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
         Glide.with(context)
                 .load(listData.getLogo_url_b())
                 .into(holder.matchBImage);
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    handler.postDelayed(this, 1000);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+                    Date event_date = dateFormat.parse(listData.getDate_start());
+                    Date current_date = new Date();
+                    if (!current_date.after(event_date)) {
+                        long diff = event_date.getTime() - current_date.getTime();
+                        long Days = diff / (24 * 60 * 60 * 1000);
+                        long Hours = diff / (60 * 60 * 1000) % 24;
+                        long Minutes = diff / (60 * 1000) % 60;
+                        long Seconds = diff / 1000 % 60;
+                        holder.leftTime.setText(String.format("%02d", Days) + " " + String.format("%02d", Hours) + "h " + String.format("%02d", Minutes) + "m " + String.format("%02d", Seconds) + "s ");
+                    } else {
+                        holder.leftTime.setVisibility(View.GONE);
+                        holder.done.setVisibility(View.VISIBLE);
+                        holder.done.setText("Time-out!");
+                        handler.removeCallbacks(runnable);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        handler.postDelayed(runnable, 0);
+//        handler.removeCallbacks(runnable);
     }
 
     @Override
@@ -76,7 +113,7 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle, matchATv, matchBTv, shortNameA, shortNameB;
+        TextView textViewTitle, matchATv, matchBTv, shortNameA, shortNameB, leftTime, done;
         ImageView matchAImage, matchBImage;
         CardView cardView;
 
@@ -87,6 +124,8 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
             matchBTv = itemView.findViewById(R.id.matchb);
             shortNameA = itemView.findViewById(R.id.shortNameA);
             shortNameB = itemView.findViewById(R.id.shortNameB);
+            leftTime = itemView.findViewById(R.id.leftTime);
+            done = itemView.findViewById(R.id.done);
             matchAImage = itemView.findViewById(R.id.matchaImage);
             matchBImage = itemView.findViewById(R.id.matchbImage);
             cardView = itemView.findViewById(R.id.cardViewMatchList);
