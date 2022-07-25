@@ -1,6 +1,7 @@
 package com.example.yoyoiq.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,9 @@ public class BOWLFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<SquadsA> list = new ArrayList<>();
     String matchA, matchB;
+    ArrayList listPlayerIdA = new ArrayList();
+    ArrayList listPlayerIdB = new ArrayList();
+    String fantasy_player_rating, pid, playing_role;
 
     private String mParam1;
     private String mParam2;
@@ -107,7 +111,6 @@ public class BOWLFragment extends Fragment {
                         jsonArrayA = new JSONArray(SquadsA);
                         for (int i = 0; i < jsonArrayA.length(); i++) {
                             JSONObject jsonObject = jsonArrayA.getJSONObject(i);
-                            String player_id = jsonObject.getString("player_id");
                             String role = jsonObject.getString("role");
                             String substitute = jsonObject.getString("substitute");
                             String role_str = jsonObject.getString("role_str");
@@ -115,7 +118,9 @@ public class BOWLFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("bowl")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA);
+                                String player_id = jsonObject.getString("player_id");
+                                listPlayerIdA.add(player_id);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA, fantasy_player_rating);
                                 list.add(squadsA);
 
                                 bowlAdapter = new BOWLAdapter(getContext(), list);
@@ -139,13 +144,11 @@ public class BOWLFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     JSONArray jsonArrayB = null;
                     try {
                         jsonArrayB = new JSONArray(SquadsB);
                         for (int i = 0; i < jsonArrayB.length(); i++) {
                             JSONObject jsonObject = jsonArrayB.getJSONObject(i);
-                            String player_id = jsonObject.getString("player_id");
                             String role = jsonObject.getString("role");
                             String substitute = jsonObject.getString("substitute");
                             String role_str = jsonObject.getString("role_str");
@@ -153,13 +156,33 @@ public class BOWLFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("bowl")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB);
+                                String player_id = jsonObject.getString("player_id");
+                                listPlayerIdB.add(player_id);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB, fantasy_player_rating);
                                 list.add(squadsA);
-
                                 bowlAdapter = new BOWLAdapter(getContext(), list);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                 recyclerView.setAdapter(bowlAdapter);
                                 bowlAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                    JSONObject jsonObjectPlayers = null;
+                    //----------------------for Players----------------------------
+                    JSONArray jsonArrayPlayers = null;
+                    try {
+                        jsonArrayPlayers = new JSONArray(jsonArray3);
+                        for (int i = 0; i < jsonArrayPlayers.length(); i++) {
+                            jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
+                            pid = jsonObjectPlayers.getString("pid");
+                            playing_role = jsonObjectPlayers.getString("playing_role");
+                            if ((listPlayerIdA.contains(pid) || listPlayerIdB.contains(pid))) {
+                                fantasy_player_rating = jsonObjectPlayers.getString("fantasy_player_rating");
+                                Log.d("TAG", "onResponsedds: " + fantasy_player_rating);
                             }
                         }
                     } catch (Exception e) {

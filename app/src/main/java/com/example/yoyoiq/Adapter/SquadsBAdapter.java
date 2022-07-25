@@ -42,6 +42,7 @@ public class SquadsBAdapter extends RecyclerView.Adapter<SquadsBAdapter.MyViewHo
 //        String separated2ndChar = separated[1];
 
         holder.playerName.setText(fullPlayerName);
+        holder.playerCredit.setText(listData.getFantasy_player_rating());
         holder.country.setText(listData.getMatchAB());
     }
 
@@ -51,13 +52,14 @@ public class SquadsBAdapter extends RecyclerView.Adapter<SquadsBAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView playerName, country;
+        TextView playerName, country, playerCredit;
         ImageView playerImg;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             playerName = itemView.findViewById(R.id.playerName);
             country = itemView.findViewById(R.id.country);
+            playerCredit = itemView.findViewById(R.id.tv_PlayerCredit);
             playerImg = itemView.findViewById(R.id.playerImg);
         }
     }

@@ -32,6 +32,10 @@ public class WKFragment extends Fragment {
     ArrayList<SquadsA> list = new ArrayList<>();
     RecyclerView recyclerView;
     String team_idA, team_idB, matchA, matchB;
+    ArrayList listPlayerIdA = new ArrayList();
+    ArrayList listPlayerIdB = new ArrayList();
+    String fantasy_player_rating, pid, playing_role;
+    ArrayList list1 = new ArrayList();
 
     private String mParam1;
     private String mParam2;
@@ -75,7 +79,6 @@ public class WKFragment extends Fragment {
         matchA = getArguments().getString("matchA");
         matchB = getArguments().getString("matchB");
 
-        Log.d("TAG", "getAllPlayer: " + getArguments().getString("match_id"));
         Call<ResponsePlayer> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -101,6 +104,11 @@ public class WKFragment extends Fragment {
                     Log.d("TAG", "onResponse4: " + jsonArray3);
 
 
+                    String role;
+                    String substitute;
+                    String role_str;
+                    String playing11;
+                    String name;
                     //----------------------for TeamA----------------------------
                     JSONObject jsonObjectTeamA = null;
                     try {
@@ -111,21 +119,22 @@ public class WKFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     JSONArray jsonArrayA = null;
                     try {
                         jsonArrayA = new JSONArray(SquadsA);
                         for (int i = 0; i < jsonArrayA.length(); i++) {
                             JSONObject jsonObject = jsonArrayA.getJSONObject(i);
-                            String player_id = jsonObject.getString("player_id");
-                            String role = jsonObject.getString("role");
-                            String substitute = jsonObject.getString("substitute");
-                            String role_str = jsonObject.getString("role_str");
-                            String playing11 = jsonObject.getString("playing11");
-                            String name = jsonObject.getString("name");
+//                            String player_id = jsonObject.getString("player_id");
+                            role = jsonObject.getString("role");
+                            substitute = jsonObject.getString("substitute");
+                            role_str = jsonObject.getString("role_str");
+                            playing11 = jsonObject.getString("playing11");
+                            name = jsonObject.getString("name");
 
                             if (role.equals("wk")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA);
+                                String player_id = jsonObject.getString("player_id");
+                                listPlayerIdA.add(player_id);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA, fantasy_player_rating);
                                 list.add(squadsA);
 
                                 squadsAAdapter = new SquadsAAdapter(getContext(), list);
@@ -133,6 +142,7 @@ public class WKFragment extends Fragment {
                                 recyclerView.setAdapter(squadsAAdapter);
                                 squadsAAdapter.notifyDataSetChanged();
                             }
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -149,21 +159,22 @@ public class WKFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     JSONArray jsonArrayB = null;
                     try {
                         jsonArrayB = new JSONArray(SquadsB);
                         for (int i = 0; i < jsonArrayB.length(); i++) {
                             JSONObject jsonObject = jsonArrayB.getJSONObject(i);
-                            String player_id = jsonObject.getString("player_id");
-                            String role = jsonObject.getString("role");
-                            String substitute = jsonObject.getString("substitute");
-                            String role_str = jsonObject.getString("role_str");
-                            String playing11 = jsonObject.getString("playing11");
-                            String name = jsonObject.getString("name");
-
+//                            String player_id = jsonObject.getString("player_id");
+                            role = jsonObject.getString("role");
+                            substitute = jsonObject.getString("substitute");
+                            role_str = jsonObject.getString("role_str");
+                            playing11 = jsonObject.getString("playing11");
+                            name = jsonObject.getString("name");
                             if (role.equals("wk")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB);
+                                String player_id = jsonObject.getString("player_id");
+                                listPlayerIdB.add(player_id);
+
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB, fantasy_player_rating);
                                 list.add(squadsA);
 
                                 squadsAAdapter = new SquadsAAdapter(getContext(), list);
@@ -193,29 +204,24 @@ public class WKFragment extends Fragment {
                     }
 
 
+                    JSONObject jsonObjectPlayers = null;
                     //----------------------for Players----------------------------
                     JSONArray jsonArrayPlayers = null;
                     try {
                         jsonArrayPlayers = new JSONArray(jsonArray3);
                         for (int i = 0; i < jsonArrayPlayers.length(); i++) {
-                            JSONObject jsonObject = jsonArrayPlayers.getJSONObject(i);
-                            Log.d("TAG", "onResponse22: " + jsonObject);
-                            String tid = jsonObject.getString("fantasy_player_rating");
-                            String pid = jsonObject.getString("pid");
-                            if (tid.equals(team_idA) || tid.equals(team_idB)) {
-                                String country = jsonObject.getString("country");
+                            jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
+                            pid = jsonObjectPlayers.getString("pid");
+                            playing_role = jsonObjectPlayers.getString("playing_role");
+                            if ((listPlayerIdA.contains(pid) || listPlayerIdB.contains(pid))) {
+                                fantasy_player_rating = jsonObjectPlayers.getString("fantasy_player_rating");
 
-//                                recyclerView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, list));
-//                                recyclerView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-//                                recyclerView.setItemChecked(2, true);
-//                                recyclerView.setOnItemClickListener(this);
-
+                                Log.d("TAG", "onResponsedds: " + fantasy_player_rating);
                             }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
 
                 } else {
                 }

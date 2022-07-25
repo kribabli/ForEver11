@@ -8,8 +8,9 @@ public class SquadsA {
     String playing11;
     String name;
     String matchAB;
+    String fantasy_player_rating;
 
-    public SquadsA(String player_id, String role, String substitute, String role_str, String playing11, String name,String matchAB) {
+    public SquadsA(String player_id, String role, String substitute, String role_str, String playing11, String name, String matchAB, String fantasy_player_rating) {
         this.player_id = player_id;
         this.role = role;
         this.substitute = substitute;
@@ -17,6 +18,7 @@ public class SquadsA {
         this.playing11 = playing11;
         this.name = name;
         this.matchAB = matchAB;
+        this.fantasy_player_rating = fantasy_player_rating;
     }
 
     public String getPlayer_id() {
@@ -73,5 +75,13 @@ public class SquadsA {
 
     public void setMatchAB(String matchAB) {
         this.matchAB = matchAB;
+    }
+
+    public String getFantasy_player_rating() {
+        return fantasy_player_rating;
+    }
+
+    public void setFantasy_player_rating(String fantasy_player_rating) {
+        this.fantasy_player_rating = fantasy_player_rating;
     }
 }

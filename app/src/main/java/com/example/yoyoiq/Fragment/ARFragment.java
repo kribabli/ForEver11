@@ -1,6 +1,7 @@
 package com.example.yoyoiq.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,9 @@ public class ARFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<SquadsA> list = new ArrayList<>();
     String matchA, matchB;
+    ArrayList listPlayerIdA = new ArrayList();
+    ArrayList listPlayerIdB = new ArrayList();
+    String fantasy_player_rating, pid, playing_role;
 
     private String mParam1;
     private String mParam2;
@@ -92,6 +96,7 @@ public class ARFragment extends Fragment {
                     String jsonArray2 = new Gson().toJson(responsePlayer.getResponsePlay().getTeams());
                     String jsonArray3 = new Gson().toJson(responsePlayer.getResponsePlay().getPlayers());
 
+
                     //----------------------for TeamA----------------------------
                     JSONObject jsonObjectTeamA = null;
                     try {
@@ -102,13 +107,11 @@ public class ARFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     JSONArray jsonArrayA = null;
                     try {
                         jsonArrayA = new JSONArray(SquadsA);
                         for (int i = 0; i < jsonArrayA.length(); i++) {
                             JSONObject jsonObject = jsonArrayA.getJSONObject(i);
-                            String player_id = jsonObject.getString("player_id");
                             String role = jsonObject.getString("role");
                             String substitute = jsonObject.getString("substitute");
                             String role_str = jsonObject.getString("role_str");
@@ -116,7 +119,10 @@ public class ARFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("all")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA);
+                                String player_id = jsonObject.getString("player_id");
+                                listPlayerIdA.add(player_id);
+
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA, fantasy_player_rating);
                                 list.add(squadsA);
 
                                 arAdapter = new ARAdapter(getContext(), list);
@@ -140,13 +146,11 @@ public class ARFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     JSONArray jsonArrayB = null;
                     try {
                         jsonArrayB = new JSONArray(SquadsB);
                         for (int i = 0; i < jsonArrayB.length(); i++) {
                             JSONObject jsonObject = jsonArrayB.getJSONObject(i);
-                            String player_id = jsonObject.getString("player_id");
                             String role = jsonObject.getString("role");
                             String substitute = jsonObject.getString("substitute");
                             String role_str = jsonObject.getString("role_str");
@@ -154,13 +158,34 @@ public class ARFragment extends Fragment {
                             String name = jsonObject.getString("name");
 
                             if (role.equals("all")) {
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB);
+                                String player_id = jsonObject.getString("player_id");
+                                listPlayerIdB.add(player_id);
+                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB, fantasy_player_rating);
                                 list.add(squadsA);
 
                                 arAdapter = new ARAdapter(getContext(), list);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                 recyclerView.setAdapter(arAdapter);
                                 arAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                    JSONObject jsonObjectPlayers = null;
+                    //----------------------for Players----------------------------
+                    JSONArray jsonArrayPlayers = null;
+                    try {
+                        jsonArrayPlayers = new JSONArray(jsonArray3);
+                        for (int i = 0; i < jsonArrayPlayers.length(); i++) {
+                            jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
+                            pid = jsonObjectPlayers.getString("pid");
+                            playing_role = jsonObjectPlayers.getString("playing_role");
+                            if ((listPlayerIdA.contains(pid) || listPlayerIdB.contains(pid))) {
+                                fantasy_player_rating = jsonObjectPlayers.getString("fantasy_player_rating");
+                                Log.d("TAG", "onResponsedds: " + fantasy_player_rating);
                             }
                         }
                     } catch (Exception e) {
