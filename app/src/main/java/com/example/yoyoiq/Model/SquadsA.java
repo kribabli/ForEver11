@@ -9,8 +9,11 @@ public class SquadsA {
     String name;
     String matchAB;
     String fantasy_player_rating;
+    String short_namePlayers;
+    String pidPlayers;
+    String abbr;
 
-    public SquadsA(String player_id, String role, String substitute, String role_str, String playing11, String name, String matchAB, String fantasy_player_rating) {
+    public SquadsA(String player_id, String role, String substitute, String role_str, String playing11, String name, String matchAB, String fantasy_player_rating, String short_namePlayers, String pidPlayers, String abbr) {
         this.player_id = player_id;
         this.role = role;
         this.substitute = substitute;
@@ -19,6 +22,9 @@ public class SquadsA {
         this.name = name;
         this.matchAB = matchAB;
         this.fantasy_player_rating = fantasy_player_rating;
+        this.short_namePlayers = short_namePlayers;
+        this.pidPlayers = pidPlayers;
+        this.abbr = abbr;
     }
 
     public String getPlayer_id() {
@@ -83,5 +89,29 @@ public class SquadsA {
 
     public void setFantasy_player_rating(String fantasy_player_rating) {
         this.fantasy_player_rating = fantasy_player_rating;
+    }
+
+    public String getShort_namePlayers() {
+        return short_namePlayers;
+    }
+
+    public void setShort_namePlayers(String short_namePlayers) {
+        this.short_namePlayers = short_namePlayers;
+    }
+
+    public String getPidPlayers() {
+        return pidPlayers;
+    }
+
+    public void setPidPlayers(String pidPlayers) {
+        this.pidPlayers = pidPlayers;
+    }
+
+    public String getAbbr() {
+        return abbr;
+    }
+
+    public void setAbbr(String abbr) {
+        this.abbr = abbr;
     }
 }

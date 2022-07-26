@@ -1,7 +1,6 @@
 package com.example.yoyoiq.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +30,17 @@ public class BATFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     ArrayList<SquadsA> list = new ArrayList<>();
     RecyclerView recyclerView;
-    String matchA, matchB;
+    String matchA, matchB, team_idA, team_idB;
     ArrayList listPlayerIdA = new ArrayList();
     ArrayList listPlayerIdB = new ArrayList();
     String fantasy_player_rating, pid, playing_role;
+    String fantasy_player_ratingPlayers, pidPlayers, playing_rolePlayers, short_namePlayers, abbrA;
+    String roleA;
+    String substituteA;
+    String role_strA;
+    String playing11A;
+    String nameA;
+    String player_idA;
 
     private String mParam1;
     private String mParam2;
@@ -95,102 +101,87 @@ public class BATFragment extends Fragment {
                     String jsonArray2 = new Gson().toJson(responsePlayer.getResponsePlay().getTeams());
                     String jsonArray3 = new Gson().toJson(responsePlayer.getResponsePlay().getPlayers());
 
+                    //----------------------for TeamB----------------------------
+                    JSONObject jsonObjectTeamB = null;
+                    try {
+                        jsonObjectTeamB = new JSONObject(jsonArray1);
+                        for (int i = 0; i < jsonObjectTeamB.length(); i++) {
+                            team_idB = jsonObjectTeamB.getString("team_id");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     //----------------------for TeamA----------------------------
                     JSONObject jsonObjectTeamA = null;
                     try {
                         jsonObjectTeamA = new JSONObject(jsonArray);
                         for (int i = 0; i < jsonObjectTeamA.length(); i++) {
-                            String team_id = jsonObjectTeamA.getString("team_id");
+                            team_idA = jsonObjectTeamA.getString("team_id");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
+                    //----------------------for TeamS----------------------------
+                    JSONArray jsonArrayS = null;
+                    try {
+                        jsonArrayS = new JSONArray(jsonArray2);
+                        for (int i = 0; i < jsonArrayS.length(); i++) {
+                            JSONObject jsonObject = jsonArrayS.getJSONObject(i);
+                            String tid = jsonObject.getString("tid");
+                            if (tid.equals(team_idA) || tid.equals(team_idB)) {
+                                abbrA = jsonObject.getString("abbr");
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     JSONArray jsonArrayA = null;
                     try {
                         jsonArrayA = new JSONArray(SquadsA);
                         for (int i = 0; i < jsonArrayA.length(); i++) {
                             JSONObject jsonObject = jsonArrayA.getJSONObject(i);
-                            String role = jsonObject.getString("role");
-                            String substitute = jsonObject.getString("substitute");
-                            String role_str = jsonObject.getString("role_str");
-                            String playing11 = jsonObject.getString("playing11");
-                            String name = jsonObject.getString("name");
-
-                            if (role.equals("bat")) {
-                                String player_id = jsonObject.getString("player_id");
-                                listPlayerIdA.add(player_id);
-                                com.example.yoyoiq.Model.SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchA, fantasy_player_rating);
-                                list.add(squadsA);
-
-                                squadsBAdapter = new SquadsBAdapter(getContext(), list);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                recyclerView.setAdapter(squadsBAdapter);
-                                squadsBAdapter.notifyDataSetChanged();
+                            roleA = jsonObject.getString("role");
+                            substituteA = jsonObject.getString("substitute");
+                            role_strA = jsonObject.getString("role_str");
+                            playing11A = jsonObject.getString("playing11");
+                            nameA = jsonObject.getString("name");
+                            if (roleA.equals("bat")) {
+                                player_idA = jsonObject.getString("player_id");
+                                listPlayerIdA.add(player_idA);
                             }
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
+                        JSONObject jsonObjectPlayers = null;
+                        //----------------------for Players----------------------------
+                        JSONArray jsonArrayPlayers = null;
+                        try {
+                            jsonArrayPlayers = new JSONArray(jsonArray3);
+                            for (int i = 0; i < jsonArrayPlayers.length(); i++) {
+                                jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
+                                pidPlayers = jsonObjectPlayers.getString("pid");
+                                playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
+                                if (playing_rolePlayers.equals("bat")) {
+                                    short_namePlayers = jsonObjectPlayers.getString("short_name");
+                                    fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
 
-                    //----------------------for TeamB----------------------------
-                    JSONObject jsonObjectTeamB = null;
-                    try {
-                        jsonObjectTeamB = new JSONObject(jsonArray1);
-                        for (int i = 0; i < jsonObjectTeamB.length(); i++) {
-                            String team_id = jsonObjectTeamB.getString("team_id");
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    JSONArray jsonArrayB = null;
-                    try {
-                        jsonArrayB = new JSONArray(SquadsB);
-                        for (int i = 0; i < jsonArrayB.length(); i++) {
-                            JSONObject jsonObject = jsonArrayB.getJSONObject(i);
-                            String role = jsonObject.getString("role");
-                            String substitute = jsonObject.getString("substitute");
-                            String role_str = jsonObject.getString("role_str");
-                            String playing11 = jsonObject.getString("playing11");
-                            String name = jsonObject.getString("name");
-
-                            if (role.equals("bat")) {
-                                String player_id = jsonObject.getString("player_id");
-                                listPlayerIdB.add(player_id);
-                                SquadsA squadsA = new SquadsA(player_id, role, substitute, role_str, playing11, name, matchB, fantasy_player_rating);
-                                list.add(squadsA);
-
-                                squadsBAdapter = new SquadsBAdapter(getContext(), list);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                recyclerView.setAdapter(squadsBAdapter);
-                                squadsBAdapter.notifyDataSetChanged();
+                                    SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA);
+                                    list.add(squadsA);
+                                    squadsBAdapter = new SquadsBAdapter(getContext(), list);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    recyclerView.setAdapter(squadsBAdapter);
+                                    squadsBAdapter.notifyDataSetChanged();
+                                }
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-
-                    JSONObject jsonObjectPlayers = null;
-                    //----------------------for Players----------------------------
-                    JSONArray jsonArrayPlayers = null;
-                    try {
-                        jsonArrayPlayers = new JSONArray(jsonArray3);
-                        for (int i = 0; i < jsonArrayPlayers.length(); i++) {
-                            jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
-                            pid = jsonObjectPlayers.getString("pid");
-                            playing_role = jsonObjectPlayers.getString("playing_role");
-                            if ((listPlayerIdA.contains(pid) || listPlayerIdB.contains(pid))) {
-                                fantasy_player_rating = jsonObjectPlayers.getString("fantasy_player_rating");
-                                Log.d("TAG", "onResponsedds: " + fantasy_player_rating);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
 
                 } else {
                 }

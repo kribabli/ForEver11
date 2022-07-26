@@ -27,7 +27,7 @@ public class players {
     String fantasy_player_rating;
     String nationality;
 
-    public players(int pid, String title, String short_name, String first_name, String last_name, String middle_name, String birthdate, String birthplace, String country, ArrayList<com.example.yoyoiq.PlayerPOJO.primary_team> primary_team, String thumb_url, String logo_url, String playing_role, String batting_style, String bowling_style, String fielding_position, String recent_match, String recent_appearance, String fantasy_player_rating, String nationality) {
+    public players(int pid, String title, String short_name, String first_name, String last_name, String middle_name, String birthdate, String birthplace, String country, ArrayList<primary_team> primary_team, String thumb_url, String logo_url, String playing_role, String batting_style, String bowling_style, String fielding_position, String recent_match, String recent_appearance, String fantasy_player_rating, String nationality) {
         this.pid = pid;
         this.title = title;
         this.short_name = short_name;
@@ -122,11 +122,11 @@ public class players {
         this.country = country;
     }
 
-    public ArrayList<com.example.yoyoiq.PlayerPOJO.primary_team> getPrimary_team() {
+    public ArrayList<primary_team> getPrimary_team() {
         return primary_team;
     }
 
-    public void setPrimary_team(ArrayList<com.example.yoyoiq.PlayerPOJO.primary_team> primary_team) {
+    public void setPrimary_team(ArrayList<primary_team> primary_team) {
         this.primary_team = primary_team;
     }
 

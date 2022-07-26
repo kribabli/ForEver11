@@ -41,7 +41,7 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
 //        String separated1stChar = separated[0];
 //        String separated2ndChar = separated[1];
 
-        holder.playerName.setText(fullPlayerName);
+        holder.playerName.setText(listData.getShort_namePlayers());
         holder.playerCredit.setText(listData.getFantasy_player_rating());
         holder.country.setText(listData.getMatchAB());
     }
