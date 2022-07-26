@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.yoyoiq.Adapter.MultipleAdapter;
 import com.example.yoyoiq.Adapter.SquadsAAdapter;
 import com.example.yoyoiq.Model.SquadsA;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
@@ -33,15 +34,7 @@ public class WKFragment extends Fragment {
     RecyclerView recyclerView;
     String team_idA, team_idB, matchA, matchB;
     ArrayList listPlayerIdA = new ArrayList();
-    ArrayList listPlayerIdB = new ArrayList();
     String fantasy_player_ratingPlayers, pidPlayers, playing_rolePlayers, short_namePlayers, abbrA;
-    String fantasy_player_ratingPlayersB, pidPlayersB, playing_rolePlayersB, short_namePlayersB, abbrB;
-    String roleB;
-    String substituteB;
-    String role_strB;
-    String playing11B;
-    String nameB;
-    String player_idB;
     String roleA;
     String substituteA;
     String role_strA;
@@ -77,6 +70,7 @@ public class WKFragment extends Fragment {
     }
 
     SquadsAAdapter squadsAAdapter;
+    MultipleAdapter multipleAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,6 +91,7 @@ public class WKFragment extends Fragment {
                 .getMatchPlaying11(getArguments().getString("match_id"));
 
         Log.d("TAG", "match_id: " + getArguments().getString("match_id"));
+
         call.enqueue(new Callback<ResponsePlayer>() {
             @Override
             public void onResponse(Call<ResponsePlayer> call, Response<ResponsePlayer> response) {
@@ -136,6 +131,7 @@ public class WKFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
                     //----------------------for TeamS----------------------------
                     JSONArray jsonArrayS = null;
                     try {
@@ -166,111 +162,34 @@ public class WKFragment extends Fragment {
                                 listPlayerIdA.add(player_idA);
                             }
                         }
-
-                        JSONObject jsonObjectPlayers = null;
-                        //----------------------for Players----------------------------
-                        JSONArray jsonArrayPlayers = null;
-                        try {
-                            jsonArrayPlayers = new JSONArray(jsonArray3);
-                            for (int i = 0; i < jsonArrayPlayers.length(); i++) {
-                                jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
-                                pidPlayers = jsonObjectPlayers.getString("pid");
-                                playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
-                                if (playing_rolePlayers.equals("wk")) {
-                                    short_namePlayers = jsonObjectPlayers.getString("short_name");
-                                    fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
-
-                                    SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA);
-                                    list.add(squadsA);
-                                    squadsAAdapter = new SquadsAAdapter(getContext(), list);
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                    recyclerView.setAdapter(squadsAAdapter);
-                                    squadsAAdapter.notifyDataSetChanged();
-                                }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
+                    JSONObject jsonObjectPlayers = null;
+                    //----------------------for Players----------------------------
+                    JSONArray jsonArrayPlayers = null;
+                    try {
+                        jsonArrayPlayers = new JSONArray(jsonArray3);
+                        for (int i = 0; i < jsonArrayPlayers.length(); i++) {
+                            jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
+                            pidPlayers = jsonObjectPlayers.getString("pid");
+                            playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
+                            if (playing_rolePlayers.equals("wk")) {
+                                short_namePlayers = jsonObjectPlayers.getString("short_name");
+                                fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
 
-//                    //----------------------for TeamB----------------------------
-//                    JSONObject jsonObjectTeamB = null;
-//                    try {
-//                        jsonObjectTeamB = new JSONObject(jsonArray1);
-//                        for (int i = 0; i < jsonObjectTeamB.length(); i++) {
-//                            team_idB = jsonObjectTeamB.getString("team_id");
-//                        }
-//
-//                        //----------------------for TeamS----------------------------
-//                        JSONArray jsonArrayS = null;
-//                        try {
-//                            jsonArrayS = new JSONArray(jsonArray2);
-//                            for (int i = 0; i < jsonArrayS.length(); i++) {
-//                                JSONObject jsonObject = jsonArrayS.getJSONObject(i);
-//                                String tid = jsonObject.getString("tid");
-//                                if (tid.equals(team_idB)) {
-//                                    abbrB = jsonObject.getString("abbr");
-//                                }
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    JSONArray jsonArrayB = null;
-//                    try {
-//                        jsonArrayB = new JSONArray(SquadsB);
-//                        for (int i = 0; i < jsonArrayB.length(); i++) {
-//                            JSONObject jsonObject = jsonArrayB.getJSONObject(i);
-//                            roleB = jsonObject.getString("role");
-//                            substituteB = jsonObject.getString("substitute");
-//                            role_strB = jsonObject.getString("role_str");
-//                            playing11B = jsonObject.getString("playing11");
-//                            nameB = jsonObject.getString("name");
-//                            if (roleB.equals("wk")) {
-//                                player_idB = jsonObject.getString("player_id");
-//                                listPlayerIdB.add(player_idB);
-//                            }
-//                        }
-//
-//                        Log.d("TAG", "onResponseB: "+abbrB);
-//                        JSONObject jsonObjectPlayers = null;
-//                        //----------------------for Players----------------------------
-//                        JSONArray jsonArrayPlayers = null;
-//                        try {
-//                            jsonArrayPlayers = new JSONArray(jsonArray3);
-//                            for (int i = 0; i < jsonArrayPlayers.length(); i++) {
-//                                jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
-//                                String  pidPlayersB = jsonObjectPlayers.getString("pid");
-//                                String playing_rolePlayersB = jsonObjectPlayers.getString("playing_role");
-//                                if ( playing_rolePlayersB.equals("wk")) {
-//                                    String   short_namePlayersB = jsonObjectPlayers.getString("short_name");
-//                                    String fantasy_player_ratingPlayersB = jsonObjectPlayers.getString("fantasy_player_rating");
-//
-////                                    SquadsA squadsA = new SquadsA(player_idB, roleB, substituteB, role_strB, playing11B, nameB, matchB, fantasy_player_ratingPlayersB,short_namePlayersB,pidPlayersB,abbrB);
-////                                    list.add(squadsA);
-////                                    squadsAAdapter = new SquadsAAdapter(getContext(), list);
-////                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-////                                    recyclerView.setAdapter(squadsAAdapter);
-////                                    squadsAAdapter.notifyDataSetChanged();
-//                                    Log.d("TAG", "onResponseSizeB: "+list.size());
-//                                }
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-
+                                SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA);
+                                list.add(squadsA);
+                                squadsAAdapter = new SquadsAAdapter(getContext(), list);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                recyclerView.setAdapter(squadsAAdapter);
+                                squadsAAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
                 }
             }

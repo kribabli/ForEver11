@@ -32,8 +32,6 @@ public class BOWLFragment extends Fragment {
     ArrayList<SquadsA> list = new ArrayList<>();
     String matchA, matchB, team_idA, team_idB;
     ArrayList listPlayerIdA = new ArrayList();
-    ArrayList listPlayerIdB = new ArrayList();
-    String fantasy_player_rating, pid, playing_role;
     String fantasy_player_ratingPlayers, pidPlayers, playing_rolePlayers, short_namePlayers, abbrA;
     String roleA;
     String substituteA;
@@ -153,30 +151,30 @@ public class BOWLFragment extends Fragment {
                                 listPlayerIdA.add(player_idA);
                             }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-                        JSONObject jsonObjectPlayers = null;
-                        //----------------------for Players----------------------------
-                        JSONArray jsonArrayPlayers = null;
-                        try {
-                            jsonArrayPlayers = new JSONArray(jsonArray3);
-                            for (int i = 0; i < jsonArrayPlayers.length(); i++) {
-                                jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
-                                pidPlayers = jsonObjectPlayers.getString("pid");
-                                playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
-                                if (playing_rolePlayers.equals("bowl")) {
-                                    short_namePlayers = jsonObjectPlayers.getString("short_name");
-                                    fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
+                    JSONObject jsonObjectPlayers = null;
+                    //----------------------for Players----------------------------
+                    JSONArray jsonArrayPlayers = null;
+                    try {
+                        jsonArrayPlayers = new JSONArray(jsonArray3);
+                        for (int i = 0; i < jsonArrayPlayers.length(); i++) {
+                            jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
+                            pidPlayers = jsonObjectPlayers.getString("pid");
+                            playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
+                            if (playing_rolePlayers.equals("bowl")) {
+                                short_namePlayers = jsonObjectPlayers.getString("short_name");
+                                fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
 
-                                    SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA);
-                                    list.add(squadsA);
-                                    bowlAdapter = new BOWLAdapter(getContext(), list);
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                    recyclerView.setAdapter(bowlAdapter);
-                                    bowlAdapter.notifyDataSetChanged();
-                                }
+                                SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA);
+                                list.add(squadsA);
+                                bowlAdapter = new BOWLAdapter(getContext(), list);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                recyclerView.setAdapter(bowlAdapter);
+                                bowlAdapter.notifyDataSetChanged();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
