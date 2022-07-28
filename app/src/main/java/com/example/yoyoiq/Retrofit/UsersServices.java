@@ -1,7 +1,7 @@
 package com.example.yoyoiq.Retrofit;
 
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
-import com.example.yoyoiq.UpComingMatchPOJO.Status;
+import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -12,7 +12,7 @@ import retrofit2.http.POST;
 public interface UsersServices {
 
     @GET("upcomingMatchesList")
-    Call<Status> getMatch(
+    Call<UpcommingResponse> getMatch(
     );
 
     @FormUrlEncoded

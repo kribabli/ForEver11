@@ -14,9 +14,9 @@ import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.BannerAdapter;
 import com.example.yoyoiq.Model.The_Slide_Items_Model_Class;
 import com.example.yoyoiq.Model.TotalHomeData;
-import com.example.yoyoiq.UpComingMatchPOJO.Status;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -80,18 +80,17 @@ public class CricketFragment extends Fragment {
     }
 
     private void getAllMatches() {
-        Call<Status> call = ApiClient
+        Call<UpcommingResponse> call = ApiClient
                 .getInstance()
                 .getApi()
                 .getMatch();
 
-        call.enqueue(new Callback<Status>() {
+        call.enqueue(new Callback<UpcommingResponse>() {
             @Override
-            public void onResponse(Call<Status> call, Response<Status> response) {
-                Status status = response.body();
+            public void onResponse(Call<UpcommingResponse> call, Response<UpcommingResponse> response) {
+                UpcommingResponse status = response.body();
                 if (response.isSuccessful()) {
-                    status.getResponseClass();
-                    String jsonArray = new Gson().toJson(status.getResponseClass().getItems());
+                    String jsonArray = new Gson().toJson(status.getResponse().getItems());
                     JSONArray jsonArray1 = null;
                     try {
                         jsonArray1 = new JSONArray(jsonArray);
@@ -119,7 +118,7 @@ public class CricketFragment extends Fragment {
                             String short_name_b = jsonObject22.getString("short_name");
                             int teamIdb = Integer.parseInt(jsonObject22.getString("team_id"));
 
-                            TotalHomeData totalHomeData = new TotalHomeData(title, match_id, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b,date_start,date_end);
+                            TotalHomeData totalHomeData = new TotalHomeData(title, match_id, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b, date_start, date_end);
                             list.add(totalHomeData);
 
                             allMatchAdapter = new AllMatchAdapter(getContext(), list);
@@ -136,7 +135,7 @@ public class CricketFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Status> call, Throwable t) {
+            public void onFailure(Call<UpcommingResponse> call, Throwable t) {
             }
         });
     }

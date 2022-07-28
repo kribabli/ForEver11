@@ -104,7 +104,6 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
             }
         };
         handler.postDelayed(runnable, 0);
-//        handler.removeCallbacks(runnable);
     }
 
     @Override
@@ -131,4 +130,5 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
             cardView = itemView.findViewById(R.id.cardViewMatchList);
         }
     }
+
 }

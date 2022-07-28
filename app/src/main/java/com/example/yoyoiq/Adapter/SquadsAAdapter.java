@@ -2,6 +2,7 @@ package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
     MainViewModel mainViewModel;
     boolean isEnable = false;
     private int lastSelectedPosition = -1;
+    int sum = 0;
 
     public SquadsAAdapter(Context context, ArrayList<SquadsA> list) {
         this.context = context;
@@ -59,6 +61,9 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
             public void onClick(View view) {
                 if (!isEnable) {
                     listData.setSelected(!listData.isSelected());
+                    String credit = listData.getFantasy_player_rating();
+                    Log.d("TAG", "onClick: " + credit);
+
                     holder.cardViewSelected.setBackgroundColor(listData.isSelected() ? Color.LTGRAY : Color.WHITE);
                     holder.im_AddPlayer.setVisibility(View.GONE);
                     holder.alreadyAddedPlayer.setVisibility(View.VISIBLE);

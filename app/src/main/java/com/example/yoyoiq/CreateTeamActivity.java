@@ -29,7 +29,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     TabLayout tabLayout;
     TabItem tabItem1, tabItem2, tabItem3, tabItem4;
     PageAdapterPlayer pageAdapterPlayer;
-    LinearLayout linearLayout;
+    LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
     CircleImageView imageViewA, imageViewB;
     TextView textViewA, textViewB;
     private String EVENT_DATE_TIME = "2022-07-23 18:08:00";
@@ -51,7 +51,10 @@ public class CreateTeamActivity extends AppCompatActivity {
         String separated1stChar = separatedTime[0];
         String separated2ndChar = separatedTime[1];
 
-        linearLayout = findViewById(R.id.linerLayout1);
+        linearLayout1 = findViewById(R.id.linerLayout1);
+        linearLayout2 = findViewById(R.id.linerLayout2);
+        linearLayout3 = findViewById(R.id.linerLayout3);
+        linearLayout4 = findViewById(R.id.linerLayout4);
 
         pageAdapterPlayer = new PageAdapterPlayer(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b);
         viewPager.setAdapter(pageAdapterPlayer);
@@ -60,7 +63,29 @@ public class CreateTeamActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                if (tab.getPosition() == 0 || tab.getPosition() == 1 || tab.getPosition() == 2 || tab.getPosition() == 3) {
+                if (tab.getPosition() == 0) {
+                    linearLayout1.setVisibility(View.VISIBLE);
+                    linearLayout2.setVisibility(View.GONE);
+                    linearLayout3.setVisibility(View.GONE);
+                    linearLayout4.setVisibility(View.GONE);
+                    pageAdapterPlayer.notifyDataSetChanged();
+                } else if (tab.getPosition() == 1) {
+                    linearLayout1.setVisibility(View.GONE);
+                    linearLayout2.setVisibility(View.VISIBLE);
+                    linearLayout3.setVisibility(View.GONE);
+                    linearLayout4.setVisibility(View.GONE);
+                    pageAdapterPlayer.notifyDataSetChanged();
+                } else if (tab.getPosition() == 2) {
+                    linearLayout1.setVisibility(View.GONE);
+                    linearLayout2.setVisibility(View.GONE);
+                    linearLayout3.setVisibility(View.VISIBLE);
+                    linearLayout4.setVisibility(View.GONE);
+                    pageAdapterPlayer.notifyDataSetChanged();
+                } else if (tab.getPosition() == 3) {
+                    linearLayout1.setVisibility(View.GONE);
+                    linearLayout2.setVisibility(View.GONE);
+                    linearLayout3.setVisibility(View.GONE);
+                    linearLayout4.setVisibility(View.VISIBLE);
                     pageAdapterPlayer.notifyDataSetChanged();
                 }
             }
@@ -154,5 +179,4 @@ public class CreateTeamActivity extends AppCompatActivity {
         super.onStop();
         handler.removeCallbacks(runnable);
     }
-
 }

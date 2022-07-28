@@ -26,7 +26,7 @@ import com.example.yoyoiq.Model.The_Slide_Items_Model_Class;
 import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.PrivacyPolicy.AboutUsActivity;
 import com.example.yoyoiq.Retrofit.ApiClient;
-import com.example.yoyoiq.UpComingMatchPOJO.Status;
+import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
 import com.example.yoyoiq.WalletPackage.AddCash;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.example.yoyoiq.common.SharedPrefManager;
@@ -268,18 +268,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void getAllMatches() {
-        Call<Status> call = ApiClient
+        Call<UpcommingResponse> call = ApiClient
                 .getInstance()
                 .getApi()
                 .getMatch();
 
-        call.enqueue(new Callback<Status>() {
+        call.enqueue(new Callback<UpcommingResponse>() {
             @Override
-            public void onResponse(Call<Status> call, Response<Status> response) {
-                Status status = response.body();
+            public void onResponse(Call<UpcommingResponse> call, Response<UpcommingResponse> response) {
+                UpcommingResponse status = response.body();
                 if (response.isSuccessful()) {
-                    status.getResponseClass();
-                    String jsonArray = new Gson().toJson(status.getResponseClass().getItems());
+                    String jsonArray = new Gson().toJson(status.getResponse().getItems());
                     JSONArray jsonArray1 = null;
                     try {
                         jsonArray1 = new JSONArray(jsonArray);
@@ -299,13 +298,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String logo_url_a = jsonObject11.getString("logo_url");
                             String name_a = jsonObject11.getString("name");
                             String short_name_a = jsonObject11.getString("short_name");
-                            int teamIda = Integer.parseInt(jsonObject11.getString("team_id"));
+//                            int teamIda = Integer.parseInt(jsonObject11.getString("team_id"));
 
 
                             String logo_url_b = jsonObject22.getString("logo_url");
                             String name_b = jsonObject22.getString("name");
                             String short_name_b = jsonObject22.getString("short_name");
-                            int teamIdb = Integer.parseInt(jsonObject22.getString("team_id"));
+//                            int teamIdb = Integer.parseInt(jsonObject22.getString("team_id"));
 
                             TotalHomeData totalHomeData = new TotalHomeData(title, match_id, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b, date_start, date_end);
                             list.add(totalHomeData);
@@ -324,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             @Override
-            public void onFailure(Call<Status> call, Throwable t) {
+            public void onFailure(Call<UpcommingResponse> call, Throwable t) {
             }
         });
     }

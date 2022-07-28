@@ -4,12 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    public static String matchId = "";
-
     public static String BASE_URL = "http://adminapp.tech/yoyoiq/api/";
-//    public static String BASE_URL = "https://rest.entitysport.com/";
-
-    public static String Match_Id_URL = "http://adminapp.tech/yoyoiq/api/" + matchId;
 
     private static ApiClient apiClient;
     private static Retrofit retrofit;
