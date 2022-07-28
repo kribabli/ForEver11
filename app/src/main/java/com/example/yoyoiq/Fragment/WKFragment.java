@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yoyoiq.Adapter.MultipleAdapter;
 import com.example.yoyoiq.Adapter.SquadsAAdapter;
 import com.example.yoyoiq.Model.SquadsA;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
@@ -70,7 +69,6 @@ public class WKFragment extends Fragment {
     }
 
     SquadsAAdapter squadsAAdapter;
-    MultipleAdapter multipleAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -179,7 +177,7 @@ public class WKFragment extends Fragment {
                                 short_namePlayers = jsonObjectPlayers.getString("short_name");
                                 fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
 
-                                SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA);
+                                SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, false);
                                 list.add(squadsA);
                                 squadsAAdapter = new SquadsAAdapter(getContext(), list);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

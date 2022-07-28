@@ -12,8 +12,9 @@ public class SquadsA {
     String short_namePlayers;
     String pidPlayers;
     String abbr;
+    private boolean isSelected = false;
 
-    public SquadsA(String player_id, String role, String substitute, String role_str, String playing11, String name, String matchAB, String fantasy_player_rating, String short_namePlayers, String pidPlayers, String abbr) {
+    public SquadsA(String player_id, String role, String substitute, String role_str, String playing11, String name, String matchAB, String fantasy_player_rating, String short_namePlayers, String pidPlayers, String abbr, boolean isSelected) {
         this.player_id = player_id;
         this.role = role;
         this.substitute = substitute;
@@ -25,6 +26,7 @@ public class SquadsA {
         this.short_namePlayers = short_namePlayers;
         this.pidPlayers = pidPlayers;
         this.abbr = abbr;
+        this.isSelected = isSelected;
     }
 
     public String getPlayer_id() {
@@ -113,5 +115,13 @@ public class SquadsA {
 
     public void setAbbr(String abbr) {
         this.abbr = abbr;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
     }
 }

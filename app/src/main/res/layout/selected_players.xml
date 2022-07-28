@@ -5,12 +5,14 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewSelected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
         android:layout_marginTop="2dp"
         android:layout_marginRight="2dp"
-        android:layout_marginBottom="2dp">
+        android:layout_marginBottom="2dp"
+        android:clickable="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -26,9 +28,9 @@
                 android:layout_weight=".2"
                 android:drawableTop="@drawable/ic_baseline_info_24"
                 android:gravity="center"
+                android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="9sp"
-                android:maxLines="1"
                 android:textStyle="bold" />
 
             <ImageView

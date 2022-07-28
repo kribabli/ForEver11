@@ -168,7 +168,7 @@ public class BOWLFragment extends Fragment {
                                 short_namePlayers = jsonObjectPlayers.getString("short_name");
                                 fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
 
-                                SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA);
+                                SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, false);
                                 list.add(squadsA);
                                 bowlAdapter = new BOWLAdapter(getContext(), list);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
