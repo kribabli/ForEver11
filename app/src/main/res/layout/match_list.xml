@@ -111,6 +111,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="8"
                 android:gravity="center"
                 android:textColor="@color/red"

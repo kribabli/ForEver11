@@ -130,5 +130,4 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
             cardView = itemView.findViewById(R.id.cardViewMatchList);
         }
     }
-
 }
