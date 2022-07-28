@@ -60,7 +60,7 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
 
         holder.playerName.setText(listData.getShort_namePlayers());
         holder.playerCredit.setText(listData.getFantasy_player_rating());
-        holder.country.setText(listData.getMatchAB());
+        holder.country.setText(listData.getAbbr());
         holder.cardViewSelected.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

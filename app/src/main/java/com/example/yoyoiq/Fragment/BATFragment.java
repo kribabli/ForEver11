@@ -158,8 +158,34 @@ public class BATFragment extends Fragment {
                     JSONObject jsonObjectPlayers = null;
                     //----------------------for Players----------------------------
                     JSONArray jsonArrayPlayers = null;
+                    JSONArray teamSquadsA = null;
+                    JSONArray teamSquadsB = null;
+                    JSONArray teamsInformation = null;
                     try {
                         jsonArrayPlayers = new JSONArray(jsonArray3);
+                        teamSquadsA = new JSONArray(SquadsA);
+                        teamSquadsB = new JSONArray(SquadsB);
+                        teamsInformation = new JSONArray(jsonArray2);
+                        ArrayList<String>allTeamAPlayerId=new ArrayList<>();
+                        ArrayList<String>allTeamBPlayerId=new ArrayList<>();
+                        ArrayList<String>allTeamInformation=new ArrayList<>();
+
+
+                        for(int k=0;k<teamSquadsA.length();k++){
+                            JSONObject xObj = teamSquadsA.getJSONObject(k);
+                            String playing11 = xObj.getString("playing11");
+                            String player_id = xObj.getString("player_id");
+                            allTeamAPlayerId.add(player_id);
+                        }
+
+                        for(int k=0;k<teamSquadsB.length();k++){
+                            JSONObject xObj = teamSquadsB.getJSONObject(k);
+                            String playing11 = xObj.getString("playing11");
+                            String player_id = xObj.getString("player_id");
+                            allTeamBPlayerId.add(player_id);
+                        }
+
+
                         for (int i = 0; i < jsonArrayPlayers.length(); i++) {
                             jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
                             pidPlayers = jsonObjectPlayers.getString("pid");
@@ -167,15 +193,23 @@ public class BATFragment extends Fragment {
                             if (playing_rolePlayers.equals("bat")) {
                                 short_namePlayers = jsonObjectPlayers.getString("short_name");
                                 fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
+                                if(allTeamAPlayerId.contains(pidPlayers)){
+                                    abbrA=matchA;
+                                }
+                                else if(allTeamBPlayerId.contains(pidPlayers)){
+                                    abbrA=matchB;
+
+                                }
 
                                 SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, false);
                                 list.add(squadsA);
                                 squadsBAdapter = new SquadsBAdapter(getContext(), list);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                recyclerView.setAdapter(squadsBAdapter);
-                                squadsBAdapter.notifyDataSetChanged();
+
                             }
                         }
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setAdapter(squadsBAdapter);
+                        squadsBAdapter.notifyDataSetChanged();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

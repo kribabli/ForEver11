@@ -43,7 +43,7 @@ public class BOWLAdapter extends RecyclerView.Adapter<BOWLAdapter.MyViewHolder> 
 
         holder.playerName.setText(listData.getShort_namePlayers());
         holder.playerCredit.setText(listData.getFantasy_player_rating());
-        holder.country.setText(listData.getMatchAB());
+        holder.country.setText(listData.getAbbr());
     }
 
     @Override
