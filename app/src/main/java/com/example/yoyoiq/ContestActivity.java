@@ -15,12 +15,13 @@ import com.google.android.material.tabs.TabLayout;
 
 public class ContestActivity extends AppCompatActivity {
     TextView walletTV, backPress, matchATv, matchBTv;
-    String matchA = "", matchB = "", match_id, logo_url_a, logo_url_b,date_start,date_end;
+    String matchA = "", matchB = "", match_id, logo_url_a, logo_url_b, date_start, date_end;
     LinearLayout createTeamLayout;
     ViewPager viewPager;
     TabLayout tabLayout;
     TabItem tabItem1, tabItem2, tabItem3;
     PageAdapter pageAdapter;
+    TextView matchList, createTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +48,11 @@ public class ContestActivity extends AppCompatActivity {
         tabItem2 = findViewById(R.id.myContests);
         tabItem3 = findViewById(R.id.myTeams);
         viewPager = findViewById(R.id.viewPager);
+        matchList = findViewById(R.id.matchList);
+        createTeam = findViewById(R.id.createTeam);
 
 
-        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b,date_start,date_end);
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b, date_start, date_end);
         viewPager.setAdapter(pageAdapter);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -79,5 +82,18 @@ public class ContestActivity extends AppCompatActivity {
         });
 
         backPress.setOnClickListener(view -> onBackPressed());
+
+        createTeam.setOnClickListener(view -> {
+            Intent intent = new Intent(this, CreateTeamActivity.class);
+            intent.putExtra("match_id", match_id);
+            intent.putExtra("matchA", matchA);
+            intent.putExtra("matchB", matchB);
+            intent.putExtra("logo_url_a", logo_url_a);
+            intent.putExtra("logo_url_b", logo_url_b);
+            intent.putExtra("date_start", date_start);
+            intent.putExtra("date_end", date_end);
+            startActivity(intent);
+
+        });
     }
 }

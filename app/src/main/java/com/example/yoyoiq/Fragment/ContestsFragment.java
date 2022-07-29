@@ -1,19 +1,15 @@
 package com.example.yoyoiq.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.yoyoiq.CreateTeamActivity;
 import com.example.yoyoiq.R;
 
 public class ContestsFragment extends Fragment {
-    TextView matchList, createTeam;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     String match_id;
@@ -49,8 +45,6 @@ public class ContestsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_contests, container, false);
-        matchList = root.findViewById(R.id.matchList);
-        createTeam = root.findViewById(R.id.createTeam);
 
         //get bundle values in Fragment
         //Bundle bundle=getArguments();
@@ -59,19 +53,6 @@ public class ContestsFragment extends Fragment {
         if (getArguments() != null) {
             match_id = getArguments().getString("match_id");
         }
-
-        createTeam.setOnClickListener(view -> {
-            Intent intent = new Intent(getContext(), CreateTeamActivity.class);
-            intent.putExtra("match_id", getArguments().getString("match_id"));
-            intent.putExtra("matchA", getArguments().getString("matchA"));
-            intent.putExtra("matchB", getArguments().getString("matchB"));
-            intent.putExtra("logo_url_a", getArguments().getString("logo_url_a"));
-            intent.putExtra("logo_url_b", getArguments().getString("logo_url_b"));
-            intent.putExtra("date_start", getArguments().getString("date_start"));
-            intent.putExtra("date_end", getArguments().getString("date_end"));
-            startActivity(intent);
-
-        });
 
         return root;
     }
