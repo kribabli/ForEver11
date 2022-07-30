@@ -120,26 +120,28 @@
 
     <LinearLayout
         android:id="@+id/createTeamLayout"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
         android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:background="@drawable/border2_black"
-        android:gravity="bottom"
+        android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="10">
 
         <TextView
             android:id="@+id/matchList"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="4.5"
             android:gravity="center"
-            android:paddingTop="5dp"
+            android:padding="5dp"
             android:text="MATCH LIST"
             android:textAlignment="center"
-            android:textColor="#ffff" />
+            android:textColor="#ffff"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
@@ -147,10 +149,11 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="5dp"
+            android:padding="5dp"
             android:text="/"
             android:textAlignment="center"
-            android:textColor="#ffff" />
+            android:textColor="#ffff"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/createTeam"
@@ -159,10 +162,11 @@
             android:layout_gravity="center"
             android:layout_weight="4.5"
             android:gravity="center"
-            android:paddingTop="5dp"
+            android:padding="5dp"
             android:text="CREATE TEAM"
             android:textAlignment="center"
-            android:textColor="#ffff" />
+            android:textColor="#ffff"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

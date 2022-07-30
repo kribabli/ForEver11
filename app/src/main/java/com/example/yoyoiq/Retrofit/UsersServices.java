@@ -1,5 +1,6 @@
 package com.example.yoyoiq.Retrofit;
 
+import com.example.yoyoiq.ContestPOJO.Contests;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
 
@@ -18,6 +19,12 @@ public interface UsersServices {
     @FormUrlEncoded
     @POST("matchPlaying11detail")
     Call<ResponsePlayer> getMatchPlaying11(
+            @Field("match_id") String match_id
+    );
+
+    @FormUrlEncoded
+    @POST("contestList")
+    Call<Contests> getContestsList(
             @Field("match_id") String match_id
     );
 }

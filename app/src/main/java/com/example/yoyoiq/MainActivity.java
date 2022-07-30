@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -286,6 +287,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             JSONObject jsonObject = jsonArray1.getJSONObject(i);
                             String title = jsonObject.getString("title");
                             String match_id = jsonObject.getString("match_id");
+                            Log.d("TAG", "onResponse: " + match_id);
                             String date_start = jsonObject.getString("date_start");
                             String date_end = jsonObject.getString("date_end");
 
