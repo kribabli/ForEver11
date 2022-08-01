@@ -2,7 +2,6 @@ package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yoyoiq.Model.MainViewModel;
 import com.example.yoyoiq.Model.SquadsA;
 import com.example.yoyoiq.R;
 
@@ -24,10 +20,8 @@ import java.util.ArrayList;
 public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHolder> {
     Context context;
     ArrayList<SquadsA> list;
-    MainViewModel mainViewModel;
     boolean isEnable = false;
     private int lastSelectedPosition = -1;
-    int sum = 0;
 
     public SquadsAAdapter(Context context, ArrayList<SquadsA> list) {
         this.context = context;
@@ -38,7 +32,6 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
     @Override
     public SquadsAAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.selected_players, parent, false);
-        mainViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(MainViewModel.class);
         return new MyViewHolder(view);
     }
 
@@ -62,14 +55,13 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
                 if (!isEnable) {
                     listData.setSelected(!listData.isSelected());
                     String credit = listData.getFantasy_player_rating();
-                    Log.d("TAG", "onClick: " + credit);
 
                     holder.cardViewSelected.setBackgroundColor(listData.isSelected() ? Color.LTGRAY : Color.WHITE);
                     holder.im_AddPlayer.setVisibility(View.GONE);
                     holder.alreadyAddedPlayer.setVisibility(View.VISIBLE);
                     lastSelectedPosition = holder.getAdapterPosition();
                 } else {
-                    listData.setSelected(!listData.isSelected());
+                    listData.setSelected(listData.isSelected());
                     holder.cardViewSelected.setBackgroundColor(listData.isSelected() ? Color.LTGRAY : Color.WHITE);
                     holder.im_AddPlayer.setVisibility(View.VISIBLE);
                     holder.alreadyAddedPlayer.setVisibility(View.GONE);

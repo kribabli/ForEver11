@@ -104,8 +104,11 @@ public class ContestsFragment extends Fragment {
                             String prize_pool = jsonObjectContest.getString("prize_pool");
                             String total_team = jsonObjectContest.getString("total_team");
                             String winners = jsonObjectContest.getString("winners");
+                            String first_price = jsonObjectContest.getString("first_price");
+                            String winning_percentage = jsonObjectContest.getString("winning_percentage");
+                            String upto = jsonObjectContest.getString("upto");
 
-                            ContestsListPOJO contestsListPOJO = new ContestsListPOJO(contest_id, contest_name, entry, join_team, prize_pool, total_team, winners);
+                            ContestsListPOJO contestsListPOJO = new ContestsListPOJO(contest_id, contest_name, entry, join_team, prize_pool, total_team, winners,first_price,winning_percentage,upto);
                             list.add(contestsListPOJO);
                             contestsListAdapter = new ContestsListAdapter(getContext(), list);
                             recyclerViewContest.setLayoutManager(new LinearLayoutManager(getContext()));

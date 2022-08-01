@@ -63,7 +63,28 @@ public class ContestsList {
     @SerializedName("status")
     private String status;
 
-    public ContestsList(String contest_id, String contest_name, String contest_tag, String winners, String prize_pool, String total_team, String join_team, String entry, String contest_description, String contest_note1, String contest_note2, String winning_note, String match_id, String type, String userid, String admin_com, String bonus_cut_percentage, String cancel_contest, String on_per, String status) {
+    @SerializedName("first_price")
+    private String first_price;
+
+    @SerializedName("second_price")
+    private String second_price;
+
+    @SerializedName("third_price")
+    private String third_price;
+
+    @SerializedName("fourth_prince")
+    private String fourth_prince;
+
+    @SerializedName("admin_commission")
+    private String admin_commission;
+
+    @SerializedName("winning_percentage")
+    private String winning_percentage;
+
+    @SerializedName("upto")
+    private String upto;
+
+    public ContestsList(String contest_id, String contest_name, String contest_tag, String winners, String prize_pool, String total_team, String join_team, String entry, String contest_description, String contest_note1, String contest_note2, String winning_note, String match_id, String type, String userid, String admin_com, String bonus_cut_percentage, String cancel_contest, String on_per, String status, String first_price, String second_price, String third_price, String fourth_prince, String admin_commission, String winning_percentage, String upto) {
         this.contest_id = contest_id;
         this.contest_name = contest_name;
         this.contest_tag = contest_tag;
@@ -84,6 +105,13 @@ public class ContestsList {
         this.cancel_contest = cancel_contest;
         this.on_per = on_per;
         this.status = status;
+        this.first_price = first_price;
+        this.second_price = second_price;
+        this.third_price = third_price;
+        this.fourth_prince = fourth_prince;
+        this.admin_commission = admin_commission;
+        this.winning_percentage = winning_percentage;
+        this.upto = upto;
     }
 
     public String getContest_id() {
@@ -244,5 +272,61 @@ public class ContestsList {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getFirst_price() {
+        return first_price;
+    }
+
+    public void setFirst_price(String first_price) {
+        this.first_price = first_price;
+    }
+
+    public String getSecond_price() {
+        return second_price;
+    }
+
+    public void setSecond_price(String second_price) {
+        this.second_price = second_price;
+    }
+
+    public String getThird_price() {
+        return third_price;
+    }
+
+    public void setThird_price(String third_price) {
+        this.third_price = third_price;
+    }
+
+    public String getFourth_prince() {
+        return fourth_prince;
+    }
+
+    public void setFourth_prince(String fourth_prince) {
+        this.fourth_prince = fourth_prince;
+    }
+
+    public String getAdmin_commission() {
+        return admin_commission;
+    }
+
+    public void setAdmin_commission(String admin_commission) {
+        this.admin_commission = admin_commission;
+    }
+
+    public String getWinning_percentage() {
+        return winning_percentage;
+    }
+
+    public void setWinning_percentage(String winning_percentage) {
+        this.winning_percentage = winning_percentage;
+    }
+
+    public String getUpto() {
+        return upto;
+    }
+
+    public void setUpto(String upto) {
+        this.upto = upto;
     }
 }

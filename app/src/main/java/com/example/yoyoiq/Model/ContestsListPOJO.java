@@ -8,8 +8,11 @@ public class ContestsListPOJO {
     String prize_pool;
     String total_team;
     String winners;
+    String first_price;
+    String winning_percentage;
+    String upto;
 
-    public ContestsListPOJO(String contest_id, String contest_name, String entry, String join_team, String prize_pool, String total_team, String winners) {
+    public ContestsListPOJO(String contest_id, String contest_name, String entry, String join_team, String prize_pool, String total_team, String winners, String first_price, String winning_percentage, String upto) {
         this.contest_id = contest_id;
         this.contest_name = contest_name;
         this.entry = entry;
@@ -17,6 +20,9 @@ public class ContestsListPOJO {
         this.prize_pool = prize_pool;
         this.total_team = total_team;
         this.winners = winners;
+        this.first_price = first_price;
+        this.winning_percentage = winning_percentage;
+        this.upto = upto;
     }
 
     public String getContest_id() {
@@ -73,5 +79,29 @@ public class ContestsListPOJO {
 
     public void setWinners(String winners) {
         this.winners = winners;
+    }
+
+    public String getFirst_price() {
+        return first_price;
+    }
+
+    public void setFirst_price(String first_price) {
+        this.first_price = first_price;
+    }
+
+    public String getWinning_percentage() {
+        return winning_percentage;
+    }
+
+    public void setWinning_percentage(String winning_percentage) {
+        this.winning_percentage = winning_percentage;
+    }
+
+    public String getUpto() {
+        return upto;
+    }
+
+    public void setUpto(String upto) {
+        this.upto = upto;
     }
 }

@@ -156,11 +156,11 @@
                 android:text="1st" />
 
             <TextView
+                android:id="@+id/first_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:drawableLeft="@drawable/ic_baseline_currency_rupee_22"
-                android:text="50K"
                 android:textColor="@color/black" />
 
             <View
@@ -173,8 +173,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:drawableLeft="@drawable/prize"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="20dp"
+                android:id="@+id/winningPer"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:text="61%" />
+                android:text="%" />
 
             <View
                 android:layout_width="0dp"
