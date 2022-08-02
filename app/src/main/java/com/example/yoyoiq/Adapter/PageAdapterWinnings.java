@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.yoyoiq.Fragment.ContestsFragment;
 import com.example.yoyoiq.Fragment.LeaderboardFragment;
-import com.example.yoyoiq.Fragment.MyContestsFragment;
 import com.example.yoyoiq.Fragment.WinningFragment;
 
 public class PageAdapterWinnings extends FragmentPagerAdapter {
@@ -20,8 +18,11 @@ public class PageAdapterWinnings extends FragmentPagerAdapter {
     String leftSports = "";
     String winningPer = "";
     String upTo = "";
+    String match_id = "";
+    String first_price = "";
+    String price_contribution = "";
 
-    public PageAdapterWinnings(@NonNull FragmentManager fm, int behavior, String total_prize, String entryFee, String totalSports, String leftSports, String winningPer, String upTo) {
+    public PageAdapterWinnings(@NonNull FragmentManager fm, int behavior, String total_prize, String entryFee, String totalSports, String leftSports, String winningPer, String upTo, String match_id, String first_price, String price_contribution) {
         super(fm, behavior);
         tabCount = behavior;
         this.total_prize = total_prize;
@@ -30,6 +31,9 @@ public class PageAdapterWinnings extends FragmentPagerAdapter {
         this.leftSports = leftSports;
         this.winningPer = winningPer;
         this.upTo = upTo;
+        this.match_id = match_id;
+        this.first_price = first_price;
+        this.price_contribution = price_contribution;
     }
 
     @NonNull
@@ -38,12 +42,7 @@ public class PageAdapterWinnings extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 Bundle bundle = new Bundle();
-                bundle.putString("total_prize", total_prize);
-                bundle.putString("entryFee", entryFee);
-                bundle.putString("totalSports", totalSports);
-                bundle.putString("leftSports", leftSports);
-                bundle.putString("winningPer", winningPer);
-                bundle.putString("upTo", upTo);
+                bundle.putString("price_contribution", price_contribution);
                 WinningFragment winningFragment = new WinningFragment();
                 winningFragment.setArguments(bundle);
                 return winningFragment;

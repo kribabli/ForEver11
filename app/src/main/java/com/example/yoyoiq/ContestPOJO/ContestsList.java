@@ -2,6 +2,8 @@ package com.example.yoyoiq.ContestPOJO;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class ContestsList {
     @SerializedName("contest_id")
     private String contest_id;
@@ -84,7 +86,10 @@ public class ContestsList {
     @SerializedName("upto")
     private String upto;
 
-    public ContestsList(String contest_id, String contest_name, String contest_tag, String winners, String prize_pool, String total_team, String join_team, String entry, String contest_description, String contest_note1, String contest_note2, String winning_note, String match_id, String type, String userid, String admin_com, String bonus_cut_percentage, String cancel_contest, String on_per, String status, String first_price, String second_price, String third_price, String fourth_prince, String admin_commission, String winning_percentage, String upto) {
+    @SerializedName("price_contribution")
+    private ArrayList<PriceContribution> price_contribution;
+
+    public ContestsList(String contest_id, String contest_name, String contest_tag, String winners, String prize_pool, String total_team, String join_team, String entry, String contest_description, String contest_note1, String contest_note2, String winning_note, String match_id, String type, String userid, String admin_com, String bonus_cut_percentage, String cancel_contest, String on_per, String status, String first_price, String second_price, String third_price, String fourth_prince, String admin_commission, String winning_percentage, String upto, ArrayList<PriceContribution> price_contribution) {
         this.contest_id = contest_id;
         this.contest_name = contest_name;
         this.contest_tag = contest_tag;
@@ -112,6 +117,7 @@ public class ContestsList {
         this.admin_commission = admin_commission;
         this.winning_percentage = winning_percentage;
         this.upto = upto;
+        this.price_contribution = price_contribution;
     }
 
     public String getContest_id() {
@@ -328,5 +334,13 @@ public class ContestsList {
 
     public void setUpto(String upto) {
         this.upto = upto;
+    }
+
+    public ArrayList<PriceContribution> getPrice_contribution() {
+        return price_contribution;
+    }
+
+    public void setPrice_contribution(ArrayList<PriceContribution> price_contribution) {
+        this.price_contribution = price_contribution;
     }
 }

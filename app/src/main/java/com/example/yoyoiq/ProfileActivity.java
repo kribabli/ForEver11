@@ -1,7 +1,6 @@
 package com.example.yoyoiq;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,12 +19,6 @@ public class ProfileActivity extends AppCompatActivity {
         backPress = findViewById(R.id.backPress);
 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
-        Log.d("Amit","Value "+ sharedPrefManager.getUserData().getEmailId());
-        Log.d("Amit","Value "+ sharedPrefManager.getUserData().getUserName());
-        Log.d("Amit","Value "+ sharedPrefManager.getUserData().getMobileNo());
-        Log.d("Amit","Value "+ sharedPrefManager.getUserData().getPassword());
-
-
 
         backPress.setOnClickListener(new View.OnClickListener() {
             @Override

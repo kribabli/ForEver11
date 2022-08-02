@@ -1,7 +1,6 @@
 package com.example.yoyoiq.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ public class ContestsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     String match_id;
-    String matchA, matchB;
+    String matchA, matchB, price_contribution;
     ArrayList<ContestsListPOJO> list = new ArrayList<>();
     RecyclerView recyclerViewContest;
     private String mParam1;
@@ -77,6 +76,7 @@ public class ContestsFragment extends Fragment {
     private void getAllContests() {
         matchA = getArguments().getString("matchA");
         matchB = getArguments().getString("matchB");
+        match_id = getArguments().getString("match_id");
 
         Call<Contests> call = ApiClient
                 .getInstance()
@@ -89,7 +89,6 @@ public class ContestsFragment extends Fragment {
                 Contests contests = response.body();
                 if (response.isSuccessful()) {
                     String jsonArray = new Gson().toJson(contests.getResponse());
-                    Log.d("TAG", "onResponse2222: " + jsonArray);
 
                     //----------------------for Contests----------------------------
                     JSONArray jsonArray1Contest = null;
@@ -97,6 +96,8 @@ public class ContestsFragment extends Fragment {
                         jsonArray1Contest = new JSONArray(jsonArray);
                         for (int i = 0; i < jsonArray1Contest.length(); i++) {
                             JSONObject jsonObjectContest = jsonArray1Contest.getJSONObject(i);
+                            price_contribution = jsonObjectContest.getString("price_contribution");
+
                             String contest_id = jsonObjectContest.getString("contest_id");
                             String contest_name = jsonObjectContest.getString("contest_name");
                             String entry = jsonObjectContest.getString("entry");
@@ -108,7 +109,7 @@ public class ContestsFragment extends Fragment {
                             String winning_percentage = jsonObjectContest.getString("winning_percentage");
                             String upto = jsonObjectContest.getString("upto");
 
-                            ContestsListPOJO contestsListPOJO = new ContestsListPOJO(contest_id, contest_name, entry, join_team, prize_pool, total_team, winners,first_price,winning_percentage,upto);
+                            ContestsListPOJO contestsListPOJO = new ContestsListPOJO(contest_id, contest_name, entry, join_team, prize_pool, total_team, winners, first_price, winning_percentage, upto, matchA, matchB, match_id, price_contribution);
                             list.add(contestsListPOJO);
                             contestsListAdapter = new ContestsListAdapter(getContext(), list);
                             recyclerViewContest.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -127,6 +128,5 @@ public class ContestsFragment extends Fragment {
             public void onFailure(Call<Contests> call, Throwable t) {
             }
         });
-
     }
 }

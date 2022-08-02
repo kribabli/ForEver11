@@ -11,8 +11,12 @@ public class ContestsListPOJO {
     String first_price;
     String winning_percentage;
     String upto;
+    String matchA;
+    String matchB;
+    String match_id;
+    String price_contribution;
 
-    public ContestsListPOJO(String contest_id, String contest_name, String entry, String join_team, String prize_pool, String total_team, String winners, String first_price, String winning_percentage, String upto) {
+    public ContestsListPOJO(String contest_id, String contest_name, String entry, String join_team, String prize_pool, String total_team, String winners, String first_price, String winning_percentage, String upto, String matchA, String matchB, String match_id,String price_contribution) {
         this.contest_id = contest_id;
         this.contest_name = contest_name;
         this.entry = entry;
@@ -23,6 +27,10 @@ public class ContestsListPOJO {
         this.first_price = first_price;
         this.winning_percentage = winning_percentage;
         this.upto = upto;
+        this.matchA = matchA;
+        this.matchB = matchB;
+        this.match_id = match_id;
+        this.price_contribution = price_contribution;
     }
 
     public String getContest_id() {
@@ -103,5 +111,37 @@ public class ContestsListPOJO {
 
     public void setUpto(String upto) {
         this.upto = upto;
+    }
+
+    public String getMatchA() {
+        return matchA;
+    }
+
+    public void setMatchA(String matchA) {
+        this.matchA = matchA;
+    }
+
+    public String getMatchB() {
+        return matchB;
+    }
+
+    public void setMatchB(String matchB) {
+        this.matchB = matchB;
+    }
+
+    public String getMatch_id() {
+        return match_id;
+    }
+
+    public void setMatch_id(String match_id) {
+        this.match_id = match_id;
+    }
+
+    public String getPrice_contribution() {
+        return price_contribution;
+    }
+
+    public void setPrice_contribution(String price_contribution) {
+        this.price_contribution = price_contribution;
     }
 }
