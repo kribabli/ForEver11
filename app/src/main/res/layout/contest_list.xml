@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/entryFee"
-                android:layout_width="90dp"
+                android:layout_width="80dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:background="@drawable/border1_green"
@@ -146,7 +146,7 @@
             android:background="#57DBDBDB"
             android:orientation="horizontal"
             android:padding="2dp"
-            android:weightSum="8">
+            android:weightSum="6.5">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -173,11 +173,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:drawableLeft="@drawable/prize"
-                android:gravity="center"/>
+                android:gravity="center" />
 
             <TextView
-                android:layout_width="20dp"
                 android:id="@+id/winningPer"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center" />
@@ -198,15 +198,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="Upto" />
 
             <TextView
+                android:id="@+id/upTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
+                android:layout_weight=".5"
                 android:gravity="center" />
 
             <View
