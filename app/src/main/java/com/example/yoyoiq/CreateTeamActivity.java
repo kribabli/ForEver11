@@ -45,12 +45,6 @@ public class CreateTeamActivity extends AppCompatActivity {
         initMethod();
         setAction();
         countDownStart();
-
-        String currentDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-        String[] separatedTime = date_start.split(" ");
-        String separated1stChar = separatedTime[0];
-        String separated2ndChar = separatedTime[1];
-
         linearLayout1 = findViewById(R.id.linerLayout1);
         linearLayout2 = findViewById(R.id.linerLayout2);
         linearLayout3 = findViewById(R.id.linerLayout3);

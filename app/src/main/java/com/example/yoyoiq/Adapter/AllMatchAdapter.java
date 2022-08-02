@@ -46,6 +46,7 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull AllMatchAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         TotalHomeData listData = list.get(position);
+        holder.setIsRecyclable(false);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

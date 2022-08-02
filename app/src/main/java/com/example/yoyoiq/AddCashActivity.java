@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 public class AddCashActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
-    LinearLayout linearLayout;
+    LinearLayout linearLayout,joinLinearLayout;
     PageAdapterWinnings pageAdapterWinnings;
     String total_prize, entryFee, totalSports, leftSports, winningPer, upTo, matchA, matchB, match_id, first_price, price_contribution;
     TextView backPress, teamATv, teamBTv, walletTV;
@@ -61,6 +61,7 @@ public class AddCashActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         linearLayout = findViewById(R.id.linerLayout1);
+        joinLinearLayout = findViewById(R.id.joinLinearLayout);
 
         backPress = findViewById(R.id.backPress);
         teamATv = findViewById(R.id.matchATv);
@@ -109,6 +110,14 @@ public class AddCashActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddCashActivity.this, AddCash.class);
+                startActivity(intent);
+            }
+        });
+
+        joinLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddCashActivity.this, CreateTeamActivity.class);
                 startActivity(intent);
             }
         });

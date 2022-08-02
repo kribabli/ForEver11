@@ -1,23 +1,16 @@
 package com.example.yoyoiq;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
@@ -77,7 +70,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void setAction() {
         backPress.setOnClickListener(view -> onBackPressed());
-
     }
 
     private void signInWithCredential(PhoneAuthCredential credential) {
@@ -126,7 +118,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(FirebaseException e) {
-            Log.d(TAG, "onVerificationFailed: " + e);
             Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };
@@ -134,10 +125,8 @@ public class RegisterActivity extends AppCompatActivity {
     private void verifyCode(String code) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         signInWithCredential(credential);
-        if(enterOTP.getText().toString().equals(code)){
+        if (enterOTP.getText().toString().equals(code)) {
             signInWithCredential(credential);
         }
-
     }
-
 }

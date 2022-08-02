@@ -33,8 +33,8 @@ public class PriceListAdapter extends RecyclerView.Adapter<PriceListAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull PriceListAdapter.MyViewHolder holder, int position) {
         PriceContributionPOJO listData = list.get(position);
-        holder.rank.setText(String.valueOf("# "+listData.getI()));
-        holder.price.setText(listData.getPosition());
+        holder.rank.setText(String.valueOf("# " + listData.getI()));
+        holder.price.setText(String.valueOf(listData.getPosition()));
     }
 
     @Override

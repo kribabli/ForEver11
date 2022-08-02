@@ -285,16 +285,16 @@
         android:layout_gravity="center"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:id="@+id/joinLinearLayout"
         android:background="@drawable/border1_green"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="10">
+        android:weightSum="9">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:gravity="center"
             android:text="JOIN"
             android:textColor="@color/white"
@@ -305,7 +305,9 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:drawableLeft="@drawable/indian_rupiya_white_small"
             android:gravity="center"
+            android:textSize="16sp"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
