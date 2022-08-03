@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 public class AddCashActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
-    LinearLayout linearLayout,joinLinearLayout;
+    LinearLayout linearLayout, joinLinearLayout;
     PageAdapterWinnings pageAdapterWinnings;
     String total_prize, entryFee, totalSports, leftSports, winningPer, upTo, matchA, matchB, match_id, first_price, price_contribution;
     TextView backPress, teamATv, teamBTv, walletTV;
@@ -28,6 +28,7 @@ public class AddCashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_cash);
         initMethod();
         setAction();
+        linearLayout.setVisibility(View.VISIBLE);
 
         pageAdapterWinnings = new PageAdapterWinnings(getSupportFragmentManager(), tabLayout.getTabCount(), total_prize, entryFee, totalSports, leftSports, winningPer, upTo, match_id, first_price, price_contribution);
         viewPager.setAdapter(pageAdapterWinnings);

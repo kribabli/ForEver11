@@ -51,7 +51,6 @@ public class ContestsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAllContests();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -74,6 +73,7 @@ public class ContestsFragment extends Fragment {
     }
 
     private void getAllContests() {
+        list.clear();
         matchA = getArguments().getString("matchA");
         matchB = getArguments().getString("matchB");
         match_id = getArguments().getString("match_id");
@@ -128,5 +128,13 @@ public class ContestsFragment extends Fragment {
             public void onFailure(Call<Contests> call, Throwable t) {
             }
         });
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getAllContests();
+        }
     }
 }

@@ -51,7 +51,6 @@ public class ContestActivity extends AppCompatActivity {
         matchList = findViewById(R.id.matchList);
         createTeam = findViewById(R.id.createTeam);
 
-
         pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b, date_start, date_end);
         viewPager.setAdapter(pageAdapter);
 

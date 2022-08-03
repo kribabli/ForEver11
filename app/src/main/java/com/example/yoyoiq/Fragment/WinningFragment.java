@@ -50,7 +50,6 @@ public class WinningFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAllContests();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -68,6 +67,7 @@ public class WinningFragment extends Fragment {
     }
 
     private void getAllContests() {
+        listPrice.clear();
         price_contribution = getArguments().getString("price_contribution");
 
         Call<Contests> call = ApiClient
@@ -109,5 +109,13 @@ public class WinningFragment extends Fragment {
             public void onFailure(Call<Contests> call, Throwable t) {
             }
         });
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getAllContests();
+        }
     }
 }
