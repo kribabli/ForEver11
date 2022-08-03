@@ -98,8 +98,8 @@ public class CricketFragment extends Fragment {
                             JSONObject jsonObject = jsonArray1.getJSONObject(i);
                             String title = jsonObject.getString("title");
                             String match_id = jsonObject.getString("match_id");
-                            String date_start = jsonObject.getString("date_start");
-                            String date_end = jsonObject.getString("date_end");
+                            String date_start = jsonObject.getString("date_start_ist");
+                            String date_end = jsonObject.getString("date_end_ist");
 
                             JSONArray teama1 = jsonObject.getJSONArray("teama");
                             JSONArray teamb1 = jsonObject.getJSONArray("teamb");
@@ -111,7 +111,6 @@ public class CricketFragment extends Fragment {
                             String name_a = jsonObject11.getString("name");
                             String short_name_a = jsonObject11.getString("short_name");
                             int teamIda = Integer.parseInt(jsonObject11.getString("team_id"));
-
 
                             String logo_url_b = jsonObject22.getString("logo_url");
                             String name_b = jsonObject22.getString("name");

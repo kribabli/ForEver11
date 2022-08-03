@@ -1,16 +1,17 @@
 package com.example.yoyoiq;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class WinnersFragment extends Fragment {
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.yoyoiq.Adapter.MegaContestAdapter;
+
+public class WinnersFragment extends Fragment {
+    RecyclerView recyclerView;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -18,9 +19,7 @@ public class WinnersFragment extends Fragment {
     private String mParam2;
 
     public WinnersFragment() {
-
     }
-
 
     public static WinnersFragment newInstance(String param1, String param2) {
         WinnersFragment fragment = new WinnersFragment();
@@ -40,14 +39,15 @@ public class WinnersFragment extends Fragment {
         }
     }
 
+    MegaContestAdapter megaContestAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root= inflater.inflate(R.layout.fragment_winners, container, false);
+//        View root = inflater.inflate(R.layout.fragment_winners, container, false);
+        View root = inflater.inflate(R.layout.contest_winners_cardview, container, false);
 
-        Intent intent = new Intent(getActivity(), ContestWinners.class);
-        startActivity(intent);
-
-        return  root;
+        recyclerView = root.findViewById(R.id.recyclerView);
+        return root;
     }
 }

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -103,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         setAction();
-//        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -287,9 +285,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             JSONObject jsonObject = jsonArray1.getJSONObject(i);
                             String title = jsonObject.getString("title");
                             String match_id = jsonObject.getString("match_id");
-                            Log.d("TAG", "onResponse: " + match_id);
-                            String date_start = jsonObject.getString("date_start");
-                            String date_end = jsonObject.getString("date_end");
+                            String date_start = jsonObject.getString("date_start_ist");
+                            String date_end = jsonObject.getString("date_end_ist");
 
                             JSONArray teama1 = jsonObject.getJSONArray("teama");
                             JSONArray teamb1 = jsonObject.getJSONArray("teamb");
@@ -301,7 +298,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String name_a = jsonObject11.getString("name");
                             String short_name_a = jsonObject11.getString("short_name");
 //                            int teamIda = Integer.parseInt(jsonObject11.getString("team_id"));
-
 
                             String logo_url_b = jsonObject22.getString("logo_url");
                             String name_b = jsonObject22.getString("name");

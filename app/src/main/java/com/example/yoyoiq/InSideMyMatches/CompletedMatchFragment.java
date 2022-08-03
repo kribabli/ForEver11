@@ -1,4 +1,4 @@
-package com.example.yoyoiq.Fragment;
+package com.example.yoyoiq.InSideMyMatches;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,5 +41,13 @@ public class CompletedMatchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_completed_match, container, false);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+
+        }
     }
 }

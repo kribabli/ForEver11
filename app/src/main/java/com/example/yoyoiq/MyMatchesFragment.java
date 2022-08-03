@@ -1,25 +1,27 @@
 package com.example.yoyoiq;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.yoyoiq.Adapter.PagerAdapterLiveCompleted;
+import com.google.android.material.tabs.TabLayout;
 
 public class MyMatchesFragment extends Fragment {
-    TextView textView, upcoming, live, completed;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    PagerAdapterLiveCompleted pagerAdapterLiveCompleted;
     private String mParam1;
     private String mParam2;
 
     public MyMatchesFragment() {
     }
-
 
     public static MyMatchesFragment newInstance(String param1, String param2) {
         MyMatchesFragment fragment = new MyMatchesFragment();
@@ -43,40 +45,34 @@ public class MyMatchesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_my_matches, container, false);
-        textView = root.findViewById(R.id.upcomingMatch);
-        live = root.findViewById(R.id.live);
-        upcoming = root.findViewById(R.id.upcoming);
-        completed = root.findViewById(R.id.completed);
+        viewPager = root.findViewById(R.id.viewPager);
+        tabLayout = root.findViewById(R.id.tabLayout);
 
-        upcoming.setOnClickListener(new View.OnClickListener() {
+        pagerAdapterLiveCompleted = new PagerAdapterLiveCompleted(getFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapterLiveCompleted);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                textView.setVisibility(View.VISIBLE);
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0) {
+                    pagerAdapterLiveCompleted.notifyDataSetChanged();
+                } else if (tab.getPosition() == 1) {
+                    pagerAdapterLiveCompleted.notifyDataSetChanged();
+                } else if (tab.getPosition() == 2) {
+                    pagerAdapterLiveCompleted.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
-        live.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textView.setVisibility(View.VISIBLE);
-            }
-        });
-
-        completed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         return root;
     }
