@@ -59,7 +59,6 @@ public class BATFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAllPlayer();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -77,6 +76,8 @@ public class BATFragment extends Fragment {
     }
 
     private void getAllPlayer() {
+        list.clear();
+        listPlayerIdA.clear();
         matchA = getArguments().getString("matchA");
         matchB = getArguments().getString("matchB");
 
@@ -166,19 +167,19 @@ public class BATFragment extends Fragment {
                         teamSquadsA = new JSONArray(SquadsA);
                         teamSquadsB = new JSONArray(SquadsB);
                         teamsInformation = new JSONArray(jsonArray2);
-                        ArrayList<String>allTeamAPlayerId=new ArrayList<>();
-                        ArrayList<String>allTeamBPlayerId=new ArrayList<>();
-                        ArrayList<String>allTeamInformation=new ArrayList<>();
+                        ArrayList<String> allTeamAPlayerId = new ArrayList<>();
+                        ArrayList<String> allTeamBPlayerId = new ArrayList<>();
+                        ArrayList<String> allTeamInformation = new ArrayList<>();
 
 
-                        for(int k=0;k<teamSquadsA.length();k++){
+                        for (int k = 0; k < teamSquadsA.length(); k++) {
                             JSONObject xObj = teamSquadsA.getJSONObject(k);
                             String playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamAPlayerId.add(player_id);
                         }
 
-                        for(int k=0;k<teamSquadsB.length();k++){
+                        for (int k = 0; k < teamSquadsB.length(); k++) {
                             JSONObject xObj = teamSquadsB.getJSONObject(k);
                             String playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
@@ -193,11 +194,10 @@ public class BATFragment extends Fragment {
                             if (playing_rolePlayers.equals("bat")) {
                                 short_namePlayers = jsonObjectPlayers.getString("short_name");
                                 fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
-                                if(allTeamAPlayerId.contains(pidPlayers)){
-                                    abbrA=matchA;
-                                }
-                                else if(allTeamBPlayerId.contains(pidPlayers)){
-                                    abbrA=matchB;
+                                if (allTeamAPlayerId.contains(pidPlayers)) {
+                                    abbrA = matchA;
+                                } else if (allTeamBPlayerId.contains(pidPlayers)) {
+                                    abbrA = matchB;
 
                                 }
 
@@ -222,6 +222,13 @@ public class BATFragment extends Fragment {
             public void onFailure(Call<ResponsePlayer> call, Throwable t) {
             }
         });
+    }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getAllPlayer();
+        }
     }
 }

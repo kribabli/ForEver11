@@ -59,7 +59,6 @@ public class BOWLFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAllPlayer();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -77,6 +76,8 @@ public class BOWLFragment extends Fragment {
     }
 
     private void getAllPlayer() {
+        list.clear();
+        listPlayerIdA.clear();
         matchA = getArguments().getString("matchA");
         matchB = getArguments().getString("matchB");
 
@@ -222,5 +223,13 @@ public class BOWLFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+            getAllPlayer();
+        }
     }
 }
