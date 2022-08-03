@@ -17,7 +17,6 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,10 +44,7 @@ public class CreateTeamActivity extends AppCompatActivity {
         initMethod();
         setAction();
         countDownStart();
-        linearLayout1 = findViewById(R.id.linerLayout1);
-        linearLayout2 = findViewById(R.id.linerLayout2);
-        linearLayout3 = findViewById(R.id.linerLayout3);
-        linearLayout4 = findViewById(R.id.linerLayout4);
+        linearLayout1.setVisibility(View.VISIBLE);
 
         pageAdapterPlayer = new PageAdapterPlayer(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b);
         viewPager.setAdapter(pageAdapterPlayer);
@@ -97,6 +93,11 @@ public class CreateTeamActivity extends AppCompatActivity {
     }
 
     private void initMethod() {
+        linearLayout1 = findViewById(R.id.linerLayout1);
+        linearLayout2 = findViewById(R.id.linerLayout2);
+        linearLayout3 = findViewById(R.id.linerLayout3);
+        linearLayout4 = findViewById(R.id.linerLayout4);
+
         tv_days = findViewById(R.id.tv_days);
         tv_done = findViewById(R.id.done);
 
