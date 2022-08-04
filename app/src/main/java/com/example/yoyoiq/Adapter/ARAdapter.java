@@ -113,6 +113,7 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
             playerImg = itemView.findViewById(R.id.playerImg);
             im_AddPlayer = itemView.findViewById(R.id.im_AddPlayer);
             cardViewSelected = itemView.findViewById(R.id.cardViewSelected);
+            alreadyAddedPlayer = itemView.findViewById(R.id.alreadyAddedPlayer);
         }
     }
 }
