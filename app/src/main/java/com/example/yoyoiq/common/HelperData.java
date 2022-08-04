@@ -1,9 +1,5 @@
 package com.example.yoyoiq.common;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.widget.Toast;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.yoyoiq.CreateTeamActivity;
@@ -15,13 +11,13 @@ import java.util.List;
 public class HelperData {
     public static MutableLiveData<Integer> playerCounter = new MutableLiveData<>(0);
     public static String type_selected = "Cricket";
-     public static MutableLiveData<Integer> conty1 = new MutableLiveData<>(0);
-     public static MutableLiveData<Integer> conty2 = new MutableLiveData<>(0);
-     public static MutableLiveData<Integer> wk = new MutableLiveData<>(0);
-     public static MutableLiveData<Integer> bat = new MutableLiveData<>(0);
-     public static MutableLiveData<Integer> ar = new MutableLiveData<>(0);
-     public static MutableLiveData<Integer> bowl = new MutableLiveData<>(0);
-     public static MutableLiveData<Double> creditCounter = new MutableLiveData<>(0.0);
+    public static MutableLiveData<Integer> conty1 = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> conty2 = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> wk = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> bat = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> ar = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> bowl = new MutableLiveData<>(0);
+    public static MutableLiveData<Double> creditCounter = new MutableLiveData<>(0.0);
     public static MutableLiveData<List<AllSelectedPlayer>> allSelectedPlayer = new MutableLiveData<>();
 
     public static String selected = "wk";
@@ -34,8 +30,6 @@ public class HelperData {
     public static String vcap = "";
     public static String cap = "";
     public static String addedPlayerIds;
-
-
 
     public static void newTeamMaking() {
         myTeamList.clear();
@@ -50,7 +44,4 @@ public class HelperData {
         creditCounter.setValue(100.0);
         CreateTeamActivity.addedPlayerIds = "";
     }
-
-
-
 }

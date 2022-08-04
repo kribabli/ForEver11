@@ -2,9 +2,9 @@ package com.example.yoyoiq;
 
 import static com.example.yoyoiq.common.HelperData.newTeamMaking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.SyncStateContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,7 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CreateTeamActivity extends AppCompatActivity {
     TextView backPress;
-    Button continueBtn;
+    Button continueBtn, teamPreview;
     String match_id, matchA, matchB, logo_url_a, logo_url_b, date_start, date_end;
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -36,7 +36,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     PageAdapterPlayer pageAdapterPlayer;
     LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
     CircleImageView imageViewA, imageViewB;
-    TextView textViewA, textViewB,tv_TotalSelectedPlayer,tv_TotalCredit,tv_TeamOneSize,tv_TeamTwoSize;
+    TextView textViewA, textViewB, tv_TotalSelectedPlayer, tv_TotalCredit, tv_TeamOneSize, tv_TeamTwoSize;
     private String EVENT_DATE_TIME = "2022-07-23 18:08:00";
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private TextView tv_days, tv_done;
@@ -110,7 +110,6 @@ public class CreateTeamActivity extends AppCompatActivity {
         creditCounter();
         playerSectionCounter();
 
-
         HelperData.wk.observe(this, e -> {
             if (e == null) {
                 tabLayout.getTabAt(0).setText("WK(0)");
@@ -154,6 +153,7 @@ public class CreateTeamActivity extends AppCompatActivity {
         tv_done = findViewById(R.id.done);
 
         backPress = findViewById(R.id.backPress);
+        teamPreview = findViewById(R.id.teamPreview);
         continueBtn = findViewById(R.id.Continue);
 
         match_id = getIntent().getStringExtra("match_id");
@@ -187,8 +187,8 @@ public class CreateTeamActivity extends AppCompatActivity {
 
         textViewA.setText(matchA);
         textViewB.setText(matchB);
-        HelperData.team1NameShort=matchA;
-        HelperData.team2NameShort=matchB;
+        HelperData.team1NameShort = matchA;
+        HelperData.team2NameShort = matchB;
 
         Glide.with(this)
                 .load(logo_url_a)
@@ -197,15 +197,22 @@ public class CreateTeamActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(logo_url_b)
                 .into(imageViewB);
+
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateTeamActivity.this, TeamPreviewActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void playerSectionCounter(){
+    private void playerSectionCounter() {
         HelperData.wk.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 if (integer >= 0) {
-                    tabLayout.getTabAt(0).setText(""+integer);
-
+                    tabLayout.getTabAt(0).setText("" + integer);
                 }
             }
         });
@@ -213,7 +220,7 @@ public class CreateTeamActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 if (integer >= 0) {
-                  tabLayout.getTabAt(1).setText(""+integer);
+                    tabLayout.getTabAt(1).setText("" + integer);
                 }
             }
         });
@@ -221,7 +228,7 @@ public class CreateTeamActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 if (integer >= 0) {
-                  tabLayout.getTabAt(2).setText(""+integer);
+                    tabLayout.getTabAt(2).setText("" + integer);
                 }
             }
         });
@@ -229,11 +236,10 @@ public class CreateTeamActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 if (integer >= 0) {
-                   tabLayout.getTabAt(3).setText(""+integer);
+                    tabLayout.getTabAt(3).setText("" + integer);
                 }
             }
         });
-
     }
 
     private void playerCounter() {
@@ -249,7 +255,6 @@ public class CreateTeamActivity extends AppCompatActivity {
                 tv_TotalSelectedPlayer.setText("" + integer + "/" + limit);
             }
         });
-
     }
 
     private void creditCounter() {
@@ -260,7 +265,6 @@ public class CreateTeamActivity extends AppCompatActivity {
             @Override
             public void onChanged(Double integer) {
                 tv_TotalCredit.setText("" + integer + "/100");
-
             }
         });
 
@@ -268,7 +272,6 @@ public class CreateTeamActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 tv_TeamOneSize.setText("" + integer);
-
             }
         });
 
@@ -276,10 +279,8 @@ public class CreateTeamActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 tv_TeamTwoSize.setText("" + integer);
-
             }
         });
-
     }
 
     private void countDownStart() {

@@ -8,9 +8,9 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:background="#373737"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:background="#373737"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -160,7 +160,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/selectedPlayerRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/typePoints"
@@ -180,6 +180,7 @@
             android:layout_weight="1" />
 
         <Button
+            android:id="@+id/teamPreview"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="2.5"
@@ -192,6 +193,7 @@
             android:layout_weight=".5" />
 
         <Button
+            android:id="@+id/saveTeam"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="2.5"
