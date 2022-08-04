@@ -15,6 +15,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        android:clickable="true"
         app:cardCornerRadius="6dp"
         tools:ignore="MissingConstraints">
 
@@ -45,7 +46,8 @@
                 android:gravity="right"
                 android:text="Lineups Out"
                 android:textColor="@color/green"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
 
         </LinearLayout>
 

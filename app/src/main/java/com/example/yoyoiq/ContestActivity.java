@@ -2,6 +2,7 @@ package com.example.yoyoiq;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class ContestActivity extends AppCompatActivity {
         matchATv = findViewById(R.id.matchATv);
         matchBTv = findViewById(R.id.matchBTv);
         createTeamLayout = findViewById(R.id.createTeamLayout);
+        createTeamLayout.setVisibility(View.VISIBLE);
 
         matchA = getIntent().getStringExtra("shortNameA");
         matchB = getIntent().getStringExtra("shortNameB");
@@ -58,7 +60,14 @@ public class ContestActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                if (tab.getPosition() == 0 || tab.getPosition() == 1 || tab.getPosition() == 2) {
+                if (tab.getPosition() == 0) {
+                    createTeamLayout.setVisibility(View.VISIBLE);
+                    pageAdapter.notifyDataSetChanged();
+                } else if (tab.getPosition() == 1) {
+                    createTeamLayout.setVisibility(View.GONE);
+                    pageAdapter.notifyDataSetChanged();
+                } else if (tab.getPosition() == 2) {
+                    createTeamLayout.setVisibility(View.GONE);
                     pageAdapter.notifyDataSetChanged();
                 }
             }
