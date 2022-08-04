@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.yoyoiq.Adapter.PriceListAdapter;
 import com.example.yoyoiq.ContestPOJO.Contests;
@@ -29,6 +30,7 @@ public class WinningFragment extends Fragment {
     String price_contribution;
     ArrayList<PriceContributionPOJO> listPrice = new ArrayList<>();
     RecyclerView recyclerViewContest;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -63,6 +65,15 @@ public class WinningFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_winning, container, false);
         recyclerViewContest = root.findViewById(R.id.winningList);
+        swipeRefreshLayout = root.findViewById(R.id.swiper);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAllContests();
+            }
+        });
+
         return root;
     }
 
@@ -96,17 +107,20 @@ public class WinningFragment extends Fragment {
                             recyclerViewContest.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerViewContest.setAdapter(priceListAdapter);
                             priceListAdapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     } catch (Exception e) {
+                        swipeRefreshLayout.setRefreshing(false);
                         e.printStackTrace();
                     }
-
                 } else {
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<Contests> call, Throwable t) {
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

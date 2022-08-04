@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getAllMatches();
         recyclerView = findViewById(R.id.recyclerViewMatchList);
 
-        swipeRefreshLayout=findViewById(R.id.swiper);
+        swipeRefreshLayout = findViewById(R.id.swiper);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -288,7 +288,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onResponse(Call<UpcommingResponse> call, Response<UpcommingResponse> response) {
                 UpcommingResponse status = response.body();
                 if (response.isSuccessful()) {
-                    swipeRefreshLayout.setRefreshing(false);
                     String jsonArray = new Gson().toJson(status.getResponse().getItems());
                     JSONArray jsonArray1 = null;
                     try {
@@ -324,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                             recyclerView.setAdapter(allMatchAdapter);
                             allMatchAdapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     } catch (JSONException e) {
                         swipeRefreshLayout.setRefreshing(false);
@@ -331,6 +331,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                 } else {
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
