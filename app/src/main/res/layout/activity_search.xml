@@ -2,26 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="55dp"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/backPress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow_back_white"
+            android:gravity="left" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:background="@color/white"
+            android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="10">
-
-            <TextView
-                android:id="@+id/backPress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_baseline_arrow_back_24"
-                android:gravity="left" />
 
             <View
                 android:layout_width="0dp"
@@ -32,10 +37,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
+                android:drawableLeft="@drawable/ic_baseline_search_24_white"
                 android:gravity="center"
-                android:drawableLeft="@drawable/ic_baseline_search_24"
                 android:hint="Search by Team Name"
-                android:textColor="@color/black"
+                android:textColor="@color/light_gray"
                 android:textSize="15sp" />
 
             <View

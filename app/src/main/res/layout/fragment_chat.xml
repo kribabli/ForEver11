@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".ChatFragment">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_banner_Chat"
-        android:layout_gravity="top"
         android:layout_width="match_parent"
-        android:layout_height="160dp"/>
+        android:layout_height="160dp"
+        android:layout_gravity="top" />
 
-</FrameLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="15dp"
+        android:backgroundTint="@color/light_pink"
+        android:drawableLeft="@drawable/ic_baseline_chat_24"
+        android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+        android:gravity="center"
+        android:text="Direct Chat"
+        android:textColor="@color/red_1"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:backgroundTint="@color/light_pink"
+        android:drawableLeft="@drawable/ic_baseline_group_add_24"
+        android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+        android:gravity="center"
+        android:text="Create a Group"
+        android:textColor="@color/red_1"
+        android:textStyle="bold" />
+
+</LinearLayout>

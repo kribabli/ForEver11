@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.AllMatchAdapter;
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView recyclerView;
     AllMatchAdapter allMatchAdapter;
     ArrayList<TotalHomeData> list = new ArrayList<>();
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getAllMatches();
         recyclerView = findViewById(R.id.recyclerViewMatchList);
+
+        swipeRefreshLayout=findViewById(R.id.swiper);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAllMatches();
+            }
+        });
 
         textView = findViewById(R.id.walletTV);
         pathSharedPreferences = getSharedPreferences("YoyoIq", MODE_PRIVATE);
@@ -277,6 +288,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onResponse(Call<UpcommingResponse> call, Response<UpcommingResponse> response) {
                 UpcommingResponse status = response.body();
                 if (response.isSuccessful()) {
+                    swipeRefreshLayout.setRefreshing(false);
                     String jsonArray = new Gson().toJson(status.getResponse().getItems());
                     JSONArray jsonArray1 = null;
                     try {
@@ -287,6 +299,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String match_id = jsonObject.getString("match_id");
                             String date_start = jsonObject.getString("date_start_ist");
                             String date_end = jsonObject.getString("date_end_ist");
+                            Log.d("TAG", "onResponse Match_id: " + match_id);
 
                             JSONArray teama1 = jsonObject.getJSONArray("teama");
                             JSONArray teamb1 = jsonObject.getJSONArray("teamb");
@@ -313,6 +326,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             allMatchAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
+                        swipeRefreshLayout.setRefreshing(false);
                         e.printStackTrace();
                     }
 
@@ -322,6 +336,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onFailure(Call<UpcommingResponse> call, Throwable t) {
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

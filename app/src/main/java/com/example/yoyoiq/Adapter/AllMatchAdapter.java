@@ -63,7 +63,6 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
                 context.startActivity(intent);
             }
         });
-
         holder.textViewTitle.setText(list.get(position).getTitle());
 
         holder.matchATv.setText(listData.getName_a());
@@ -113,13 +112,14 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle, matchATv, matchBTv, shortNameA, shortNameB, leftTime, done;
+        TextView textViewTitle, matchATv, matchBTv, shortNameA, shortNameB, leftTime, done, lineUp;
         ImageView matchAImage, matchBImage;
         CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.matchTitle);
+            lineUp = itemView.findViewById(R.id.lineUp);
             matchATv = itemView.findViewById(R.id.matcha);
             matchBTv = itemView.findViewById(R.id.matchb);
             shortNameA = itemView.findViewById(R.id.shortNameA);
