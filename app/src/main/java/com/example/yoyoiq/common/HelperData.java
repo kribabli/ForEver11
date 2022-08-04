@@ -47,7 +47,7 @@ public class HelperData {
         bowl.setValue(0);
         conty1.setValue(0);
         conty2.setValue(0);
-        creditCounter.setValue(0.0);
+        creditCounter.setValue(100.0);
         CreateTeamActivity.addedPlayerIds = "";
     }
 
