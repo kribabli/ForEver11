@@ -101,20 +101,27 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:text="Upcoming Matches"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                android:layout_marginStart="15dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewMatchList"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swiper"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/view_pager"
-                android:layout_gravity="bottom"
-                android:layout_margin="5dp"
-                tools:ignore="InvalidId" />
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewMatchList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view_pager"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="5dp"
+                    tools:ignore="InvalidId" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </LinearLayout>
 
