@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.yoyoiq.Adapter.ContestsListAdapter;
 import com.example.yoyoiq.ContestPOJO.Contests;
@@ -32,6 +33,7 @@ public class ContestsFragment extends Fragment {
     String matchA, matchB, price_contribution;
     ArrayList<ContestsListPOJO> list = new ArrayList<>();
     RecyclerView recyclerViewContest;
+    SwipeRefreshLayout swipeRefreshLayout;
     private String mParam1;
     private String mParam2;
 
@@ -69,6 +71,14 @@ public class ContestsFragment extends Fragment {
         }
 
         recyclerViewContest = root.findViewById(R.id.contestsList);
+        swipeRefreshLayout = root.findViewById(R.id.swiper);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAllContests();
+            }
+        });
+
         return root;
     }
 
@@ -115,17 +125,21 @@ public class ContestsFragment extends Fragment {
                             recyclerViewContest.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerViewContest.setAdapter(contestsListAdapter);
                             contestsListAdapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     } catch (Exception e) {
+                        swipeRefreshLayout.setRefreshing(false);
                         e.printStackTrace();
                     }
 
                 } else {
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<Contests> call, Throwable t) {
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

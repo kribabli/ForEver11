@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.AllMatchAdapter;
@@ -33,9 +34,9 @@ import retrofit2.Response;
 public class CricketFragment extends Fragment {
     ViewPager view_bannerItem;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<TotalHomeData> list = new ArrayList<>();
     private List<The_Slide_Items_Model_Class> listItems;
-
 
     public CricketFragment() {
         // Required empty public constructor
@@ -63,8 +64,15 @@ public class CricketFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_cricket, container, false);
         view_bannerItem = root.findViewById(R.id.view_bannerItem);
+        swipeRefreshLayout = root.findViewById(R.id.swiper);
         recyclerView = root.findViewById(R.id.recyclerViewMatchList);
         view_bannerItem.setAdapter(bannerAdapter);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAllMatches();
+            }
+        });
         return root;
     }
 
@@ -124,17 +132,21 @@ public class CricketFragment extends Fragment {
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setAdapter(allMatchAdapter);
                             allMatchAdapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     } catch (JSONException e) {
+                        swipeRefreshLayout.setRefreshing(false);
                         e.printStackTrace();
                     }
 
                 } else {
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<UpcommingResponse> call, Throwable t) {
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
