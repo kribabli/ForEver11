@@ -419,7 +419,7 @@
             android:id="@+id/WK"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WK"
+            android:text="WK(0)"
             app:tabSelectedTextColor="@color/green"
             app:tabTextColor="@color/black" />
 
@@ -427,7 +427,7 @@
             android:id="@+id/BAT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BAT"
+            android:text="BAT(0)"
             app:tabSelectedTextColor="@color/green"
             app:tabTextColor="@color/black" />
 
@@ -435,7 +435,7 @@
             android:id="@+id/AR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AR"
+            android:text="AR(0)"
             app:tabSelectedTextColor="@color/green"
             app:tabTextColor="@color/black" />
 
@@ -443,7 +443,7 @@
             android:id="@+id/BOWL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BOWL"
+            android:text="BOWL(0)"
             app:tabSelectedTextColor="@color/green"
             app:tabTextColor="@color/black" />
 

@@ -97,16 +97,7 @@
                     android:padding="5dp"
                     android:src="@drawable/plus_icon" />
 
-                <ImageView
-                    android:id="@+id/alreadyAddedPlayer"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/tv_PlayerCredit"
-                    android:padding="5dp"
-                    android:src="@drawable/minus_icon"
-                    android:visibility="gone" />
+
 
             </RelativeLayout>
 

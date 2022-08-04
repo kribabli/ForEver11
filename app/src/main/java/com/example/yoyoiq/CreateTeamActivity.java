@@ -1,17 +1,23 @@
 package com.example.yoyoiq;
 
+import static com.example.yoyoiq.common.HelperData.newTeamMaking;
+
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.SyncStateContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.yoyoiq.Adapter.PageAdapterPlayer;
+import com.example.yoyoiq.common.HelperData;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
@@ -30,12 +36,13 @@ public class CreateTeamActivity extends AppCompatActivity {
     PageAdapterPlayer pageAdapterPlayer;
     LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
     CircleImageView imageViewA, imageViewB;
-    TextView textViewA, textViewB;
+    TextView textViewA, textViewB,tv_TotalSelectedPlayer,tv_TotalCredit,tv_TeamOneSize,tv_TeamTwoSize;
     private String EVENT_DATE_TIME = "2022-07-23 18:08:00";
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private TextView tv_days, tv_done;
     private Handler handler = new Handler();
     private Runnable runnable;
+    public static String addedPlayerIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +97,51 @@ public class CreateTeamActivity extends AppCompatActivity {
         });
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        if (!HelperData.teamEdt) {
+            newTeamMaking();
+        }
+
+        HelperData.conty1 = new MutableLiveData<>();
+        HelperData.conty2 = new MutableLiveData<>();
+        HelperData.conty1.setValue(0);
+        HelperData.conty2.setValue(0);
+        playerCounter();
+        creditCounter();
+        playerSectionCounter();
+
+
+        HelperData.wk.observe(this, e -> {
+            if (e == null) {
+                tabLayout.getTabAt(0).setText("WK(0)");
+                return;
+            }
+            tabLayout.getTabAt(0).setText("WK(" + e + ")");
+        });
+
+        HelperData.bat.observe(this, e -> {
+            if (e == null) {
+                tabLayout.getTabAt(1).setText("BAT(0)");
+                return;
+            }
+            tabLayout.getTabAt(1).setText("BAT(" + e + ")");
+        });
+
+        HelperData.ar.observe(this, e -> {
+            if (e == null) {
+                tabLayout.getTabAt(2).setText("AR(0)");
+                return;
+            }
+            tabLayout.getTabAt(2).setText("AR(" + e + ")");
+        });
+
+        HelperData.bowl.observe(this, e -> {
+            if (e == null) {
+                tabLayout.getTabAt(3).setText("BOWL(0)");
+                return;
+            }
+            tabLayout.getTabAt(3).setText("BOWL(" + e + ")");
+        });
     }
 
     private void initMethod() {
@@ -123,6 +175,11 @@ public class CreateTeamActivity extends AppCompatActivity {
         imageViewB = findViewById(R.id.im_Team2);
         textViewA = findViewById(R.id.tvHead_TeamOneName);
         textViewB = findViewById(R.id.tvHead_TeamTwoName);
+
+        tv_TotalSelectedPlayer = findViewById(R.id.tv_TotalSelectedPlayer);
+        tv_TotalCredit = findViewById(R.id.tv_TotalCredit);
+        tv_TeamOneSize = findViewById(R.id.tv_TeamOneSize);
+        tv_TeamTwoSize = findViewById(R.id.tv_TeamTwoSize);
     }
 
     private void setAction() {
@@ -130,6 +187,8 @@ public class CreateTeamActivity extends AppCompatActivity {
 
         textViewA.setText(matchA);
         textViewB.setText(matchB);
+        HelperData.team1NameShort=matchA;
+        HelperData.team2NameShort=matchB;
 
         Glide.with(this)
                 .load(logo_url_a)
@@ -138,6 +197,89 @@ public class CreateTeamActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(logo_url_b)
                 .into(imageViewB);
+    }
+
+    private void playerSectionCounter(){
+        HelperData.wk.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer >= 0) {
+                    tabLayout.getTabAt(0).setText(""+integer);
+
+                }
+            }
+        });
+        HelperData.bat.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer >= 0) {
+                  tabLayout.getTabAt(1).setText(""+integer);
+                }
+            }
+        });
+        HelperData.ar.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer >= 0) {
+                  tabLayout.getTabAt(2).setText(""+integer);
+                }
+            }
+        });
+        HelperData.bowl.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer >= 0) {
+                   tabLayout.getTabAt(3).setText(""+integer);
+                }
+            }
+        });
+
+    }
+
+    private void playerCounter() {
+        HelperData.playerCounter.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                int limit = 0;
+                if (HelperData.type_selected.equalsIgnoreCase("Cricket")) {
+                    limit = 11;
+                } else {
+                    limit = 5;
+                }
+                tv_TotalSelectedPlayer.setText("" + integer + "/" + limit);
+            }
+        });
+
+    }
+
+    private void creditCounter() {
+        tv_TeamOneSize = findViewById(R.id.tv_TeamOneSize);
+        tv_TeamTwoSize = findViewById(R.id.tv_TeamTwoSize);
+
+        HelperData.creditCounter.observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double integer) {
+                tv_TotalCredit.setText("" + integer + "/100");
+
+            }
+        });
+
+        HelperData.conty1.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                tv_TeamOneSize.setText("" + integer);
+
+            }
+        });
+
+        HelperData.conty2.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                tv_TeamTwoSize.setText("" + integer);
+
+            }
+        });
+
     }
 
     private void countDownStart() {
