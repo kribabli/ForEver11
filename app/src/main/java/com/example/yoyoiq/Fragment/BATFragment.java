@@ -20,6 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -170,20 +172,24 @@ public class BATFragment extends Fragment {
                         ArrayList<String> allTeamAPlayerId = new ArrayList<>();
                         ArrayList<String> allTeamBPlayerId = new ArrayList<>();
                         ArrayList<String> allTeamInformation = new ArrayList<>();
+                        Map<String, String> myMap = new HashMap<String, String>();
+                        String playing11 = null;
 
 
                         for (int k = 0; k < teamSquadsA.length(); k++) {
                             JSONObject xObj = teamSquadsA.getJSONObject(k);
-                            String playing11 = xObj.getString("playing11");
+                             playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamAPlayerId.add(player_id);
+                            myMap.put(player_id,playing11);
                         }
 
                         for (int k = 0; k < teamSquadsB.length(); k++) {
                             JSONObject xObj = teamSquadsB.getJSONObject(k);
-                            String playing11 = xObj.getString("playing11");
+                            playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamBPlayerId.add(player_id);
+                            myMap.put(player_id,playing11);
                         }
 
 
@@ -198,6 +204,10 @@ public class BATFragment extends Fragment {
                                     abbrA = matchA;
                                 } else if (allTeamBPlayerId.contains(pidPlayers)) {
                                     abbrA = matchB;
+
+                                }
+                                if(myMap.containsKey(pidPlayers)){
+                                    playing11A= myMap.get(pidPlayers);
 
                                 }
 

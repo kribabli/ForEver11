@@ -21,6 +21,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -177,21 +179,33 @@ public class WKFragment extends Fragment {
                         ArrayList<String> allTeamAPlayerId = new ArrayList<>();
                         ArrayList<String> allTeamBPlayerId = new ArrayList<>();
                         ArrayList<String> allTeamInformation = new ArrayList<>();
+                        ArrayList<String> isPlaying = new ArrayList<>();
+                        Map<String, String> myMap = new HashMap<String, String>();
+
+                        String playing11 = null;
 
 
                         for (int k = 0; k < teamSquadsA.length(); k++) {
                             JSONObject xObj = teamSquadsA.getJSONObject(k);
-                            String playing11 = xObj.getString("playing11");
-                            String player_id = xObj.getString("player_id");
+                             playing11 = xObj.getString("playing11");
+                             String player_id = xObj.getString("player_id");
                             allTeamAPlayerId.add(player_id);
+                            isPlaying.add(playing11);
+                            myMap.put(player_id,playing11);
                         }
 
                         for (int k = 0; k < teamSquadsB.length(); k++) {
                             JSONObject xObj = teamSquadsB.getJSONObject(k);
-                            String playing11 = xObj.getString("playing11");
+                             playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamBPlayerId.add(player_id);
+                            isPlaying.add(playing11);
+                            myMap.put(player_id,playing11);
                         }
+
+                        Log.d("Amit","Value 111 "+isPlaying.size());
+
+
 
                         for (int i = 0; i < jsonArrayPlayers.length(); i++) {
                             jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
@@ -199,11 +213,16 @@ public class WKFragment extends Fragment {
                             playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
                             if (playing_rolePlayers.equals("wk")) {
                                 short_namePlayers = jsonObjectPlayers.getString("short_name");
+                                Log.d("amit","Value "+short_namePlayers);
                                 fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
                                 if (allTeamAPlayerId.contains(pidPlayers)) {
                                     abbrA = matchA;
                                 } else if (allTeamBPlayerId.contains(pidPlayers)) {
                                     abbrA = matchB;
+
+                                }
+                                if(myMap.containsKey(pidPlayers)){
+                                    playing11A=myMap.get(pidPlayers);
 
                                 }
 

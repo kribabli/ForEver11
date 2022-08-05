@@ -26,6 +26,7 @@ public class HelperData {
     public static String team2NameShort = "";
     public static boolean teamEdt = false;
     public static int limit = 11;
+    public static boolean lineUp = false;
     public static int selectedTeamNo;
     public static String vcap = "";
     public static String cap = "";

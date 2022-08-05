@@ -54,6 +54,16 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
         holder.playerCredit.setText(listData.getFantasy_player_rating());
         holder.country.setText(listData.getAbbr());
 
+        if(listData.getPlaying11()==true){
+            holder.isPlaying.setText("Playing");
+            /*please not Remove this commented code code*/
+        }
+//        if(listData.getPlaying11()==false){
+//            holder.isPlaying.setText(" Not Playing");
+//            holder.isPlaying.setTextColor(Color.RED);
+//
+//        }
+
 
 
         holder.cardViewSelected.setOnClickListener(view -> {
@@ -103,6 +113,7 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
                             AllSelectedPlayer allSelectedPlayer= new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()), listData.getShort_namePlayers(), listData.getAbbr(), "WK", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
                             HelperData.allSelectedPlayer.setValue(Collections.singletonList(allSelectedPlayer));
                             HelperData.myTeamList.add(allSelectedPlayer);
+
                         }
                         else{
                             Toast.makeText(context, "Please add player from another tab", Toast.LENGTH_SHORT).show();
@@ -134,7 +145,7 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView playerName, country, playerCredit;
+        TextView playerName, country, playerCredit,isPlaying;
         ImageView playerImg, alreadyAddedPlayer, im_AddPlayer;
         CardView cardViewSelected;
 
@@ -147,6 +158,7 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
             im_AddPlayer = itemView.findViewById(R.id.im_AddPlayer);
             cardViewSelected = itemView.findViewById(R.id.cardViewSelected);
             alreadyAddedPlayer = itemView.findViewById(R.id.alreadyAddedPlayer);
+            isPlaying = itemView.findViewById(R.id.isPlaying);
         }
     }
 }

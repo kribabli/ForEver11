@@ -61,8 +61,8 @@ public class SquadsA {
         this.role_str = role_str;
     }
 
-    public String getPlaying11() {
-        return playing11;
+    public boolean getPlaying11() {
+        return Boolean.parseBoolean(playing11);
     }
 
     public void setPlaying11(String playing11) {
