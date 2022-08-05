@@ -27,11 +27,11 @@
                 android:gravity="left" />
 
             <TextView
+                android:id="@+id/leftTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
                 android:gravity="center"
-                android:text="2h 30m Left"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="85dp"
         android:layout_below="@+id/toolbar"
-        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
         android:background="@color/light_gray"
         android:orientation="vertical">
 
@@ -112,40 +112,47 @@
     <LinearLayout
         android:id="@+id/typePoints"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="25dp"
         android:layout_below="@+id/linerLayout1"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
         android:orientation="horizontal"
-        android:weightSum="9">
+        android:weightSum="9.2">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="TYPE"
             android:textColor="@color/black" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".2" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="POINTS"
             android:textColor="@color/black" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3" />
+            android:layout_weight="5" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="2"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="% C BY"
             android:textColor="@color/black" />
 
@@ -153,7 +160,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="2"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="% VC BY"
             android:textColor="@color/black" />
 
@@ -162,9 +170,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/selectedPlayerRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/typePoints"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="40dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
