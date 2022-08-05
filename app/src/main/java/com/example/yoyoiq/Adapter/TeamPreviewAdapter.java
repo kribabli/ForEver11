@@ -1,6 +1,8 @@
 package com.example.yoyoiq.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.R;
+import com.example.yoyoiq.TeamPreviewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +36,37 @@ public class TeamPreviewAdapter extends RecyclerView.Adapter<TeamPreviewAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TeamPreviewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TeamPreviewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setIsRecyclable(false);
         holder.playerName.setText(list.get(position).getTitle());
         holder.country.setText(list.get(position).getCountry() + " " + list.get(position).getPlaying_role());
         holder.playerPoints.setText(list.get(position).getPoints() + "pts");
+
+        if (list.get(position).isCap()) {
+            holder.tv_c.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.red_light)));
+        } else {
+        }
+
+        if (list.get(position).isVcap()) {
+            holder.tv_vc.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.red_light)));
+        } else {
+        }
+
+        holder.tv_c.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TeamPreviewActivity.makeAllCaptainFalse(list.get(position).getPid());
+                notifyDataSetChanged();
+            }
+        });
+
+        holder.tv_vc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TeamPreviewActivity.makeAllViceCaptainFalse(list.get(position).getPid());
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
