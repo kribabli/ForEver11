@@ -76,8 +76,6 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
                 if (HelperData.playerCounter.getValue() < HelperData.limit) {
                     if (HelperData.creditCounter.getValue() >= Double.valueOf(listData.getFantasy_player_rating())) {
                         CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";
-                        holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
-                        holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
                         if (HelperData.team1NameShort == listData.getAbbr()) {
                             if (HelperData.conty1.getValue() < 7) {
                                 HelperData.conty1.setValue(HelperData.conty1.getValue() + 1);
