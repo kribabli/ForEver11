@@ -103,7 +103,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
         saveTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TeamPreviewActivity.this, ContestActivity.class);
+                Intent intent = new Intent(TeamPreviewActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
