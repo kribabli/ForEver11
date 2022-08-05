@@ -5,7 +5,6 @@ import static com.example.yoyoiq.common.HelperData.newTeamMaking;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -102,8 +101,6 @@ public class CreateTeamActivity extends AppCompatActivity {
         if (!HelperData.teamEdt) {
             newTeamMaking();
         }
-
-        Log.d("Amit","Value 111"+HelperData.myTeamList);
 
         HelperData.conty1 = new MutableLiveData<>();
         HelperData.conty2 = new MutableLiveData<>();
@@ -205,6 +202,7 @@ public class CreateTeamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CreateTeamActivity.this, TeamPreviewActivity.class);
+                intent.putExtra("date_start", date_start);
                 startActivity(intent);
             }
         });
