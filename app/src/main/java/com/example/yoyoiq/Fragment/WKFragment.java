@@ -42,6 +42,7 @@ public class WKFragment extends Fragment {
     String playing11A;
     String nameA;
     String player_idA;
+    public static String allTruePlayers = "";
 
     private String mParam1;
     private String mParam2;
@@ -192,6 +193,9 @@ public class WKFragment extends Fragment {
                             allTeamAPlayerId.add(player_id);
                             isPlaying.add(playing11);
                             myMap.put(player_id,playing11);
+                            if (playing11.equalsIgnoreCase("true")) {
+                                allTruePlayers = allTruePlayers + "_" + player_id + "_\n";
+                            }
                         }
 
                         for (int k = 0; k < teamSquadsB.length(); k++) {
