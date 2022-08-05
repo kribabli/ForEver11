@@ -1,14 +1,18 @@
 package com.example.yoyoiq;
 
+import static com.example.yoyoiq.common.HelperData.allSelectedPlayer;
+import static com.example.yoyoiq.common.HelperData.limit;
 import static com.example.yoyoiq.common.HelperData.newTeamMaking;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
@@ -198,14 +202,43 @@ public class CreateTeamActivity extends AppCompatActivity {
                 .load(logo_url_b)
                 .into(imageViewB);
 
-        continueBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CreateTeamActivity.this, TeamPreviewActivity.class);
-                intent.putExtra("date_start", date_start);
-                startActivity(intent);
-            }
+        continueBtn.setOnClickListener(v -> {
+            handleAfterContinueButton();
         });
+    }
+
+    private void handleAfterContinueButton() {
+        if(HelperData.playerCounter.getValue()==limit){
+            if(HelperData.wk.getValue()>=1){
+                if(HelperData.bat.getValue()>=3){
+                    if(HelperData.ar.getValue()>=1){
+                        if(HelperData.bowl.getValue()>=3){
+                            Intent intent = new Intent(CreateTeamActivity.this, TeamPreviewActivity.class);
+                            intent.putExtra("date_start", date_start);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(this, "Add atleast 3 player in BOWL", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else {
+                        Toast.makeText(this, "Add atleast 1 player in AlRounder section", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    Toast.makeText(this, "Add atleast 3 player in Batting section", Toast.LENGTH_LONG).show();
+                }
+            }
+            else {
+                Toast.makeText(this, "Add atleast 1 player in WicketKeepers section", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            Toast.makeText(this, "You have selected " + HelperData.playerCounter.getValue() + "  it required " + limit + " players", Toast.LENGTH_LONG).show();
+        }
+
+        
+
     }
 
     private void playerSectionCounter() {
