@@ -36,7 +36,8 @@ public class TeamPreviewAdapter extends RecyclerView.Adapter<TeamPreviewAdapter.
     public void onBindViewHolder(@NonNull TeamPreviewAdapter.MyViewHolder holder, int position) {
         holder.setIsRecyclable(false);
         holder.playerName.setText(list.get(position).getTitle());
-        holder.country.setText(list.get(position).getCountry());
+        holder.country.setText(list.get(position).getCountry() + " " + list.get(position).getPlaying_role());
+        holder.playerPoints.setText(list.get(position).getPoints() + "pts");
     }
 
     @Override
@@ -45,13 +46,16 @@ public class TeamPreviewAdapter extends RecyclerView.Adapter<TeamPreviewAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView playerName, country;
+        TextView playerName, country, playerPoints, tv_c, tv_vc;
         ImageView playerImg;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            tv_c = itemView.findViewById(R.id.tv_c);
+            tv_vc = itemView.findViewById(R.id.tv_vc);
             playerName = itemView.findViewById(R.id.playerName);
             country = itemView.findViewById(R.id.country);
+            playerPoints = itemView.findViewById(R.id.playerPoints);
             playerImg = itemView.findViewById(R.id.playerImg);
         }
     }
