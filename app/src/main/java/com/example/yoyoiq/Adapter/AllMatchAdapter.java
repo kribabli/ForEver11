@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.yoyoiq.ContestActivity;
 import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.R;
+import com.example.yoyoiq.common.HelperData;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
         TotalHomeData listData = list.get(position);
         holder.setIsRecyclable(false);
 
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +63,7 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
                 intent.putExtra("date_end", listData.getDate_end());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
+                HelperData.matchId=listData.getMatch_id();
             }
         });
         holder.textViewTitle.setText(list.get(position).getTitle());

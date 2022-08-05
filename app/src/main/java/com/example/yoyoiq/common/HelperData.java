@@ -22,15 +22,20 @@ public class HelperData {
 
     public static String selected = "wk";
     public static ArrayList<AllSelectedPlayer> myTeamList = new ArrayList<>();
+    public static ArrayList<AllSelectedPlayer> myteamListSelected = new ArrayList<>();
     public static String team1NameShort = "";
     public static String team2NameShort = "";
     public static boolean teamEdt = false;
     public static int limit = 11;
     public static boolean lineUp = false;
     public static int selectedTeamNo;
-    public static String vcap = "";
-    public static String cap = "";
+    public static boolean vcap = false;
+    public static boolean cap =false;
     public static String addedPlayerIds;
+    public static String matchId;
+    public static String contestId;
+    public static String UserId;
+
 
     public static void newTeamMaking() {
         myTeamList.clear();
@@ -43,6 +48,8 @@ public class HelperData {
         conty1.setValue(0);
         conty2.setValue(0);
         creditCounter.setValue(100.0);
+        vcap=false;
+        cap=false;
         CreateTeamActivity.addedPlayerIds = "";
     }
 }

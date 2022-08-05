@@ -27,4 +27,10 @@ public interface UsersServices {
     Call<Contests> getContestsList(
             @Field("match_id") String match_id
     );
+
+    @FormUrlEncoded
+    @POST("userTeamContest")
+    Call<Contests>Send_myteam_list_Server(
+            @Field("match_id") String match_id
+    );
 }
