@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.Adapter.TeamPreviewAdapter;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
+import com.example.yoyoiq.common.HelperData;
 
 import java.util.ArrayList;
 
@@ -37,9 +38,9 @@ public class TeamPreviewActivity extends AppCompatActivity {
     }
 
     private void setAction() {
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(TeamPreviewActivity.this));
+        arrayList = (HelperData.myTeamList);
         teamPreviewAdapter = new TeamPreviewAdapter(getApplicationContext(), arrayList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(TeamPreviewActivity.this));
         recyclerView.setAdapter(teamPreviewAdapter);
         teamPreviewAdapter.notifyDataSetChanged();
 
