@@ -1,4 +1,4 @@
-package com.example.yoyoiq.Fragment;
+package com.example.yoyoiq.InSideContestActivityFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

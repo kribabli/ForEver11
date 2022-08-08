@@ -1,4 +1,4 @@
-package com.example.yoyoiq.Fragment;
+package com.example.yoyoiq.InSideContestActivityFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,7 +47,7 @@ public class MyContestsFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
+        if (isVisibleToUser) {
 
         }
     }

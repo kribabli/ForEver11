@@ -17,22 +17,62 @@ import com.google.android.material.tabs.TabLayout;
 public class ContestActivity extends AppCompatActivity {
     TextView walletTV, backPress, matchATv, matchBTv;
     String matchA = "", matchB = "", match_id, logo_url_a, logo_url_b, date_start, date_end;
-    LinearLayout createTeamLayout;
+    LinearLayout createTeamLayout, createTeamLay;
     ViewPager viewPager;
     TabLayout tabLayout;
     TabItem tabItem1, tabItem2, tabItem3;
     PageAdapter pageAdapter;
-    TextView matchList, createTeam;
+    TextView matchList, createTeam, createTeam1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contest);
+        initMethod();
+        setAction();
+
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b, date_start, date_end);
+        viewPager.setAdapter(pageAdapter);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0) {
+                    createTeamLay.setVisibility(View.GONE);
+                    createTeamLayout.setVisibility(View.VISIBLE);
+                    pageAdapter.notifyDataSetChanged();
+                } else if (tab.getPosition() == 1) {
+                    createTeamLay.setVisibility(View.GONE);
+                    createTeamLayout.setVisibility(View.GONE);
+                    pageAdapter.notifyDataSetChanged();
+                } else if (tab.getPosition() == 2) {
+                    createTeamLay.setVisibility(View.VISIBLE);
+                    createTeamLayout.setVisibility(View.GONE);
+                    pageAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+    }
+
+    private void initMethod() {
         walletTV = findViewById(R.id.walletTV);
         backPress = findViewById(R.id.backPress);
         matchATv = findViewById(R.id.matchATv);
         matchBTv = findViewById(R.id.matchBTv);
         createTeamLayout = findViewById(R.id.createTeamLayout);
+        createTeamLay = findViewById(R.id.createTeamLay);
         createTeamLayout.setVisibility(View.VISIBLE);
 
         matchA = getIntent().getStringExtra("shortNameA");
@@ -52,38 +92,10 @@ public class ContestActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         matchList = findViewById(R.id.matchList);
         createTeam = findViewById(R.id.createTeam);
+        createTeam1 = findViewById(R.id.createTeam1);
+    }
 
-        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b, date_start, date_end);
-        viewPager.setAdapter(pageAdapter);
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                if (tab.getPosition() == 0) {
-                    createTeamLayout.setVisibility(View.VISIBLE);
-                    pageAdapter.notifyDataSetChanged();
-                } else if (tab.getPosition() == 1) {
-                    createTeamLayout.setVisibility(View.GONE);
-                    pageAdapter.notifyDataSetChanged();
-                } else if (tab.getPosition() == 2) {
-                    createTeamLayout.setVisibility(View.GONE);
-                    pageAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
+    private void setAction() {
         walletTV.setOnClickListener(view -> {
             Intent intent = new Intent(ContestActivity.this, AddCash.class);
             startActivity(intent);
@@ -101,7 +113,18 @@ public class ContestActivity extends AppCompatActivity {
             intent.putExtra("date_start", date_start);
             intent.putExtra("date_end", date_end);
             startActivity(intent);
+        });
 
+        createTeam1.setOnClickListener(view -> {
+            Intent intent = new Intent(this, CreateTeamActivity.class);
+            intent.putExtra("match_id", match_id);
+            intent.putExtra("matchA", matchA);
+            intent.putExtra("matchB", matchB);
+            intent.putExtra("logo_url_a", logo_url_a);
+            intent.putExtra("logo_url_b", logo_url_b);
+            intent.putExtra("date_start", date_start);
+            intent.putExtra("date_end", date_end);
+            startActivity(intent);
         });
     }
 }
