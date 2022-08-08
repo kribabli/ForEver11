@@ -6,19 +6,22 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.yoyoiq.common.SharedPrefManager;
 import com.example.yoyoiq.Model.UserData;
 import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.example.yoyoiq.common.SharedPrefManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     Button sign_In_FB;
@@ -154,5 +157,20 @@ public class LoginActivity extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void addDataToFirestore() {
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("first_name", "Babli");
+        data.put("last_name", "Singh");
+        firebaseFirestore.collection("users")
+                .add(data)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(exception -> {
+                    Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }

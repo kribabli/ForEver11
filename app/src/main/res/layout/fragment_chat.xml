@@ -13,6 +13,7 @@
         android:layout_gravity="top" />
 
     <Button
+        android:id="@+id/directChat"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginLeft="15dp"
@@ -27,6 +28,7 @@
         android:textStyle="bold" />
 
     <Button
+        android:id="@+id/createGroup"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_gravity="center"

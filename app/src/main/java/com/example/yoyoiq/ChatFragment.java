@@ -1,14 +1,18 @@
 package com.example.yoyoiq;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import androidx.fragment.app.Fragment;
+
+import com.example.yoyoiq.ChatFirebase.DirectChatActivity;
 
 public class ChatFragment extends Fragment {
+    Button createGroup, directChat;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -40,8 +44,19 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root= inflater.inflate(R.layout.fragment_chat, container, false);
+        View root = inflater.inflate(R.layout.fragment_chat, container, false);
 
+        directChat = root.findViewById(R.id.directChat);
+        createGroup = root.findViewById(R.id.createGroup);
+
+        directChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DirectChatActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
         return root;
 
     }
