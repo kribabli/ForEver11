@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.yoyoiq.AddCashActivity;
 import com.example.yoyoiq.Model.ContestsListPOJO;
 import com.example.yoyoiq.R;
+import com.example.yoyoiq.common.HelperData;
 
 import java.util.ArrayList;
 
@@ -63,6 +64,9 @@ public class ContestsListAdapter extends RecyclerView.Adapter<ContestsListAdapte
                 intent.putExtra("first_price", listData.getFirst_price());
                 intent.putExtra("price_contribution", listData.getPrice_contribution());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                HelperData.contestId=listData.getContest_id();
+                HelperData.matchId= listData.getMatch_id();
+
                 context.startActivity(intent);
             }
         });

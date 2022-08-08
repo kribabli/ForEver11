@@ -1,8 +1,9 @@
 package com.example.yoyoiq;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,12 +13,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.Adapter.TeamPreviewAdapter;
+import com.example.yoyoiq.ContestPOJO.Contests;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
+import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.HelperData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TeamPreviewActivity extends AppCompatActivity {
     TextView backPress, leftTime, tv_done;
@@ -103,9 +114,44 @@ public class TeamPreviewActivity extends AppCompatActivity {
         saveTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TeamPreviewActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(TeamPreviewActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+                Log.d("Amit","Value Check ");
+
+                JSONArray jsonArray=new JSONArray();
+                JSONObject Myteamobjects=new JSONObject();
+                for(int i=0;i<HelperData.myTeamList.size();i++){
+                    try {
+                        Myteamobjects.put("playername",HelperData.myTeamList.get(i).getTitle());
+                        Myteamobjects.put("country",HelperData.myTeamList.get(i).getCountry());
+                        Myteamobjects.put("fantasy_rating",HelperData.myTeamList.get(i).getFantasy_player_rating());
+                        Myteamobjects.put("role",HelperData.myTeamList.get(i).getPlaying_role());
+                        Myteamobjects.put("cap",HelperData.myTeamList.get(i).isCap());
+                        Myteamobjects.put("vcap",HelperData.myTeamList.get(i).isVcap());
+                        Myteamobjects.put("point",HelperData.myTeamList.get(i).getPoints());
+                        jsonArray.put(Myteamobjects);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.d("Amit","Value check this "+jsonArray);
+                Call<JSONObject> call= ApiClient.getInstance().getApi().Send_myteam_list_Server(HelperData.UserId,HelperData.matchId,HelperData.contestId,"Team1",jsonArray);
+                call.enqueue(new Callback<JSONObject>() {
+                    @Override
+                    public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                        if(response.isSuccessful()){
+                            Log.d("Amit","Value 11 "+response.body());
+
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<JSONObject> call, Throwable t) {
+
+                    }
+                });
             }
         });
     }

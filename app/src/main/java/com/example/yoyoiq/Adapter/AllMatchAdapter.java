@@ -63,7 +63,6 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
                 intent.putExtra("date_end", listData.getDate_end());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-                HelperData.matchId=listData.getMatch_id();
             }
         });
         holder.textViewTitle.setText(list.get(position).getTitle());

@@ -1,8 +1,13 @@
 package com.example.yoyoiq.Retrofit;
 
 import com.example.yoyoiq.ContestPOJO.Contests;
+import com.example.yoyoiq.LoginPojo.LoginResponse;
+import com.example.yoyoiq.LoginPojo.RegistrationResponse;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -30,7 +35,34 @@ public interface UsersServices {
 
     @FormUrlEncoded
     @POST("userTeamContest")
-    Call<Contests>Send_myteam_list_Server(
-            @Field("match_id") String match_id
+    Call<JSONObject>Send_myteam_list_Server(
+            @Field("user_id") String user_id,
+            @Field("match_id") String match_id,
+            @Field("contest_id") String contest_id,
+            @Field("team_name") String Team_name,
+            @Field("squads") JSONArray squads
+
+            );
+
+
+    @FormUrlEncoded
+    @POST("registration")
+    Call<RegistrationResponse> SendUserDetails_server(
+            @Field("mobile_no") String mobile_no,
+            @Field("username") String username,
+            @Field("email") String email,
+            @Field("password") String password
+
     );
+
+    @FormUrlEncoded
+    @POST("registration")
+    Call<LoginResponse> getUserLoginData(
+            @Field("email_or_mobile") String mobile_no,
+            @Field("password") String password
+
+    );
+
+
+
 }

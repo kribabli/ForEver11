@@ -2,6 +2,7 @@ package com.example.yoyoiq;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.yoyoiq.LoginPojo.RegistrationResponse;
+import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.SharedPrefManager;
 import com.example.yoyoiq.Model.UserData;
 import com.example.yoyoiq.common.DatabaseConnectivity;
@@ -18,6 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterDetails extends AppCompatActivity {
     TextView backPress, registerUser;
@@ -92,6 +99,7 @@ public class RegisterDetails extends AppCompatActivity {
             } else {
                 progressDialog.show();
                 insertRegisterData();
+                send_user_Data_onServer();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,6 +120,24 @@ public class RegisterDetails extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 showDialog("User Register Successfully..", true);
+            }
+        });
+    }
+    private void send_user_Data_onServer(){
+        Call<RegistrationResponse> call= ApiClient.getInstance().getApi().
+                SendUserDetails_server(mobileNo.getText().toString(),userName.getText().toString(),emailId.getText().toString(),password.getText().toString());
+        call.enqueue(new Callback<RegistrationResponse>() {
+            @Override
+            public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+                if(response.isSuccessful()){
+                    Log.d("Amit","Value 111 "+response.body().getStatus());
+                    showDialog("User Register Successfully..", true);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+
             }
         });
     }

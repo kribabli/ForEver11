@@ -201,7 +201,10 @@ public class CreateTeamActivity extends AppCompatActivity {
                 .into(imageViewB);
 
         continueBtn.setOnClickListener(v -> {
-            handleAfterContinueButton();
+//            handleAfterContinueButton();
+            Intent intent = new Intent(CreateTeamActivity.this, TeamPreviewActivity.class);
+            intent.putExtra("date_start", date_start);
+            startActivity(intent);
         });
     }
 

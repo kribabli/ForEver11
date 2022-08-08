@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void userLogout() {
         sharedPrefManager.logout();
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        Intent intent = new Intent(MainActivity.this, FrontActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
