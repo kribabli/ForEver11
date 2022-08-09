@@ -1,6 +1,7 @@
 package com.example.yoyoiq.ChatFirebase;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +20,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     private Context context;
     private List<UserData> list;
 
-    public ChatAdapter(Context context, List<UserData> list) {
+    public ChatAdapter(Context context, ArrayList<UserData> list) {
         this.context = context;
-        this.list = new ArrayList<>();
-    }
-
-    public void add(UserData userData) {
-        list.add(userData);
-        notifyDataSetChanged();
-    }
-
-    public void clear() {
-        list.clear();
-        notifyDataSetChanged();
+        this.list = list;
     }
 
     @NonNull
@@ -46,6 +37,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
         UserData userData = list.get(position);
         holder.name.setText(userData.getUserName());
         holder.email.setText(userData.getEmailId());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("receiverId", userData.getMobileNo());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
 
     }
 

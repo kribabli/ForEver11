@@ -2,7 +2,6 @@ package com.example.yoyoiq;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,10 +10,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.yoyoiq.LoginPojo.RegistrationResponse;
-import com.example.yoyoiq.Retrofit.ApiClient;
-import com.example.yoyoiq.common.SharedPrefManager;
 import com.example.yoyoiq.Model.UserData;
+import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.example.yoyoiq.common.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -123,14 +122,14 @@ public class RegisterDetails extends AppCompatActivity {
             }
         });
     }
-    private void send_user_Data_onServer(){
-        Call<RegistrationResponse> call= ApiClient.getInstance().getApi().
-                SendUserDetails_server(mobileNo.getText().toString(),userName.getText().toString(),emailId.getText().toString(),password.getText().toString());
+
+    private void send_user_Data_onServer() {
+        Call<RegistrationResponse> call = ApiClient.getInstance().getApi().
+                SendUserDetails_server(mobileNo.getText().toString(), userName.getText().toString(), emailId.getText().toString(), password.getText().toString());
         call.enqueue(new Callback<RegistrationResponse>() {
             @Override
             public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
-                if(response.isSuccessful()){
-                    Log.d("Amit","Value 111 "+response.body().getStatus());
+                if (response.isSuccessful()) {
                     showDialog("User Register Successfully..", true);
                 }
             }
