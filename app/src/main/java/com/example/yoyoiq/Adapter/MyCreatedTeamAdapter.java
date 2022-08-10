@@ -10,16 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yoyoiq.Model.AllSelectedPlayer;
+import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamPOJOClass;
 import com.example.yoyoiq.R;
 
 import java.util.ArrayList;
 
 public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdapter.MyViewHolder> {
     Context context;
-    ArrayList<AllSelectedPlayer> list;
+    ArrayList<CreatedTeamPOJOClass> list;
+    int countWK=0;
 
-    public MyCreatedTeamAdapter(Context context, ArrayList<AllSelectedPlayer> list) {
+    public MyCreatedTeamAdapter(Context context, ArrayList<CreatedTeamPOJOClass> list) {
         this.context = context;
         this.list = list;
     }
@@ -33,8 +34,23 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyCreatedTeamAdapter.MyViewHolder holder, int position) {
-        holder.teamA.setText(list.get(position).getTitle());
-        Log.d("Amit","Value 11"+list.get(position).getTitle());
+        CreatedTeamPOJOClass createdTeamPOJOClass = list.get(position);
+
+        if (createdTeamPOJOClass.isCap()==true){
+            holder.teamA.setText(createdTeamPOJOClass.getTitle());
+        }else if (createdTeamPOJOClass.isVcap()==true){
+            holder.teamB.setText(createdTeamPOJOClass.getTitle());
+        }
+
+        for(int i=0;i<list.size();i++){
+            if (createdTeamPOJOClass.getPlaying_role().equals("WK")){
+                countWK++;
+            }
+            if (createdTeamPOJOClass.getPlaying_role().equals("BAT")){
+
+            }
+        }
+        holder.wkTv.setText(countWK);
     }
 
     @Override
