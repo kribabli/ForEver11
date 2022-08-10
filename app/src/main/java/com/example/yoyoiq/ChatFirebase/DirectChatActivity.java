@@ -1,6 +1,5 @@
 package com.example.yoyoiq.ChatFirebase;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -9,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.yoyoiq.Model.UserData;
 import com.example.yoyoiq.R;
@@ -25,7 +25,7 @@ public class DirectChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<UserData> list = new ArrayList();
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
-    SharedPreferences sharedPreferences;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,44 +33,13 @@ public class DirectChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_direct_chat);
         initMethod();
         setAction();
-        sharedPreferences = getSharedPreferences("path", MODE_PRIVATE);
-
-        databaseConnectivity.getDatabasePath(this).child("RegisterDetails").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String uid = dataSnapshot.getKey();
-                    String mobile1 = dataSnapshot.child("mobileNo").getValue().toString();
-                    String password11 = dataSnapshot.child("password").getValue().toString();
-                    String mobileS = sharedPreferences.getString("mobileNo", "");
-                    String passwordS = sharedPreferences.getString("userPassword", "");
-
-                    if (mobile1.contains(mobileS) && password11.contains(passwordS)) {
-                        String userName = dataSnapshot.child("userName").getValue().toString();
-                        String mobile = dataSnapshot.child("mobileNo").getValue().toString();
-                        String emailId = dataSnapshot.child("emailId").getValue().toString();
-                        String password = dataSnapshot.child("password").getValue().toString();
-
-                        UserData userData = new UserData(userName, mobile, emailId, password);
-                        list.add(userData);
-                        chatAdapter = new ChatAdapter(getApplicationContext(), list);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(DirectChatActivity.this));
-                        recyclerView.setAdapter(chatAdapter);
-                        chatAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        getAllUserList();
     }
 
     private void initMethod() {
         recyclerView = findViewById(R.id.recyclerView);
         close = findViewById(R.id.close);
+        swipeRefreshLayout = findViewById(R.id.swiper);
     }
 
     private void setAction() {
@@ -78,6 +47,42 @@ public class DirectChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAllUserList();
+            }
+        });
+    }
+
+    private void getAllUserList() {
+        databaseConnectivity.getDatabasePath(this).child("RegisterDetails").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String userName = dataSnapshot.child("userName").getValue().toString();
+                    String mobile = dataSnapshot.child("mobileNo").getValue().toString();
+                    String emailId = dataSnapshot.child("emailId").getValue().toString();
+                    String password = dataSnapshot.child("password").getValue().toString();
+
+                    UserData userData = new UserData(userName, mobile, emailId, password);
+                    list.add(userData);
+                    chatAdapter = new ChatAdapter(getApplicationContext(), list);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(DirectChatActivity.this));
+                    recyclerView.setAdapter(chatAdapter);
+                    chatAdapter.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

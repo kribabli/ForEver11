@@ -175,13 +175,12 @@ public class BATFragment extends Fragment {
                         Map<String, String> myMap = new HashMap<String, String>();
                         String playing11 = null;
 
-
                         for (int k = 0; k < teamSquadsA.length(); k++) {
                             JSONObject xObj = teamSquadsA.getJSONObject(k);
-                             playing11 = xObj.getString("playing11");
+                            playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamAPlayerId.add(player_id);
-                            myMap.put(player_id,playing11);
+                            myMap.put(player_id, playing11);
                         }
 
                         for (int k = 0; k < teamSquadsB.length(); k++) {
@@ -189,9 +188,8 @@ public class BATFragment extends Fragment {
                             playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamBPlayerId.add(player_id);
-                            myMap.put(player_id,playing11);
+                            myMap.put(player_id, playing11);
                         }
-
 
                         for (int i = 0; i < jsonArrayPlayers.length(); i++) {
                             jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
@@ -204,17 +202,13 @@ public class BATFragment extends Fragment {
                                     abbrA = matchA;
                                 } else if (allTeamBPlayerId.contains(pidPlayers)) {
                                     abbrA = matchB;
-
                                 }
-                                if(myMap.containsKey(pidPlayers)){
-                                    playing11A= myMap.get(pidPlayers);
-
+                                if (myMap.containsKey(pidPlayers)) {
+                                    playing11A = myMap.get(pidPlayers);
                                 }
-
                                 SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, false);
                                 list.add(squadsA);
                                 squadsBAdapter = new SquadsBAdapter(getContext(), list);
-
                             }
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

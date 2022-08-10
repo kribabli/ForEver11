@@ -1,7 +1,6 @@
 package com.example.yoyoiq.ChatFirebase;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -35,16 +34,12 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        sendBtn = findViewById(R.id.send);
-        close = findViewById(R.id.close);
-        messageEd = findViewById(R.id.message);
-        recyclerView = findViewById(R.id.recyclerView);
-        receiverId = getIntent().getStringExtra("receiverId");
-
+        initMethod();
         setAction();
+
+        receiverId = getIntent().getStringExtra("receiverId");
         senderRoom = FirebaseAuth.getInstance().getUid() + receiverId;
         receiverRoom = receiverId + FirebaseAuth.getInstance().getUid();
-
         databaseReferenceSender = FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom);
         databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom);
 
@@ -67,20 +62,24 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = messageEd.getText().toString();
-                if (message.trim().length() > 0) {
-                    sendMessage(message);
-                }
-            }
-        });
     }
 
-    private void receiveMessage() {
+    private void initMethod() {
+        sendBtn = findViewById(R.id.send);
+        close = findViewById(R.id.close);
+        messageEd = findViewById(R.id.message);
+        recyclerView = findViewById(R.id.recyclerView);
+    }
 
+    private void setAction() {
+        close.setOnClickListener(v -> finish());
+
+        sendBtn.setOnClickListener(v -> {
+            String message = messageEd.getText().toString();
+            if (message.trim().length() > 0) {
+                sendMessage(message);
+            }
+        });
     }
 
     private void sendMessage(String message) {
@@ -96,14 +95,5 @@ public class ChatActivity extends AppCompatActivity {
         databaseReferenceSender
                 .child(messageId)
                 .setValue(messageModel);
-    }
-
-    private void setAction() {
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 }

@@ -72,7 +72,6 @@ public class ARFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_a_r, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
         return root;
@@ -159,7 +158,6 @@ public class ARFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-
                     JSONObject jsonObjectPlayers = null;
                     //----------------------for Players----------------------------
                     JSONArray jsonArrayPlayers = null;
@@ -175,16 +173,14 @@ public class ARFragment extends Fragment {
                         ArrayList<String> allTeamBPlayerId = new ArrayList<>();
                         ArrayList<String> allTeamInformation = new ArrayList<>();
                         Map<String, String> myMap = new HashMap<String, String>();
-                        String playing11=null;
-
-
+                        String playing11 = null;
 
                         for (int k = 0; k < teamSquadsA.length(); k++) {
                             JSONObject xObj = teamSquadsA.getJSONObject(k);
-                             playing11 = xObj.getString("playing11");
+                            playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamAPlayerId.add(player_id);
-                            myMap.put(player_id,playing11);
+                            myMap.put(player_id, playing11);
                         }
 
                         for (int k = 0; k < teamSquadsB.length(); k++) {
@@ -192,8 +188,9 @@ public class ARFragment extends Fragment {
                             playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamBPlayerId.add(player_id);
-                            myMap.put(player_id,playing11);
+                            myMap.put(player_id, playing11);
                         }
+
                         for (int i = 0; i < jsonArrayPlayers.length(); i++) {
                             jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
                             pidPlayers = jsonObjectPlayers.getString("pid");
@@ -206,13 +203,12 @@ public class ARFragment extends Fragment {
                                 } else if (allTeamBPlayerId.contains(pidPlayers)) {
                                     abbrA = matchB;
                                 }
-                                if(myMap.containsKey(pidPlayers)){
-                                    playing11A=myMap.get(pidPlayers);
+                                if (myMap.containsKey(pidPlayers)) {
+                                    playing11A = myMap.get(pidPlayers);
                                 }
                                 SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, false);
                                 list.add(squadsA);
                                 arAdapter = new ARAdapter(getContext(), list);
-
                             }
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -221,7 +217,6 @@ public class ARFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 } else {
                 }
             }

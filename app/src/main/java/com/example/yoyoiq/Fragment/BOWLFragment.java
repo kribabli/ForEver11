@@ -169,28 +169,28 @@ public class BOWLFragment extends Fragment {
                         teamSquadsA = new JSONArray(SquadsA);
                         teamSquadsB = new JSONArray(SquadsB);
                         teamsInformation = new JSONArray(jsonArray2);
-                        ArrayList<String>allTeamAPlayerId=new ArrayList<>();
-                        ArrayList<String>allTeamBPlayerId=new ArrayList<>();
-                        ArrayList<String>allTeamInformation=new ArrayList<>();
+                        ArrayList<String> allTeamAPlayerId = new ArrayList<>();
+                        ArrayList<String> allTeamBPlayerId = new ArrayList<>();
+                        ArrayList<String> allTeamInformation = new ArrayList<>();
                         Map<String, String> myMap = new HashMap<String, String>();
                         String playing11 = null;
 
-
-                        for(int k=0;k<teamSquadsA.length();k++){
+                        for (int k = 0; k < teamSquadsA.length(); k++) {
                             JSONObject xObj = teamSquadsA.getJSONObject(k);
-                             playing11 = xObj.getString("playing11");
+                            playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamAPlayerId.add(player_id);
-                            myMap.put(player_id,playing11);
+                            myMap.put(player_id, playing11);
                         }
 
-                        for(int k=0;k<teamSquadsB.length();k++){
+                        for (int k = 0; k < teamSquadsB.length(); k++) {
                             JSONObject xObj = teamSquadsB.getJSONObject(k);
-                             playing11 = xObj.getString("playing11");
+                            playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamBPlayerId.add(player_id);
-                            myMap.put(player_id,playing11);
+                            myMap.put(player_id, playing11);
                         }
+
                         for (int i = 0; i < jsonArrayPlayers.length(); i++) {
                             jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
                             pidPlayers = jsonObjectPlayers.getString("pid");
@@ -198,22 +198,17 @@ public class BOWLFragment extends Fragment {
                             if (playing_rolePlayers.equals("bowl")) {
                                 short_namePlayers = jsonObjectPlayers.getString("short_name");
                                 fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
-                                if(allTeamAPlayerId.contains(pidPlayers)){
-                                    abbrA=matchA;
+                                if (allTeamAPlayerId.contains(pidPlayers)) {
+                                    abbrA = matchA;
+                                } else if (allTeamBPlayerId.contains(pidPlayers)) {
+                                    abbrA = matchB;
                                 }
-                                else if(allTeamBPlayerId.contains(pidPlayers)){
-                                    abbrA=matchB;
-
+                                if (myMap.containsKey(pidPlayers)) {
+                                    playing11A = myMap.get(pidPlayers);
                                 }
-                                if(myMap.containsKey(pidPlayers)){
-                                    playing11A=myMap.get(pidPlayers);
-
-                                }
-
                                 SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, false);
                                 list.add(squadsA);
                                 bowlAdapter = new BOWLAdapter(getContext(), list);
-
                             }
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -224,7 +219,6 @@ public class BOWLFragment extends Fragment {
                     }
 
                 } else {
-
                 }
             }
 
@@ -238,7 +232,7 @@ public class BOWLFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser){
+        if (isVisibleToUser) {
             getAllPlayer();
         }
     }
