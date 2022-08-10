@@ -93,7 +93,7 @@ public class SquadsBAdapter extends RecyclerView.Adapter<SquadsBAdapter.MyViewHo
                                     HelperData.playerCounter.setValue(HelperData.playerCounter.getValue() + 1);
                                     holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
                                     holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
-                                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()), listData.getShort_namePlayers(), listData.getAbbr(), "BAT", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
+                                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()),HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "BAT", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
                                     HelperData.allSelectedPlayer.setValue(Collections.singletonList(allSelectedPlayer));
                                     HelperData.myTeamList.add(allSelectedPlayer);
                                 } else {
@@ -109,7 +109,7 @@ public class SquadsBAdapter extends RecyclerView.Adapter<SquadsBAdapter.MyViewHo
                                     HelperData.playerCounter.setValue(HelperData.playerCounter.getValue() + 1);
                                     holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
                                     holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
-                                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()), listData.getShort_namePlayers(), listData.getAbbr(), "BAT", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
+                                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()),HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "BAT", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
                                     HelperData.allSelectedPlayer.setValue(Collections.singletonList(allSelectedPlayer));
                                     HelperData.myTeamList.add(allSelectedPlayer);
                                 } else {

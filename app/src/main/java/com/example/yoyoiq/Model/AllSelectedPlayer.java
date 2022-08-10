@@ -1,14 +1,16 @@
 package com.example.yoyoiq.Model;
 
 public class AllSelectedPlayer {
+
     int pid;
-    String title, country, playing_role;
+    String matchId, title, country, playing_role;
     double fantasy_player_rating;
     boolean added, isCap, isVcap;
     String points;
 
-    public AllSelectedPlayer(int pid, String title, String country, String playing_role, double fantasy_player_rating, boolean added, boolean isCap, boolean isVcap, String points) {
+    public AllSelectedPlayer(int pid,String matchId ,String title, String country, String playing_role, double fantasy_player_rating, boolean added, boolean isCap, boolean isVcap, String points) {
         this.pid = pid;
+        this.matchId=matchId;
         this.title = title;
         this.country = country;
         this.playing_role = playing_role;
@@ -19,6 +21,13 @@ public class AllSelectedPlayer {
         this.points = points;
     }
 
+    public String getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(String matchId) {
+        this.matchId = matchId;
+    }
 
     public int getPid() {
         return pid;

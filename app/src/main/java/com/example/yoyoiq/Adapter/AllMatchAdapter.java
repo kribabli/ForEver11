@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
                 intent.putExtra("logo_url_b", listData.getLogo_url_b());
                 intent.putExtra("date_start", listData.getDate_start());
                 intent.putExtra("date_end", listData.getDate_end());
+                HelperData.matchId= listData.getMatch_id();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

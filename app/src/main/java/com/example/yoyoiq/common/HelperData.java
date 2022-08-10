@@ -17,6 +17,8 @@ public class HelperData {
     public static MutableLiveData<Integer> bat = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> ar = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> bowl = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> Selectedcap = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> selectedVcap = new MutableLiveData<>(0);
     public static MutableLiveData<Double> creditCounter = new MutableLiveData<>(0.0);
     public static MutableLiveData<List<AllSelectedPlayer>> allSelectedPlayer = new MutableLiveData<>();
 
@@ -34,7 +36,7 @@ public class HelperData {
     public static String addedPlayerIds;
     public static String matchId;
     public static String contestId;
-    public static String UserId;
+    public static String UserId="71";
 
 
     public static void newTeamMaking() {
@@ -47,6 +49,8 @@ public class HelperData {
         bowl.setValue(0);
         conty1.setValue(0);
         conty2.setValue(0);
+        Selectedcap.setValue(0);
+        selectedVcap.setValue(0);
         creditCounter.setValue(100.0);
         vcap=false;
         cap=false;

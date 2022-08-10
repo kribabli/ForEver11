@@ -298,7 +298,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String match_id = jsonObject.getString("match_id");
                             String date_start = jsonObject.getString("date_start_ist");
                             String date_end = jsonObject.getString("date_end_ist");
-                            Log.d("TAG", "onResponse Match_id: " + match_id);
 
                             JSONArray teama1 = jsonObject.getJSONArray("teama");
                             JSONArray teamb1 = jsonObject.getJSONArray("teamb");

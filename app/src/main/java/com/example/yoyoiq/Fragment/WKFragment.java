@@ -104,10 +104,7 @@ public class WKFragment extends Fragment {
 
                     String jsonArray2 = new Gson().toJson(responsePlayer.getResponsePlay().getTeams());
                     String jsonArray3 = new Gson().toJson(responsePlayer.getResponsePlay().getPlayers());
-                    Log.d("TAG", "onResponse1: " + jsonArray);
-                    Log.d("TAG", "onResponse2: " + jsonArray1);
-                    Log.d("TAG", "onResponse3: " + jsonArray2);
-                    Log.d("TAG", "onResponse4: " + jsonArray3);
+
 
                     //----------------------for TeamB----------------------------
                     JSONObject jsonObjectTeamB = null;
@@ -207,7 +204,7 @@ public class WKFragment extends Fragment {
                             myMap.put(player_id,playing11);
                         }
 
-                        Log.d("Amit","Value 111 "+isPlaying.size());
+
 
 
 
@@ -217,7 +214,7 @@ public class WKFragment extends Fragment {
                             playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
                             if (playing_rolePlayers.equals("wk")) {
                                 short_namePlayers = jsonObjectPlayers.getString("short_name");
-                                Log.d("amit","Value "+short_namePlayers);
+
                                 fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
                                 if (allTeamAPlayerId.contains(pidPlayers)) {
                                     abbrA = matchA;
@@ -229,7 +226,6 @@ public class WKFragment extends Fragment {
                                     playing11A=myMap.get(pidPlayers);
 
                                 }
-
                                 SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, false);
                                 list.add(squadsA);
                                 squadsAAdapter = new SquadsAAdapter(getContext(), list);
@@ -248,6 +244,7 @@ public class WKFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponsePlayer> call, Throwable t) {
+
             }
         });
 

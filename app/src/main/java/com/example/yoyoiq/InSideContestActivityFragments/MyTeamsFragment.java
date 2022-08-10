@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MyTeamsFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
-    ArrayList<AllSelectedPlayer> arrayList = new ArrayList();
+    ArrayList<myAllTeamRequest> arrayList = new ArrayList();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
@@ -54,7 +54,7 @@ public class MyTeamsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_my_teams, container, false);
-        recyclerView = root.findViewById(R.id.myTeamList);
+        recyclerView = root.findViewById(R.id.myAllTeamList);
         swipeRefreshLayout = root.findViewById(R.id.swiper);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -67,8 +67,9 @@ public class MyTeamsFragment extends Fragment {
     }
 
     private void getMyAllCreatedTeam() {
-        arrayList = (HelperData.myTeamList);
-        myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), arrayList);
+
+
+//        myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), arrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(myCreatedTeamAdapter);
         myCreatedTeamAdapter.notifyDataSetChanged();
