@@ -1,6 +1,7 @@
 package com.example.yoyoiq.InSideContestActivityFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,13 @@ import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamPOJOClass;
 import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -101,27 +104,39 @@ public class MyTeamsFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         }
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<ArrayList<CreatedTeamPOJOClass>>() {
+                        }.getType();
+                        list = gson.fromJson(squads.toString(), listType);
+                        Log.d("Amit","Value "+list.toString());
+                        Log.d("Amit","Value "+squads.toString());
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setAdapter(myCreatedTeamAdapter);
+                        myCreatedTeamAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
 
-                        for (int j = 0; j < squads.length(); j++) {
-                            JSONObject jsonObjectSquads = squads.getJSONObject(j);
-                            boolean added = jsonObjectSquads.getBoolean("added");
-                            String country = jsonObjectSquads.getString("country");
-                            String fantasy_player_rating = jsonObjectSquads.getString("fantasy_player_rating");
-                            boolean isCap = jsonObjectSquads.getBoolean("isCap");
-                            boolean isVcap = jsonObjectSquads.getBoolean("isVcap");
-                            String matchId = jsonObjectSquads.getString("matchId");
-                            String pid = jsonObjectSquads.getString("pid");
-                            String playing_role = jsonObjectSquads.getString("playing_role");
-                            String points = jsonObjectSquads.getString("points");
-                            String title = jsonObjectSquads.getString("title");
 
-                            CreatedTeamPOJOClass createdTeamPOJOClass = new CreatedTeamPOJOClass(added, country, fantasy_player_rating, isCap, isVcap, matchId, pid, playing_role, points, title);
-                            list.add(createdTeamPOJOClass);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            recyclerView.setAdapter(myCreatedTeamAdapter);
-                            myCreatedTeamAdapter.notifyDataSetChanged();
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
+
+//                        for (int j = 0; j < squads.length(); j++) {
+//                            JSONObject jsonObjectSquads = squads.getJSONObject(j);
+//                            boolean added = jsonObjectSquads.getBoolean("added");
+//                            String country = jsonObjectSquads.getString("country");
+//                            String fantasy_player_rating = jsonObjectSquads.getString("fantasy_player_rating");
+//                            boolean isCap = jsonObjectSquads.getBoolean("isCap");
+//                            boolean isVcap = jsonObjectSquads.getBoolean("isVcap");
+//                            String matchId = jsonObjectSquads.getString("matchId");
+//                            String pid = jsonObjectSquads.getString("pid");
+//                            String playing_role = jsonObjectSquads.getString("playing_role");
+//                            String points = jsonObjectSquads.getString("points");
+//                            String title = jsonObjectSquads.getString("title");
+//
+//                            CreatedTeamPOJOClass createdTeamPOJOClass = new CreatedTeamPOJOClass(added, country, fantasy_player_rating, isCap, isVcap, matchId, pid, playing_role, points, title);
+//                            list.add(createdTeamPOJOClass);
+//                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//                            recyclerView.setAdapter(myCreatedTeamAdapter);
+//                            myCreatedTeamAdapter.notifyDataSetChanged();
+//                            swipeRefreshLayout.setRefreshing(false);
+//                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -59,7 +59,7 @@ public interface UsersServices {
     );
 
     @FormUrlEncoded
-    @POST("registration")
+    @POST("userlogin")
     Call<LoginResponse> getUserLoginData(
             @Field("email_or_mobile") String mobile_no,
             @Field("password") String password

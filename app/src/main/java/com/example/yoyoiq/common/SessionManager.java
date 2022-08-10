@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 import com.example.yoyoiq.LoginPojo.userLoginData;
 
+import java.util.ArrayList;
+
 public class SessionManager {
     private static String SHARED_PREF_NAME = "YoyoIq_UserDetails_from_Server";
     private SharedPreferences sharedPreferences;
@@ -15,13 +17,13 @@ public class SessionManager {
         this.context = context;
     }
 
-    public void saveUser(userLoginData userData) {
+    public void saveUser(ArrayList<userLoginData> userData) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.putString("userId", userData.getUser_id());
-        editor.putString("mobileNoServer", userData.getMobile_no());
-        editor.putString("emailIdServer", userData.getEmail_id());
-        editor.putString("userNameServer", userData.getUsername());
+//        editor.putString("userId", userData.getUser_id());
+//        editor.putString("mobileNoServer", userData.getMobile_no());
+//        editor.putString("emailIdServer", userData.getEmail_id());
+//        editor.putString("userNameServer", userData.getUsername());
         editor.putBoolean("logged", true);
         editor.apply();
     }

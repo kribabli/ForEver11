@@ -97,7 +97,7 @@ public class RegisterDetails extends AppCompatActivity {
                 isValid = false;
             } else {
                 progressDialog.show();
-                insertRegisterData();
+//                insertRegisterData();
                 send_user_Data_onServer();
             }
         } catch (Exception e) {

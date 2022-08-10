@@ -1,6 +1,7 @@
 package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
     @Override
     public void onBindViewHolder(@NonNull MyCreatedTeamAdapter.MyViewHolder holder, int position) {
         holder.teamA.setText(list.get(position).getTitle());
+        Log.d("Amit","Value 11"+list.get(position).getTitle());
     }
 
     @Override
