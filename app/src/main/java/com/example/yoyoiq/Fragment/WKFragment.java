@@ -1,7 +1,6 @@
 package com.example.yoyoiq.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +74,6 @@ public class WKFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_w_k, container, false);
-
         recyclerView = view.findViewById(R.id.recyclerView);
         return view;
     }
@@ -104,7 +102,6 @@ public class WKFragment extends Fragment {
 
                     String jsonArray2 = new Gson().toJson(responsePlayer.getResponsePlay().getTeams());
                     String jsonArray3 = new Gson().toJson(responsePlayer.getResponsePlay().getPlayers());
-
 
                     //----------------------for TeamB----------------------------
                     JSONObject jsonObjectTeamB = null;
@@ -168,7 +165,6 @@ public class WKFragment extends Fragment {
                     JSONArray teamSquadsA = null;
                     JSONArray teamSquadsB = null;
                     JSONArray teamsInformation = null;
-
                     try {
                         jsonArrayPlayers = new JSONArray(jsonArray3);
                         teamSquadsA = new JSONArray(SquadsA);
@@ -179,17 +175,15 @@ public class WKFragment extends Fragment {
                         ArrayList<String> allTeamInformation = new ArrayList<>();
                         ArrayList<String> isPlaying = new ArrayList<>();
                         Map<String, String> myMap = new HashMap<String, String>();
-
                         String playing11 = null;
-
 
                         for (int k = 0; k < teamSquadsA.length(); k++) {
                             JSONObject xObj = teamSquadsA.getJSONObject(k);
-                             playing11 = xObj.getString("playing11");
-                             String player_id = xObj.getString("player_id");
+                            playing11 = xObj.getString("playing11");
+                            String player_id = xObj.getString("player_id");
                             allTeamAPlayerId.add(player_id);
                             isPlaying.add(playing11);
-                            myMap.put(player_id,playing11);
+                            myMap.put(player_id, playing11);
                             if (playing11.equalsIgnoreCase("true")) {
                                 allTruePlayers = allTruePlayers + "_" + player_id + "_\n";
                             }
@@ -197,16 +191,12 @@ public class WKFragment extends Fragment {
 
                         for (int k = 0; k < teamSquadsB.length(); k++) {
                             JSONObject xObj = teamSquadsB.getJSONObject(k);
-                             playing11 = xObj.getString("playing11");
+                            playing11 = xObj.getString("playing11");
                             String player_id = xObj.getString("player_id");
                             allTeamBPlayerId.add(player_id);
                             isPlaying.add(playing11);
-                            myMap.put(player_id,playing11);
+                            myMap.put(player_id, playing11);
                         }
-
-
-
-
 
                         for (int i = 0; i < jsonArrayPlayers.length(); i++) {
                             jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
@@ -214,22 +204,18 @@ public class WKFragment extends Fragment {
                             playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
                             if (playing_rolePlayers.equals("wk")) {
                                 short_namePlayers = jsonObjectPlayers.getString("short_name");
-
                                 fantasy_player_ratingPlayers = jsonObjectPlayers.getString("fantasy_player_rating");
                                 if (allTeamAPlayerId.contains(pidPlayers)) {
                                     abbrA = matchA;
                                 } else if (allTeamBPlayerId.contains(pidPlayers)) {
                                     abbrA = matchB;
-
                                 }
-                                if(myMap.containsKey(pidPlayers)){
-                                    playing11A=myMap.get(pidPlayers);
-
+                                if (myMap.containsKey(pidPlayers)) {
+                                    playing11A = myMap.get(pidPlayers);
                                 }
                                 SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, false);
                                 list.add(squadsA);
                                 squadsAAdapter = new SquadsAAdapter(getContext(), list);
-
                             }
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
