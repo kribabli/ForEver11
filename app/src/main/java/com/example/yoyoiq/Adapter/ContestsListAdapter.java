@@ -65,7 +65,6 @@ public class ContestsListAdapter extends RecyclerView.Adapter<ContestsListAdapte
                 intent.putExtra("price_contribution", listData.getPrice_contribution());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 HelperData.contestId=listData.getContest_id();
-                HelperData.matchId= listData.getMatch_id();
 
                 context.startActivity(intent);
             }

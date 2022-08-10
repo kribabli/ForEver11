@@ -13,19 +13,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.SendMyTeamOnServerPojo.SendCreatedTeamServer;
 import com.example.yoyoiq.Adapter.TeamPreviewAdapter;
-import com.example.yoyoiq.ContestPOJO.Contests;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.HelperData;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -95,6 +89,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
         setAction();
         countDownStart();
 
+
     }
 
     private void inItMethod() {
@@ -123,10 +118,14 @@ public class TeamPreviewActivity extends AppCompatActivity {
     }
 
     private void Handle_And_UploadTeamOnServer()  {
-        if(HelperData.Selectedcap.getValue()==1){
-            if(HelperData.selectedVcap.getValue()==1){
-                String check =HelperData.myTeamList.toString();
-                Call<JSONObject> call= ApiClient.getInstance().getApi().Send_myteam_list_Server(HelperData.UserId,HelperData.matchId,check);
+        if(HelperData.Selectedcap.getValue()>=1){
+            if(HelperData.selectedVcap.getValue()>=1){
+                Gson gson = new Gson();
+                String data = gson.toJson(arrayList);
+//                String check =HelperData.myTeamList.toString();
+                Log.d("Amit","Value Check "+data);
+
+                Call<JSONObject> call= ApiClient.getInstance().getApi().Send_myteam_list_Server(HelperData.UserId,HelperData.matchId,data);
                 call.enqueue(new Callback<JSONObject>() {
                     @Override
                     public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
@@ -156,8 +155,6 @@ public class TeamPreviewActivity extends AppCompatActivity {
 
 
     }
-
-
 
     private void countDownStart() {
         runnable = new Runnable() {
