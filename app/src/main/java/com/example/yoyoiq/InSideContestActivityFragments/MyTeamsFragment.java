@@ -123,23 +123,27 @@ public class MyTeamsFragment extends Fragment {
                                         swipeRefreshLayout.setRefreshing(false);
 
                                     } catch (Exception e) {
+                                        swipeRefreshLayout.setRefreshing(false);
                                         e.printStackTrace();
                                     }
                                 }
                             } catch (Exception e) {
+                                swipeRefreshLayout.setRefreshing(false);
                                 e.printStackTrace();
                             }
                         }
                     } catch (Exception e) {
+                        swipeRefreshLayout.setRefreshing(false);
                         e.printStackTrace();
                     }
                 } else {
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<CreatedTeamResponse> call, Throwable t) {
-
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
