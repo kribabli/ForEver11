@@ -1,12 +1,12 @@
 package com.example.yoyoiq.InSideContestActivityFragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -76,6 +76,7 @@ public class MyTeamsFragment extends Fragment {
     }
 
     private void getMyAllCreatedTeam() {
+        list.clear();
         Call<CreatedTeamResponse> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -88,7 +89,6 @@ public class MyTeamsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     String totalData = new Gson().toJson(createdTeamResponse.getResponse());
 
-                    Log.d("TAG", "onResponse: " + totalData);
                     //----------------------for CreatedTeam(Per User)----------------------------
                     JSONArray short_squads = null;
                     JSONArray jsonArray = null;
@@ -98,43 +98,38 @@ public class MyTeamsFragment extends Fragment {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
                                 short_squads = jsonObject.getJSONArray("short_squads");
-                                Log.d("TAG", "onResponse1: " + short_squads);
+                                for (int j = 0; j < short_squads.length(); j++) {
+                                    try {
+                                        JSONObject jsonObjectSquads = short_squads.getJSONObject(0);
+                                        String TeamName = jsonObjectSquads.getString("TeamName");
+                                        int allrounder = Integer.parseInt(jsonObjectSquads.getString("allrounder"));
+                                        int batsman = Integer.parseInt(jsonObjectSquads.getString("batsman"));
+                                        int boller = Integer.parseInt(jsonObjectSquads.getString("boller"));
+                                        String captain = jsonObjectSquads.getString("captain");
+                                        String match_id = jsonObjectSquads.getString("match_id");
+                                        int teamAcount = Integer.parseInt(jsonObjectSquads.getString("teamAcount"));
+                                        int teamBcount = Integer.parseInt(jsonObjectSquads.getString("teamBcount"));
+                                        String user_id = jsonObjectSquads.getString("user_id");
+                                        String vicecaptain = jsonObjectSquads.getString("vicecaptain");
+                                        int wkeeper = Integer.parseInt(jsonObjectSquads.getString("wkeeper"));
+
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(TeamName, match_id, user_id, captain, vicecaptain, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount);
+                                        list.add(myAllTeamRequest);
+
+                                        myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                        recyclerView.setAdapter(myCreatedTeamAdapter);
+                                        myCreatedTeamAdapter.notifyDataSetChanged();
+                                        swipeRefreshLayout.setRefreshing(false);
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
-
-                        Log.d("TAG", "onResponse2: " + short_squads);
-                        for (int j = 0; j < short_squads.length(); j++) {
-                            try {
-                                JSONObject jsonObjectSquads = short_squads.getJSONObject(0);
-                                Log.d("TAG", "onResponse3: " + jsonObjectSquads);
-                                String TeamName = jsonObjectSquads.getString("TeamName");
-                                int allrounder = Integer.parseInt(jsonObjectSquads.getString("allrounder"));
-                                int batsman = Integer.parseInt(jsonObjectSquads.getString("batsman"));
-                                int boller = Integer.parseInt(jsonObjectSquads.getString("boller"));
-                                String captain = jsonObjectSquads.getString("captain");
-                                String match_id = jsonObjectSquads.getString("match_id");
-                                int teamAcount = Integer.parseInt(jsonObjectSquads.getString("teamAcount"));
-                                int teamBcount = Integer.parseInt(jsonObjectSquads.getString("teamBcount"));
-                                String user_id = jsonObjectSquads.getString("user_id");
-                                String vicecaptain = jsonObjectSquads.getString("vicecaptain");
-                                int wkeeper = Integer.parseInt(jsonObjectSquads.getString("wkeeper"));
-
-//                                CreatedTeamPOJOClass createdTeamPOJOClass = new CreatedTeamPOJOClass(added, country, fantasy_player_rating, isCap, isVcap, matchId, pid, playing_role, points, title);
-//                                list.add(createdTeamPOJOClass);
-
-//                                myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
-//                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//                                recyclerView.setAdapter(myCreatedTeamAdapter);
-//                                myCreatedTeamAdapter.notifyDataSetChanged();
-//                                swipeRefreshLayout.setRefreshing(false);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

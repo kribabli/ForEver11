@@ -33,12 +33,17 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
     @Override
     public void onBindViewHolder(@NonNull MyCreatedTeamAdapter.MyViewHolder holder, int position) {
         myAllTeamRequest allTeamRequest = list.get(position);
-        holder.CName.setText(allTeamRequest.getCaptain());
-        holder.VCname.setText(allTeamRequest.getVicecaptain());
-        holder.wkTv.setText(Integer.parseInt(String.valueOf(allTeamRequest.getWkeeper())));
-        holder.batTv.setText(allTeamRequest.getBatsman());
-        holder.arTv.setText(allTeamRequest.getAllrounder());
-        holder.bowlTv.setText(allTeamRequest.getBoller());
+        if (list.size() > 0) {
+            holder.CName.setText(allTeamRequest.getCaptain());
+            holder.VCname.setText(allTeamRequest.getVicecaptain());
+            holder.wkTv.setText(String.valueOf(allTeamRequest.getWkeeper()));
+            holder.batTv.setText(String.valueOf(allTeamRequest.getBatsman()));
+            holder.arTv.setText(String.valueOf(allTeamRequest.getAllrounder()));
+            holder.bowlTv.setText(String.valueOf(allTeamRequest.getBoller()));
+            holder.teamACount.setText(String.valueOf(allTeamRequest.getTeamAcount()));
+            holder.teamBCount.setText(String.valueOf(allTeamRequest.getTeamBcount()));
+            holder.userNameAndTid.setText(String.valueOf(allTeamRequest.getUser_id()));
+        }
     }
 
     @Override
@@ -47,7 +52,7 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView teamA, teamB, wkTv, batTv, arTv, bowlTv, CName, VCname;
+        TextView teamA, teamB, wkTv, batTv, arTv, bowlTv, CName, VCname, teamACount, teamBCount, userNameAndTid;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +64,9 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
             bowlTv = itemView.findViewById(R.id.bowlTv);
             CName = itemView.findViewById(R.id.CName);
             VCname = itemView.findViewById(R.id.VCname);
+            teamACount = itemView.findViewById(R.id.teamACount);
+            teamBCount = itemView.findViewById(R.id.teamBCount);
+            userNameAndTid = itemView.findViewById(R.id.userNameAndTid);
         }
     }
 }
