@@ -1,7 +1,6 @@
 package com.example.yoyoiq.InSideContestActivityFragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.MyCreatedTeamAdapter;
-import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamPOJOClass;
 import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
-import com.example.yoyoiq.MainActivity;
-import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.HelperData;
@@ -38,7 +33,7 @@ public class MyTeamsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-    ArrayList<CreatedTeamPOJOClass> list = new ArrayList();
+    ArrayList<myAllTeamRequest> list = new ArrayList();
 
     public MyTeamsFragment() {
         // Required empty public constructor
@@ -81,6 +76,12 @@ public class MyTeamsFragment extends Fragment {
     }
 
     private void getMyAllCreatedTeam() {
+        list = (HelperData.myCountyPlayer);
+        myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(myCreatedTeamAdapter);
+        myCreatedTeamAdapter.notifyDataSetChanged();
+
         Call<CreatedTeamResponse> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -98,7 +99,6 @@ public class MyTeamsFragment extends Fragment {
                     JSONArray jsonArray = null;
                     try {
                         jsonArray = new JSONArray(totalData);
-                        Log.d("Amit","Value "+jsonArray);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
@@ -107,35 +107,35 @@ public class MyTeamsFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         }
-                        Log.d("Amit","Value check "+squads);
 
-                        for (int j = 0; j < squads.length(); j++) {
-                            try {
-                                JSONObject jsonObjectSquads = squads.getJSONObject(j);
-                                boolean added = jsonObjectSquads.getBoolean("added");
-                                String country = jsonObjectSquads.getString("country");
-                                String fantasy_player_rating = jsonObjectSquads.getString("fantasy_player_rating");
-                                boolean isCap = jsonObjectSquads.getBoolean("isCap");
-                                boolean isVcap = jsonObjectSquads.getBoolean("isVcap");
-                                String matchId = jsonObjectSquads.getString("matchId");
-                                String pid = jsonObjectSquads.getString("pid");
-                                String playing_role = jsonObjectSquads.getString("playing_role");
-                                String points = jsonObjectSquads.getString("points");
-                                String title = jsonObjectSquads.getString("title");
+//                        for (int j = 0; j < squads.length(); j++) {
+//                            try {
+//                                JSONObject jsonObjectSquads = squads.getJSONObject(j);
+//                                boolean added = jsonObjectSquads.getBoolean("added");
+//                                String country = jsonObjectSquads.getString("country");
+//                                String fantasy_player_rating = jsonObjectSquads.getString("fantasy_player_rating");
+//                                boolean isCap = jsonObjectSquads.getBoolean("isCap");
+//                                boolean isVcap = jsonObjectSquads.getBoolean("isVcap");
+//                                String matchId = jsonObjectSquads.getString("matchId");
+//                                String pid = jsonObjectSquads.getString("pid");
+//                                String playing_role = jsonObjectSquads.getString("playing_role");
+//                                String points = jsonObjectSquads.getString("points");
+//                                String title = jsonObjectSquads.getString("title");
+//
+//                                CreatedTeamPOJOClass createdTeamPOJOClass = new CreatedTeamPOJOClass(added, country, fantasy_player_rating, isCap, isVcap, matchId, pid, playing_role, points, title);
+//                                list.add(createdTeamPOJOClass);
+//
+////                                myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
+////                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+////                                recyclerView.setAdapter(myCreatedTeamAdapter);
+////                                myCreatedTeamAdapter.notifyDataSetChanged();
+////                                swipeRefreshLayout.setRefreshing(false);
+//
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
 
-                                CreatedTeamPOJOClass createdTeamPOJOClass = new CreatedTeamPOJOClass(added, country, fantasy_player_rating, isCap, isVcap, matchId, pid, playing_role, points, title);
-                                list.add(createdTeamPOJOClass);
-
-//                                myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
-//                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//                                recyclerView.setAdapter(myCreatedTeamAdapter);
-//                                myCreatedTeamAdapter.notifyDataSetChanged();
-//                                swipeRefreshLayout.setRefreshing(false);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

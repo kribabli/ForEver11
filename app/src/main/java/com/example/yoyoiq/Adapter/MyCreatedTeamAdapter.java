@@ -1,7 +1,6 @@
 package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamPOJOClass;
+import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.R;
 
 import java.util.ArrayList;
 
 public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdapter.MyViewHolder> {
     Context context;
-    ArrayList<CreatedTeamPOJOClass> list;
-    int countWK=0;
+    ArrayList<myAllTeamRequest> list;
 
-    public MyCreatedTeamAdapter(Context context, ArrayList<CreatedTeamPOJOClass> list) {
+    public MyCreatedTeamAdapter(Context context, ArrayList<myAllTeamRequest> list) {
         this.context = context;
         this.list = list;
     }
@@ -34,23 +32,13 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyCreatedTeamAdapter.MyViewHolder holder, int position) {
-        CreatedTeamPOJOClass createdTeamPOJOClass = list.get(position);
-
-        if (createdTeamPOJOClass.isCap()==true){
-            holder.teamA.setText(createdTeamPOJOClass.getTitle());
-        }else if (createdTeamPOJOClass.isVcap()==true){
-            holder.teamB.setText(createdTeamPOJOClass.getTitle());
-        }
-
-        for(int i=0;i<list.size();i++){
-            if (createdTeamPOJOClass.getPlaying_role().equals("WK")){
-                countWK++;
-            }
-            if (createdTeamPOJOClass.getPlaying_role().equals("BAT")){
-
-            }
-        }
-        holder.wkTv.setText(""+countWK);
+        myAllTeamRequest allTeamRequest = list.get(position);
+        holder.CName.setText(allTeamRequest.getCaptain());
+        holder.VCname.setText(allTeamRequest.getVicecaptain());
+        holder.wkTv.setText(Integer.parseInt(String.valueOf(allTeamRequest.getWkeeper())));
+        holder.batTv.setText(allTeamRequest.getBatsman());
+        holder.arTv.setText(allTeamRequest.getAllrounder());
+        holder.bowlTv.setText(allTeamRequest.getBoller());
     }
 
     @Override
@@ -59,7 +47,7 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView teamA, teamB, wkTv, batTv, arTv, bowlTv;
+        TextView teamA, teamB, wkTv, batTv, arTv, bowlTv, CName, VCname;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +57,8 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
             batTv = itemView.findViewById(R.id.batTv);
             arTv = itemView.findViewById(R.id.arTv);
             bowlTv = itemView.findViewById(R.id.bowlTv);
+            CName = itemView.findViewById(R.id.CName);
+            VCname = itemView.findViewById(R.id.VCname);
         }
     }
 }

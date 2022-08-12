@@ -1,10 +1,8 @@
 package com.example.yoyoiq;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.yoyoiq.Adapter.TeamPreviewAdapter;
 import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
@@ -20,7 +19,6 @@ import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.HelperData;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -43,9 +41,8 @@ public class TeamPreviewActivity extends AppCompatActivity {
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static boolean captainSelected = false;
     public static boolean viceCaptainSelected = false;
-    String CaptainName,VCName;
-    int batCount,arCount,bowlCount,wkCount=0,teamACount,teamBCount;
-
+    String CaptainName, VCName;
+    int batCount, arCount, bowlCount, wkCount = 0, teamACount, teamBCount;
 
     public static void makeAllCaptainFalse(int no) {
         captainSelected = false;
@@ -55,7 +52,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
             } else {
                 HelperData.myTeamList.get(i).setCap(true);
                 captainSelected = true;
-                HelperData.Selectedcap.setValue(HelperData.Selectedcap.getValue()+1);
+                HelperData.Selectedcap.setValue(HelperData.Selectedcap.getValue() + 1);
             }
             if (HelperData.myTeamList.get(i).isCap()) {
                 if (HelperData.myTeamList.get(i).isVcap()) {
@@ -74,7 +71,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
             } else {
                 HelperData.myTeamList.get(i).setVcap(true);
                 viceCaptainSelected = true;
-                HelperData.selectedVcap.setValue(HelperData.selectedVcap.getValue()+1);
+                HelperData.selectedVcap.setValue(HelperData.selectedVcap.getValue() + 1);
             }
             if (HelperData.myTeamList.get(i).isVcap()) {
                 if (HelperData.myTeamList.get(i).isCap()) {
@@ -91,42 +88,33 @@ public class TeamPreviewActivity extends AppCompatActivity {
         inItMethod();
         setAction();
         countDownStart();
-
-
     }
 
     private void saveTeamLocally() {
-        for(int i=0;i<HelperData.myTeamList.size();i++){
-            if(HelperData.myTeamList.get(i).isCap()==true){
-                CaptainName=HelperData.myTeamList.get(i).getTitle();
+        for (int i = 0; i < HelperData.myTeamList.size(); i++) {
+            if (HelperData.myTeamList.get(i).isCap() == true) {
+                CaptainName = HelperData.myTeamList.get(i).getTitle();
             }
-            if(HelperData.myTeamList.get(i).isVcap()==true){
-                VCName=HelperData.myTeamList.get(i).getTitle();
-
+            if (HelperData.myTeamList.get(i).isVcap() == true) {
+                VCName = HelperData.myTeamList.get(i).getTitle();
             }
-            if(HelperData.myTeamList.get(i).getPlaying_role()=="WK"){
+            if (HelperData.myTeamList.get(i).getPlaying_role() == "WK") {
                 wkCount++;
-
             }
-            if(HelperData.myTeamList.get(i).getPlaying_role()=="BAT"){
+            if (HelperData.myTeamList.get(i).getPlaying_role() == "BAT") {
                 batCount++;
-
             }
-            if(HelperData.myTeamList.get(i).getPlaying_role()=="AR"){
+            if (HelperData.myTeamList.get(i).getPlaying_role() == "AR") {
                 arCount++;
-
             }
-            if(HelperData.myTeamList.get(i).getPlaying_role()=="BOWL"){
+            if (HelperData.myTeamList.get(i).getPlaying_role() == "BOWL") {
                 bowlCount++;
-
             }
 
         }
-        myAllTeamRequest dataholderClass=new myAllTeamRequest("T"+HelperData.TeamCount.getValue(),HelperData.matchId,HelperData.UserId,CaptainName,
-                VCName,batCount,bowlCount,arCount,wkCount,HelperData.conty1.getValue(),HelperData.conty2.getValue());
+        myAllTeamRequest dataholderClass = new myAllTeamRequest("T" + HelperData.TeamCount.getValue(), HelperData.matchId, HelperData.UserId, CaptainName,
+                VCName, batCount, bowlCount, arCount, wkCount, HelperData.conty1.getValue(), HelperData.conty2.getValue());
         HelperData.myCountyPlayer.add(dataholderClass);
-        Log.d("Amit","Value "+HelperData.conty1.getValue()+" "+HelperData.conty2.getValue()+" "+wkCount+" "+batCount+" "+arCount+" "+bowlCount);
-
     }
 
     private void inItMethod() {
@@ -148,50 +136,39 @@ public class TeamPreviewActivity extends AppCompatActivity {
 
         backPress.setOnClickListener(view -> onBackPressed());
 
-        saveTeam.setOnClickListener(v -> {
-            Handle_And_UploadTeamOnServer();
-
-        });
+        saveTeam.setOnClickListener(v -> Handle_And_UploadTeamOnServer());
     }
 
-    private void Handle_And_UploadTeamOnServer()  {
-        if(HelperData.Selectedcap.getValue()>=1){
-            if(HelperData.selectedVcap.getValue()>=1){
+    private void Handle_And_UploadTeamOnServer() {
+        if (HelperData.Selectedcap.getValue() >= 1) {
+            if (HelperData.selectedVcap.getValue() >= 1) {
                 Gson gson = new Gson();
                 String data = gson.toJson(arrayList);
 //                String check =HelperData.myTeamList.toString();
-
-                Call<JSONObject> call= ApiClient.getInstance().getApi().Send_myteam_list_Server(HelperData.UserId,HelperData.matchId,data);
+                Call<JSONObject> call = ApiClient.getInstance().getApi().Send_myteam_list_Server(HelperData.UserId, HelperData.matchId, data);
                 call.enqueue(new Callback<JSONObject>() {
                     @Override
                     public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
-                        if(response.isSuccessful()){
-                            Toast.makeText(TeamPreviewActivity.this, "Your Team Created Successfully..", Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(TeamPreviewActivity.this,MainActivity.class);
+                        if (response.isSuccessful()) {
+                            Toast.makeText(TeamPreviewActivity.this, "Your Team Created Successfully...", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(TeamPreviewActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
-                            HelperData.TeamCount.setValue(HelperData.TeamCount.getValue()+1);
+                            HelperData.TeamCount.setValue(HelperData.TeamCount.getValue() + 1);
                             saveTeamLocally();
                         }
                     }
+
                     @Override
                     public void onFailure(Call<JSONObject> call, Throwable t) {
-
                     }
                 });
-
-            }
-            else{
+            } else {
                 Toast.makeText(this, "Please Select Your Vice Captain", Toast.LENGTH_SHORT).show();
             }
-
-        }
-        else{
+        } else {
             Toast.makeText(this, "Please Select Your Captain", Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
 
     private void countDownStart() {
