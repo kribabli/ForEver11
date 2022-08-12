@@ -36,6 +36,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
     Button saveTeam, teamPreView;
     TeamPreviewAdapter teamPreviewAdapter;
     ArrayList<AllSelectedPlayer> arrayList = new ArrayList();
+    ArrayList<myAllTeamRequest> shortSquads = new ArrayList();
     private Handler handler = new Handler();
     private Runnable runnable;
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -115,6 +116,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
         myAllTeamRequest dataholderClass = new myAllTeamRequest("T" + HelperData.TeamCount.getValue(), HelperData.matchId, HelperData.UserId, CaptainName,
                 VCName, batCount, bowlCount, arCount, wkCount, HelperData.conty1.getValue(), HelperData.conty2.getValue());
         HelperData.myCountyPlayer.add(dataholderClass);
+        shortSquads.add(dataholderClass);
     }
 
     private void inItMethod() {
@@ -136,7 +138,10 @@ public class TeamPreviewActivity extends AppCompatActivity {
 
         backPress.setOnClickListener(view -> onBackPressed());
 
-        saveTeam.setOnClickListener(v -> Handle_And_UploadTeamOnServer());
+       saveTeam.setOnClickListener(view -> {
+           saveTeamLocally();
+           Handle_And_UploadTeamOnServer();
+       });
     }
 
     private void Handle_And_UploadTeamOnServer() {
@@ -144,8 +149,9 @@ public class TeamPreviewActivity extends AppCompatActivity {
             if (HelperData.selectedVcap.getValue() >= 1) {
                 Gson gson = new Gson();
                 String data = gson.toJson(arrayList);
+                String shortData= gson.toJson(shortSquads);
 //                String check =HelperData.myTeamList.toString();
-                Call<JSONObject> call = ApiClient.getInstance().getApi().Send_myteam_list_Server(HelperData.UserId, HelperData.matchId, data);
+                Call<JSONObject> call = ApiClient.getInstance().getApi().Send_myteam_list_Server(HelperData.UserId, HelperData.matchId, data,shortData);
                 call.enqueue(new Callback<JSONObject>() {
                     @Override
                     public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
@@ -155,7 +161,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                             HelperData.TeamCount.setValue(HelperData.TeamCount.getValue() + 1);
-                            saveTeamLocally();
+
                         }
                     }
 

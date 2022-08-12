@@ -38,7 +38,8 @@ public interface UsersServices {
     Call<JSONObject> Send_myteam_list_Server(
             @Field("user_id") String User_id,
             @Field("match_id") String match_id,
-            @Field("squads") String squads
+            @Field("squads") String squads,
+            @Field("short_squads") String short_squads
 //            @Body SendCreatedTeamServer sendCreatedTeamServer
     );
 
