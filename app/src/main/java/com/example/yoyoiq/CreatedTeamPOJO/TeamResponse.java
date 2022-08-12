@@ -1,5 +1,6 @@
 package com.example.yoyoiq.CreatedTeamPOJO;
 
+import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -17,11 +18,23 @@ public class TeamResponse {
     @SerializedName("squads")
     private ArrayList<Squad> squads;
 
-    public TeamResponse(String id, String user_id, String match_id, ArrayList<Squad> squads) {
+    @SerializedName("short_squads")
+    private ArrayList<myAllTeamRequest> short_squads;
+
+    public TeamResponse(String id, String user_id, String match_id, ArrayList<Squad> squads, ArrayList<myAllTeamRequest> short_squads) {
         this.id = id;
         this.user_id = user_id;
         this.match_id = match_id;
         this.squads = squads;
+        this.short_squads = short_squads;
+    }
+
+    public ArrayList<myAllTeamRequest> getShort_squads() {
+        return short_squads;
+    }
+
+    public void setShort_squads(ArrayList<myAllTeamRequest> short_squads) {
+        this.short_squads = short_squads;
     }
 
     public String getId() {

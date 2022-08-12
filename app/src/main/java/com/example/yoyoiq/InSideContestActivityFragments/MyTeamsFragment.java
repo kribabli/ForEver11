@@ -1,12 +1,12 @@
 package com.example.yoyoiq.InSideContestActivityFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -76,12 +76,6 @@ public class MyTeamsFragment extends Fragment {
     }
 
     private void getMyAllCreatedTeam() {
-        list = (HelperData.myCountyPlayer);
-        myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(myCreatedTeamAdapter);
-        myCreatedTeamAdapter.notifyDataSetChanged();
-
         Call<CreatedTeamResponse> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -94,47 +88,52 @@ public class MyTeamsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     String totalData = new Gson().toJson(createdTeamResponse.getResponse());
 
+                    Log.d("TAG", "onResponse: " + totalData);
                     //----------------------for CreatedTeam(Per User)----------------------------
-                    JSONArray squads = null;
+                    JSONArray short_squads = null;
                     JSONArray jsonArray = null;
                     try {
                         jsonArray = new JSONArray(totalData);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
-                                squads = jsonObject.getJSONArray("squads");
+                                short_squads = jsonObject.getJSONArray("short_squads");
+                                Log.d("TAG", "onResponse1: " + short_squads);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
 
-//                        for (int j = 0; j < squads.length(); j++) {
-//                            try {
-//                                JSONObject jsonObjectSquads = squads.getJSONObject(j);
-//                                boolean added = jsonObjectSquads.getBoolean("added");
-//                                String country = jsonObjectSquads.getString("country");
-//                                String fantasy_player_rating = jsonObjectSquads.getString("fantasy_player_rating");
-//                                boolean isCap = jsonObjectSquads.getBoolean("isCap");
-//                                boolean isVcap = jsonObjectSquads.getBoolean("isVcap");
-//                                String matchId = jsonObjectSquads.getString("matchId");
-//                                String pid = jsonObjectSquads.getString("pid");
-//                                String playing_role = jsonObjectSquads.getString("playing_role");
-//                                String points = jsonObjectSquads.getString("points");
-//                                String title = jsonObjectSquads.getString("title");
-//
+                        Log.d("TAG", "onResponse2: " + short_squads);
+                        for (int j = 0; j < short_squads.length(); j++) {
+                            try {
+                                JSONObject jsonObjectSquads = short_squads.getJSONObject(0);
+                                Log.d("TAG", "onResponse3: " + jsonObjectSquads);
+                                String TeamName = jsonObjectSquads.getString("TeamName");
+                                int allrounder = Integer.parseInt(jsonObjectSquads.getString("allrounder"));
+                                int batsman = Integer.parseInt(jsonObjectSquads.getString("batsman"));
+                                int boller = Integer.parseInt(jsonObjectSquads.getString("boller"));
+                                String captain = jsonObjectSquads.getString("captain");
+                                String match_id = jsonObjectSquads.getString("match_id");
+                                int teamAcount = Integer.parseInt(jsonObjectSquads.getString("teamAcount"));
+                                int teamBcount = Integer.parseInt(jsonObjectSquads.getString("teamBcount"));
+                                String user_id = jsonObjectSquads.getString("user_id");
+                                String vicecaptain = jsonObjectSquads.getString("vicecaptain");
+                                int wkeeper = Integer.parseInt(jsonObjectSquads.getString("wkeeper"));
+
 //                                CreatedTeamPOJOClass createdTeamPOJOClass = new CreatedTeamPOJOClass(added, country, fantasy_player_rating, isCap, isVcap, matchId, pid, playing_role, points, title);
 //                                list.add(createdTeamPOJOClass);
-//
-////                                myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
-////                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-////                                recyclerView.setAdapter(myCreatedTeamAdapter);
-////                                myCreatedTeamAdapter.notifyDataSetChanged();
-////                                swipeRefreshLayout.setRefreshing(false);
-//
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
+
+//                                myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
+//                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//                                recyclerView.setAdapter(myCreatedTeamAdapter);
+//                                myCreatedTeamAdapter.notifyDataSetChanged();
+//                                swipeRefreshLayout.setRefreshing(false);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
