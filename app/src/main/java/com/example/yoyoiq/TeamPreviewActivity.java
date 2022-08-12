@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.yoyoiq.Adapter.TeamPreviewAdapter;
+import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.HelperData;
@@ -42,6 +43,8 @@ public class TeamPreviewActivity extends AppCompatActivity {
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static boolean captainSelected = false;
     public static boolean viceCaptainSelected = false;
+    String CaptainName,VCName;
+    int batCount,arCount,bowlCount,wkCount=0,teamACount,teamBCount;
 
 
     public static void makeAllCaptainFalse(int no) {
@@ -92,6 +95,40 @@ public class TeamPreviewActivity extends AppCompatActivity {
 
     }
 
+    private void saveTeamLocally() {
+        for(int i=0;i<HelperData.myTeamList.size();i++){
+            if(HelperData.myTeamList.get(i).isCap()==true){
+                CaptainName=HelperData.myTeamList.get(i).getTitle();
+            }
+            if(HelperData.myTeamList.get(i).isVcap()==true){
+                VCName=HelperData.myTeamList.get(i).getTitle();
+
+            }
+            if(HelperData.myTeamList.get(i).getPlaying_role()=="WK"){
+                wkCount++;
+
+            }
+            if(HelperData.myTeamList.get(i).getPlaying_role()=="BAT"){
+                batCount++;
+
+            }
+            if(HelperData.myTeamList.get(i).getPlaying_role()=="AR"){
+                arCount++;
+
+            }
+            if(HelperData.myTeamList.get(i).getPlaying_role()=="BOWL"){
+                bowlCount++;
+
+            }
+
+        }
+        myAllTeamRequest dataholderClass=new myAllTeamRequest("T"+HelperData.TeamCount.getValue(),HelperData.matchId,HelperData.UserId,CaptainName,
+                VCName,batCount,bowlCount,arCount,wkCount,HelperData.conty1.getValue(),HelperData.conty2.getValue());
+        HelperData.myCountyPlayer.add(dataholderClass);
+        Log.d("Amit","Value "+HelperData.conty1.getValue()+" "+HelperData.conty2.getValue()+" "+wkCount+" "+batCount+" "+arCount+" "+bowlCount);
+
+    }
+
     private void inItMethod() {
         backPress = findViewById(R.id.backPress);
         recyclerView = findViewById(R.id.selectedPlayerRecyclerView);
@@ -123,7 +160,6 @@ public class TeamPreviewActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 String data = gson.toJson(arrayList);
 //                String check =HelperData.myTeamList.toString();
-                Log.d("Amit","Value Check "+data);
 
                 Call<JSONObject> call= ApiClient.getInstance().getApi().Send_myteam_list_Server(HelperData.UserId,HelperData.matchId,data);
                 call.enqueue(new Callback<JSONObject>() {
@@ -134,6 +170,8 @@ public class TeamPreviewActivity extends AppCompatActivity {
                             Intent intent=new Intent(TeamPreviewActivity.this,MainActivity.class);
                             startActivity(intent);
                             finish();
+                            HelperData.TeamCount.setValue(HelperData.TeamCount.getValue()+1);
+                            saveTeamLocally();
                         }
                     }
                     @Override

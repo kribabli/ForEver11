@@ -122,10 +122,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse loginResponse=response.body();
                 if(response.isSuccessful()){
-                    Log.d("Amit","Value check 1"+loginResponse.getData());
                     if(loginResponse.getData()=="Login successful"){
-
-
                     }
                     else if(loginResponse.getData()=="Username or password something went wrong"){
                         showDialog("Invalid Mobile or Password", false);

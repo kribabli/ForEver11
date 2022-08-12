@@ -3,6 +3,7 @@ package com.example.yoyoiq.common;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.yoyoiq.CreateTeamActivity;
+import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class HelperData {
     public static MutableLiveData<Integer> playerCounter = new MutableLiveData<>(0);
     public static String type_selected = "Cricket";
     public static MutableLiveData<Integer> conty1 = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> TeamCount = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> conty2 = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> wk = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> bat = new MutableLiveData<>(0);
@@ -24,7 +26,7 @@ public class HelperData {
 
     public static String selected = "wk";
     public static ArrayList<AllSelectedPlayer> myTeamList = new ArrayList<>();
-    public static ArrayList<AllSelectedPlayer> myteamListSelected = new ArrayList<>();
+    public static ArrayList<myAllTeamRequest> myCountyPlayer = new ArrayList<>();
     public static String team1NameShort = "";
     public static String team2NameShort = "";
     public static boolean teamEdt = false;

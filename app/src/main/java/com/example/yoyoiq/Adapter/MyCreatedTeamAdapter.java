@@ -50,7 +50,7 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
 
             }
         }
-        holder.wkTv.setText(countWK);
+        holder.wkTv.setText(""+countWK);
     }
 
     @Override

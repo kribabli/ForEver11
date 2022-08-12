@@ -2,12 +2,12 @@ package com.example.yoyoiq.InSideContestActivityFragments;
 
 public class myAllTeamRequest {
 
-   String id;
+   String TeamName;
    String match_id, user_id, captain, vicecaptain;
-   int batsman, boller, allrounder, wkeeper;
+   int batsman, boller, allrounder, wkeeper,teamAcount,teamBcount;
 
-   public myAllTeamRequest(String id, String match_id, String user_id, String captain, String vicecaptain, int batsman, int boller, int allrounder, int wkeeper) {
-      this.id = id;
+   public myAllTeamRequest(String teamName, String match_id, String user_id, String captain, String vicecaptain, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount) {
+      TeamName = teamName;
       this.match_id = match_id;
       this.user_id = user_id;
       this.captain = captain;
@@ -16,14 +16,16 @@ public class myAllTeamRequest {
       this.boller = boller;
       this.allrounder = allrounder;
       this.wkeeper = wkeeper;
+      this.teamAcount = teamAcount;
+      this.teamBcount = teamBcount;
    }
 
-   public String getId() {
-      return id;
+   public String getTeamName() {
+      return TeamName;
    }
 
-   public void setId(String id) {
-      this.id = id;
+   public void setTeamName(String teamName) {
+      TeamName = teamName;
    }
 
    public String getMatch_id() {
@@ -88,5 +90,21 @@ public class myAllTeamRequest {
 
    public void setWkeeper(int wkeeper) {
       this.wkeeper = wkeeper;
+   }
+
+   public int getTeamAcount() {
+      return teamAcount;
+   }
+
+   public void setTeamAcount(int teamAcount) {
+      this.teamAcount = teamAcount;
+   }
+
+   public int getTeamBcount() {
+      return teamBcount;
+   }
+
+   public void setTeamBcount(int teamBcount) {
+      this.teamBcount = teamBcount;
    }
 }

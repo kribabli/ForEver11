@@ -1,6 +1,7 @@
 package com.example.yoyoiq.InSideContestActivityFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.yoyoiq.MainActivity;
 import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.example.yoyoiq.common.HelperData;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -82,7 +84,7 @@ public class MyTeamsFragment extends Fragment {
         Call<CreatedTeamResponse> call = ApiClient
                 .getInstance()
                 .getApi()
-                .getUserTeamCreated("71", "56659");
+                .getUserTeamCreated("71", HelperData.matchId);
 
         call.enqueue(new Callback<CreatedTeamResponse>() {
             @Override
@@ -96,6 +98,7 @@ public class MyTeamsFragment extends Fragment {
                     JSONArray jsonArray = null;
                     try {
                         jsonArray = new JSONArray(totalData);
+                        Log.d("Amit","Value "+jsonArray);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
@@ -104,6 +107,7 @@ public class MyTeamsFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         }
+                        Log.d("Amit","Value check "+squads);
 
                         for (int j = 0; j < squads.length(); j++) {
                             try {
@@ -122,11 +126,11 @@ public class MyTeamsFragment extends Fragment {
                                 CreatedTeamPOJOClass createdTeamPOJOClass = new CreatedTeamPOJOClass(added, country, fantasy_player_rating, isCap, isVcap, matchId, pid, playing_role, points, title);
                                 list.add(createdTeamPOJOClass);
 
-                                myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                recyclerView.setAdapter(myCreatedTeamAdapter);
-                                myCreatedTeamAdapter.notifyDataSetChanged();
-                                swipeRefreshLayout.setRefreshing(false);
+//                                myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
+//                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//                                recyclerView.setAdapter(myCreatedTeamAdapter);
+//                                myCreatedTeamAdapter.notifyDataSetChanged();
+//                                swipeRefreshLayout.setRefreshing(false);
 
                             } catch (Exception e) {
                                 e.printStackTrace();
