@@ -38,12 +38,11 @@ public class HelperData {
     public static boolean lineUp = false;
     public static int selectedTeamNo;
     public static boolean vcap = false;
-    public static boolean cap =false;
+    public static boolean cap = false;
     public static String addedPlayerIds;
     public static String matchId;
     public static String contestId;
-    public static String UserId="71";
-
+    public static String UserId = "71";
 
     public static void newTeamMaking() {
         myTeamList.clear();
@@ -58,8 +57,8 @@ public class HelperData {
         Selectedcap.setValue(0);
         selectedVcap.setValue(0);
         creditCounter.setValue(100.0);
-        vcap=false;
-        cap=false;
+        vcap = false;
+        cap = false;
         CreateTeamActivity.addedPlayerIds = "";
     }
 }
