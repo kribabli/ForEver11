@@ -2,7 +2,6 @@ package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,15 +43,14 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ARAdapter.MyViewHolder holder, int position) {
         SquadsA listData = list.get(position);
-
-        String fullPlayerName = listData.getName();
         holder.playerName.setText(listData.getShort_namePlayers());
         holder.playerCredit.setText(listData.getFantasy_player_rating());
         holder.country.setText(listData.getAbbr());
 
-        if(listData.getPlaying11()==true){
+        if (listData.getPlaying11() == true) {
             holder.isPlaying.setText("Playing");
         }
+
         /*please not Remove this commented code code*/
 //        if(listData.getPlaying11()==false){
 //            holder.isPlaying.setText(" Not Playing");
@@ -60,31 +58,30 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
 //        }
 
         holder.cardViewSelected.setOnClickListener(view -> {
-            if(CreateTeamActivity.addedPlayerIds.contains("_" + list.get(position).getPidPlayers() + "_")){
+            if (CreateTeamActivity.addedPlayerIds.contains("_" + list.get(position).getPidPlayers() + "_")) {
                 //removed minus sign
                 String credit = listData.getFantasy_player_rating();
-                double playerCredit= Double.parseDouble(credit);
-                int pid= Integer.parseInt(listData.getPidPlayers());
+                double playerCredit = Double.parseDouble(credit);
+                int pid = Integer.parseInt(listData.getPidPlayers());
                 holder.im_AddPlayer.setImageResource(R.drawable.plus_icon);
                 CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds.replace("_" + list.get(position).getPidPlayers() + "_\n", "");
                 HelperData.ar.setValue(HelperData.ar.getValue() - 1);
-                HelperData.creditCounter.setValue(Double.valueOf(HelperData.creditCounter.getValue() + playerCredit ));
+                HelperData.creditCounter.setValue(Double.valueOf(HelperData.creditCounter.getValue() + playerCredit));
                 HelperData.playerCounter.setValue(HelperData.playerCounter.getValue() - 1);
-                if(HelperData.team1NameShort==listData.getAbbr()){
-                    HelperData.conty1.setValue(HelperData.conty1.getValue()-1);}
-                else if(HelperData.team2NameShort==listData.getAbbr()){
-                    HelperData.conty2.setValue(HelperData.conty2.getValue()-1);}
+                if (HelperData.team1NameShort == listData.getAbbr()) {
+                    HelperData.conty1.setValue(HelperData.conty1.getValue() - 1);
+                } else if (HelperData.team2NameShort == listData.getAbbr()) {
+                    HelperData.conty2.setValue(HelperData.conty2.getValue() - 1);
+                }
                 holder.cardViewSelected.setBackgroundColor(Color.WHITE);
                 HelperData.allSelectedPlayer.getValue().remove(listData);
                 int index = HelperData.myTeamList.size() - 1;
                 HelperData.myTeamList.remove(index);
-
-            }
-            else {
+            } else {
                 if (HelperData.playerCounter.getValue() < HelperData.limit) {
                     if (HelperData.creditCounter.getValue() >= Double.valueOf(listData.getFantasy_player_rating())) {
-                        if (HelperData.ar.getValue()<4) {
-                            if (HelperData.team1NameShort== listData.getAbbr()) {
+                        if (HelperData.ar.getValue() < 4) {
+                            if (HelperData.team1NameShort == listData.getAbbr()) {
                                 if (HelperData.conty1.getValue() < 7) {
                                     CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";
                                     HelperData.conty1.setValue(HelperData.conty1.getValue() + 1);
@@ -93,15 +90,14 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
                                     HelperData.playerCounter.setValue(HelperData.playerCounter.getValue() + 1);
                                     holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
                                     holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
-                                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()),HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "AR", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
+                                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()), HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "AR", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
                                     HelperData.allSelectedPlayer.setValue(Collections.singletonList(allSelectedPlayer));
                                     HelperData.myTeamList.add(allSelectedPlayer);
                                 } else {
                                     Toast.makeText(context, "Please select player from another Country", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                            else if (HelperData.team2NameShort == listData.getAbbr()) {
-                                if (HelperData.conty2.getValue() <7) {
+                            } else if (HelperData.team2NameShort == listData.getAbbr()) {
+                                if (HelperData.conty2.getValue() < 7) {
                                     CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";
                                     HelperData.conty2.setValue(HelperData.conty2.getValue() + 1);
                                     HelperData.ar.setValue(HelperData.ar.getValue() + 1);
@@ -109,32 +105,24 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
                                     HelperData.playerCounter.setValue(HelperData.playerCounter.getValue() + 1);
                                     holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
                                     holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
-                                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()),HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "AR", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
+                                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()), HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "AR", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
                                     HelperData.allSelectedPlayer.setValue(Collections.singletonList(allSelectedPlayer));
                                     HelperData.myTeamList.add(allSelectedPlayer);
                                 } else {
                                     Toast.makeText(context, "Please select player from another Country", Toast.LENGTH_SHORT).show();
                                 }
                             }
-
-                        }
-                        else{
+                        } else {
                             Toast.makeText(context, "Please add player from another tab", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else{
+                    } else {
                         Toast.makeText(context, "Not enough credits left", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else{
-                    Toast.makeText(context, HelperData.limit+"player Added", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, HelperData.limit + "player Added", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
-
-
     }
 
     @Override
@@ -143,8 +131,8 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView playerName, country, playerCredit,isPlaying;
-        ImageView playerImg,alreadyAddedPlayer, im_AddPlayer;
+        TextView playerName, country, playerCredit, isPlaying;
+        ImageView playerImg, alreadyAddedPlayer, im_AddPlayer;
         CardView cardViewSelected;
 
         public MyViewHolder(@NonNull View itemView) {
