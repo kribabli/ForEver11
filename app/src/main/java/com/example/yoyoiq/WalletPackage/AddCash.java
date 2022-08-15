@@ -44,6 +44,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         initMethod();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
+
         databaseConnectivity.getDatabasePath(AddCash.this).child("KYCDetails")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -64,9 +65,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
                                 startActivity(intent1);
                                 finish();
                             }
-
                         });
-
                     }
 
                     @Override
