@@ -42,7 +42,8 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
             holder.bowlTv.setText(String.valueOf(allTeamRequest.getBoller()));
             holder.teamACount.setText(String.valueOf(allTeamRequest.getTeamAcount()));
             holder.teamBCount.setText(String.valueOf(allTeamRequest.getTeamBcount()));
-            holder.userNameAndTid.setText(String.valueOf(allTeamRequest.getUser_id()));
+
+            holder.userNameAndTid.setText("Team "+ (position+1));
         }
     }
 

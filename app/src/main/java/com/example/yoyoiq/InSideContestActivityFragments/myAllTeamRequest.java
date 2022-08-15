@@ -2,15 +2,17 @@ package com.example.yoyoiq.InSideContestActivityFragments;
 
 public class myAllTeamRequest {
     String TeamName;
-    String match_id, user_id, captain, vicecaptain;
+    String match_id, user_id, captain, vicecaptain, teamAName, teamBName;
     int batsman, boller, allrounder, wkeeper, teamAcount, teamBcount;
 
-    public myAllTeamRequest(String teamName, String match_id, String user_id, String captain, String vicecaptain, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount) {
+    public myAllTeamRequest(String teamName, String match_id, String user_id, String captain, String vicecaptain, String teamAName, String teamBName, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount) {
         TeamName = teamName;
         this.match_id = match_id;
         this.user_id = user_id;
         this.captain = captain;
         this.vicecaptain = vicecaptain;
+        this.teamAName = teamAName;
+        this.teamBName = teamBName;
         this.batsman = batsman;
         this.boller = boller;
         this.allrounder = allrounder;
@@ -57,6 +59,22 @@ public class myAllTeamRequest {
 
     public void setVicecaptain(String vicecaptain) {
         this.vicecaptain = vicecaptain;
+    }
+
+    public String getTeamAName() {
+        return teamAName;
+    }
+
+    public void setTeamAName(String teamAName) {
+        this.teamAName = teamAName;
+    }
+
+    public String getTeamBName() {
+        return teamBName;
+    }
+
+    public void setTeamBName(String teamBName) {
+        this.teamBName = teamBName;
     }
 
     public int getBatsman() {

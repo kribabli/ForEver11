@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                 isValid = false;
             } else {
                 LoginValidation();
-                LoginValidationFromServer();
+//                LoginValidationFromServer();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,15 +114,17 @@ public class LoginActivity extends AppCompatActivity {
     private void LoginValidationFromServer() {
         String mobile = mobileNo.getText().toString().trim();
         String password1 = userPassword.getText().toString().trim();
-
         Call<LoginResponse>call= ApiClient.getInstance().getApi().getUserLoginData(mobile,password1);
-
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse loginResponse=response.body();
                 if(response.isSuccessful()){
+                    Log.d("Amit","Value Check "+response.body());
                     if(loginResponse.getData()=="Login successful"){
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
                     }
                     else if(loginResponse.getData()=="Username or password something went wrong"){
                         showDialog("Invalid Mobile or Password", false);
@@ -130,7 +132,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             }
-
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
 

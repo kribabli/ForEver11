@@ -24,6 +24,10 @@ public class HelperData {
     public static MutableLiveData<Double> creditCounter = new MutableLiveData<>(0.0);
     public static MutableLiveData<List<AllSelectedPlayer>> allSelectedPlayer = new MutableLiveData<>();
 
+    public static MutableLiveData<String> refrashers = new MutableLiveData<>();
+    public static MutableLiveData<String> selectedPlayer = new MutableLiveData<>();
+    public static MutableLiveData<String> getCall_For_Refrashers = new MutableLiveData<>();
+
     public static String selected = "wk";
     public static ArrayList<AllSelectedPlayer> myTeamList = new ArrayList<>();
     public static ArrayList<myAllTeamRequest> myCountyPlayer = new ArrayList<>();
