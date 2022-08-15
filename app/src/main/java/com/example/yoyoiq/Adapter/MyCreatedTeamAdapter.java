@@ -34,6 +34,7 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
     public void onBindViewHolder(@NonNull MyCreatedTeamAdapter.MyViewHolder holder, int position) {
         myAllTeamRequest allTeamRequest = list.get(position);
         if (list.size() > 0) {
+            int team = position + 1;
             holder.CName.setText(allTeamRequest.getCaptain());
             holder.VCname.setText(allTeamRequest.getVicecaptain());
             holder.wkTv.setText(String.valueOf(allTeamRequest.getWkeeper()));
@@ -42,7 +43,7 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
             holder.bowlTv.setText(String.valueOf(allTeamRequest.getBoller()));
             holder.teamACount.setText(String.valueOf(allTeamRequest.getTeamAcount()));
             holder.teamBCount.setText(String.valueOf(allTeamRequest.getTeamBcount()));
-            holder.userNameAndTid.setText(String.valueOf(allTeamRequest.getUser_id()));
+            holder.userNameAndTid.setText("(T" + team + ")");
         }
     }
 

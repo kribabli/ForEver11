@@ -7,11 +7,8 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="160dp"
+        android:layout_margin="12dp"
         app:cardCornerRadius="8dp">
 
         <LinearLayout
@@ -113,7 +110,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:gravity="center"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/teamBCount"
@@ -121,7 +119,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:gravity="center"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/CName"
@@ -150,9 +149,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_marginTop="130dp"
             android:background="@color/white"
+            android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="12">
 

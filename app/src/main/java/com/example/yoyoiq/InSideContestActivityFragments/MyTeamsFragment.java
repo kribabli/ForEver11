@@ -128,7 +128,6 @@ public class MyTeamsFragment extends Fragment {
                                     }
                                 }
                             } catch (Exception e) {
-                                swipeRefreshLayout.setRefreshing(false);
                                 e.printStackTrace();
                             }
                         }
