@@ -31,6 +31,8 @@ import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
 import com.example.yoyoiq.WalletPackage.AddCash;
 import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.example.yoyoiq.common.HelperData;
+import com.example.yoyoiq.common.SessionManager;
 import com.example.yoyoiq.common.SharedPrefManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DatabaseConnectivity databaseConnectivity;
     SharedPreferences pathSharedPreferences;
     SharedPrefManager sharedPrefManager;
+    SessionManager sessionManager;
     RecyclerView recyclerView;
     AllMatchAdapter allMatchAdapter;
     ArrayList<TotalHomeData> list = new ArrayList<>();
@@ -72,8 +75,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         getAllMatches();
         recyclerView = findViewById(R.id.recyclerViewMatchList);
+        sessionManager=new SessionManager(getApplicationContext());
 
         swipeRefreshLayout = findViewById(R.id.swiper);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -270,7 +275,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void userLogout() {
-        sharedPrefManager.logout();
+        sessionManager.logout();
+        HelperData.UserId="";
+        HelperData.UserName="";
+        HelperData.Usermobile="";
+        HelperData.UserEmail="";
         Intent intent = new Intent(MainActivity.this, FrontActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

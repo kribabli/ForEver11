@@ -21,7 +21,7 @@ public class SharedPrefManager {
         editor.putString("userName", userData.getUserName());
         editor.putString("mobileNo", userData.getMobileNo());
         editor.putString("emailId", userData.getEmailId());
-        editor.putString("userPassword", userData.getPassword());
+        editor.putString("user_id", userData.getUser_id());
         editor.putBoolean("logged", true);
         editor.apply();
     }
@@ -29,7 +29,7 @@ public class SharedPrefManager {
     public UserData getUserData() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new UserData(sharedPreferences.getString("userName", ""), sharedPreferences.getString("mobileNo", ""),
-                sharedPreferences.getString("emailId", ""), sharedPreferences.getString("userPassword", ""));
+                sharedPreferences.getString("emailId", ""), sharedPreferences.getString("user_id", ""));
     }
 
     public boolean isLoggedIn() {

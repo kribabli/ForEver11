@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.yoyoiq.common.SessionManager;
 import com.example.yoyoiq.common.SharedPrefManager;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,12 +23,14 @@ public class SplashActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     DatabaseReference databaseReference;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        sessionManager=new SessionManager(getApplicationContext());
 
         //get version and other info..
         PackageManager manager = this.getPackageManager();
@@ -58,7 +61,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (sharedPrefManager.isLoggedIn()) {
+                if (sessionManager.isLoggedIn()) {
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

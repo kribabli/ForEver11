@@ -42,7 +42,11 @@ public class HelperData {
     public static String addedPlayerIds;
     public static String matchId;
     public static String contestId;
-    public static String UserId = "71";
+    public static String UserId = "";
+    public static String UserName = "";
+    public static String Usermobile = "";
+    public static String UserEmail = "";
+
 
     public static void newTeamMaking() {
         myTeamList.clear();

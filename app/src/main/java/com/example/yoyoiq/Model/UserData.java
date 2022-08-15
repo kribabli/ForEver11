@@ -4,16 +4,13 @@ public class UserData {
     String userName;
     String mobileNo;
     String emailId;
-    String password;
+    String user_id;
 
-    public UserData(String userName, String mobileNo, String emailId, String password) {
+    public UserData(String userName, String mobileNo, String emailId, String user_id) {
         this.userName = userName;
         this.mobileNo = mobileNo;
         this.emailId = emailId;
-        this.password = password;
-    }
-
-    public UserData() {
+        this.user_id = user_id;
     }
 
     public String getUserName() {
@@ -40,11 +37,11 @@ public class UserData {
         this.emailId = emailId;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 }

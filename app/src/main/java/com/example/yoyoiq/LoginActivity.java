@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -17,11 +18,17 @@ import com.example.yoyoiq.LoginPojo.userLoginData;
 import com.example.yoyoiq.Model.UserData;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.example.yoyoiq.common.SharedPrefManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         sharedPreferences = getSharedPreferences("path", MODE_PRIVATE);
+        sessionManager=new SessionManager(getApplicationContext());
         initMethod();
         setAction();
         DownloadData();
@@ -101,8 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                 userPassword.requestFocus();
                 isValid = false;
             } else {
-                LoginValidation();
-//                LoginValidationFromServer();
+//                LoginValidation();
+                LoginValidationFromServer();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,25 +126,52 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                LoginResponse loginResponse=response.body();
-                if(response.isSuccessful()){
-                    Log.d("Amit","Value Check "+response.body());
-                    if(loginResponse.getData()=="Login successful"){
-                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(i);
-                        finish();
+                LoginResponse loginResponse= response.body();
+                if(response.isSuccessful()) {
+                    if (loginResponse.getData().trim().toString().equalsIgnoreCase("Login successful")){
+                        list = loginResponse.getUserLoginDataArrayList();
+                        String totalData = new Gson().toJson(loginResponse.getUserLoginDataArrayList());
+                        JSONArray jsonArray = null;
+                        try {
+                            jsonArray = new JSONArray(totalData);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                String email_id = jsonObject.getString("email_id");
+                                String mobile_no = jsonObject.getString("mobile_no");
+                                String user_id = jsonObject.getString("user_id");
+                                String username = jsonObject.getString("username");
+                                HelperData.UserId=user_id;
+                                HelperData.UserName=username;
+                                HelperData.Usermobile=mobile_no;
+                                HelperData.UserEmail=email_id;
+                                UserData userData=new UserData(username,mobile_no,email_id,user_id);
+                                sessionManager.saveUser(userData);
+                                Toast.makeText(LoginActivity.this, "Login Successfully..", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
-                    else if(loginResponse.getData()=="Username or password something went wrong"){
+                    else if(loginResponse.getData().trim().toString().equalsIgnoreCase("Username or password something went wrong")) {
                         showDialog("Invalid Mobile or Password", false);
                     }
-
+                    else {
+                        showDialog("Please Register YourSelf", false);
+                    }
                 }
+
             }
+
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
 
             }
         });
+
 
     }
 
