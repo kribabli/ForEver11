@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         view_bannerItem = findViewById(R.id.view_bannerItem);
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
 
+
         textView.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, AddCash.class);
             startActivity(intent);
@@ -110,6 +111,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mainActivityLayout = findViewById(R.id.mainActivityLayout);
         databaseConnectivity = new DatabaseConnectivity();
         setAutoSliderBanner();
+        Log.d("Amit","Value "+sessionManager.getUserData().getUser_id());
+        Log.d("Amit","Value "+sessionManager.getUserData().getUserName());
+        Log.d("Amit","Value "+sessionManager.getUserData().getMobileNo());
+        Log.d("Amit","Value "+sessionManager.getUserData().getEmailId());
 
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.NavigationView);

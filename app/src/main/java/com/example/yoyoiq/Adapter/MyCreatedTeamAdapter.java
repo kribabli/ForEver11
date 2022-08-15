@@ -11,16 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.R;
+import com.example.yoyoiq.common.SessionManager;
 
 import java.util.ArrayList;
 
 public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdapter.MyViewHolder> {
     Context context;
     ArrayList<myAllTeamRequest> list;
+    SessionManager sessionManager;
 
     public MyCreatedTeamAdapter(Context context, ArrayList<myAllTeamRequest> list) {
         this.context = context;
         this.list = list;
+        sessionManager=new SessionManager(context.getApplicationContext());
     }
 
     @NonNull
@@ -42,7 +45,7 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
             holder.bowlTv.setText(String.valueOf(allTeamRequest.getBoller()));
             holder.teamACount.setText(String.valueOf(allTeamRequest.getTeamAcount()));
             holder.teamBCount.setText(String.valueOf(allTeamRequest.getTeamBcount()));
-            holder.userNameAndTid.setText("(T" + (position + 1) + ")");
+            holder.userNameAndTid.setText(sessionManager.getUserData().getUserName()+"(T" + (position + 1) + ")");
             holder.teamA.setText(allTeamRequest.getTeamAName());
             holder.teamB.setText(allTeamRequest.getTeamBName());
         }

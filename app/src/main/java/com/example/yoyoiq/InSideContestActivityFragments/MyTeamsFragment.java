@@ -80,7 +80,7 @@ public class MyTeamsFragment extends Fragment {
         Call<CreatedTeamResponse> call = ApiClient
                 .getInstance()
                 .getApi()
-                .getUserTeamCreated("71", HelperData.matchId);
+                .getUserTeamCreated(HelperData.UserId, HelperData.matchId);
 
         call.enqueue(new Callback<CreatedTeamResponse>() {
             @Override

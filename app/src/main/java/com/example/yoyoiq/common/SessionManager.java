@@ -29,9 +29,9 @@ public class SessionManager {
         editor.apply();
     }
 
-    public userLoginData getUserData() {
+    public UserData getUserData() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
-        return new userLoginData(sharedPreferences.getString("userNameServer", ""), sharedPreferences.getString("mobileNoServer", ""),
+        return new UserData(sharedPreferences.getString("userNameServer", ""), sharedPreferences.getString("mobileNoServer", ""),
                 sharedPreferences.getString("emailIdServer", ""), sharedPreferences.getString("userId", ""));
     }
 
