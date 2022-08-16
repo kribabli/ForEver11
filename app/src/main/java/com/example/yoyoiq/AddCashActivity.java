@@ -16,7 +16,9 @@ import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
 import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.WalletPackage.AddCash;
+import com.example.yoyoiq.WalletPackage.ViewBalanceResponse;
 import com.example.yoyoiq.common.HelperData;
+import com.example.yoyoiq.common.SessionManager;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
@@ -31,10 +33,12 @@ public class AddCashActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     LinearLayout linearLayout, joinLinearLayout;
+    SessionManager sessionManager;
     PageAdapterWinnings pageAdapterWinnings;
-    String total_prize, entryFee, totalSports, leftSports, winningPer, upTo, matchA, matchB, match_id, first_price, price_contribution;
+    String total_prize, entryFee, totalSports, leftSports, winningPer, upTo, matchA, matchB, match_id, first_price, price_contribution,contestId;
     TextView backPress, teamATv, teamBTv, walletTV;
     TextView total_prize1, entryFee1, totalSports1, leftSports1, winningPer1, upTo1, first_price1;
+    int balance=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class AddCashActivity extends AppCompatActivity {
 
         pageAdapterWinnings = new PageAdapterWinnings(getSupportFragmentManager(), tabLayout.getTabCount(), total_prize, entryFee, totalSports, leftSports, winningPer, upTo, match_id, first_price, price_contribution);
         viewPager.setAdapter(pageAdapterWinnings);
+        sessionManager=new SessionManager(getApplicationContext());
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -100,6 +105,7 @@ public class AddCashActivity extends AppCompatActivity {
         matchB = getIntent().getStringExtra("matchB");
         match_id = getIntent().getStringExtra("match_id");
         first_price = getIntent().getStringExtra("first_price");
+        contestId = getIntent().getStringExtra("Contest_id");
         price_contribution = getIntent().getStringExtra("price_contribution");
 
         teamATv.setText(matchA);
@@ -114,27 +120,50 @@ public class AddCashActivity extends AppCompatActivity {
     }
 
     private void setAction() {
-        backPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
+        backPress.setOnClickListener(v -> onBackPressed());
+
+        walletTV.setOnClickListener(v -> {
+            Intent intent = new Intent(AddCashActivity.this, AddCash.class);
+            startActivity(intent);
+            finish();
         });
 
-        walletTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddCashActivity.this, AddCash.class);
-                startActivity(intent);
-            }
-        });
-
-        joinLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddCashActivity.this, SelectTeams.class);
-                startActivity(intent);
-            }
+        joinLinearLayout.setOnClickListener(v -> {
+            Call<ViewBalanceResponse> call=ApiClient.getInstance().getApi().getBalanceDetails(sessionManager.getUserData().getUser_id());
+            call.enqueue(new Callback<ViewBalanceResponse>() {
+                @Override
+                public void onResponse(Call<ViewBalanceResponse> call, Response<ViewBalanceResponse> response) {
+                    ViewBalanceResponse viewBalanceResponse= response.body();
+                    if(response.isSuccessful()){
+                        balance= Integer.parseInt(viewBalanceResponse.getBalance());
+                        if(balance>=Integer.parseInt(entryFee)){
+                            if(HelperData.TeamCount.getValue()>=1){
+                                Intent intent=new Intent(AddCashActivity.this,SelectTeams.class);
+                                intent.putExtra("Match_id",match_id);
+                                intent.putExtra("Contest_id",contestId);
+                                intent.putExtra("EntryFee",entryFee);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else{
+                                Intent intent=new Intent(AddCashActivity.this,CreateTeamActivity.class);
+                                intent.putExtra("match_id", match_id);
+                                intent.putExtra("matchA", matchA);
+                                intent.putExtra("matchB", matchB);
+                                intent.putExtra("logo_url_a", HelperData.logoUrlTeamA);
+                                intent.putExtra("logo_url_b", HelperData.logoUrlTeamB);
+                                intent.putExtra("date_start", HelperData.MatchStartTime);
+                                intent.putExtra("date_end", HelperData.MatchEndTime);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<ViewBalanceResponse> call, Throwable t) {
+                }
+            });
         });
     }
 }

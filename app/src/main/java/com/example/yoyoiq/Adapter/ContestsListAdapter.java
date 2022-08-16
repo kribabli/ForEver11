@@ -53,6 +53,7 @@ public class ContestsListAdapter extends RecyclerView.Adapter<ContestsListAdapte
             public void onClick(View v) {
                 Intent intent = new Intent(context, AddCashActivity.class);
                 intent.putExtra("total_prize", listData.getPrize_pool());
+                intent.putExtra("Contest_id", listData.getContest_id());
                 intent.putExtra("entryFee", listData.getEntry());
                 intent.putExtra("totalSports", listData.getTotal_team());
                 intent.putExtra("leftSports", String.valueOf(totalS - leftS));

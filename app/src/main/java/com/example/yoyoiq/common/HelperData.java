@@ -19,6 +19,8 @@ public class HelperData {
     public static MutableLiveData<Integer> bat = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> ar = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> bowl = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> myTeam = new MutableLiveData<>(0);
+    public static MutableLiveData<Integer> myContest = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> Selectedcap = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> selectedVcap = new MutableLiveData<>(0);
     public static MutableLiveData<Double> creditCounter = new MutableLiveData<>(0.0);
@@ -46,6 +48,10 @@ public class HelperData {
     public static String UserName = "";
     public static String Usermobile = "";
     public static String UserEmail = "";
+    public static  String logoUrlTeamA="";
+    public static  String logoUrlTeamB="";
+    public static  String MatchStartTime="";
+    public static  String MatchEndTime="";
 
 
     public static void newTeamMaking() {

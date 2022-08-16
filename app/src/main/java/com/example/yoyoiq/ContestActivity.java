@@ -7,10 +7,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.PageAdapter;
 import com.example.yoyoiq.WalletPackage.AddCash;
+import com.example.yoyoiq.common.HelperData;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
@@ -30,6 +32,23 @@ public class ContestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contest);
         initMethod();
         setAction();
+        counterSection();
+
+        HelperData.myTeam.observe(this, e -> {
+            if (e == null) {
+                tabLayout.getTabAt(1).setText("My TEAMS");
+                return;
+            }
+            tabLayout.getTabAt(2).setText("MY TEAMS(" + e + ")");
+        });
+
+        HelperData.myContest.observe(this,e->{
+            if(e==null){
+                tabLayout.getTabAt(1).setText("MY CONTESTS");
+                return;
+            }
+            tabLayout.getTabAt(1).setText("MY CONTESTS("+ e +")");
+        });
 
         pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b, date_start, date_end);
         viewPager.setAdapter(pageAdapter);
@@ -66,6 +85,25 @@ public class ContestActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
+    private void counterSection() {
+        HelperData.myTeam.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer >= 0) {
+                    tabLayout.getTabAt(2).setText("" + integer);
+                }
+            }
+        });
+        HelperData.myContest.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer >= 0) {
+                    tabLayout.getTabAt(1).setText("" + integer);
+                }
+            }
+        });
+    }
+
     private void initMethod() {
         walletTV = findViewById(R.id.walletTV);
         backPress = findViewById(R.id.backPress);
@@ -84,6 +122,10 @@ public class ContestActivity extends AppCompatActivity {
         date_end = getIntent().getStringExtra("date_end");
         matchATv.setText(matchA);
         matchBTv.setText(matchB);
+        HelperData.logoUrlTeamA=logo_url_a;
+        HelperData.logoUrlTeamB=logo_url_b;
+        HelperData.MatchStartTime=date_start;
+        HelperData.MatchEndTime=date_end;
 
         tabLayout = findViewById(R.id.tabLayout);
         tabItem1 = findViewById(R.id.contests);
@@ -93,6 +135,9 @@ public class ContestActivity extends AppCompatActivity {
         matchList = findViewById(R.id.matchList);
         createTeam = findViewById(R.id.createTeam);
         createTeam1 = findViewById(R.id.createTeam1);
+
+
+
     }
 
     private void setAction() {

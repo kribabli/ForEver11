@@ -15,6 +15,7 @@ import com.example.yoyoiq.KYC.ShowKYCDetails;
 import com.example.yoyoiq.NotificationActivity;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SharedPrefManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +45,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         initMethod();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
+
 
         databaseConnectivity.getDatabasePath(AddCash.this).child("KYCDetails")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -120,7 +122,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     }
 
     private void paymentMethod() {
-        String sAmount = "100";
+        String sAmount =amount.getText().toString();
         int amount = Math.round(Float.parseFloat(sAmount) * 100);
 
         Checkout checkout = new Checkout();

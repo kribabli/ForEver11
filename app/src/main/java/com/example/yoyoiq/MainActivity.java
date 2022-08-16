@@ -111,10 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mainActivityLayout = findViewById(R.id.mainActivityLayout);
         databaseConnectivity = new DatabaseConnectivity();
         setAutoSliderBanner();
-        Log.d("Amit","Value "+sessionManager.getUserData().getUser_id());
-        Log.d("Amit","Value "+sessionManager.getUserData().getUserName());
-        Log.d("Amit","Value "+sessionManager.getUserData().getMobileNo());
-        Log.d("Amit","Value "+sessionManager.getUserData().getEmailId());
+
 
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.NavigationView);
@@ -312,7 +309,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String match_id = jsonObject.getString("match_id");
                             String date_start = jsonObject.getString("date_start_ist");
                             String date_end = jsonObject.getString("date_end_ist");
-                            Log.d("TAG", "onResponse Match_id: "+match_id);
 
                             JSONArray teama1 = jsonObject.getJSONArray("teama");
                             JSONArray teamb1 = jsonObject.getJSONArray("teamb");

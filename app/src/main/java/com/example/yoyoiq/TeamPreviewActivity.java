@@ -162,6 +162,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                             HelperData.TeamCount.setValue(HelperData.TeamCount.getValue() + 1);
+                            HelperData.myTeam.setValue(HelperData.TeamCount.getValue()+1);
 
                         }
                     }

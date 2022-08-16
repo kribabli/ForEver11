@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.example.yoyoiq.common.SharedPrefManager;
 import com.example.yoyoiq.common.DatabaseConnectivity;
@@ -62,6 +63,8 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (sessionManager.isLoggedIn()) {
+                    HelperData.UserId=sessionManager.getUserData().getUser_id();
+                    HelperData.UserName=sessionManager.getUserData().getUserName();
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

@@ -180,6 +180,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
+                        android:id="@+id/text1"
                         android:layout_margin="1dp"
                         android:background="@drawable/circle_shape"
                         android:gravity="center"
@@ -194,6 +195,7 @@
                         android:background="@drawable/circle_shape"
                         android:gravity="center"
                         android:textAlignment="center"
+                        android:id="@+id/text2"
                         android:textColor="#ffff"
                         android:textSize="14sp" />
 
@@ -201,6 +203,67 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@drawable/circle_shape"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:id="@+id/text3"
+                        android:textColor="#ffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@drawable/circle_shape"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:id="@+id/text4"
+                        android:textColor="#ffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@drawable/circle_shape"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:id="@+id/text5"
+                        android:textColor="#ffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@drawable/circle_shape"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:id="@+id/text6"
+                        android:textColor="#ffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@drawable/circle_shape"
+                        android:gravity="center"
+                        android:id="@+id/text7"
+                        android:textAlignment="center"
+                        android:textColor="#ffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/text8"
                         android:layout_margin="1dp"
                         android:background="@drawable/circle_shape"
                         android:gravity="center"
@@ -213,6 +276,7 @@
                         android:layout_height="25dp"
                         android:layout_gravity="center"
                         android:layout_margin="1dp"
+                        android:id="@+id/text9"
                         android:background="@drawable/circle_shape"
                         android:gravity="center"
                         android:textAlignment="center"
@@ -223,6 +287,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
+                        android:id="@+id/text10"
                         android:layout_margin="1dp"
                         android:background="@drawable/circle_shape"
                         android:gravity="center"
@@ -235,61 +300,7 @@
                         android:layout_height="25dp"
                         android:layout_gravity="center"
                         android:layout_margin="1dp"
-                        android:background="@drawable/circle_shape"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@drawable/circle_shape"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@drawable/circle_shape"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@drawable/circle_shape"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@drawable/circle_shape"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="1dp"
+                        android:id="@+id/text11"
                         android:background="@drawable/circle_shape"
                         android:gravity="center"
                         android:textAlignment="center"

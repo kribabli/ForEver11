@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="15dp"
+        android:weightSum="6"
+        android:id="@+id/mainLayout">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.5"
+            android:text="CONFIRMATION"
+            android:textStyle="normal"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.5"
+            android:textStyle="normal"
+            android:textSize="15sp"
+            android:text="Amount Added (Unutilised) + Winnings."/>
+
+
+
+
+    </LinearLayout>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:weightSum="10"
+       >
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         android:layout_marginLeft="15dp"
+         android:layout_marginRight="15dp"
+         android:layout_weight="5"
+         ><TextView
+             android:layout_width="200dp"
+             android:layout_height="wrap_content"
+             android:textSize="15sp"
+             android:text="  Entry"
+             android:textColor="@color/black"
+             />
+         <TextView
+             android:layout_width="200dp"
+             android:layout_height="wrap_content"
+             android:paddingLeft="80dp"
+             android:textSize="15sp"
+             android:text="  0"
+             android:id="@+id/entryFeeAmount"
+             android:drawableLeft="@drawable/indian_rupiya_symbol"
+             android:textColor="@color/black"
+             />
+     </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_margin="15dp"
+           android:layout_weight="5"
+           >
+           <TextView
+           android:layout_width="200dp"
+           android:layout_height="wrap_content"
+           android:textSize="15sp"
+           android:text="  Usable Cash Bonus"
+           android:textColor="@color/black"
+           />
+           <TextView
+               android:layout_width="200dp"
+               android:layout_height="wrap_content"
+               android:paddingLeft="80dp"
+               android:textSize="15sp"
+               android:id="@+id/cash_bonus"
+               android:text="  0"
+               android:drawableLeft="@drawable/indian_rupiya_symbol"
+               android:textColor="@color/black"
+               />
+
+
+
+       </LinearLayout>
+
+   </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        ><TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="  To Pay"
+        android:textColor="@color/green"
+        />
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="80dp"
+            android:textSize="15sp"
+            android:text="  0"
+            android:id="@+id/toPayfee"
+            android:drawableLeft="@drawable/green_rupees"
+            android:textColor="@color/green"
+            />
+    </LinearLayout>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/joinContest"
+        android:text="JOIN Contest"
+        android:backgroundTint="@color/green"
+        android:textColor="@color/white"/>
+
+
+</LinearLayout>

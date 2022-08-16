@@ -154,7 +154,6 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                     else if(loginResponse.getData().trim().toString().equalsIgnoreCase("Username or password something went wrong")) {
                         showDialog("Invalid Mobile or Password", false);
@@ -163,16 +162,11 @@ public class LoginActivity extends AppCompatActivity {
                         showDialog("Please Register YourSelf", false);
                     }
                 }
-
             }
-
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-
             }
         });
-
-
     }
 
     private void LoginValidation() {

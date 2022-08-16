@@ -1,11 +1,13 @@
 package com.example.yoyoiq.Retrofit;
 
 import com.example.yoyoiq.ContestPOJO.Contests;
+import com.example.yoyoiq.JoinContest.JoinContestsResponse;
 import com.example.yoyoiq.LoginPojo.LoginResponse;
 import com.example.yoyoiq.LoginPojo.RegistrationResponse;
 import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
+import com.example.yoyoiq.WalletPackage.ViewBalanceResponse;
 
 import org.json.JSONObject;
 
@@ -64,5 +66,23 @@ public interface UsersServices {
     Call<LoginResponse> getUserLoginData(
             @Field("email_or_mobile") String mobile_no,
             @Field("password") String password
+    );
+
+
+    @FormUrlEncoded
+    @POST("viewbalance")
+    Call<ViewBalanceResponse> getBalanceDetails(
+            @Field("user_id") String user_id
+
+    );
+
+    @FormUrlEncoded
+    @POST("joinContest")
+    Call<JoinContestsResponse> getJoinContestResponse(
+            @Field("user_id") String user_id,
+            @Field("match_id") String match_id,
+            @Field("contest_id") String contest_id,
+            @Field("team_id") String team_id
+
     );
 }

@@ -15,11 +15,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.yoyoiq.Adapter.PageAdapterPlayer;
 import com.example.yoyoiq.common.HelperData;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
@@ -38,7 +41,10 @@ public class CreateTeamActivity extends AppCompatActivity {
     PageAdapterPlayer pageAdapterPlayer;
     LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
     CircleImageView imageViewA, imageViewB;
+    LinearProgressIndicator maxPlayerSelected;
+    RecyclerView ball_recyclerView;
     TextView textViewA, textViewB, tv_TotalSelectedPlayer, tv_TotalCredit, tv_TeamOneSize, tv_TeamTwoSize;
+    TextView text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11;
     private String EVENT_DATE_TIME = "2022-07-23 18:08:00";
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private TextView tv_days, tv_done;
@@ -150,6 +156,18 @@ public class CreateTeamActivity extends AppCompatActivity {
         linearLayout2 = findViewById(R.id.linerLayout2);
         linearLayout3 = findViewById(R.id.linerLayout3);
         linearLayout4 = findViewById(R.id.linerLayout4);
+        ball_recyclerView = findViewById(R.id.ball_recyclerView);
+        text1 = findViewById(R.id.text1);
+        text2 = findViewById(R.id.text2);
+        text3 = findViewById(R.id.text3);
+        text4 = findViewById(R.id.text4);
+        text5 = findViewById(R.id.text5);
+        text6 = findViewById(R.id.text6);
+        text7 = findViewById(R.id.text7);
+        text8 = findViewById(R.id.text8);
+        text9 = findViewById(R.id.text9);
+        text10 = findViewById(R.id.text10);
+        text11 = findViewById(R.id.text11);
 
         tv_days = findViewById(R.id.tv_days);
         tv_done = findViewById(R.id.done);
@@ -276,6 +294,40 @@ public class CreateTeamActivity extends AppCompatActivity {
                     limit = 5;
                 }
                 tv_TotalSelectedPlayer.setText("" + integer + "/" + limit);
+                LinearProgressIndicator maxPlayerSelected=new LinearProgressIndicator(CreateTeamActivity.this);
+                try{
+                    maxPlayerSelected.setProgressCompat(integer, true);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+                ball_recyclerView.setLayoutManager(layoutManager);
+
+                if(integer != null) {
+                    LinearLayout layout = (LinearLayout)findViewById(R.id.playerPosition);
+                    for(int i=0;i<layout.getChildCount();i++)
+                    {
+                        TextView b =  (TextView) layout.getChildAt(i);
+
+                        b.setBackground(getResources().getDrawable(R.drawable.circle_shape));
+
+                    }
+                    for(int i=0;i<integer;i++) {
+                        TextView b = (TextView) layout.getChildAt(i);
+                        b.setBackground(getResources().getDrawable(R.drawable.green_circleshape));
+
+                    }
+                    TextView b = (TextView) layout.getChildAt(integer);
+                    try {
+                        b.setText(String.valueOf(integer + 1));
+                    }catch (NullPointerException e){
+
+                    }
+                }
+
             }
         });
     }
