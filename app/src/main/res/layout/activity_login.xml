@@ -120,7 +120,8 @@
                 android:backgroundTint="@color/white"
                 android:drawableLeft="@drawable/facebook"
                 android:text="Facebook"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:visibility="gone" />
 
         </LinearLayout>
 

@@ -3,7 +3,6 @@ package com.example.yoyoiq;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,6 +20,13 @@ import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.example.yoyoiq.common.SharedPrefManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -39,6 +45,9 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     Button sign_In_FB;
+    SignInButton sign_in_button;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
     EditText mobileNo, userPassword;
     TextView login, backPress;
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
@@ -56,13 +65,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         sharedPreferences = getSharedPreferences("path", MODE_PRIVATE);
-        sessionManager=new SessionManager(getApplicationContext());
+        sessionManager = new SessionManager(getApplicationContext());
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(this, gso);
+
         initMethod();
         setAction();
         DownloadData();
     }
 
     private void initMethod() {
+        sign_in_button = findViewById(R.id.sign_in_button);
         sign_In_FB = findViewById(R.id.button_facebook);
         mobileNo = findViewById(R.id.mobileNo);
         userPassword = findViewById(R.id.userPassword);
@@ -74,6 +88,33 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(view -> dataValidation());
 
         backPress.setOnClickListener(view -> onBackPressed());
+
+        sign_in_button.setOnClickListener(v -> signIn());
+    }
+
+    private void signIn() {
+        Intent signInIntent = gsc.getSignInIntent();
+        startActivityForResult(signInIntent, 1000);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                task.getResult(ApiException.class);
+                navigateToSecondActivity();
+            } catch (ApiException e) {
+                Toast.makeText(this, "Something went wrong !", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void navigateToSecondActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void DownloadData() {
@@ -122,13 +163,13 @@ public class LoginActivity extends AppCompatActivity {
     private void LoginValidationFromServer() {
         String mobile = mobileNo.getText().toString().trim();
         String password1 = userPassword.getText().toString().trim();
-        Call<LoginResponse>call= ApiClient.getInstance().getApi().getUserLoginData(mobile,password1);
+        Call<LoginResponse> call = ApiClient.getInstance().getApi().getUserLoginData(mobile, password1);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                LoginResponse loginResponse= response.body();
-                if(response.isSuccessful()) {
-                    if (loginResponse.getData().trim().toString().equalsIgnoreCase("Login successful")){
+                LoginResponse loginResponse = response.body();
+                if (response.isSuccessful()) {
+                    if (loginResponse.getData().trim().toString().equalsIgnoreCase("Login successful")) {
                         list = loginResponse.getUserLoginDataArrayList();
                         String totalData = new Gson().toJson(loginResponse.getUserLoginDataArrayList());
                         JSONArray jsonArray = null;
@@ -140,11 +181,11 @@ public class LoginActivity extends AppCompatActivity {
                                 String mobile_no = jsonObject.getString("mobile_no");
                                 String user_id = jsonObject.getString("user_id");
                                 String username = jsonObject.getString("username");
-                                HelperData.UserId=user_id;
-                                HelperData.UserName=username;
-                                HelperData.Usermobile=mobile_no;
-                                HelperData.UserEmail=email_id;
-                                UserData userData=new UserData(username,mobile_no,email_id,user_id);
+                                HelperData.UserId = user_id;
+                                HelperData.UserName = username;
+                                HelperData.Usermobile = mobile_no;
+                                HelperData.UserEmail = email_id;
+                                UserData userData = new UserData(username, mobile_no, email_id, user_id);
                                 sessionManager.saveUser(userData);
                                 Toast.makeText(LoginActivity.this, "Login Successfully..", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -154,15 +195,14 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                    }
-                    else if(loginResponse.getData().trim().toString().equalsIgnoreCase("Username or password something went wrong")) {
+                    } else if (loginResponse.getData().trim().toString().equalsIgnoreCase("Username or password something went wrong")) {
                         showDialog("Invalid Mobile or Password", false);
-                    }
-                    else {
+                    } else {
                         showDialog("Please Register YourSelf", false);
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
             }

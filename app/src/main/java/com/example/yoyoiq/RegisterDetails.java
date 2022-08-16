@@ -2,7 +2,6 @@ package com.example.yoyoiq;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,7 +35,6 @@ public class RegisterDetails extends AppCompatActivity {
     ProgressDialog progressDialog;
     SharedPrefManager sharedPrefManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,19 +59,9 @@ public class RegisterDetails extends AppCompatActivity {
     }
 
     private void setAction() {
-        backPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        backPress.setOnClickListener(view -> onBackPressed());
 
-        registerUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                validation();
-            }
-        });
+        registerUser.setOnClickListener(view -> validation());
     }
 
     private boolean validation() {
@@ -103,7 +91,6 @@ public class RegisterDetails extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return isValid;
     }
 

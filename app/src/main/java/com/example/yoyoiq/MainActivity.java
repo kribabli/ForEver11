@@ -3,6 +3,7 @@ package com.example.yoyoiq;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.BannerAdapter;
+import com.example.yoyoiq.LoginPojo.RegistrationResponse;
 import com.example.yoyoiq.Model.The_Slide_Items_Model_Class;
 import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.PrivacyPolicy.AboutUsActivity;
@@ -34,6 +36,10 @@ import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.example.yoyoiq.common.SharedPrefManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -69,16 +75,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     AllMatchAdapter allMatchAdapter;
     ArrayList<TotalHomeData> list = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         getAllMatches();
         recyclerView = findViewById(R.id.recyclerViewMatchList);
-        sessionManager=new SessionManager(getApplicationContext());
+        sessionManager = new SessionManager(getApplicationContext());
 
         swipeRefreshLayout = findViewById(R.id.swiper);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -112,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         databaseConnectivity = new DatabaseConnectivity();
         setAutoSliderBanner();
 
-
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.NavigationView);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.start, R.string.close);
@@ -121,6 +127,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         setAction();
         navigationView.setNavigationItemSelectedListener(this);
+        googleSignIn();
+    }
+
+    private void googleSignIn() {
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(this, gso);
+        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if (googleSignInAccount != null) {
+            String userName = googleSignInAccount.getDisplayName();
+            String userEmail = googleSignInAccount.getEmail();
+            Uri photoUrl = googleSignInAccount.getPhotoUrl();
+            String id = googleSignInAccount.getId();
+            Log.d("TAG", "onCreate: " + id + "  " + userName + "  " + userEmail + "  " + photoUrl);
+
+            Call<RegistrationResponse> call = ApiClient.getInstance().getApi().
+                    SendUserDetails_server(id, userName, userEmail, String.valueOf(photoUrl));
+            call.enqueue(new Callback<RegistrationResponse>() {
+                @Override
+                public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+                }
+
+                @Override
+                public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     private void setAction() {
@@ -144,7 +177,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     jsonArray = new JSONArray(str);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-
                     }
                     listItems = new ArrayList<>();
                     listItems.add(new The_Slide_Items_Model_Class(R.drawable.group1));
@@ -167,14 +199,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public class The_slide_timer extends TimerTask {
         @Override
         public void run() {
-            MainActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (view_bannerItem.getCurrentItem() < listItems.size() - 1) {
-                        view_bannerItem.setCurrentItem(view_bannerItem.getCurrentItem() + 1);
-                    } else
-                        view_bannerItem.setCurrentItem(0);
-                }
+            MainActivity.this.runOnUiThread(() -> {
+                if (view_bannerItem.getCurrentItem() < listItems.size() - 1) {
+                    view_bannerItem.setCurrentItem(view_bannerItem.getCurrentItem() + 1);
+                } else
+                    view_bannerItem.setCurrentItem(0);
             });
         }
     }
@@ -277,11 +306,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void userLogout() {
+        gsc.signOut();
         sessionManager.logout();
-        HelperData.UserId="";
-        HelperData.UserName="";
-        HelperData.Usermobile="";
-        HelperData.UserEmail="";
+        HelperData.UserId = "";
+        HelperData.UserName = "";
+        HelperData.Usermobile = "";
+        HelperData.UserEmail = "";
         Intent intent = new Intent(MainActivity.this, FrontActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -351,5 +381,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-
 }
