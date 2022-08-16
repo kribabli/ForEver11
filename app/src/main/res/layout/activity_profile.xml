@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_last"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".ProfileActivity">
@@ -23,7 +25,7 @@
                 android:id="@+id/backPress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_baseline_arrow_back_24"
+                android:background="@drawable/arrow_back_white"
                 android:gravity="left"
                 android:textColor="@color/black" />
 
@@ -35,7 +37,7 @@
             <TextView
                 android:id="@+id/share"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/ic_baseline_share_24"
                 android:gravity="right" />
 
@@ -46,39 +48,61 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="120dp"
+        app:cardCornerRadius="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/light_gray"
-            android:orientation="horizontal"
-            android:weightSum="10">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:elevation="4dp"
+            android:gravity="start"
+            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:src="@drawable/ic_phonepe_logo" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilePic"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginVertical="10dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_person_3_24"
+                android:visibility="visible"
+                app:civ_border_color="#efefef"
+                app:civ_border_width="2dp"
+                app:civ_circle_background_color="@android:color/white" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="User Name"
-                android:textColor="@color/black" />
+                android:layout_margin="10dp"
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5" />
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:padding="4dp"
+                    android:text="User Name"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/skillScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#5EB7DA"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="Skill Score:0"
+                    android:textColor="@color/red_1"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -87,61 +111,68 @@
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="110dp"
             android:layout_marginRight="10dp"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="7.5">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:gravity="center"
-                android:text="0"
-                android:textColor="@color/black" />
+            android:weightSum="8">
 
             <TextView
                 android:id="@+id/followers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:gravity="center"
-                android:text="Followers"
-                android:textColor="@color/black" />
+                android:text="0"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".5"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
+                android:text="Followers"
                 android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/following"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:gravity="center"
-                android:text="Following"
-                android:textColor="@color/black" />
+                android:text="0"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".5"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
+                android:text="Following"
                 android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/friends"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:text="Friends"
                 android:textColor="@color/black" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
 
         </LinearLayout>
 
