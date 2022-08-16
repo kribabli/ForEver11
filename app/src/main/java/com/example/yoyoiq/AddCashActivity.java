@@ -7,10 +7,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.yoyoiq.Adapter.MyCreatedTeamAdapter;
 import com.example.yoyoiq.Adapter.PageAdapterWinnings;
 import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
+import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.WalletPackage.AddCash;
 import com.example.yoyoiq.common.HelperData;
@@ -19,8 +22,6 @@ import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +35,6 @@ public class AddCashActivity extends AppCompatActivity {
     String total_prize, entryFee, totalSports, leftSports, winningPer, upTo, matchA, matchB, match_id, first_price, price_contribution;
     TextView backPress, teamATv, teamBTv, walletTV;
     TextView total_prize1, entryFee1, totalSports1, leftSports1, winningPer1, upTo1, first_price1;
-    ArrayList<String> list = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,64 +132,8 @@ public class AddCashActivity extends AppCompatActivity {
         joinLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getMyAllCreatedTeam();
-            }
-        });
-    }
-
-    private void getMyAllCreatedTeam() {
-        list.clear();
-        Call<CreatedTeamResponse> call = ApiClient
-                .getInstance()
-                .getApi()
-                .getUserTeamCreated("71", HelperData.matchId);
-
-        call.enqueue(new Callback<CreatedTeamResponse>() {
-            @Override
-            public void onResponse(Call<CreatedTeamResponse> call, Response<CreatedTeamResponse> response) {
-                CreatedTeamResponse createdTeamResponse = response.body();
-                if (response.isSuccessful()) {
-                    String totalData = new Gson().toJson(createdTeamResponse.getResponse());
-
-                    //----------------------for CreatedTeam(Per User)----------------------------
-                    JSONArray short_squads = null;
-                    JSONArray jsonArray = null;
-                    try {
-                        jsonArray = new JSONArray(totalData);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            try {
-                                short_squads = jsonObject.getJSONArray("short_squads");
-                                for (int j = 0; j < short_squads.length(); j++) {
-                                    try {
-                                        JSONObject jsonObjectSquads = short_squads.getJSONObject(0);
-                                        String TeamName = jsonObjectSquads.getString("TeamName");
-                                        list.add(TeamName);
-
-                                        if (list.isEmpty()) {
-                                            Intent intent = new Intent(AddCashActivity.this, CreateTeamActivity.class);
-                                            startActivity(intent);
-                                        } else {
-                                            Intent intent = new Intent(AddCashActivity.this, AddCash.class);
-                                            startActivity(intent);
-                                        }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CreatedTeamResponse> call, Throwable t) {
+                Intent intent = new Intent(AddCashActivity.this, SelectTeams.class);
+                startActivity(intent);
             }
         });
     }
