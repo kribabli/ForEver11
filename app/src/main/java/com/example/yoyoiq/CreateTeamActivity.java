@@ -21,6 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.yoyoiq.Adapter.PageAdapterPlayer;
+import com.example.yoyoiq.OnlyTeamPreView.OnlyTeamPreview;
 import com.example.yoyoiq.common.HelperData;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.tabs.TabItem;
@@ -44,7 +45,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     LinearProgressIndicator maxPlayerSelected;
     RecyclerView ball_recyclerView;
     TextView textViewA, textViewB, tv_TotalSelectedPlayer, tv_TotalCredit, tv_TeamOneSize, tv_TeamTwoSize;
-    TextView text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11;
+    TextView text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11;
     private String EVENT_DATE_TIME = "2022-07-23 18:08:00";
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private TextView tv_days, tv_done;
@@ -221,7 +222,16 @@ public class CreateTeamActivity extends AppCompatActivity {
         continueBtn.setOnClickListener(v -> {
             handleAfterContinueButton();
         });
+
+        teamPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateTeamActivity.this, OnlyTeamPreview.class);
+                startActivity(intent);
+            }
+        });
     }
+
     private void handleAfterContinueButton() {
         if (HelperData.playerCounter.getValue() == limit) {
             if (HelperData.wk.getValue() >= 1) {
@@ -294,11 +304,10 @@ public class CreateTeamActivity extends AppCompatActivity {
                     limit = 5;
                 }
                 tv_TotalSelectedPlayer.setText("" + integer + "/" + limit);
-                LinearProgressIndicator maxPlayerSelected=new LinearProgressIndicator(CreateTeamActivity.this);
-                try{
+                LinearProgressIndicator maxPlayerSelected = new LinearProgressIndicator(CreateTeamActivity.this);
+                try {
                     maxPlayerSelected.setProgressCompat(integer, true);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -306,16 +315,15 @@ public class CreateTeamActivity extends AppCompatActivity {
 
                 ball_recyclerView.setLayoutManager(layoutManager);
 
-                if(integer != null) {
-                    LinearLayout layout = (LinearLayout)findViewById(R.id.playerPosition);
-                    for(int i=0;i<layout.getChildCount();i++)
-                    {
-                        TextView b =  (TextView) layout.getChildAt(i);
+                if (integer != null) {
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.playerPosition);
+                    for (int i = 0; i < layout.getChildCount(); i++) {
+                        TextView b = (TextView) layout.getChildAt(i);
 
                         b.setBackground(getResources().getDrawable(R.drawable.circle_shape));
 
                     }
-                    for(int i=0;i<integer;i++) {
+                    for (int i = 0; i < integer; i++) {
                         TextView b = (TextView) layout.getChildAt(i);
                         b.setBackground(getResources().getDrawable(R.drawable.green_circleshape));
 
@@ -323,11 +331,10 @@ public class CreateTeamActivity extends AppCompatActivity {
                     TextView b = (TextView) layout.getChildAt(integer);
                     try {
                         b.setText(String.valueOf(integer + 1));
-                    }catch (NullPointerException e){
+                    } catch (NullPointerException e) {
 
                     }
                 }
-
             }
         });
     }

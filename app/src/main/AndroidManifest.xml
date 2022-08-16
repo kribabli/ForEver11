@@ -17,6 +17,9 @@
         android:theme="@style/Theme.YoYoIq"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".OnlyTeamPreView.OnlyTeamPreview"
+            android:exported="false" />
+        <activity
             android:name=".ChatFirebase.ChatActivity"
             android:exported="true" />
         <activity
