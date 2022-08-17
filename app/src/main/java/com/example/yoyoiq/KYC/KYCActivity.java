@@ -13,13 +13,19 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -27,18 +33,26 @@ import androidx.core.content.ContextCompat;
 
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SharedPrefManager;
+import com.github.drjacky.imagepicker.ImagePicker;
+import com.github.drjacky.imagepicker.constant.ImageProvider;
+import com.github.drjacky.imagepicker.util.FileUriUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.internal.Intrinsics;
 
 public class KYCActivity extends AppCompatActivity {
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
@@ -51,6 +65,8 @@ public class KYCActivity extends AppCompatActivity {
     ImageView imageViewPan;
     Bitmap bitmap;
     String fileName = "";
+    String pan_image_path = "";
+    String code = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +75,7 @@ public class KYCActivity extends AppCompatActivity {
         initMethod();
         setAction();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
+
     }
 
     private void initMethod() {
@@ -80,126 +97,50 @@ public class KYCActivity extends AppCompatActivity {
         backPress.setOnClickListener(view -> onBackPressed());
 
         camera1.setOnClickListener(view -> {
-            if (checkAndRequestPermissions(KYCActivity.this)) {
-                chooseImage(KYCActivity.this);
-            }
+            callCamera();
+
         });
 
         submit.setOnClickListener(view -> buttonValidation());
     }
 
-    private boolean checkAndRequestPermissions(final Activity context) {
-        int WExtstorePermission = ContextCompat.checkSelfPermission(context,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int cameraPermission = ContextCompat.checkSelfPermission(context,
-                Manifest.permission.CAMERA);
-        List<String> listPermissionsNeeded = new ArrayList<>();
-        if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.CAMERA);
-        }
-        if (WExtstorePermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded
-                    .add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(context, listPermissionsNeeded
-                            .toArray(new String[listPermissionsNeeded.size()]),
-                    REQUEST_ID_MULTIPLE_PERMISSIONS);
-            return false;
-        }
-        return true;
-    }
-
-    private void chooseImage(Context context) {
-        // create a menuOption Array
-        final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit"};
-        // create a dialog for showing the optionsMenu
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        // set the items in builder
-        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (optionsMenu[i].equals("Take Photo")) {
-                    // Open the camera and get the photo
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
-                } else if (optionsMenu[i].equals("Choose from Gallery")) {
-                    // choose from  external storage
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto, 1);
-                } else if (optionsMenu[i].equals("Exit")) {
-                    dialogInterface.dismiss();
-                }
+    private void callCamera() {
+        code = "panImage";
+        ImagePicker.Companion.with(KYCActivity.this).crop().cropFreeStyle().
+                maxResultSize(1080,1080,true).provider(ImageProvider.BOTH).createIntentFromDialog((Function1)(new Function1(){
+            public Object invoke(Object var1) {
+                this.invoke((Intent) var1);
+                return Unit.INSTANCE;
             }
-        });
-        builder.show();
+
+            public final void invoke(@NotNull Intent it) {
+                Intrinsics.checkNotNullParameter(it, "it");
+                launcher.launch(it);
+            }
+        }));
+
+
     }
 
-    @SuppressLint("MissingSuperCall")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_ID_MULTIPLE_PERMISSIONS:
-                if (ContextCompat.checkSelfPermission(KYCActivity.this,
-                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(),
-                                    "FlagUp Requires Access to Camara.", Toast.LENGTH_SHORT)
-                            .show();
-                } else if (ContextCompat.checkSelfPermission(KYCActivity.this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(),
-                            "FlagUp Requires Access to Your Storage.",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    chooseImage(KYCActivity.this);
-                }
-                break;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_CANCELED) {
-            switch (requestCode) {
-                case 0:
-                    if (resultCode == RESULT_OK && data != null) {
-                        bitmap = (Bitmap) data.getExtras().get("data");
-                        fileName = "KycPanImage.jpg";
+    ActivityResultLauncher<Intent> launcher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Uri uri = result.getData().getData();
+                    pan_image_path = FileUriUtils.INSTANCE.getRealPath(this, uri);
+                    InputStream inputStream = null;
+                    try {
+                        inputStream = getContentResolver().openInputStream(result.getData().getData());
+                        bitmap = BitmapFactory.decodeStream(inputStream);
                         imageViewPan.setImageBitmap(bitmap);
-                        imageUpload();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
                     }
-                    break;
-                case 1:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImage = data.getData();
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        if (selectedImage != null) {
-                            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
-                                String[] file = picturePath.toString().split("/");
-                                fileName = file[file.length - 1];
-                                imageViewPan.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                                cursor.close();
-                                InputStream inputStream = null;
-                                try {
-                                    inputStream = getContentResolver().openInputStream(selectedImage);
-                                    bitmap = BitmapFactory.decodeStream(inputStream);
-                                    imageUpload();
 
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    }
-                    break;
-            }
-        }
-    }
+                } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
+
+                }
+            });
+
 
     private void imageUpload() {
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -223,7 +164,14 @@ public class KYCActivity extends AppCompatActivity {
                 accountNo.setError("Please enter account no.");
                 accountNo.requestFocus();
                 isValid = false;
-            } else if (retypeAccount.getText().toString().trim().length() == 0
+            }
+            else if (accountNo.getText().toString().trim().length() <=10) {
+                accountNo.setError("Please enter correct account no.");
+                accountNo.requestFocus();
+                isValid = false;
+            }
+
+            else if (retypeAccount.getText().toString().trim().length() == 0
                     || retypeAccount.getText().toString().trim() == accountNo.getText().toString().trim()) {
                 retypeAccount.setError("Re-Enter account no.");
                 retypeAccount.requestFocus();
@@ -236,24 +184,49 @@ public class KYCActivity extends AppCompatActivity {
                 ifscCode.setError("Please enter IFSC Code");
                 ifscCode.requestFocus();
                 isValid = false;
-            } else if (panCard.getText().toString().trim().length() == 0) {
+            }
+            else if (ifscCode.getText().toString().trim().length() <= 10) {
+                ifscCode.setError("Please enter correct IFSC Code");
+                ifscCode.requestFocus();
+                isValid = false;
+            }
+            else if (panCard.getText().toString().trim().length() == 0) {
                 panCard.setError("Please enter PANCard No.");
                 panCard.requestFocus();
                 isValid = false;
-            } else if (imageViewPan.getDrawable() == null) {
+            }
+            else if (panCard.getText().toString().trim().length() <10) {
+                panCard.setError("Please enter correct PANCard No.");
+                panCard.requestFocus();
+                isValid = false;
+            }
+            else if (imageViewPan.getDrawable() == null) {
                 databaseConnectivity.showAlertDialog("Alert", "Click Picture of PANCard", false, this);
                 isValid = false;
             } else if (aadharNo.getText().toString().trim().length() == 0) {
                 aadharNo.setError("Please enter Aadhar");
                 aadharNo.requestFocus();
                 isValid = false;
-            } else {
+            }
+            else if (aadharNo.getText().toString().trim().length() >12) {
+                aadharNo.setError("Please enter correct Aadhar");
+                aadharNo.requestFocus();
+                isValid = false;
+            }
+            else {
                 insertKYCDetails();
+                send_kyc_Details_OnServer();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return isValid;
+    }
+
+    private void send_kyc_Details_OnServer() {
+        Log.d("Amit","Value "+pan_image_path);
+        HelperData.uploadFile(KYCActivity.this,HelperData.UserId,fullName.getText().toString(),accountNo.getText().toString(),
+                ifscCode.getText().toString(),bankName.getText().toString(),aadharNo.getText().toString(),panCard.getText().toString(),fileName);
     }
 
     private void insertKYCDetails() {
@@ -296,4 +269,6 @@ public class KYCActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 }

@@ -135,7 +135,7 @@ public class AddCashActivity extends AppCompatActivity {
                 public void onResponse(Call<ViewBalanceResponse> call, Response<ViewBalanceResponse> response) {
                     ViewBalanceResponse viewBalanceResponse= response.body();
                     if(response.isSuccessful()){
-                        balance= Integer.parseInt(viewBalanceResponse.getBalance());
+//                        balance= Integer.parseInt(viewBalanceResponse.getBalance());
                         if(balance>=Integer.parseInt(entryFee)){
                             if(HelperData.TeamCount.getValue()>=1){
                                 Intent intent=new Intent(AddCashActivity.this,SelectTeams.class);

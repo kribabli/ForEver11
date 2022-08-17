@@ -309,13 +309,7 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/clearTeam"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:src="@drawable/clearteam" />
+
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

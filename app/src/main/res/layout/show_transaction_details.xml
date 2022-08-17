@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    android:background="@color/light_gray"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:textSize="18sp"
+        android:textColor="@color/gray"
+        android:paddingLeft="4dp"
+        android:text="Transaction Id:"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:id="@+id/transactionId"
+        android:paddingLeft="5dp"
+        android:text=""/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/gray"
+        android:paddingLeft="4dp"
+        android:text="Transaction Date:"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:id="@+id/transactionDate"
+        android:paddingLeft="5dp"
+        android:text=""/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/gray"
+        android:paddingLeft="4dp"
+        android:text="TeamName:"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:id="@+id/TeamName"
+        android:paddingLeft="5dp"
+        android:text=""/>
+
+
+
+
+
+
+</LinearLayout>

@@ -2,20 +2,27 @@ package com.example.yoyoiq.Retrofit;
 
 import com.example.yoyoiq.ContestPOJO.Contests;
 import com.example.yoyoiq.JoinContest.JoinContestsResponse;
+import com.example.yoyoiq.KYC.KycAddedPostResponse;
 import com.example.yoyoiq.LoginPojo.LoginResponse;
 import com.example.yoyoiq.LoginPojo.RegistrationResponse;
 import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
+import com.example.yoyoiq.WalletPackage.PostBalanceResponse;
 import com.example.yoyoiq.WalletPackage.ViewBalanceResponse;
+import com.example.yoyoiq.WalletPackage.ViewTransactionHistoryResponse;
 
 import org.json.JSONObject;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface UsersServices {
 
@@ -77,12 +84,40 @@ public interface UsersServices {
     );
 
     @FormUrlEncoded
+    @POST("viewtransection")
+    Call<ViewTransactionHistoryResponse> getTransactionDetails(
+            @Field("user_id") String user_id
+
+    );
+
+    @FormUrlEncoded
+    @POST("addbalance")
+    Call<PostBalanceResponse> sendBalanceData(
+            @Field("user_id") String user_id,
+            @Field("balance") String balance
+
+    );
+
+    @FormUrlEncoded
     @POST("joinContest")
     Call<JoinContestsResponse> getJoinContestResponse(
             @Field("user_id") String user_id,
             @Field("match_id") String match_id,
             @Field("contest_id") String contest_id,
             @Field("team_id") String team_id
+
+    );
+    @Multipart
+    @POST("addkycdetails")
+    Call<KycAddedPostResponse> sendKycDetailsOnServer(
+            @Part("user_id") RequestBody userid,
+            @Part("fullName") RequestBody fullName,
+            @Part("account_no") RequestBody accountNo,
+            @Part("bank_name") RequestBody bankName,
+            @Part("ifsc") RequestBody ifsc,
+            @Part("adhar_no") RequestBody adhar_no,
+            @Part("pancard_no") RequestBody pan,
+            @Part MultipartBody.Part pancard
 
     );
 }

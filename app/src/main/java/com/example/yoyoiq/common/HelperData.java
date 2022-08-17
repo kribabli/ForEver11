@@ -1,13 +1,26 @@
 package com.example.yoyoiq.common;
 
+import android.content.Context;
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.yoyoiq.CreateTeamActivity;
 import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
+import com.example.yoyoiq.KYC.KycAddedPostResponse;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
+import com.example.yoyoiq.Retrofit.ApiClient;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HelperData {
     public static MutableLiveData<Integer> playerCounter = new MutableLiveData<>(0);
@@ -26,7 +39,7 @@ public class HelperData {
     public static MutableLiveData<Double> creditCounter = new MutableLiveData<>(0.0);
     public static MutableLiveData<List<AllSelectedPlayer>> allSelectedPlayer = new MutableLiveData<>();
 
-    public static MutableLiveData<String> refrashers = new MutableLiveData<>();
+    public static MutableLiveData<String> refreashLive = new MutableLiveData<>();
     public static MutableLiveData<String> selectedPlayer = new MutableLiveData<>();
     public static MutableLiveData<String> getCall_For_Refrashers = new MutableLiveData<>();
 
@@ -70,5 +83,54 @@ public class HelperData {
         vcap = false;
         cap = false;
         CreateTeamActivity.addedPlayerIds = "";
+    }
+
+    public static void uploadFile(Context context,String user_Id, String fullName, String accountNo, String ifsc, String bankName,  String aadhar, String pan, String pan_img_path){
+        MultipartBody.Part fileToUpload1 = null;
+
+        File myFile1 = new File(pan_img_path);
+        RequestBody requestBody1 = RequestBody.create(MediaType.parse("*/*"), myFile1);
+        fileToUpload1 = MultipartBody.Part.createFormData("pan_img", myFile1.getName(), requestBody1);
+
+
+        RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), user_Id);
+        RequestBody fullname = RequestBody.create(MediaType.parse("text/plain"), fullName);
+        RequestBody account_no = RequestBody.create(MediaType.parse("text/plain"), accountNo);
+        RequestBody ifsc_code = RequestBody.create(MediaType.parse("text/plain"), ifsc);
+        RequestBody bank_name = RequestBody.create(MediaType.parse("text/plain"), bankName);
+        RequestBody aadhar_no = RequestBody.create(MediaType.parse("text/plain"), aadhar);
+        RequestBody pancard_no = RequestBody.create(MediaType.parse("text/plain"), pan);
+
+        Call<KycAddedPostResponse> call= ApiClient.getInstance().getApi().sendKycDetailsOnServer(user_id,fullname,account_no,ifsc_code,
+                bank_name,aadhar_no,pancard_no,fileToUpload1);
+
+        call.enqueue(new Callback<KycAddedPostResponse>() {
+            @Override
+            public void onResponse(Call<KycAddedPostResponse> call, Response<KycAddedPostResponse> response) {
+                KycAddedPostResponse kycAddedPostResponse= response.body();
+                if(response.isSuccessful()){
+                    Log.d("Amit","Value check ");
+                    if(kycAddedPostResponse!=null){
+
+                        refreashLive.setValue("ds");
+                    }
+                    else{
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<KycAddedPostResponse> call, Throwable t) {
+                Log.d("Amit","Value check "+""+t);
+
+            }
+        });
+
+
+
     }
 }

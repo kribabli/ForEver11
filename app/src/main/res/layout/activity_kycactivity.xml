@@ -100,6 +100,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/designborder"
                         android:drawablePadding="4dp"
+                        android:maxLength="20"
                         android:hint="Account No."
                         android:inputType="number"
                         android:padding="7dp" />
@@ -128,6 +129,7 @@
                         android:drawablePadding="4dp"
                         android:hint="Retype Account No."
                         android:inputType="number"
+                        android:maxLength="20"
                         android:padding="7dp" />
 
                 </LinearLayout>
@@ -153,6 +155,7 @@
                         android:background="@drawable/designborder"
                         android:drawablePadding="4dp"
                         android:hint="Bank Name"
+                        android:maxLength="20"
                         android:padding="7dp" />
 
                 </LinearLayout>
@@ -178,6 +181,7 @@
                         android:background="@drawable/designborder"
                         android:drawablePadding="4dp"
                         android:hint="IFSC Code"
+                        android:maxLength="15"
                         android:inputType="textCapCharacters"
                         android:padding="7dp" />
 
@@ -203,6 +207,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/designborder"
                         android:drawablePadding="4dp"
+                        android:maxLength="10"
                         android:hint="PAN Card"
                         android:inputType="textCapCharacters"
                         android:padding="7dp" />
@@ -255,6 +260,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/designborder"
                         android:drawablePadding="4dp"
+                        android:maxLength="12"
                         android:hint="Enter Your Aadhar"
                         android:inputType="number"
                         android:padding="7dp" />
