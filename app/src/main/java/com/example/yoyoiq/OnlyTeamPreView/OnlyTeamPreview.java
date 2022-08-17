@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.R;
@@ -75,7 +76,7 @@ public class OnlyTeamPreview extends AppCompatActivity {
                 CaptainName, VCName, batCount, bowlCount, arCount, wkCount, CaptainName, VCName, wkName, BATName, ARName, BOWLName);
         list.add(onlyTeamPreviewModel);
         onlyTeamPreviewAdapter = new OnlyTeamPreviewAdapter(getApplicationContext(), list);
-        recyclerView.setLayoutManager(new GridLayoutManager(OnlyTeamPreview.this, 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(OnlyTeamPreview.this,3));
         recyclerView.setAdapter(onlyTeamPreviewAdapter);
         onlyTeamPreviewAdapter.notifyDataSetChanged();
     }

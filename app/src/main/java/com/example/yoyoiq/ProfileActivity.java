@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,10 @@ public class ProfileActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     CircleImageView userProfile;
+    GridView gridView;
+    String[] wordPositionTv = {"Skill Score"};
+    int[] positionIv = {R.drawable.ic_baseline_perm_identity_24};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,10 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
+//        gridView = findViewById(R.id.gridView);
+//        ProfileAdapter adapter = new ProfileAdapter(ProfileActivity.this, wordPositionTv, positionIv);
+//        gridView.setAdapter(adapter);
     }
 
     @Override

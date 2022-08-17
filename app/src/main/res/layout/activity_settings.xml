@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".SettingsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:background="@color/black"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -22,17 +23,18 @@
                 android:id="@+id/backPress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_baseline_arrow_back_24"
+                android:background="@drawable/arrow_back_white"
                 android:gravity="left" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
+                android:layout_weight="10"
                 android:gravity="center"
-                android:text="Settings"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:text="My Info &amp; Settings"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -41,34 +43,103 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="11dp"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
-        <EditText
+        <TextView
+            android:id="@+id/userName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Name:"/>
-        <EditText
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:background="@color/light_gray"
+            android:text="User Name"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Email:"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="Enter Password:"/>
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:background="@color/light_gray"
+            android:text="Email"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/mobileNo"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="10"
+            android:background="@color/light_gray"
+            android:gravity="left"
+            android:text="9090808899"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:background="@color/light_gray"
+            android:drawableRight="@drawable/ic_baseline_mode_edit_black"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="200dp"
             android:backgroundTint="@color/light_gray"
-            android:hint="Date of Birth"/>
+            android:hint="Date of Birth" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
         <RadioGroup
             android:id="@+id/radioGrp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/light_gray"
             android:orientation="horizontal">
 
             <RadioButton
@@ -76,104 +147,126 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:checked="true"
                 android:layout_weight="1"
-                android:textSize="14dp"
-                android:text="Male" />
+                android:checked="true"
+                android:text="Male"
+                android:textSize="14dp" />
 
             <RadioButton
                 android:id="@+id/radioF"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:checked="false"
                 android:layout_weight="1"
-                android:textSize="14dp"
-                android:text="Female" />
+                android:checked="false"
+                android:text="Female"
+                android:textSize="14dp" />
 
             <RadioButton
                 android:id="@+id/radioO"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:checked="false"
                 android:layout_weight="1"
-                android:textSize="14dp"
-                android:text="Others" />
+                android:checked="false"
+                android:text="Others"
+                android:textSize="14dp" />
 
         </RadioGroup>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
         android:layout_marginLeft="10dp"
-        android:weightSum="10"
-        android:orientation="horizontal">
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9090808899"
-            android:layout_weight="6"
-            android:textSize="20sp"/>
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/light_gray"
+            android:gravity="left"
+            android:text="City"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change"
-            android:layout_weight="4"
-            android:textSize="20sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:weightSum="10"
-        android:orientation="vertical">
-
-        <EditText
+            android:id="@+id/Country"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Address"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="City"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="PinCode"/>
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="40dp"/>
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="40dp"/>
+            android:layout_height="50dp"
+            android:background="@color/light_gray"
+            android:gravity="left"
+            android:text="Country"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="30dp"
+        android:background="@color/light_gray"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:background="@drawable/border_red"
-            android:text="UPDATE PROFILE" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="220dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/logOut"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:drawableLeft="@drawable/ic_baseline_logout_24"
+                android:gravity="center"
+                android:text="LOGOUT"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="100dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border_dark_green"
+                android:gravity="center"
+                android:text="UPDATE PROFILE"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
