@@ -118,8 +118,8 @@ public interface UsersServices {
             @Part("user_id") RequestBody userid,
             @Part("fullName") RequestBody fullName,
             @Part("account_no") RequestBody accountNo,
+            @Part("ifsc_code") RequestBody ifsc,
             @Part("bank_name") RequestBody bankName,
-            @Part("ifsc") RequestBody ifsc,
             @Part("adhar_no") RequestBody adhar_no,
             @Part("pancard_no") RequestBody pan,
             @Part MultipartBody.Part pancard

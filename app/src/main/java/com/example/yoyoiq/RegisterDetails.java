@@ -1,24 +1,43 @@
 package com.example.yoyoiq;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.yoyoiq.KYC.KYCActivity;
+import com.example.yoyoiq.LoginPojo.LoginResponse;
 import com.example.yoyoiq.LoginPojo.RegistrationResponse;
+import com.example.yoyoiq.LoginPojo.userLoginData;
 import com.example.yoyoiq.Model.UserData;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.DatabaseConnectivity;
+import com.example.yoyoiq.common.HelperData;
+import com.example.yoyoiq.common.SessionManager;
 import com.example.yoyoiq.common.SharedPrefManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +53,11 @@ public class RegisterDetails extends AppCompatActivity {
     TextView password;
     ProgressDialog progressDialog;
     SharedPrefManager sharedPrefManager;
+    SessionManager sessionManager;
+   String check;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
+    List<userLoginData> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +69,9 @@ public class RegisterDetails extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait");
         progressDialog.setMessage("Data Uploading..");
+        check=getIntent().getStringExtra("check");
+        sessionManager = new SessionManager(getApplicationContext());
+
     }
 
     private void initMethod() {
@@ -85,8 +112,13 @@ public class RegisterDetails extends AppCompatActivity {
                 isValid = false;
             } else {
                 progressDialog.show();
-//                insertRegisterData();
-                send_user_Data_onServer();
+                if(check.equalsIgnoreCase("true")){
+                    // this function for google login data
+                    googleDataLogin();
+                }
+                else{
+                    send_user_Data_onServer();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,21 +126,88 @@ public class RegisterDetails extends AppCompatActivity {
         return isValid;
     }
 
-    private void insertRegisterData() {
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("userName", userName.getText().toString());
-        data.put("mobileNo", mobileNo.getText().toString());
-        data.put("emailId", emailId.getText().toString());
-        data.put("password", password.getText().toString());
-        UserData userData = new UserData(userName.getText().toString(), mobileNo.getText().toString(), emailId.getText().toString(), password.getText().toString());
-        sharedPrefManager.saveUser(userData);
-        databaseConnectivity.getDatabasePath(this).child("RegisterDetails").push().setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                showDialog("User Register Successfully..", true);
-            }
-        });
+    private void googleDataLogin() {
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(this, gso);
+        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if (googleSignInAccount != null) {
+            String userName1 = googleSignInAccount.getDisplayName();
+            String userEmail = googleSignInAccount.getEmail();
+            Uri photoUrl = googleSignInAccount.getPhotoUrl();
+            String id = googleSignInAccount.getId();
+
+            userName.setText(""+userName1);
+            emailId.setText(""+userEmail);
+            Call<RegistrationResponse> call = ApiClient.getInstance().getApi().
+                    SendUserDetails_server(mobileNo.getText().toString(), userName1, userEmail, password.getText().toString());
+            call.enqueue(new Callback<RegistrationResponse>() {
+                @Override
+                public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+                    RegistrationResponse registrationResponse= response.body();
+                    if(response.isSuccessful()){
+                        if(registrationResponse.getResponse()!=null){
+                            Call<LoginResponse> call1 = ApiClient.getInstance().getApi().getUserLoginData(userEmail, password.getText().toString());
+
+                            call1.enqueue(new Callback<LoginResponse>() {
+                                @Override
+                                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                                    LoginResponse loginResponse= response.body();
+                                    if(response.isSuccessful()){
+                                        if (loginResponse.getData().trim().toString().equalsIgnoreCase("Login successful")) {
+                                            list = loginResponse.getUserLoginDataArrayList();
+                                            String totalData = new Gson().toJson(loginResponse.getUserLoginDataArrayList());
+                                            JSONArray jsonArray = null;
+                                            try {
+                                                jsonArray = new JSONArray(totalData);
+                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                                    String email_id = jsonObject.getString("email_id");
+                                                    String mobile_no = jsonObject.getString("mobile_no");
+                                                    String user_id = jsonObject.getString("user_id");
+                                                    String username = jsonObject.getString("username");
+                                                    HelperData.UserId = user_id;
+                                                    HelperData.UserName = username;
+                                                    HelperData.Usermobile = mobile_no;
+                                                    HelperData.UserEmail = email_id;
+                                                    UserData userData = new UserData(username, mobile_no, email_id, user_id);
+                                                    sessionManager.saveUser(userData);
+                                                    Toast.makeText(RegisterDetails.this, "Login Successfully..", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(RegisterDetails.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        } else if (loginResponse.getData().trim().toString().equalsIgnoreCase("Username or password something went wrong")) {
+                                            showDialog("Invalid Mobile or Password", false);
+                                        } else {
+                                            showDialog("Please Register YourSelf", false);
+                                        }
+
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+                                }
+                            });
+
+                        }
+
+                    }
+                }
+                @Override
+                public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+
+                }
+            });
+        }
+
     }
+
 
     private void send_user_Data_onServer() {
         Call<RegistrationResponse> call = ApiClient.getInstance().getApi().

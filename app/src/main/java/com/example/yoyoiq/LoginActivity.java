@@ -112,7 +112,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void navigateToSecondActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, RegisterDetails.class);
+        intent.putExtra("checkData",true);
         startActivity(intent);
         finish();
     }

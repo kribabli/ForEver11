@@ -1,10 +1,15 @@
 package com.example.yoyoiq;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +23,7 @@ import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.OnlyTeamPreView.OnlyTeamPreview;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.HelperData;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -146,10 +152,114 @@ public class TeamPreviewActivity extends AppCompatActivity {
         teamPreView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TeamPreviewActivity.this, OnlyTeamPreview.class);
-                startActivity(intent);
+//                Intent intent = new Intent(TeamPreviewActivity.this, OnlyTeamPreview.class);
+//                startActivity(intent);
+                onlyTeamPreviewData();
             }
+
+
         });
+    }
+
+    private void onlyTeamPreviewData() {
+
+        BottomSheetDialog dialogGroundView = new BottomSheetDialog(this);
+        dialogGroundView.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogGroundView.setContentView(R.layout.activity_only_team_preview);
+
+
+        final LinearLayout LL_GroundWK = dialogGroundView.findViewById(R.id.LL_GroundWK);
+        final LinearLayout LL_GroundBAT = dialogGroundView.findViewById(R.id.LL_GroundBAT);
+        final LinearLayout LL_GroundAR = dialogGroundView.findViewById(R.id.LL_GroundAR);
+        final LinearLayout LL_GroundBOWL = dialogGroundView.findViewById(R.id.LL_GroundBOWL);
+        dialogGroundView.show();
+
+        for(int i=0; i<HelperData.myTeamList.size();i++){
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View tv = inflater.inflate(R.layout.single_grounder, null);
+            View tvKalu = inflater.inflate(R.layout.black_ground, null);
+            TextView nameTxt = tv.findViewById(R.id.nameTxt);
+            TextView nameTxtKalu = tvKalu.findViewById(R.id.nameTxtKalu);
+
+            TextView badgeTxtGoru = tv.findViewById(R.id.badgeTxtGoru);
+            TextView badgeTxtKalu = tvKalu.findViewById(R.id.badgeTxtKalu);
+
+
+            if (HelperData.myTeamList.get(i).isCap()) {
+                badgeTxtGoru.setText("C");
+                badgeTxtGoru.setVisibility(View.VISIBLE);
+
+                badgeTxtKalu.setText("C");
+                badgeTxtKalu.setVisibility(View.VISIBLE);
+            }
+
+            if (HelperData.myTeamList.get(i).isVcap()) {
+                badgeTxtGoru.setText("Vc");
+                badgeTxtGoru.setVisibility(View.VISIBLE);
+
+                badgeTxtKalu.setText("Vc");
+                badgeTxtKalu.setVisibility(View.VISIBLE);
+            }
+
+            String one = "" + HelperData.myTeamList.get(i).getTitle();
+            String two = "";
+
+            nameTxt.setText("" + one);
+            nameTxtKalu.setText("" + one);
+
+            try {
+                String currentString = "" + HelperData.myTeamList.get(i).getTitle();
+                String[] separated = currentString.split(" ");
+                one = separated[0];
+                two = separated[1];
+            } catch (Exception e) {
+                e.printStackTrace();
+                try {
+                    nameTxt.setText("" + HelperData.myTeamList.get(i).getTitle().substring(0, 10));
+                    nameTxtKalu.setText("" + HelperData.myTeamList.get(i).getTitle().substring(0, 10));
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+
+            if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("wk")) {
+                assert LL_GroundWK != null;
+                LL_GroundWK.setBackgroundColor(Color.TRANSPARENT);
+                if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
+                    LL_GroundWK.addView(tv);
+                } else {
+                    LL_GroundWK.addView(tvKalu);
+                }
+            }
+            else if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("bat")) {
+                LL_GroundBAT.setBackgroundColor(Color.TRANSPARENT);
+                if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
+                    LL_GroundBAT.addView(tv);
+                } else {
+                    LL_GroundBAT.addView(tvKalu);
+                }
+            }
+            else if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("all")) {
+                LL_GroundAR.setBackgroundColor(Color.TRANSPARENT);
+                if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
+                    LL_GroundAR.addView(tv);
+                } else {
+                    LL_GroundAR.addView(tvKalu);
+                }
+            }
+            else if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("bowl")) {
+                LL_GroundBOWL.setBackgroundColor(Color.TRANSPARENT);
+                if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
+                    LL_GroundBOWL.addView(tv);
+                } else {
+                    LL_GroundBOWL.addView(tvKalu);
+                }
+            }
+
+        }
+
+
+
     }
 
     private void Handle_And_UploadTeamOnServer() {

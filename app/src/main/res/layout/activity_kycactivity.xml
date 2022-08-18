@@ -294,6 +294,14 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_bar"
+            />
+
+
+
     </LinearLayout>
 
 </LinearLayout>

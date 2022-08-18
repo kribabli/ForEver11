@@ -1,20 +1,11 @@
 package com.example.yoyoiq.KYC;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.example.yoyoiq.common.HelperData;
+import com.example.yoyoiq.common.SessionManager;
 import com.example.yoyoiq.common.SharedPrefManager;
 import com.github.drjacky.imagepicker.ImagePicker;
 import com.github.drjacky.imagepicker.constant.ImageProvider;
@@ -46,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -53,8 +46,11 @@ import java.util.HashMap;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.internal.Intrinsics;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
-public class KYCActivity extends AppCompatActivity {
+public class KYCActivity extends AppCompatActivity   {
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
     TextView backPress, camera1;
     EditText fullName, accountNo, retypeAccount, bankName, ifscCode, panCard, aadharNo;
@@ -67,6 +63,7 @@ public class KYCActivity extends AppCompatActivity {
     String fileName = "";
     String pan_image_path = "";
     String code = "";
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +72,8 @@ public class KYCActivity extends AppCompatActivity {
         initMethod();
         setAction();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
+        sessionManager=new SessionManager(getApplicationContext());
+        Log.d("Amit","Check "+sessionManager.getUserData().getUser_id());
 
     }
 
@@ -101,7 +100,7 @@ public class KYCActivity extends AppCompatActivity {
 
         });
 
-        submit.setOnClickListener(view -> buttonValidation());
+        submit.setOnClickListener(view -> send_kyc_Details_OnServer());
     }
 
     private void callCamera() {
@@ -121,6 +120,7 @@ public class KYCActivity extends AppCompatActivity {
 
 
     }
+
 
     ActivityResultLauncher<Intent> launcher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
@@ -224,9 +224,8 @@ public class KYCActivity extends AppCompatActivity {
     }
 
     private void send_kyc_Details_OnServer() {
-        Log.d("Amit","Value "+pan_image_path);
-        HelperData.uploadFile(KYCActivity.this,HelperData.UserId,fullName.getText().toString(),accountNo.getText().toString(),
-                ifscCode.getText().toString(),bankName.getText().toString(),aadharNo.getText().toString(),panCard.getText().toString(),fileName);
+        HelperData.uploadFile(KYCActivity.this,sessionManager.getUserData().getUser_id(),fullName.getText().toString(),accountNo.getText().toString(),
+                ifscCode.getText().toString(),bankName.getText().toString(),aadharNo.getText().toString(),panCard.getText().toString(),pan_image_path);
     }
 
     private void insertKYCDetails() {

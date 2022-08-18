@@ -4,21 +4,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class KycAddedPostResponse {
      @SerializedName("status")
-     boolean status;
+     String status;
 
      @SerializedName("response")
      String response;
 
-    public KycAddedPostResponse(boolean status, String response) {
+    public KycAddedPostResponse(String status, String response) {
         this.status = status;
         this.response = response;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

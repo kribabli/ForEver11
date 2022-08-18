@@ -1,5 +1,7 @@
 package com.example.yoyoiq.common;
 
+import static android.util.Log.wtf;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -89,29 +91,34 @@ public class HelperData {
         MultipartBody.Part fileToUpload1 = null;
 
         File myFile1 = new File(pan_img_path);
-        RequestBody requestBody1 = RequestBody.create(MediaType.parse("*/*"), myFile1);
-        fileToUpload1 = MultipartBody.Part.createFormData("pan_img", myFile1.getName(), requestBody1);
+
+        RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), myFile1);
+        MultipartBody.Part  fileToUpload2 = MultipartBody.Part.createFormData("pan_img", myFile1.getName(), requestBody1);
+        Log.d("Amit","1 "+user_Id);
+        Log.d("Amit","2 "+fullName);
+        Log.d("Amit","3 "+accountNo);
+        Log.d("Amit","4 "+pan_img_path);
 
 
-        RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), user_Id);
-        RequestBody fullname = RequestBody.create(MediaType.parse("text/plain"), fullName);
-        RequestBody account_no = RequestBody.create(MediaType.parse("text/plain"), accountNo);
-        RequestBody ifsc_code = RequestBody.create(MediaType.parse("text/plain"), ifsc);
-        RequestBody bank_name = RequestBody.create(MediaType.parse("text/plain"), bankName);
-        RequestBody aadhar_no = RequestBody.create(MediaType.parse("text/plain"), aadhar);
-        RequestBody pancard_no = RequestBody.create(MediaType.parse("text/plain"), pan);
+        RequestBody user_id = RequestBody.create(MediaType.parse("multipart/form-data"), user_Id);
+        RequestBody full_name = RequestBody.create(MediaType.parse("multipart/form-data"), fullName);
+        RequestBody account_no = RequestBody.create(MediaType.parse("multipart/form-data"), accountNo);
+        RequestBody ifsc_code = RequestBody.create(MediaType.parse("multipart/form-data"), ifsc);
+        RequestBody bank_name = RequestBody.create(MediaType.parse("multipart/form-data"), bankName);
+        RequestBody aadhar_no = RequestBody.create(MediaType.parse("multipart/form-data"), aadhar);
+        RequestBody pancard_no = RequestBody.create(MediaType.parse("multipart/form-data"), pan);
 
-        Call<KycAddedPostResponse> call= ApiClient.getInstance().getApi().sendKycDetailsOnServer(user_id,fullname,account_no,ifsc_code,
-                bank_name,aadhar_no,pancard_no,fileToUpload1);
+        Call<KycAddedPostResponse> call=ApiClient.getInstance().getApi().sendKycDetailsOnServer(user_id,full_name,account_no,
+                ifsc_code,bank_name,aadhar_no,pancard_no,fileToUpload2);
 
         call.enqueue(new Callback<KycAddedPostResponse>() {
             @Override
             public void onResponse(Call<KycAddedPostResponse> call, Response<KycAddedPostResponse> response) {
                 KycAddedPostResponse kycAddedPostResponse= response.body();
+                Log.d("Amit","Value Check Here "+response);
                 if(response.isSuccessful()){
-                    Log.d("Amit","Value check ");
                     if(kycAddedPostResponse!=null){
-                        refreashLive.setValue("ds");
+
                     }
                     else{
 
@@ -124,7 +131,7 @@ public class HelperData {
 
             @Override
             public void onFailure(Call<KycAddedPostResponse> call, Throwable t) {
-                Log.d("Amit","Value check "+""+t);
+                Log.d("Hulk","Value check "+""+t);
 
             }
         });
