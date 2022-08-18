@@ -69,6 +69,7 @@ public class RecentTransactions extends AppCompatActivity {
                  ViewTransactionHistoryResponse viewTransactionHistoryResponse= response.body();
                  if(response.isSuccessful()){
                      if(viewTransactionHistoryResponse!=null){
+                         list.clear();
                          String detailsData=new Gson().toJson(viewTransactionHistoryResponse.getDetail());
                          JSONArray jsonArray=null;
                         try{
@@ -82,6 +83,7 @@ public class RecentTransactions extends AppCompatActivity {
                                 String type=jsonObject.getString("type");
                                 transection dataholder=new transection(userid,type,amount,transection_id,created_date);
                                 list.add(dataholder);
+                                myAdapter.notifyDataSetChanged();
 
 
 
