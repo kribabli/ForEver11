@@ -208,8 +208,8 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         }
     }
 
-    private void sendBalanceServer(){
-        Call<PostBalanceResponse> call=ApiClient.getInstance().getApi().sendBalanceData(HelperData.UserId,amount.getText().toString());
+    private void sendBalanceServer(String s){
+        Call<PostBalanceResponse> call=ApiClient.getInstance().getApi().sendBalanceData(HelperData.UserId,amount.getText().toString(),s);
         call.enqueue(new Callback<PostBalanceResponse>() {
             @Override
             public void onResponse(Call<PostBalanceResponse> call, Response<PostBalanceResponse> response) {
@@ -236,7 +236,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         builder.setTitle("Payment Successfully added..");
         builder.setMessage(s);
         builder.show();
-        sendBalanceServer();
+        sendBalanceServer(s);
     }
 
     @Override

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.yoyoiq.KYC.KYCActivity;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -42,7 +43,6 @@ public class RecentTransactions extends AppCompatActivity {
     MyAdapter myAdapter;
    ArrayList<transection> list=new ArrayList<>();
     String id="";
-    TranssactionAdapter transsactionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class RecentTransactions extends AppCompatActivity {
         });
 
 
-        Call<ViewTransactionHistoryResponse> call= ApiClient.getInstance().getApi().getTransactionDetails("70");
+        Call<ViewTransactionHistoryResponse> call= ApiClient.getInstance().getApi().getTransactionDetails(HelperData.UserId);
          call.enqueue(new Callback<ViewTransactionHistoryResponse>() {
              @Override
              public void onResponse(Call<ViewTransactionHistoryResponse> call, Response<ViewTransactionHistoryResponse> response) {

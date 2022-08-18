@@ -111,7 +111,6 @@ public class HelperData {
                 if(response.isSuccessful()){
                     Log.d("Amit","Value check ");
                     if(kycAddedPostResponse!=null){
-
                         refreashLive.setValue("ds");
                     }
                     else{

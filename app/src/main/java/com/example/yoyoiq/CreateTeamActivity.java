@@ -210,6 +210,8 @@ public class CreateTeamActivity extends AppCompatActivity {
         textViewB.setText(matchB);
         HelperData.team1NameShort = matchA;
         HelperData.team2NameShort = matchB;
+        HelperData.logoUrlTeamA=logo_url_a;
+        HelperData.logoUrlTeamB=logo_url_b;
 
         Glide.with(this)
                 .load(logo_url_a)
@@ -259,81 +261,66 @@ public class CreateTeamActivity extends AppCompatActivity {
     }
 
     private void playerSectionCounter() {
-        HelperData.wk.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (integer >= 0) {
-                    tabLayout.getTabAt(0).setText("" + integer);
-                }
+        HelperData.wk.observe(this, integer -> {
+            if (integer >= 0) {
+                tabLayout.getTabAt(0).setText("" + integer);
             }
         });
-        HelperData.bat.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (integer >= 0) {
-                    tabLayout.getTabAt(1).setText("" + integer);
-                }
+        HelperData.bat.observe(this, integer -> {
+            if (integer >= 0) {
+                tabLayout.getTabAt(1).setText("" + integer);
             }
         });
-        HelperData.ar.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (integer >= 0) {
-                    tabLayout.getTabAt(2).setText("" + integer);
-                }
+        HelperData.ar.observe(this, integer -> {
+            if (integer >= 0) {
+                tabLayout.getTabAt(2).setText("" + integer);
             }
         });
-        HelperData.bowl.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (integer >= 0) {
-                    tabLayout.getTabAt(3).setText("" + integer);
-                }
+        HelperData.bowl.observe(this, integer -> {
+            if (integer >= 0) {
+                tabLayout.getTabAt(3).setText("" + integer);
             }
         });
     }
 
     private void playerCounter() {
-        HelperData.playerCounter.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                int limit = 0;
-                if (HelperData.type_selected.equalsIgnoreCase("Cricket")) {
-                    limit = 11;
-                } else {
-                    limit = 5;
+        HelperData.playerCounter.observe(this, integer -> {
+            int limit = 0;
+            if (HelperData.type_selected.equalsIgnoreCase("Cricket")) {
+                limit = 11;
+            } else {
+                limit = 5;
+            }
+            tv_TotalSelectedPlayer.setText("" + integer + "/" + limit);
+            LinearProgressIndicator maxPlayerSelected = new LinearProgressIndicator(CreateTeamActivity.this);
+            try {
+                maxPlayerSelected.setProgressCompat(integer, true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+            ball_recyclerView.setLayoutManager(layoutManager);
+
+            if (integer != null) {
+                LinearLayout layout = (LinearLayout) findViewById(R.id.playerPosition);
+                for (int i = 0; i < layout.getChildCount(); i++) {
+                    TextView b = (TextView) layout.getChildAt(i);
+
+                    b.setBackground(getResources().getDrawable(R.drawable.circle_shape));
+
                 }
-                tv_TotalSelectedPlayer.setText("" + integer + "/" + limit);
-                LinearProgressIndicator maxPlayerSelected = new LinearProgressIndicator(CreateTeamActivity.this);
+                for (int i = 0; i < integer; i++) {
+                    TextView b = (TextView) layout.getChildAt(i);
+                    b.setBackground(getResources().getDrawable(R.drawable.green_circleshape));
+
+                }
+                TextView b = (TextView) layout.getChildAt(integer);
                 try {
-                    maxPlayerSelected.setProgressCompat(integer, true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    b.setText(String.valueOf(integer + 1));
+                } catch (NullPointerException e) {
 
-                ball_recyclerView.setLayoutManager(layoutManager);
-
-                if (integer != null) {
-                    LinearLayout layout = (LinearLayout) findViewById(R.id.playerPosition);
-                    for (int i = 0; i < layout.getChildCount(); i++) {
-                        TextView b = (TextView) layout.getChildAt(i);
-
-                        b.setBackground(getResources().getDrawable(R.drawable.circle_shape));
-
-                    }
-                    for (int i = 0; i < integer; i++) {
-                        TextView b = (TextView) layout.getChildAt(i);
-                        b.setBackground(getResources().getDrawable(R.drawable.green_circleshape));
-
-                    }
-                    TextView b = (TextView) layout.getChildAt(integer);
-                    try {
-                        b.setText(String.valueOf(integer + 1));
-                    } catch (NullPointerException e) {
-
-                    }
                 }
             }
         });
@@ -343,26 +330,11 @@ public class CreateTeamActivity extends AppCompatActivity {
         tv_TeamOneSize = findViewById(R.id.tv_TeamOneSize);
         tv_TeamTwoSize = findViewById(R.id.tv_TeamTwoSize);
 
-        HelperData.creditCounter.observe(this, new Observer<Double>() {
-            @Override
-            public void onChanged(Double integer) {
-                tv_TotalCredit.setText("" + integer + "/100");
-            }
-        });
+        HelperData.creditCounter.observe(this, integer -> tv_TotalCredit.setText("" + integer + "/100"));
 
-        HelperData.conty1.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                tv_TeamOneSize.setText("" + integer);
-            }
-        });
+        HelperData.conty1.observe(this, integer -> tv_TeamOneSize.setText("" + integer));
 
-        HelperData.conty2.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                tv_TeamTwoSize.setText("" + integer);
-            }
-        });
+        HelperData.conty2.observe(this, integer -> tv_TeamTwoSize.setText("" + integer));
     }
 
     private void countDownStart() {

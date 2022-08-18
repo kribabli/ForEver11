@@ -99,7 +99,8 @@ public interface UsersServices {
     @POST("addbalance")
     Call<PostBalanceResponse> sendBalanceData(
             @Field("user_id") String user_id,
-            @Field("balance") String balance
+            @Field("balance") String balance,
+            @Field("transection_id") String transaction_id
     );
 
     @FormUrlEncoded

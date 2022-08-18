@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.yoyoiq.CreateTeamActivity;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.Model.SquadsA;
@@ -51,6 +52,14 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
         if (listData.getPlaying11() == true) {
             holder.isPlaying.setText("Playing");
         }
+        if(listData.getAbbr()==HelperData.team1NameShort){
+            Glide.with(context).load(HelperData.logoUrlTeamA).into(holder.playerImg);
+
+        }
+        else{
+            Glide.with(context).load(HelperData.logoUrlTeamB).into(holder.playerImg);
+        }
+
 
         /*please not Remove this commented code code*/
 //        if(listData.getPlaying11()==false){
