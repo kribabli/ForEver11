@@ -111,6 +111,7 @@
         <entry key="..\:/BabliOfficeWork/YoYoIq/app/src/main/res/drawable/ic_phonepe_logo.xml" value="0.1" />
         <entry key="..\:/BabliOfficeWork/YoYoIq/app/src/main/res/layout/activity_main.xml" value="0.22708333333333333" />
         <entry key="..\:/BabliOfficeWork/YoYoIq/app/src/main/res/layout/match_list.xml" value="0.33" />
+        <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/drawable/button_color.xml" value="0.1215" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/drawable/circle_shape.xml" value="0.1215" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/drawable/green_circleshape.xml" value="0.1215" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/drawable/green_rupees.xml" value="0.1135" />
@@ -122,6 +123,8 @@
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/activity_create_team_actvity.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/activity_kycactivity.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/activity_login.xml" value="0.19895833333333332" />
+        <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/activity_only_team_preview.xml" value="0.19895833333333332" />
+        <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/activity_profile.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/activity_recent_transactions.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/activity_team_preview.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/customised_dialog_layout.xml" value="0.19895833333333332" />
@@ -130,6 +133,7 @@
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/my_created_team_list.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/selected_players.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/show_transaction_details.xml" value="0.19791666666666666" />
+        <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/single_player_layout.xml" value="0.19791666666666666" />
         <entry key="..\:/Users/Ravi/Desktop/Amit Office Projects/YoyoIq/YoYo-Iq/app/src/main/res/layout/transaction_history_layout.xml" value="0.19791666666666666" />
       </map>
     </option>

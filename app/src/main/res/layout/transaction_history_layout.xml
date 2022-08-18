@@ -1,69 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="5dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginBottom="5dp">
 
-   <androidx.cardview.widget.CardView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       app:cardBackgroundColor="@color/light_gray"
-       android:layout_marginLeft="2dp"
-       android:layout_marginTop="5dp"
-       android:layout_marginRight="2dp"
-       app:cardCornerRadius="4dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="2dp"
+        app:cardBackgroundColor="@color/light_gray"
+        app:cardCornerRadius="4dp">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:id="@+id/layout"
-           android:layout_margin="4dp"
-           android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="4dp"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/signConvention"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textSize="18sp"
-               android:layout_marginLeft="30dp"
-               android:text="+"
-               android:id="@+id/signConvention"/>
+            <TextView
+                android:id="@+id/symbol_rupees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/green_rupees"
+                android:drawablePadding="2dp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/reason"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="70dp"
+                android:text="Joined Contest"
+                android:textColor="@color/black" />
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textSize="15sp"
-               android:text="0"
-               android:drawablePadding="2dp"
-               android:drawableLeft="@drawable/green_rupees"
-               android:id="@+id/symbol_rupees"/>
+            <ImageView
+                android:id="@+id/expand_activities_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="70dp"
+                android:src="@drawable/ic_baseline_expand_more_24" />
 
+        </LinearLayout>
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="match_parent"
-               android:id="@+id/reason"
-               android:paddingLeft="70dp"
-               android:text="Joined Contest"
-               android:gravity="center"
-               android:textStyle="bold"/>
+    </androidx.cardview.widget.CardView>
 
-
-           <ImageView
-               android:layout_width="wrap_content"
-               android:layout_height="match_parent"
-               android:src="@drawable/ic_baseline_expand_more_24"
-               android:paddingLeft="70dp"
-               android:id="@+id/expand_activities_button"/>
-
-
-
-       </LinearLayout>
-
-
-   </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
