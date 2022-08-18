@@ -53,7 +53,7 @@ public class RecentTransactions extends AppCompatActivity {
     }
 
     private void loadTransactionDetails() {
-        Call<ViewTransactionHistoryResponse> call = ApiClient.getInstance().getApi().getTransactionDetails("78");
+        Call<ViewTransactionHistoryResponse> call = ApiClient.getInstance().getApi().getTransactionDetails(HelperData.UserId);
 
         call.enqueue(new Callback<ViewTransactionHistoryResponse>() {
             @Override
