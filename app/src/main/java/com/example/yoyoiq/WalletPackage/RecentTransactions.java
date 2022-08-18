@@ -20,8 +20,10 @@ import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -34,15 +36,11 @@ public class RecentTransactions extends AppCompatActivity {
     TextView backPress;
     ListView listViewNotification;
     SessionManager sessionManager;
-    MyAdapter myAdapter;
-<<<<<<< HEAD
    ArrayList<transection> list=new ArrayList<>();
+   MyAdapter myAdapter;
+
     String id="";
-=======
-    ArrayList<transection> list = new ArrayList<>();
-    String id = "";
-    TranssactionAdapter transsactionAdapter;
->>>>>>> 6100cafd8f2e13313bb92ecd10e3ff718601524f
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,47 +48,29 @@ public class RecentTransactions extends AppCompatActivity {
         setContentView(R.layout.activity_recent_transactions);
         sessionManager = new SessionManager(getApplicationContext());
         listViewNotification = findViewById(R.id.listViewNotification);
-        myAdapter = new MyAdapter();
-        listViewNotification.setAdapter(myAdapter);
         backPress = findViewById(R.id.backPress);
-
+        myAdapter=new MyAdapter();
+        listViewNotification.setAdapter(myAdapter);
         backPress.setOnClickListener(view -> onBackPressed());
+        loadTransactionDetails();
+    }
 
-        Call<ViewTransactionHistoryResponse> call = ApiClient.getInstance().getApi().getTransactionDetails("70");
+    private void loadTransactionDetails() {
+
+        Call<ViewTransactionHistoryResponse> call=ApiClient.getInstance().getApi().getTransactionDetails(HelperData.UserId);
+
         call.enqueue(new Callback<ViewTransactionHistoryResponse>() {
             @Override
-<<<<<<< HEAD
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-
-        Call<ViewTransactionHistoryResponse> call= ApiClient.getInstance().getApi().getTransactionDetails(HelperData.UserId);
-         call.enqueue(new Callback<ViewTransactionHistoryResponse>() {
-             @Override
-             public void onResponse(Call<ViewTransactionHistoryResponse> call, Response<ViewTransactionHistoryResponse> response) {
-                 ViewTransactionHistoryResponse viewTransactionHistoryResponse= response.body();
-                 if(response.isSuccessful()){
-                     if(viewTransactionHistoryResponse!=null){
-                         list.clear();
-                         String detailsData=new Gson().toJson(viewTransactionHistoryResponse.getDetail());
-                         JSONArray jsonArray=null;
-                        try{
-                            jsonArray=new JSONArray(detailsData);
-                            for(int i=0;i<jsonArray.length();i++){
-=======
             public void onResponse(Call<ViewTransactionHistoryResponse> call, Response<ViewTransactionHistoryResponse> response) {
-                ViewTransactionHistoryResponse viewTransactionHistoryResponse = response.body();
-                if (response.isSuccessful()) {
-                    if (viewTransactionHistoryResponse != null) {
-                        list.clear();
-                        String detailsData = new Gson().toJson(viewTransactionHistoryResponse.getDetail());
-                        JSONArray jsonArray = null;
+                ViewTransactionHistoryResponse viewTransactionHistoryResponse= response.body();
+                list.clear();
+                if(response.isSuccessful()){
+                    if(viewTransactionHistoryResponse.getDetail()!=null){
+                        String detailsData=new Gson().toJson(viewTransactionHistoryResponse.getDetail());
+                        JSONArray jsonArray=null;
                         try {
-                            jsonArray = new JSONArray(detailsData);
-                            for (int i = 0; i < jsonArray.length(); i++) {
->>>>>>> 6100cafd8f2e13313bb92ecd10e3ff718601524f
+                            jsonArray=new JSONArray(detailsData);
+                            for(int i = 0; i < jsonArray.length(); i++){
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 String userid = jsonObject.getString("user_id");
                                 String amount = jsonObject.getString("amount");
@@ -100,19 +80,25 @@ public class RecentTransactions extends AppCompatActivity {
                                 transection dataholder = new transection(userid, type, amount, transection_id, created_date);
                                 list.add(dataholder);
                                 myAdapter.notifyDataSetChanged();
+
                             }
-                        } catch (Exception e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
+
                 }
             }
 
             @Override
             public void onFailure(Call<ViewTransactionHistoryResponse> call, Throwable t) {
+
             }
         });
     }
+
 
     private class MyAdapter extends BaseAdapter {
 
@@ -169,3 +155,4 @@ public class RecentTransactions extends AppCompatActivity {
         }
     }
 }
+
