@@ -45,7 +45,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -119,12 +118,12 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/bonusTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:drawableLeft="@drawable/indian_rupiya_symbol"
             android:drawablePadding="4dp"
-            android:id="@+id/bonusTv"
             android:padding="7dp"
             android:text="0"
             android:textColorHint="#555555"
@@ -148,28 +147,28 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/winningsTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:drawableLeft="@drawable/indian_rupiya_symbol"
             android:drawablePadding="4dp"
-            android:id="@+id/winningsTV"
             android:padding="7dp"
             android:text="0"
             android:textColorHint="#555555"
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/withdrawTv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/withdrawTv"
             android:layout_weight="3"
-            android:text="Withdraw"
-            android:gravity="center"
             android:background="@drawable/border_red"
-            android:textSize="15sp"
+            android:gravity="center"
+            android:text="Withdraw"
             android:textColor="@color/white"
-            android:textStyle="bold"/>
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -301,7 +300,7 @@
             android:text="Add"
             android:textColor="@color/white"
             android:textStyle="bold" />
-    </LinearLayout>
 
+    </LinearLayout>
 
 </LinearLayout>

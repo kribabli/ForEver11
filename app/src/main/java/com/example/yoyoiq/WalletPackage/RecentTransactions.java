@@ -20,7 +20,6 @@ import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,11 +35,9 @@ public class RecentTransactions extends AppCompatActivity {
     TextView backPress;
     ListView listViewNotification;
     SessionManager sessionManager;
-   ArrayList<transection> list=new ArrayList<>();
-   MyAdapter myAdapter;
-
-    String id="";
-
+    ArrayList<transection> list = new ArrayList<>();
+    MyAdapter myAdapter;
+    String id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,28 +46,27 @@ public class RecentTransactions extends AppCompatActivity {
         sessionManager = new SessionManager(getApplicationContext());
         listViewNotification = findViewById(R.id.listViewNotification);
         backPress = findViewById(R.id.backPress);
-        myAdapter=new MyAdapter();
+        myAdapter = new MyAdapter();
         listViewNotification.setAdapter(myAdapter);
         backPress.setOnClickListener(view -> onBackPressed());
         loadTransactionDetails();
     }
 
     private void loadTransactionDetails() {
-
-        Call<ViewTransactionHistoryResponse> call=ApiClient.getInstance().getApi().getTransactionDetails(HelperData.UserId);
+        Call<ViewTransactionHistoryResponse> call = ApiClient.getInstance().getApi().getTransactionDetails("78");
 
         call.enqueue(new Callback<ViewTransactionHistoryResponse>() {
             @Override
             public void onResponse(Call<ViewTransactionHistoryResponse> call, Response<ViewTransactionHistoryResponse> response) {
-                ViewTransactionHistoryResponse viewTransactionHistoryResponse= response.body();
+                ViewTransactionHistoryResponse viewTransactionHistoryResponse = response.body();
                 list.clear();
-                if(response.isSuccessful()){
-                    if(viewTransactionHistoryResponse.getDetail()!=null){
-                        String detailsData=new Gson().toJson(viewTransactionHistoryResponse.getDetail());
-                        JSONArray jsonArray=null;
+                if (response.isSuccessful()) {
+                    if (viewTransactionHistoryResponse.getDetail() != null) {
+                        String detailsData = new Gson().toJson(viewTransactionHistoryResponse.getDetail());
+                        JSONArray jsonArray = null;
                         try {
-                            jsonArray=new JSONArray(detailsData);
-                            for(int i = 0; i < jsonArray.length(); i++){
+                            jsonArray = new JSONArray(detailsData);
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 String userid = jsonObject.getString("user_id");
                                 String amount = jsonObject.getString("amount");
@@ -80,21 +76,16 @@ public class RecentTransactions extends AppCompatActivity {
                                 transection dataholder = new transection(userid, type, amount, transection_id, created_date);
                                 list.add(dataholder);
                                 myAdapter.notifyDataSetChanged();
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
-
                 }
             }
 
             @Override
             public void onFailure(Call<ViewTransactionHistoryResponse> call, Throwable t) {
-
             }
         });
     }
@@ -130,7 +121,7 @@ public class RecentTransactions extends AppCompatActivity {
             ImageView Bill_Image = view.findViewById(R.id.expand_activities_button);
             if (data.getType().equalsIgnoreCase("credit")) {
                 signConvention.setText("+");
-                signConvention.setTextColor(Color.parseColor("#64e764"));
+                signConvention.setTextColor(Color.parseColor("#FF000000"));
             } else {
                 signConvention.setText("-");
                 signConvention.setTextColor(Color.parseColor("#D70101"));
@@ -155,4 +146,3 @@ public class RecentTransactions extends AppCompatActivity {
         }
     }
 }
-

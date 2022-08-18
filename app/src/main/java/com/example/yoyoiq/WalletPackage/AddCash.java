@@ -2,8 +2,6 @@ package com.example.yoyoiq.WalletPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,18 +31,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Request;
-import okio.Timeout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddCash extends AppCompatActivity implements PaymentResultListener {
-    TextView addCash, backPress, myRecentPay, KYCDetails, notification,amountTv,bonusTv,withdrawTv,winningsTV;
+    TextView addCash, backPress, myRecentPay, KYCDetails, notification, amountTv, bonusTv, withdrawTv, winningsTV;
     EditText amount;
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     String loggedInUserNumber;
@@ -60,11 +55,9 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         Checkout.preload(getApplicationContext());
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         sessionManager = new SessionManager(getApplicationContext());
-        swipeRefreshLayout=new SwipeRefreshLayout(AddCash.this);
+        swipeRefreshLayout = new SwipeRefreshLayout(AddCash.this);
         initMethod();
         loadBalanceDataFromServer();
-
-
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
 
         databaseConnectivity.getDatabasePath(AddCash.this).child("KYCDetails")
@@ -99,41 +92,37 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     }
 
     private void loadBalanceDataFromServer() {
-        Call<ViewBalanceResponse> call=ApiClient.getInstance().getApi().getBalanceDetails(sessionManager.getUserData().getUser_id());
+        Call<ViewBalanceResponse> call = ApiClient.getInstance().getApi().getBalanceDetails(sessionManager.getUserData().getUser_id());
 
         call.enqueue(new Callback<ViewBalanceResponse>() {
             @Override
             public void onResponse(Call<ViewBalanceResponse> call, Response<ViewBalanceResponse> response) {
-                ViewBalanceResponse viewBalanceResponse=response.body();
-                if(response.isSuccessful()){
-                    String balanceData=new Gson().toJson(viewBalanceResponse.getBalance());
-                    JSONArray jsonArray=null;
+                ViewBalanceResponse viewBalanceResponse = response.body();
+                if (response.isSuccessful()) {
+                    String balanceData = new Gson().toJson(viewBalanceResponse.getBalance());
+                    JSONArray jsonArray = null;
                     String balance = null;
                     String bouns_cash = null;
-                    try{
-                        jsonArray=new JSONArray(balanceData);
-                        for(int i=0;i<jsonArray.length();i++){
-                            JSONObject jsonObject =jsonArray.getJSONObject(i);
-                            balance=jsonObject.getString("balance");
-                            bouns_cash=jsonObject.getString("add_bonus");
-
-
+                    try {
+                        jsonArray = new JSONArray(balanceData);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            balance = jsonObject.getString("balance");
+                            bouns_cash = jsonObject.getString("add_bonus");
                         }
-                        amountTv.setText(" "+balance);
-                        bonusTv.setText(" "+bouns_cash);
+                        amountTv.setText(" " + balance);
+                        bonusTv.setText(" " + bouns_cash);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-
                 }
             }
+
             @Override
             public void onFailure(Call<ViewBalanceResponse> call, Throwable t) {
 
             }
         });
-
     }
 
     private void initMethod() {
@@ -150,8 +139,6 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     }
 
     private void setAction() {
-
-
         myRecentPay.setOnClickListener(view -> {
             Intent intent = new Intent(AddCash.this, RecentTransactions.class);
             startActivity(intent);
@@ -186,7 +173,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     }
 
     private void paymentMethod() {
-        String sAmount =amount.getText().toString();
+        String sAmount = amount.getText().toString();
         int amount = Math.round(Float.parseFloat(sAmount) * 100);
 
         Checkout checkout = new Checkout();
@@ -208,17 +195,16 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         }
     }
 
-    private void sendBalanceServer(String s){
-        Call<PostBalanceResponse> call=ApiClient.getInstance().getApi().sendBalanceData(HelperData.UserId,amount.getText().toString(),s);
+    private void sendBalanceServer(String s) {
+        Call<PostBalanceResponse> call = ApiClient.getInstance().getApi().sendBalanceData(HelperData.UserId, amount.getText().toString(), s);
         call.enqueue(new Callback<PostBalanceResponse>() {
             @Override
             public void onResponse(Call<PostBalanceResponse> call, Response<PostBalanceResponse> response) {
-                PostBalanceResponse postBalanceResponse= response.body();
-                if(response.isSuccessful()){
-                    if(postBalanceResponse.getResponse().toString().equalsIgnoreCase("successfully added")){
+                PostBalanceResponse postBalanceResponse = response.body();
+                if (response.isSuccessful()) {
+                    if (postBalanceResponse.getResponse().toString().equalsIgnoreCase("successfully added")) {
                         loadBalanceDataFromServer();
                         amount.setText("");
-
                     }
                 }
             }
