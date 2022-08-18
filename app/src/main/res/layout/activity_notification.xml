@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotificationActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".NotificationActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -43,14 +43,21 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="70dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ListView
+            android:id="@+id/listViewNotification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/listViewNotification"
-            android:background="@color/light_gray"/>
+            android:background="@color/light_gray" />
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/editT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
 </LinearLayout>
