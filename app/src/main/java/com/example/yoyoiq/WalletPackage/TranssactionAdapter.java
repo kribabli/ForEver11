@@ -30,7 +30,7 @@ public class TranssactionAdapter extends RecyclerView.Adapter<TranssactionAdapte
     public TranssactionAdapter(Context context, ArrayList<transection> list) {
         this.context = context;
         this.list = list;
-        sessionManager=new SessionManager(context.getApplicationContext());
+        sessionManager = new SessionManager(context.getApplicationContext());
     }
 
     @NonNull
@@ -42,12 +42,11 @@ public class TranssactionAdapter extends RecyclerView.Adapter<TranssactionAdapte
 
     @Override
     public void onBindViewHolder(@NonNull TranssactionAdapter.MyViewHolder holder, int position) {
-        if(list.get(position).getType().equalsIgnoreCase("credit")){
+        if (list.get(position).getType().equalsIgnoreCase("credit")) {
             holder.signConvention.setText("+");
             holder.signConvention.setTextColor(Color.parseColor("#64e764"));
 
-        }
-        else{
+        } else {
             holder.signConvention.setText("-");
             holder.signConvention.setTextColor(Color.parseColor("#D70101"));
         }
@@ -56,61 +55,53 @@ public class TranssactionAdapter extends RecyclerView.Adapter<TranssactionAdapte
         holder.layout.setOnClickListener(view -> {
             AlertDialog.Builder builder;
             AlertDialog alertDialog;
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
-            View view1  = inflater.inflate(R.layout.show_transaction_details,null);
-            TextView textView1=view1.findViewById(R.id.transactionId);
-            TextView textView2=view1.findViewById(R.id.transactionDate);
-            TextView textView3=view1.findViewById(R.id.TeamName);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+            View view1 = inflater.inflate(R.layout.show_transaction_details, null);
+            TextView textView1 = view1.findViewById(R.id.transactionId);
+            TextView textView2 = view1.findViewById(R.id.transactionDate);
+            TextView textView3 = view1.findViewById(R.id.TeamName);
 
-            textView1.setText(""+list.get(position).getTransection_id());
-            textView2.setText(""+list.get(position).getCreated_date());
-            textView3.setText(""+sessionManager.getUserData().getUserName());
+            textView1.setText("" + list.get(position).getTransection_id());
+            textView2.setText("" + list.get(position).getCreated_date());
+            textView3.setText("" + sessionManager.getUserData().getUserName());
 
             builder = new AlertDialog.Builder(context);
             builder.setView(view1);
             alertDialog = builder.create();
             alertDialog.show();
-
-
         });
 
         holder.expand_activities_button.setOnClickListener(view -> {
             final Dialog dialog = new Dialog(context);
             dialog.setContentView(R.layout.show_transaction_details);
+            TextView textView1 = dialog.findViewById(R.id.transactionId);
+            TextView textView2 = dialog.findViewById(R.id.transactionDate);
+            TextView textView3 = dialog.findViewById(R.id.TeamName);
 
-
-
-            TextView textView1=dialog.findViewById(R.id.transactionId);
-            TextView textView2=dialog.findViewById(R.id.transactionDate);
-            TextView textView3=dialog.findViewById(R.id.TeamName);
-
-            textView1.setText(""+list.get(position).getTransection_id());
-            textView2.setText(""+list.get(position).getCreated_date());
-            textView3.setText(""+sessionManager.getUserData().getUserName());
-
-
-
+            textView1.setText("" + list.get(position).getTransection_id());
+            textView2.setText("" + list.get(position).getCreated_date());
+            textView3.setText("" + sessionManager.getUserData().getUserName());
         });
-
     }
 
     @Override
     public int getItemCount() {
-       return list.size();
+        return list.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView expand_activities_button;
         TextView reason;
-        TextView symbol_rupees,signConvention;
+        TextView symbol_rupees, signConvention;
         LinearLayout layout;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            expand_activities_button=(ImageView) itemView.findViewById(R.id.expand_activities_button);
-            reason=(TextView) itemView.findViewById(R.id.reason);
-            symbol_rupees=(TextView) itemView.findViewById(R.id.symbol_rupees);
-            signConvention=(TextView) itemView.findViewById(R.id.signConvention);
-            layout=(LinearLayout) itemView.findViewById(R.id.layout);
+            expand_activities_button = (ImageView) itemView.findViewById(R.id.expand_activities_button);
+            reason = (TextView) itemView.findViewById(R.id.reason);
+            symbol_rupees = (TextView) itemView.findViewById(R.id.symbol_rupees);
+            signConvention = (TextView) itemView.findViewById(R.id.signConvention);
+            layout = (LinearLayout) itemView.findViewById(R.id.layout);
         }
     }
 }
