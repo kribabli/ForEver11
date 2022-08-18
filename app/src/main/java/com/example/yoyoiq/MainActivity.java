@@ -284,7 +284,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent2);
                 break;
             case R.id.howToPlay:
-                Toast.makeText(this, "How To Play", Toast.LENGTH_SHORT).show();
+                Intent intent6 = new Intent(MainActivity.this, HowToPlay.class);
+                startActivity(intent6);
                 break;
             case R.id.infoSettings:
                 Intent intent1 = new Intent(MainActivity.this, SettingsActivity.class);

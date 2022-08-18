@@ -34,17 +34,28 @@
                     android:id="@+id/profileView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/white_person"
-                    android:gravity="left" />
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_main_profile_logo"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="8"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_yoyoiq_logo"
                     android:gravity="center"
-                    android:text="YoYo iQ"
                     android:textColor="#ffff"
                     android:textSize="15sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4" />
 
                 <TextView
                     android:id="@+id/notification"
