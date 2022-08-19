@@ -1,14 +1,20 @@
 package com.example.yoyoiq;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.yoyoiq.Adapter.PagerAdapterRewards;
+import com.google.android.material.tabs.TabLayout;
+
 public class RewardsFragment extends Fragment {
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    PagerAdapterRewards pagerAdapterRewards;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -39,7 +45,32 @@ public class RewardsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root= inflater.inflate(R.layout.fragment_rewards, container, false);
+        View root = inflater.inflate(R.layout.fragment_rewards, container, false);
+        viewPager = root.findViewById(R.id.viewPager);
+        tabLayout = root.findViewById(R.id.tabLayout);
+
+        pagerAdapterRewards = new PagerAdapterRewards(getFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapterRewards);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0) {
+                } else if (tab.getPosition() == 1) {
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
         return root;
     }
 }

@@ -19,6 +19,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:background="@drawable/logo_dr"
+                android:gravity="center"
+                android:textColor="@color/yellow_theme"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -78,7 +95,6 @@
         tools:ignore="UnknownId">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/Upcoming_Match_User"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/border_list_price"
