@@ -82,6 +82,14 @@ public interface UsersServices {
 
     );
 
+
+    @FormUrlEncoded
+    @POST("viewkycdetail")
+    Call<JSONObject> getkycDetails(
+            @Field("user_id") String user_id
+
+    );
+
     @FormUrlEncoded
     @POST("viewtransection")
     Call<ViewTransactionHistoryResponse> getTransactionDetails(
@@ -112,16 +120,19 @@ public interface UsersServices {
             @Field("team_id") String team_id
     );
 
-    @Multipart
-    @POST("addkycdetails")
+    @FormUrlEncoded
+    @POST("addkycdetail")
     Call<KycAddedPostResponse> sendKycDetailsOnServer(
-            @Part("user_id") RequestBody userid,
-            @Part("fullName") RequestBody fullName,
-            @Part("account_no") RequestBody accountNo,
-            @Part("ifsc_code") RequestBody ifsc,
-            @Part("bank_name") RequestBody bankName,
-            @Part("adhar_no") RequestBody adhar_no,
-            @Part("pancard_no") RequestBody pan,
-            @Part MultipartBody.Part pancard
+            @Field("user_id") RequestBody userid,
+            @Field("fullname") RequestBody fullName,
+            @Field("account_no") RequestBody accountNo,
+            @Field("ifsc_code") RequestBody ifsc,
+            @Field("bank_name") RequestBody bankName,
+            @Field ("dob") RequestBody dob,
+            @Field ("address") RequestBody address,
+            @Field("adhar_no") RequestBody adhar_no,
+            @Field("pancard_no") RequestBody pan,
+            @Field ("pancard") RequestBody pancard
+
     );
 }

@@ -57,39 +57,17 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         sessionManager = new SessionManager(getApplicationContext());
         swipeRefreshLayout = new SwipeRefreshLayout(AddCash.this);
+        LoadKycData();
         initMethod();
         loadBalanceDataFromServer();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
-
-        databaseConnectivity.getDatabasePath(AddCash.this).child("KYCDetails")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            for (DataSnapshot ds : snapshot.getChildren()) {
-                                String key = ds.getKey();
-                                checkId.add(key);
-                            }
-                        }
-                        KYCDetails.setOnClickListener(view -> {
-                            if (checkId.contains(loggedInUserNumber)) {
-                                Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
-                                startActivity(intent1);
-                                finish();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-
         setAction();
+
+    }
+
+    private void LoadKycData() {
+
+
     }
 
     private void loadBalanceDataFromServer() {
@@ -154,6 +132,17 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         });
 
         addCash.setOnClickListener(view -> addAmountValidation());
+        KYCDetails.setOnClickListener(view -> {
+            if (HelperData.kycStatus==true) {
+                Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
+                startActivity(intent1);
+                finish();
+            }
+        });
     }
 
     private boolean addAmountValidation() {

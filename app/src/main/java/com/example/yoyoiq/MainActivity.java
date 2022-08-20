@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getAllMatches();
         recyclerView = findViewById(R.id.recyclerViewMatchList);
         sessionManager = new SessionManager(getApplicationContext());
+        Log.d("Amit","Value "+HelperData.UserId);
 
         swipeRefreshLayout = findViewById(R.id.swiper);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

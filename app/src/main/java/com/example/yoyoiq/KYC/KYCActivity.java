@@ -1,6 +1,7 @@
 package com.example.yoyoiq.KYC;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -71,7 +72,7 @@ public class KYCActivity extends AppCompatActivity   {
     SessionManager sessionManager;
     private DatePickerDialog datePickerDialog;
     private Boolean clickable = true;
-    String date="",years="",months="";
+    String date="",year="",month="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,6 @@ public class KYCActivity extends AppCompatActivity   {
         setAction();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
         sessionManager=new SessionManager(getApplicationContext());
-        Log.d("Amit","Check "+sessionManager.getUserData().getUser_id());
 
     }
 
@@ -110,7 +110,7 @@ public class KYCActivity extends AppCompatActivity   {
 
         });
 
-        submit.setOnClickListener(view -> send_kyc_Details_OnServer());
+        submit.setOnClickListener(view -> buttonValidation());
 
         date_of_birth.setOnClickListener(view -> {
             if(clickable){
@@ -121,19 +121,19 @@ public class KYCActivity extends AppCompatActivity   {
                 int day = calender.get(Calendar.DAY_OF_MONTH);
                 datePickerDialog = new DatePickerDialog(KYCActivity.this, (view1, years1, monthsOfYear, dayOfMonths) -> {
 
-//                    year = "" + years1;
-//                    date = (dayOfMonths + "-" + (monthsOfYear + 1) + "-" + year);
-//                    try {
-//                        date = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("dd-MM-yyyy").parse(date));
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                    try {
-//                        month = new SimpleDateFormat("MMMM").format(new SimpleDateFormat("yyyy-MM-dd").parse(date));
-//
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
+                    year = "" + years1;
+                    date = (dayOfMonths + "-" + (monthsOfYear + 1) + "-" + year);
+                    try {
+                        date = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("dd-MM-yyyy").parse(date));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        month = new SimpleDateFormat("MMMM").format(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
                     date_of_birth.setText(date);
                     clickable = true;
@@ -170,7 +170,7 @@ public class KYCActivity extends AppCompatActivity   {
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
                 if (result.getResultCode() == RESULT_OK) {
                     Uri uri = result.getData().getData();
-                    pan_image_path = FileUriUtils.INSTANCE.getRealPath(this, uri);
+                    pan_image_path= String.valueOf(uri);
                     InputStream inputStream = null;
                     try {
                         inputStream = getContentResolver().openInputStream(result.getData().getData());
@@ -184,18 +184,6 @@ public class KYCActivity extends AppCompatActivity   {
 
                 }
             });
-
-
-    private void imageUpload() {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference uploader = storage.getReference("KYCDetailsImage/" + loggedInUserNumber + "/" + fileName);
-        ByteArrayOutputStream toUpload = new ByteArrayOutputStream();
-        Bitmap.createScaledBitmap(bitmap, 400, 600, false)
-                .compress(Bitmap.CompressFormat.JPEG, 100, toUpload);
-        byte[] result = toUpload.toByteArray();
-        uploader.putBytes(result).addOnSuccessListener(taskSnapshot -> uploader.getDownloadUrl().addOnSuccessListener(uri -> {
-        }));
-    }
 
     private boolean buttonValidation() {
         boolean isValid = true;
@@ -214,7 +202,12 @@ public class KYCActivity extends AppCompatActivity   {
                 accountNo.requestFocus();
                 isValid = false;
             }
+            else if(date_of_birth.getText().toString().length()==0){
+                date_of_birth.setError("Please enter correct account no.");
+                date_of_birth.requestFocus();
+                isValid = false;
 
+            }
             else if (retypeAccount.getText().toString().trim().length() == 0
                     || retypeAccount.getText().toString().trim() == accountNo.getText().toString().trim()) {
                 retypeAccount.setError("Re-Enter account no.");
@@ -265,7 +258,6 @@ public class KYCActivity extends AppCompatActivity   {
                 isValid = false;
             }
             else {
-                insertKYCDetails();
                 send_kyc_Details_OnServer();
             }
         } catch (Exception e) {
@@ -276,7 +268,16 @@ public class KYCActivity extends AppCompatActivity   {
 
     private void send_kyc_Details_OnServer() {
         HelperData.uploadFile(KYCActivity.this,sessionManager.getUserData().getUser_id(),fullName.getText().toString(),accountNo.getText().toString(),
-                ifscCode.getText().toString(),bankName.getText().toString(),aadharNo.getText().toString(),panCard.getText().toString(),pan_image_path);
+                ifscCode.getText().toString(),bankName.getText().toString(),date_of_birth.getText().toString(),address_ed.getText().toString(),aadharNo.getText().toString(),panCard.getText().toString(),pan_image_path);
+        showDialog("Details Saved..", true);
+        fullName.setText("");
+        accountNo.setText("");
+        retypeAccount.setText("");
+        bankName.setText("");
+        ifscCode.setText("");
+        panCard.setText("");
+        aadharNo.setText("");
+
     }
 
     private void insertKYCDetails() {

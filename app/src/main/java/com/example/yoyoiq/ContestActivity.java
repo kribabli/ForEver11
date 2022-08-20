@@ -32,23 +32,8 @@ public class ContestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contest);
         initMethod();
         setAction();
-        counterSection();
+        
 
-        HelperData.myTeam.observe(this, e -> {
-            if (e == null) {
-                tabLayout.getTabAt(1).setText("My Teams");
-                return;
-            }
-            tabLayout.getTabAt(2).setText("My Teams(" + e + ")");
-        });
-
-        HelperData.myContest.observe(this,e->{
-            if(e==null){
-                tabLayout.getTabAt(1).setText("My contests");
-                return;
-            }
-            tabLayout.getTabAt(1).setText("My contests("+ e +")");
-        });
 
         pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b, date_start, date_end);
         viewPager.setAdapter(pageAdapter);
