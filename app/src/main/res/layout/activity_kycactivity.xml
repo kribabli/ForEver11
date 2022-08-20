@@ -217,6 +217,33 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="Address.*"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/address_ed"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/designborder"
+                        android:drawablePadding="4dp"
+                        android:maxLength="12"
+                        android:hint="Enter your Address"
+                        android:inputType="number"
+                        android:padding="7dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:weightSum="10">
 
@@ -262,6 +289,34 @@
                         android:drawablePadding="4dp"
                         android:maxLength="12"
                         android:hint="Enter Your Aadhar"
+                        android:inputType="number"
+                        android:padding="7dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="Select date of birth.*"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/date_of_birth"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/designborder"
+                        android:drawablePadding="4dp"
+                        android:maxLength="12"
+                        android:hint="Select Date of birth"
+                        android:drawableRight="@drawable/ic_baseline_calendar_month_24"
                         android:inputType="number"
                         android:padding="7dp" />
 

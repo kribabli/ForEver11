@@ -1,11 +1,13 @@
 package com.example.yoyoiq.KYC;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,6 +43,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import kotlin.Unit;
@@ -52,8 +57,8 @@ import okhttp3.RequestBody;
 
 public class KYCActivity extends AppCompatActivity   {
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
-    TextView backPress, camera1;
-    EditText fullName, accountNo, retypeAccount, bankName, ifscCode, panCard, aadharNo;
+    TextView backPress, camera1,date_of_birth;
+    EditText fullName, accountNo, retypeAccount, bankName, ifscCode, panCard, aadharNo,address_ed;
     Button submit;
     DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     SharedPrefManager sharedPrefManager;
@@ -64,6 +69,9 @@ public class KYCActivity extends AppCompatActivity   {
     String pan_image_path = "";
     String code = "";
     SessionManager sessionManager;
+    private DatePickerDialog datePickerDialog;
+    private Boolean clickable = true;
+    String date="",years="",months="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +98,8 @@ public class KYCActivity extends AppCompatActivity   {
         panCard = findViewById(R.id.panCardNo);
         aadharNo = findViewById(R.id.aadharNo);
         submit = findViewById(R.id.submitBtn);
+        address_ed = findViewById(R.id.address_ed);
+        date_of_birth = findViewById(R.id.date_of_birth);
     }
 
     private void setAction() {
@@ -101,6 +111,40 @@ public class KYCActivity extends AppCompatActivity   {
         });
 
         submit.setOnClickListener(view -> send_kyc_Details_OnServer());
+
+        date_of_birth.setOnClickListener(view -> {
+            if(clickable){
+                clickable=false;
+                final Calendar calender = Calendar.getInstance();
+                int years = calender.get(Calendar.YEAR);
+                int monthInt = calender.get(Calendar.MONTH);
+                int day = calender.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog = new DatePickerDialog(KYCActivity.this, (view1, years1, monthsOfYear, dayOfMonths) -> {
+
+//                    year = "" + years1;
+//                    date = (dayOfMonths + "-" + (monthsOfYear + 1) + "-" + year);
+//                    try {
+//                        date = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("dd-MM-yyyy").parse(date));
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        month = new SimpleDateFormat("MMMM").format(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+//
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+
+                    date_of_birth.setText(date);
+                    clickable = true;
+                }, years, monthInt, day);
+                datePickerDialog.show();
+
+
+            }
+
+
+        });
     }
 
     private void callCamera() {
@@ -180,7 +224,14 @@ public class KYCActivity extends AppCompatActivity   {
                 bankName.setError("Please enter Bank Name");
                 bankName.requestFocus();
                 isValid = false;
-            } else if (ifscCode.getText().toString().trim().length() == 0) {
+            }
+            else if (address_ed.getText().toString().trim().length() == 0) {
+                address_ed.setError("Please enter address ");
+                address_ed.requestFocus();
+                isValid = false;
+            }
+
+            else if (ifscCode.getText().toString().trim().length() == 0) {
                 ifscCode.setError("Please enter IFSC Code");
                 ifscCode.requestFocus();
                 isValid = false;

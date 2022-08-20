@@ -2,6 +2,7 @@ package com.example.yoyoiq.WalletPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,6 +100,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
             public void onResponse(Call<ViewBalanceResponse> call, Response<ViewBalanceResponse> response) {
                 ViewBalanceResponse viewBalanceResponse = response.body();
                 if (response.isSuccessful()) {
+                    Log.d("Amit","Check Here");
                     String balanceData = new Gson().toJson(viewBalanceResponse.getBalance());
                     JSONArray jsonArray = null;
                     String balance = null;

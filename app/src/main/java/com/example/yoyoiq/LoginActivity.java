@@ -72,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
 
         initMethod();
         setAction();
-        DownloadData();
     }
 
     private void initMethod() {
@@ -112,32 +111,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void navigateToSecondActivity() {
-        Intent intent = new Intent(LoginActivity.this, RegisterDetails.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("checkData",true);
         startActivity(intent);
         finish();
     }
 
-    private void DownloadData() {
-        databaseConnectivity.getDatabasePath(this).child("RegisterDetails").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        alreadyRegisterMobile = dataSnapshot.child("mobileNo").getValue().toString();
-                        allPhoneNumber.add(alreadyRegisterMobile);
-                        password = dataSnapshot.child("password").getValue().toString();
-                        allPassword.add(password);
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     private boolean dataValidation() {
         boolean isValid = true;
@@ -210,48 +190,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void LoginValidation() {
-        String mobile = mobileNo.getText().toString().trim();
-        String password1 = userPassword.getText().toString().trim();
-        String userName = "";
-        String emailId = "";
-        UserData userData = new UserData(userName, mobile, emailId, password1);
-        sharedPrefManager.saveUser(userData);
-        if (allPhoneNumber.contains(mobile)) {
-            if (allPassword.contains(password1)) {
 
-                //here we get particular user data for profileActivity.
-                databaseConnectivity.getDatabasePath(this).child("RegisterDetails").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getValue() != null) {
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                String mobile1 = dataSnapshot.child("mobileNo").getValue().toString();
-                                String password11 = dataSnapshot.child("password").getValue().toString();
-                                if (mobile1.contains(mobile) && password11.contains(password1)) {
-                                    String userName1 = dataSnapshot.child("userName").getValue().toString();
-                                    String emailId1 = dataSnapshot.child("emailId").getValue().toString();
-                                    sharedPreferences.edit().putString("userName", userName1).apply();
-                                    sharedPreferences.edit().putString("emailId", emailId1).apply();
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
-                finish();
-            }
-        } else {
-            showDialog("Invalid Mobile or Password", false);
-        }
-    }
 
     public void showDialog(String message, Boolean isFinish) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

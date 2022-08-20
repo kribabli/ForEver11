@@ -15,16 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.HelperData;
+import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
 
 public class OnlyTeamPreview extends AppCompatActivity {
     TextView close, teamA, teamB, userNameAndTid;
     int batCount, arCount, bowlCount, wkCount = 0;
-    LinearLayout LL_GroundWK;
-    LinearLayout LL_GroundBAT;
-    LinearLayout LL_GroundAR;
-    LinearLayout LL_GroundBOWL;
+    FlexboxLayout LL_GroundWK;
+    FlexboxLayout LL_GroundBAT;
+    FlexboxLayout LL_GroundAR;
+    FlexboxLayout LL_GroundBOWL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
