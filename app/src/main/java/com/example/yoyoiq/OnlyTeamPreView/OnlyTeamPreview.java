@@ -88,6 +88,15 @@ public class OnlyTeamPreview extends AppCompatActivity {
                 }
             }
 
+            if (HelperData.myTeamList.get(i).getCountry().equals(HelperData.team1NameShort)) {
+                nameTxt.setBackgroundColor(Color.BLACK);
+                nameTxt.setTextColor(Color.WHITE);
+            }
+            if (HelperData.myTeamList.get(i).getCountry().equalsIgnoreCase(HelperData.team2NameShort)) {
+                nameTxt.setBackgroundColor(Color.WHITE);
+                nameTxt.setTextColor(Color.BLACK);
+            }
+
             if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("wk")) {
                 assert LL_GroundWK != null;
                 LL_GroundWK.setBackgroundColor(Color.TRANSPARENT);
