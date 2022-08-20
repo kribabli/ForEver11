@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class OnlyTeamPreview extends AppCompatActivity {
     TextView close, teamA, teamB, userNameAndTid;
-    int batCount, arCount, bowlCount, wkCount = 0;
+    int batCount, arCount, bowlCount, wkCount = 0,teamAcount=0,teamBCount=0;
     FlexboxLayout LL_GroundWK;
     FlexboxLayout LL_GroundBAT;
     FlexboxLayout LL_GroundAR;
@@ -56,37 +56,25 @@ public class OnlyTeamPreview extends AppCompatActivity {
         for (int i = 0; i < HelperData.myTeamList.size(); i++) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View tv = inflater.inflate(R.layout.single_grounder, null);
-            View tvKalu = inflater.inflate(R.layout.black_ground, null);
-
-
             TextView nameTxt = tv.findViewById(R.id.nameTxt);
-            TextView nameTxtKalu = tvKalu.findViewById(R.id.nameTxtKalu);
-
             TextView badgeTxtGoru = tv.findViewById(R.id.badgeTxtGoru);
-            TextView badgeTxtKalu = tvKalu.findViewById(R.id.badgeTxtKalu);
-
+            TextView VCnameTv = tv.findViewById(R.id.VCnameTv);
 
             if (HelperData.myTeamList.get(i).isCap()) {
                 badgeTxtGoru.setText("C");
                 badgeTxtGoru.setVisibility(View.VISIBLE);
-
-                badgeTxtKalu.setText("C");
-                badgeTxtKalu.setVisibility(View.VISIBLE);
             }
 
             if (HelperData.myTeamList.get(i).isVcap()) {
-                badgeTxtGoru.setText("Vc");
-                badgeTxtGoru.setVisibility(View.VISIBLE);
-
-                badgeTxtKalu.setText("Vc");
-                badgeTxtKalu.setVisibility(View.VISIBLE);
+                VCnameTv.setText("VC");
+                VCnameTv.setVisibility(View.VISIBLE);
             }
 
             String one = "" + HelperData.myTeamList.get(i).getTitle();
             String two = "";
 
             nameTxt.setText("" + one);
-            nameTxtKalu.setText("" + one);
+
 
             try {
                 String currentString = "" + HelperData.myTeamList.get(i).getTitle();
@@ -97,53 +85,60 @@ public class OnlyTeamPreview extends AppCompatActivity {
                 e.printStackTrace();
                 try {
                     nameTxt.setText("" + HelperData.myTeamList.get(i).getTitle().substring(0, 10));
-                    nameTxtKalu.setText("" + HelperData.myTeamList.get(i).getTitle().substring(0, 10));
+
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
-            if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
-                nameTxt.setText("" + one.substring(0, 1) + ". " + two + "");
-            } else {
-                nameTxtKalu.setText("" + one.substring(0, 1) + ". " + two + "");
-            }
 
-            if (HelperData.team1NameShort.length() == 0) {
-                HelperData.team1NameShort = HelperData.myTeamList.get(0).getCountry();
-            }
 
             if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("wk")) {
                 assert LL_GroundWK != null;
                 LL_GroundWK.setBackgroundColor(Color.TRANSPARENT);
                 if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
                     LL_GroundWK.addView(tv);
-                } else {
-                    LL_GroundWK.addView(tvKalu);
+                    teamAcount++;
+                }
+                else{
+                    LL_GroundWK.addView(tv);
+                    teamBCount++;
                 }
             } else if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("bat")) {
                 LL_GroundBAT.setBackgroundColor(Color.TRANSPARENT);
                 if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
                     LL_GroundBAT.addView(tv);
-                } else {
-                    LL_GroundBAT.addView(tvKalu);
+                    teamAcount++;
                 }
-            } else if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("all")) {
+                else{
+                    LL_GroundBAT.addView(tv);
+                    teamBCount++;
+                }
+            } else if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("ar")) {
                 LL_GroundAR.setBackgroundColor(Color.TRANSPARENT);
                 if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
                     LL_GroundAR.addView(tv);
-                } else {
-                    LL_GroundAR.addView(tvKalu);
+                    teamAcount++;
                 }
+                else{
+                    LL_GroundAR.addView(tv);
+                    teamBCount++;
+                }
+
             } else if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("bowl")) {
                 LL_GroundBOWL.setBackgroundColor(Color.TRANSPARENT);
                 if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
                     LL_GroundBOWL.addView(tv);
-                } else {
-                    LL_GroundBOWL.addView(tvKalu);
+                    teamAcount++;
+                }
+                else{
+                    LL_GroundBOWL.addView(tv);
+                    teamBCount++;
                 }
 
             }
 
         }
+        teamA.setText(""+teamAcount);
+        teamB.setText(""+teamBCount);
     }
 }

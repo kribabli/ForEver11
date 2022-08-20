@@ -79,29 +79,27 @@
 
             </com.google.android.flexbox.FlexboxLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
                 <View
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toLeftOf="@+id/tvwk"
+                    android:layout_weight="9"
                     android:background="@color/white" />
 
                 <TextView
                     android:id="@+id/tvwk"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
                     android:text="Wicket Keeper"
                     android:textColor="@color/white" />
-            </RelativeLayout>
+            </LinearLayout>
 
 
             <com.google.android.flexbox.FlexboxLayout
