@@ -14,15 +14,12 @@ import com.example.yoyoiq.WalletPackage.ViewTransactionHistoryResponse;
 
 import org.json.JSONObject;
 
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 public interface UsersServices {
 
@@ -79,9 +76,7 @@ public interface UsersServices {
     @POST("viewbalance")
     Call<ViewBalanceResponse> getBalanceDetails(
             @Field("user_id") String user_id
-
     );
-
 
     @FormUrlEncoded
     @POST("viewkycdetail")
@@ -100,6 +95,12 @@ public interface UsersServices {
     @FormUrlEncoded
     @POST("myContestMatchesList")
     Call<UpcommingResponse> getContestMatchesList(
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("liveContestMatchesList")
+    Call<UpcommingResponse> getLiveContestMatchesList(
             @Field("user_id") String user_id
     );
 
@@ -128,11 +129,10 @@ public interface UsersServices {
             @Field("account_no") RequestBody accountNo,
             @Field("ifsc_code") RequestBody ifsc,
             @Field("bank_name") RequestBody bankName,
-            @Field ("dob") RequestBody dob,
-            @Field ("address") RequestBody address,
+            @Field("dob") RequestBody dob,
+            @Field("address") RequestBody address,
             @Field("adhar_no") RequestBody adhar_no,
             @Field("pancard_no") RequestBody pan,
-            @Field ("pancard") RequestBody pancard
-
+            @Field("pancard") RequestBody pancard
     );
 }
