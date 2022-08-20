@@ -5,23 +5,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.HelperData;
 import com.google.android.flexbox.FlexboxLayout;
 
-import java.util.ArrayList;
-
 public class OnlyTeamPreview extends AppCompatActivity {
     TextView close, teamA, teamB, userNameAndTid;
-    int batCount, arCount, bowlCount, wkCount = 0,teamAcount=0,teamBCount=0;
+    int batCount, arCount, bowlCount, wkCount = 0, teamAcount = 0, teamBCount = 0;
     FlexboxLayout LL_GroundWK;
     FlexboxLayout LL_GroundBAT;
     FlexboxLayout LL_GroundAR;
@@ -34,7 +28,6 @@ public class OnlyTeamPreview extends AppCompatActivity {
         initMethod();
         setAction();
         getPreViewTeamData();
-
     }
 
     private void initMethod() {
@@ -53,10 +46,15 @@ public class OnlyTeamPreview extends AppCompatActivity {
     }
 
     private void getPreViewTeamData() {
+        userNameAndTid.setText("" + HelperData.UserName);
+        teamA.setText("" + HelperData.team1NameShort);
+        teamB.setText("" + HelperData.team2NameShort);
+
         for (int i = 0; i < HelperData.myTeamList.size(); i++) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View tv = inflater.inflate(R.layout.single_grounder, null);
             TextView nameTxt = tv.findViewById(R.id.nameTxt);
+            TextView playerPts = tv.findViewById(R.id.pointsTxt);
             TextView badgeTxtGoru = tv.findViewById(R.id.badgeTxtGoru);
             TextView VCnameTv = tv.findViewById(R.id.VCnameTv);
 
@@ -71,10 +69,9 @@ public class OnlyTeamPreview extends AppCompatActivity {
             }
 
             String one = "" + HelperData.myTeamList.get(i).getTitle();
-            String two = "";
-
+            String two = "" + HelperData.myTeamList.get(i).getPoints();
             nameTxt.setText("" + one);
-
+            playerPts.setText("" + two);
 
             try {
                 String currentString = "" + HelperData.myTeamList.get(i).getTitle();
@@ -85,12 +82,11 @@ public class OnlyTeamPreview extends AppCompatActivity {
                 e.printStackTrace();
                 try {
                     nameTxt.setText("" + HelperData.myTeamList.get(i).getTitle().substring(0, 10));
-
+                    playerPts.setText("" + HelperData.myTeamList.get(i).getPoints());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
-
 
             if (HelperData.myTeamList.get(i).getPlaying_role().equalsIgnoreCase("wk")) {
                 assert LL_GroundWK != null;
@@ -98,8 +94,7 @@ public class OnlyTeamPreview extends AppCompatActivity {
                 if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
                     LL_GroundWK.addView(tv);
                     teamAcount++;
-                }
-                else{
+                } else {
                     LL_GroundWK.addView(tv);
                     teamBCount++;
                 }
@@ -108,8 +103,7 @@ public class OnlyTeamPreview extends AppCompatActivity {
                 if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
                     LL_GroundBAT.addView(tv);
                     teamAcount++;
-                }
-                else{
+                } else {
                     LL_GroundBAT.addView(tv);
                     teamBCount++;
                 }
@@ -118,8 +112,7 @@ public class OnlyTeamPreview extends AppCompatActivity {
                 if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
                     LL_GroundAR.addView(tv);
                     teamAcount++;
-                }
-                else{
+                } else {
                     LL_GroundAR.addView(tv);
                     teamBCount++;
                 }
@@ -129,16 +122,11 @@ public class OnlyTeamPreview extends AppCompatActivity {
                 if (HelperData.team1NameShort.equalsIgnoreCase(HelperData.myTeamList.get(i).getCountry())) {
                     LL_GroundBOWL.addView(tv);
                     teamAcount++;
-                }
-                else{
+                } else {
                     LL_GroundBOWL.addView(tv);
                     teamBCount++;
                 }
-
             }
-
         }
-        teamA.setText(""+teamAcount);
-        teamB.setText(""+teamBCount);
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/pitch_bg"
     tools:context=".OnlyTeamPreView.OnlyTeamPreview">
 
@@ -76,7 +76,6 @@
                 app:flexWrap="wrap"
                 app:justifyContent="space_around">
 
-
             </com.google.android.flexbox.FlexboxLayout>
 
             <LinearLayout
@@ -86,21 +85,31 @@
                 android:weightSum="10">
 
                 <View
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_weight="9"
+                    android:layout_weight="10"
                     android:background="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
                 <TextView
                     android:id="@+id/tvwk"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
+                    android:layout_weight="10"
+                    android:gravity="center"
                     android:text="Wicket Keeper"
-                    android:textColor="@color/white" />
-            </LinearLayout>
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
+            </LinearLayout>
 
             <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/LL_GroundBAT"
@@ -109,20 +118,27 @@
                 app:flexWrap="wrap"
                 app:justifyContent="space_around">
 
-
             </com.google.android.flexbox.FlexboxLayout>
 
-
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/linerLayout1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:weightSum="10">
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_toLeftOf="@+id/tvbt"
+                    android:layout_weight="10"
                     android:background="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
 
                 <TextView
                     android:id="@+id/tvbt"
@@ -133,9 +149,13 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
+                    android:layout_weight="10"
+                    android:gravity="center"
                     android:text="Batsman"
-                    android:textColor="@color/white" />
-            </RelativeLayout>
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
@@ -154,19 +174,26 @@
 
                 </com.google.android.flexbox.FlexboxLayout>
 
-
             </HorizontalScrollView>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:weightSum="10">
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
                     android:layout_toLeftOf="@+id/tvall"
+                    android:layout_weight="10"
                     android:background="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
 
                 <TextView
                     android:id="@+id/tvall"
@@ -177,9 +204,13 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
+                    android:layout_weight="10"
+                    android:gravity="center"
                     android:text="All Rounder"
-                    android:textColor="@color/white" />
-            </RelativeLayout>
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
@@ -200,17 +231,27 @@
 
             </HorizontalScrollView>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:weightSum="10">
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_below="@+id/tvbw"
                     android:layout_alignParentBottom="true"
-                    android:layout_toLeftOf="@+id/tvbw"
+                    android:layout_weight="10"
                     android:background="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:weightSum="10">
 
                 <TextView
                     android:id="@+id/tvbw"
@@ -221,14 +262,17 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
+                    android:layout_weight="10"
+                    android:gravity="center"
                     android:text="Bowler"
-                    android:textColor="@color/white" />
-            </RelativeLayout>
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
+            </LinearLayout>
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

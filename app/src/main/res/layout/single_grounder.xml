@@ -26,10 +26,12 @@
             android:background="@drawable/button_red_colour_round"
             android:backgroundTint="@color/white"
             android:gravity="center"
+            android:maxLines="1"
             android:paddingHorizontal="8dp"
-            android:textSize="10dp"
             android:text="Name"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/pointsTxt"
@@ -38,8 +40,9 @@
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:gravity="center"
+            android:maxLines="1"
             android:paddingHorizontal="8dp"
-            android:text="Name"
+            android:text="Player Pts"
             android:textColor="#ffff"
             android:textSize="10dp" />
 
@@ -47,25 +50,24 @@
 
     <TextView
         android:id="@+id/badgeTxtGoru"
-        android:visibility="gone"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:background="@drawable/button_red_colour_round"
         android:gravity="center"
         android:text="C"
         android:textColor="@color/white"
-        android:textStyle="bold" />
-
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/VCnameTv"
-        android:visibility="gone"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/button_red_colour_round"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/border2_black"
         android:gravity="center"
         android:text="VC"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
 </RelativeLayout>
