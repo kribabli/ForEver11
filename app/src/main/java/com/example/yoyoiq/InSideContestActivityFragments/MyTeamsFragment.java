@@ -1,7 +1,6 @@
 package com.example.yoyoiq.InSideContestActivityFragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +93,6 @@ public class MyTeamsFragment extends Fragment {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
                                 short_squads = jsonObject.getJSONArray("short_squads");
-                                Log.d("Amit","Value check "+short_squads.length());
                                 for (int j = 0; j < short_squads.length(); j++) {
                                     try {
                                         JSONObject jsonObjectSquads = short_squads.getJSONObject(0);
@@ -138,6 +136,7 @@ public class MyTeamsFragment extends Fragment {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
+
             @Override
             public void onFailure(Call<CreatedTeamResponse> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
