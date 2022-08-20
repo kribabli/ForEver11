@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,6 @@ public class RecentTransactions extends AppCompatActivity {
     SessionManager sessionManager;
     ArrayList<transection> list = new ArrayList<>();
     MyAdapter myAdapter;
-    String id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +72,6 @@ public class RecentTransactions extends AppCompatActivity {
                                 String created_date = jsonObject.getString("created_date");
                                 String transection_id = jsonObject.getString("transection_id");
                                 String type = jsonObject.getString("type");
-                                Log.d("Amit","Value Check "+jsonArray);
                                 transection dataholder = new transection(userid, type, amount, transection_id, created_date);
                                 list.add(dataholder);
                                 myAdapter.notifyDataSetChanged();
