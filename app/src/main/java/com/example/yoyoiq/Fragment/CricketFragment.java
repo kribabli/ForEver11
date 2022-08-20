@@ -88,6 +88,7 @@ public class CricketFragment extends Fragment {
     }
 
     private void getAllMatches() {
+        list.clear();
         Call<UpcommingResponse> call = ApiClient
                 .getInstance()
                 .getApi()
