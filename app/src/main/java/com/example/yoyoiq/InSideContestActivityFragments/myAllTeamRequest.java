@@ -2,6 +2,7 @@ package com.example.yoyoiq.InSideContestActivityFragments;
 
 public class myAllTeamRequest {
     String TeamName;
+    String TeamId;
     String match_id, user_id, captain, vicecaptain, teamAName, teamBName;
     int batsman, boller, allrounder, wkeeper, teamAcount, teamBcount;
     boolean isSlected;
@@ -10,7 +11,8 @@ public class myAllTeamRequest {
 
 
 
-    public myAllTeamRequest(String teamName, String match_id, String user_id, String captain, String vicecaptain, String teamAName, String teamBName, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount,boolean isSlected) {
+    public myAllTeamRequest( String TeamId, String teamName, String match_id, String user_id, String captain, String vicecaptain, String teamAName, String teamBName, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount,boolean isSlected) {
+        this.TeamId=TeamId;
         TeamName = teamName;
         this.match_id = match_id;
         this.user_id = user_id;
@@ -27,6 +29,14 @@ public class myAllTeamRequest {
         this.isSlected=isSlected;
     }
 
+
+    public String getTeamId() {
+        return TeamId;
+    }
+
+    public void setTeamId(String teamId) {
+        TeamId = teamId;
+    }
 
     public boolean isSlected() {
         return isSlected;

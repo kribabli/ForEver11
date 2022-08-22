@@ -1,10 +1,14 @@
 package com.example.yoyoiq;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
@@ -21,6 +25,7 @@ import com.example.yoyoiq.common.HelperData;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -34,13 +39,15 @@ public class SelectTeams extends AppCompatActivity {
     Button joinBtn;
     RecyclerView recyclerView;
     ArrayList<myAllTeamRequest> list = new ArrayList();
-    SwipeRefreshLayout swipeRefreshLayout;
     SelectTeamsAdapter selectTeamsAdapter;
     public static Integer count=0;
     String contest_id;
     String Entryfee;
     String Upto;
-   public static String Teamname;
+    String TeamId;
+   public static String ContestTeamId;
+   ProgressDialog progressDialog;
+
 
 
     public static boolean allSelectedTeam = false;
@@ -50,7 +57,7 @@ public class SelectTeams extends AppCompatActivity {
     public static void selected_single_Team(String teamId) {
         for (int i = 0; i < HelperData.myCountyPlayer.size(); i++) {
             if(HelperData.myCountyPlayer.get(i).isSlected()==true){
-               SelectTeams.Teamname=HelperData.myCountyPlayer.get(i).getTeamName();
+               SelectTeams.ContestTeamId=HelperData.myCountyPlayer.get(i).getTeamId();
                Log.d("Amit","Value "+teamId);
 
 
@@ -66,16 +73,41 @@ public class SelectTeams extends AppCompatActivity {
         setAction();
         getMyAllCreatedTeam();
         selectedTeamCounter();
+        progressDialog=new ProgressDialog(SelectTeams.this);
+
+        progressDialog.setTitle("Please wait Joining Contest..");
 
     }
 
     private void JoinContestData() {
-       Call<JoinContestsResponse>call=ApiClient.getInstance().getApi().getJoinContestResponse(HelperData.UserId,HelperData.matchId,contest_id,Teamname);
-       call.enqueue(new Callback<JoinContestsResponse>() {
+        progressDialog.show();
+        Log.d("Amit","Value Check "+ContestTeamId);
+        Log.d("Amit","Value Check1"+HelperData.UserId);
+        Log.d("Amit","Value Check2 "+HelperData.matchId);
+        Log.d("Amit","Value Check3 "+contest_id);
+        Call<JoinContestsResponse>call=ApiClient.getInstance().getApi().getJoinContestResponse(HelperData.UserId,HelperData.matchId,contest_id,SelectTeams.ContestTeamId);
+        call.enqueue(new Callback<JoinContestsResponse>() {
            @Override
            public void onResponse(Call<JoinContestsResponse> call, Response<JoinContestsResponse> response) {
                if(response.isSuccessful()){
                    String Data =new Gson().toJson(response.body());
+                   try {
+                       JSONObject jsonObject=new JSONObject(Data);
+                       if(jsonObject.getString("response").equalsIgnoreCase("successfully added")){
+                           progressDialog.dismiss();
+                           Toast.makeText(SelectTeams.this, "Your Team Join Contest Successfully.", Toast.LENGTH_SHORT).show();
+                           Intent intent=new Intent(SelectTeams.this,MainActivity.class);
+                           startActivity(intent);
+                           finish();
+
+
+                       }
+
+                   } catch (JSONException e) {
+                       e.printStackTrace();
+                   }
+                   progressDialog.dismiss();
+
 
                }
            }
@@ -94,7 +126,6 @@ public class SelectTeams extends AppCompatActivity {
     private void initMethod() {
         backPress = findViewById(R.id.backPress);
         recyclerView = findViewById(R.id.recyclerView);
-        swipeRefreshLayout = findViewById(R.id.swiper);
         joinBtn = findViewById(R.id.JoinTeam);
         team = findViewById(R.id.team);
         selectAll = findViewById(R.id.selectAll);
@@ -111,12 +142,6 @@ public class SelectTeams extends AppCompatActivity {
             }
         });
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getMyAllCreatedTeam();
-            }
-        });
 
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,11 +168,14 @@ public class SelectTeams extends AppCompatActivity {
                     //----------------------for CreatedTeam(Per User)----------------------------
                     JSONArray short_squads = null;
                     JSONArray jsonArray = null;
+                    String CreatedTeamId;
                     try {
                         jsonArray = new JSONArray(totalData);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
+
+                                CreatedTeamId=jsonObject.getString("id");
                                 short_squads = jsonObject.getJSONArray("short_squads");
                                 for (int j = 0; j < short_squads.length(); j++) {
                                     try {
@@ -166,37 +194,37 @@ public class SelectTeams extends AppCompatActivity {
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
 
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount,false);
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId,TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount,false);
                                         list.add(myAllTeamRequest);
                                         HelperData.myCountyPlayer.add(myAllTeamRequest);
                                         selectTeamsAdapter = new SelectTeamsAdapter(SelectTeams.this, list);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(SelectTeams.this));
                                         recyclerView.setAdapter(selectTeamsAdapter);
                                         selectTeamsAdapter.notifyDataSetChanged();
-                                        swipeRefreshLayout.setRefreshing(false);
+
                                     } catch (Exception e) {
-                                        swipeRefreshLayout.setRefreshing(false);
+
                                         e.printStackTrace();
                                     }
                                 }
                                 selectAll.setText("Select All (" + list.size() + ")");
                             } catch (Exception e) {
-                                swipeRefreshLayout.setRefreshing(false);
+
                                 e.printStackTrace();
                             }
                         }
                     } catch (Exception e) {
-                        swipeRefreshLayout.setRefreshing(false);
+
                         e.printStackTrace();
                     }
                 } else {
-                    swipeRefreshLayout.setRefreshing(false);
+
                 }
             }
 
             @Override
             public void onFailure(Call<CreatedTeamResponse> call, Throwable t) {
-                swipeRefreshLayout.setRefreshing(false);
+
             }
         });
     }

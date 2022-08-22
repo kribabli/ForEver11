@@ -62,7 +62,7 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
                     Log.d("Amit","Check1 "+selected);
                     holder.select.setImageResource(R.drawable.green_circleshape);
                     list.get(position).setSlected(true);
-                    SelectTeams.selected_single_Team(list.get(position).getTeamName());
+                    SelectTeams.selected_single_Team(list.get(position).getTeamId());
                     HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue()+1);
                 }
                 else if(selected!=false){

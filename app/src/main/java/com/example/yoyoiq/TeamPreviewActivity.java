@@ -116,7 +116,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
                 bowlCount++;
             }
         }
-        myAllTeamRequest dataholderClass = new myAllTeamRequest("T" + HelperData.TeamCount.getValue(), HelperData.matchId, HelperData.UserId, CaptainName,
+        myAllTeamRequest dataholderClass = new myAllTeamRequest("","T" + HelperData.TeamCount.getValue(), HelperData.matchId, HelperData.UserId, CaptainName,
                 VCName, HelperData.team1NameShort, HelperData.team2NameShort, batCount, bowlCount, arCount, wkCount, HelperData.conty1.getValue(), HelperData.conty2.getValue(),false);
         HelperData.myCountyPlayer.add(dataholderClass);
         shortSquads.add(dataholderClass);
