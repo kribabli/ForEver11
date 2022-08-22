@@ -1,7 +1,5 @@
 package com.example.yoyoiq.Adapter;
 
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,10 +22,7 @@ public class PagerAdapterLiveCompleted extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                Bundle bundle = new Bundle();
-                UpcomingMatchFragment upcomingMatchFragment = new UpcomingMatchFragment();
-                upcomingMatchFragment.setArguments(bundle);
-                return upcomingMatchFragment;
+                return new UpcomingMatchFragment();
             case 1:
                 return new LiveMatchFragment();
             case 2:
