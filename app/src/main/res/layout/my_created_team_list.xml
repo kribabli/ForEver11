@@ -76,29 +76,56 @@
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/badgeTxtGoru"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_red_colour_round"
+                android:gravity="center"
+                android:text="C"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/image1"
                 android:layout_width="55dp"
-                android:layout_height="63dp"
-                android:src="@drawable/ic_baseline_person_3" />
+                android:layout_height="55dp"
+                android:src="@drawable/ic_player_logo" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2" />
 
+            <TextView
+                android:id="@+id/VCnameTv"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border2_black"
+                android:gravity="center"
+                android:text="VC"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/image2"
                 android:layout_width="55dp"
-                android:layout_height="63dp"
-                android:src="@drawable/ic_baseline_person_3" />
+                android:layout_marginRight="10dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_player_logo" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="105dp"
             android:background="@color/green"
             android:gravity="center"
             android:orientation="horizontal"
@@ -122,35 +149,71 @@
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/CName"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Rahul"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:cardCornerRadius="5dp">
+
+                <TextView
+                    android:id="@+id/CName"
+                    android:layout_width="55dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:text="Rahul"
+                    android:textColor="@color/black"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
+
+            </androidx.cardview.widget.CardView>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2" />
+                android:layout_weight="1.5" />
 
-            <TextView
-                android:id="@+id/VCname"
+            <androidx.cardview.widget.CardView
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Rohit"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:cardCornerRadius="5dp">
+
+                <TextView
+                    android:id="@+id/VCname"
+                    android:layout_width="55dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:text="Rohit"
+                    android:textColor="@color/black"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
+
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".2" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="125dp"
             android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal"
