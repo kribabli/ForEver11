@@ -116,8 +116,8 @@
             <ImageView
                 android:id="@+id/image2"
                 android:layout_width="55dp"
-                android:layout_marginRight="10dp"
                 android:layout_height="55dp"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_player_logo" />
 
         </LinearLayout>
