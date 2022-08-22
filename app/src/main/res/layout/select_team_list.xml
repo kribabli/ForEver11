@@ -42,16 +42,7 @@
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="5" />
-
-                <TextView
-                    android:id="@+id/editImg"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:drawableRight="@drawable/ic_baseline_edit_24" />
+                    android:layout_weight="6" />
 
             </LinearLayout>
 
@@ -87,8 +78,8 @@
                 <ImageView
                     android:id="@+id/image1"
                     android:layout_width="55dp"
-                    android:layout_height="63dp"
-                    android:src="@drawable/ic_baseline_person_3" />
+                    android:layout_height="52dp"
+                    android:src="@drawable/ic_player_logo" />
 
                 <View
                     android:layout_width="0dp"
@@ -98,15 +89,15 @@
                 <ImageView
                     android:id="@+id/image2"
                     android:layout_width="55dp"
-                    android:layout_height="63dp"
-                    android:src="@drawable/ic_baseline_person_3" />
+                    android:layout_height="52dp"
+                    android:src="@drawable/ic_player_logo" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="105dp"
                 android:background="@color/green"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -130,28 +121,60 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/CName"
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Rahul"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    app:cardCornerRadius="5dp">
+
+                    <TextView
+                        android:id="@+id/CName"
+                        android:layout_width="55dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingHorizontal="8dp"
+                        android:text="Rahul"
+                        android:textColor="@color/black"
+                        android:textSize="10dp"
+                        android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2" />
+                    android:layout_weight="1.5" />
 
-                <TextView
-                    android:id="@+id/VCname"
+                <androidx.cardview.widget.CardView
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Rohit"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    app:cardCornerRadius="5dp">
+
+                    <TextView
+                        android:id="@+id/VCname"
+                        android:layout_width="55dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingHorizontal="8dp"
+                        android:text="Rohit"
+                        android:textColor="@color/black"
+                        android:textSize="10dp"
+                        android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2" />
 
             </LinearLayout>
 
