@@ -81,10 +81,6 @@ public class SelectTeams extends AppCompatActivity {
 
     private void JoinContestData() {
         progressDialog.show();
-        Log.d("Amit","Value Check "+ContestTeamId);
-        Log.d("Amit","Value Check1"+HelperData.UserId);
-        Log.d("Amit","Value Check2 "+HelperData.matchId);
-        Log.d("Amit","Value Check3 "+contest_id);
         Call<JoinContestsResponse>call=ApiClient.getInstance().getApi().getJoinContestResponse(HelperData.UserId,HelperData.matchId,contest_id,SelectTeams.ContestTeamId);
         call.enqueue(new Callback<JoinContestsResponse>() {
            @Override
