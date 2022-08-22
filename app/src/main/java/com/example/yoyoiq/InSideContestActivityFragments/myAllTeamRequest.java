@@ -7,12 +7,8 @@ public class myAllTeamRequest {
     int batsman, boller, allrounder, wkeeper, teamAcount, teamBcount;
     boolean isSlected;
 
-
-
-
-
-    public myAllTeamRequest( String TeamId, String teamName, String match_id, String user_id, String captain, String vicecaptain, String teamAName, String teamBName, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount,boolean isSlected) {
-        this.TeamId=TeamId;
+    public myAllTeamRequest(String TeamId, String teamName, String match_id, String user_id, String captain, String vicecaptain, String teamAName, String teamBName, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount, boolean isSlected) {
+        this.TeamId = TeamId;
         TeamName = teamName;
         this.match_id = match_id;
         this.user_id = user_id;
@@ -26,7 +22,7 @@ public class myAllTeamRequest {
         this.wkeeper = wkeeper;
         this.teamAcount = teamAcount;
         this.teamBcount = teamBcount;
-        this.isSlected=isSlected;
+        this.isSlected = isSlected;
     }
 
 
