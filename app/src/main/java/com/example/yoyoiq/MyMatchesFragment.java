@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.PagerAdapterLiveCompleted;
+import com.example.yoyoiq.InSideMyMatches.CompletedMatchFragment;
+import com.example.yoyoiq.InSideMyMatches.LiveMatchFragment;
+import com.example.yoyoiq.InSideMyMatches.UpcomingMatchFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class MyMatchesFragment extends Fragment {
@@ -16,6 +19,8 @@ public class MyMatchesFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     ViewPager viewPager;
     TabLayout tabLayout;
+    Fragment selectedFragment = null;
+    Fragment fragment = new Fragment();
     PagerAdapterLiveCompleted pagerAdapterLiveCompleted;
     private String mParam1;
     private String mParam2;
@@ -47,7 +52,7 @@ public class MyMatchesFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my_matches, container, false);
         viewPager = root.findViewById(R.id.viewPager);
         tabLayout = root.findViewById(R.id.tabLayout);
-
+        selectedFragment = fragment;
         pagerAdapterLiveCompleted = new PagerAdapterLiveCompleted(getFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapterLiveCompleted);
 
@@ -56,10 +61,13 @@ public class MyMatchesFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0) {
+                    selectedFragment = new UpcomingMatchFragment();
                     pagerAdapterLiveCompleted.notifyDataSetChanged();
                 } else if (tab.getPosition() == 1) {
+                    selectedFragment = new LiveMatchFragment();
                     pagerAdapterLiveCompleted.notifyDataSetChanged();
                 } else if (tab.getPosition() == 2) {
+                    selectedFragment = new CompletedMatchFragment();
                     pagerAdapterLiveCompleted.notifyDataSetChanged();
                 }
             }
@@ -72,6 +80,7 @@ public class MyMatchesFragment extends Fragment {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         return root;
