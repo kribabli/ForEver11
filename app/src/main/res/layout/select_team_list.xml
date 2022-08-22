@@ -292,7 +292,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <TextView
+        <ImageView
             android:id="@+id/select"
             android:layout_width="23dp"
             android:layout_height="20dp"

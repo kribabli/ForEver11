@@ -217,14 +217,22 @@ public class RegisterDetails extends AppCompatActivity {
         call.enqueue(new Callback<RegistrationResponse>() {
             @Override
             public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+                RegistrationResponse registrationResponse= response.body();
                 if (response.isSuccessful()) {
-                    showDialog("User Register Successfully..", true);
+                    if(registrationResponse.getResponse().equalsIgnoreCase("Email already exist")){
+                        showDialog(""+registrationResponse.getResponse(), true);
+                    }
+                    if(registrationResponse.getResponse().equalsIgnoreCase("Mobile no already exist")){
+                        showDialog(""+registrationResponse.getResponse(), true);
+                    }
+                    if(registrationResponse.getResponse().equalsIgnoreCase("successfully registered")){
+                        showDialog("User Register Successfully..", true);
+                    }
+
                 }
             }
-
             @Override
             public void onFailure(Call<RegistrationResponse> call, Throwable t) {
-
             }
         });
     }

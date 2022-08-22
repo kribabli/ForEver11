@@ -18,6 +18,7 @@ import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.OnlyTeamPreView.OnlyTeamPreview;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.common.HelperData;
+import com.example.yoyoiq.common.SessionManager;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -43,6 +44,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static boolean captainSelected = false;
     public static boolean viceCaptainSelected = false;
+    SessionManager sessionManager;
     String CaptainName, VCName;
     int batCount, arCount, bowlCount, wkCount = 0;
 
@@ -90,6 +92,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
         inItMethod();
         setAction();
         countDownStart();
+        sessionManager=new SessionManager(getApplicationContext());
     }
 
     private void saveTeamLocally() {
@@ -114,7 +117,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
             }
         }
         myAllTeamRequest dataholderClass = new myAllTeamRequest("T" + HelperData.TeamCount.getValue(), HelperData.matchId, HelperData.UserId, CaptainName,
-                VCName, HelperData.team1NameShort, HelperData.team2NameShort, batCount, bowlCount, arCount, wkCount, HelperData.conty1.getValue(), HelperData.conty2.getValue());
+                VCName, HelperData.team1NameShort, HelperData.team2NameShort, batCount, bowlCount, arCount, wkCount, HelperData.conty1.getValue(), HelperData.conty2.getValue(),false);
         HelperData.myCountyPlayer.add(dataholderClass);
         shortSquads.add(dataholderClass);
     }
@@ -159,7 +162,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
                 String data = gson.toJson(arrayList);
                 String shortData = gson.toJson(shortSquads);
 //                String check =HelperData.myTeamList.toString();
-                Call<JSONObject> call = ApiClient.getInstance().getApi().Send_myteam_list_Server(HelperData.UserId, HelperData.matchId, data, shortData);
+                Call<JSONObject> call = ApiClient.getInstance().getApi().Send_myteam_list_Server(sessionManager.getUserData().getUser_id(), HelperData.matchId, data, shortData);
                 call.enqueue(new Callback<JSONObject>() {
                     @Override
                     public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {

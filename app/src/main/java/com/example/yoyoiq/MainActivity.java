@@ -339,6 +339,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             JSONObject jsonObject = jsonArray1.getJSONObject(i);
                             String title = jsonObject.getString("title");
                             String match_id = jsonObject.getString("match_id");
+                            Log.d("Amit","Value "+match_id);
                             String date_start = jsonObject.getString("date_start_ist");
                             String date_end = jsonObject.getString("date_end_ist");
 

@@ -2,6 +2,7 @@ package com.example.yoyoiq;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import retrofit2.Call;
@@ -129,41 +131,81 @@ public class AddCashActivity extends AppCompatActivity {
         });
 
         joinLinearLayout.setOnClickListener(v -> {
-            Call<ViewBalanceResponse> call=ApiClient.getInstance().getApi().getBalanceDetails(sessionManager.getUserData().getUser_id());
-            call.enqueue(new Callback<ViewBalanceResponse>() {
-                @Override
-                public void onResponse(Call<ViewBalanceResponse> call, Response<ViewBalanceResponse> response) {
-                    ViewBalanceResponse viewBalanceResponse= response.body();
-                    if(response.isSuccessful()){
+            loadTeamData();
+
+        });
+    }
+
+    private void loadTeamData() {
+        Call<CreatedTeamResponse> call = ApiClient
+                .getInstance()
+                .getApi()
+                .getUserTeamCreated(HelperData.UserId, match_id);
+
+        call.enqueue(new Callback<CreatedTeamResponse>() {
+            @Override
+            public void onResponse(Call<CreatedTeamResponse> call, Response<CreatedTeamResponse> response) {
+                CreatedTeamResponse createdTeamResponse= response.body();
+                if(response.isSuccessful()){
+                    String totalData = new Gson().toJson(createdTeamResponse.getResponse());
+                    String data=new Gson().toJson(createdTeamResponse.getResponse());
+                    if(totalData.length()==2){
+                        Intent intent=new Intent(AddCashActivity.this,CreateTeamActivity.class);
+                        intent.putExtra("match_id", match_id);
+                        intent.putExtra("matchA", matchA);
+                        intent.putExtra("matchB", matchB);
+                        intent.putExtra("logo_url_a", HelperData.logoUrlTeamA);
+                        intent.putExtra("logo_url_b", HelperData.logoUrlTeamB);
+                        intent.putExtra("date_start", HelperData.MatchStartTime);
+                        intent.putExtra("date_end", HelperData.MatchEndTime);
+                        startActivity(intent);
+                        finish();
+                        JSONArray short_squads = null;
+                        JSONArray jsonArray = null;
+                    }
+                    else{
+                        Intent intent=new Intent(AddCashActivity.this,SelectTeams.class);
+                        intent.putExtra("Match_id",match_id);
+                        intent.putExtra("Contest_id",contestId);
+                        intent.putExtra("EntryFee",entryFee);
+                        intent.putExtra("upto",upTo);
+                        startActivity(intent);
+                        finish();
+                    }
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CreatedTeamResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void LoadBalanceData() {
+        Call<ViewBalanceResponse> call=ApiClient.getInstance().getApi().getBalanceDetails(sessionManager.getUserData().getUser_id());
+        call.enqueue(new Callback<ViewBalanceResponse>() {
+            @Override
+            public void onResponse(Call<ViewBalanceResponse> call, Response<ViewBalanceResponse> response) {
+                ViewBalanceResponse viewBalanceResponse= response.body();
+                if(response.isSuccessful()){
+                    Log.d("Amit","Value Check3");
 //                        balance= Integer.parseInt(viewBalanceResponse.getBalance());
-                        if(balance>=Integer.parseInt(entryFee)){
-                            if(HelperData.TeamCount.getValue()>=1){
-                                Intent intent=new Intent(AddCashActivity.this,SelectTeams.class);
-                                intent.putExtra("Match_id",match_id);
-                                intent.putExtra("Contest_id",contestId);
-                                intent.putExtra("EntryFee",entryFee);
-                                startActivity(intent);
-                                finish();
-                            }
-                            else{
-                                Intent intent=new Intent(AddCashActivity.this,CreateTeamActivity.class);
-                                intent.putExtra("match_id", match_id);
-                                intent.putExtra("matchA", matchA);
-                                intent.putExtra("matchB", matchB);
-                                intent.putExtra("logo_url_a", HelperData.logoUrlTeamA);
-                                intent.putExtra("logo_url_b", HelperData.logoUrlTeamB);
-                                intent.putExtra("date_start", HelperData.MatchStartTime);
-                                intent.putExtra("date_end", HelperData.MatchEndTime);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
+                    if(balance>=Integer.parseInt(entryFee)){
+
+
+
                     }
                 }
-                @Override
-                public void onFailure(Call<ViewBalanceResponse> call, Throwable t) {
-                }
-            });
+            }
+            @Override
+            public void onFailure(Call<ViewBalanceResponse> call, Throwable t) {
+            }
         });
+
+
     }
 }

@@ -110,7 +110,7 @@ public class MyTeamsFragment extends Fragment {
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
 
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount);
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount,false);
                                         list.add(myAllTeamRequest);
                                         myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

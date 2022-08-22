@@ -1,16 +1,22 @@
 package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.yoyoiq.CreateTeamActivity;
 import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.R;
+import com.example.yoyoiq.SelectTeams;
+import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 
 import java.util.ArrayList;
@@ -19,6 +25,7 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
     Context context;
     ArrayList<myAllTeamRequest> list;
     SessionManager sessionManager;
+    boolean selected=false;
 
     public SelectTeamsAdapter(Context context, ArrayList<myAllTeamRequest> list) {
         this.context = context;
@@ -48,6 +55,24 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
             holder.userNameAndTid.setText(sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
             holder.teamA.setText(allTeamRequest.getTeamAName());
             holder.teamB.setText(allTeamRequest.getTeamBName());
+
+            holder.select.setOnClickListener(view -> {
+                if(selected!=true){
+                    selected=true;
+                    Log.d("Amit","Check1 "+selected);
+                    holder.select.setImageResource(R.drawable.green_circleshape);
+                    list.get(position).setSlected(true);
+                    SelectTeams.selected_single_Team(list.get(position).getTeamName());
+                    HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue()+1);
+                }
+                else if(selected!=false){
+                    selected=false;
+                    holder.select.setImageResource(R.drawable.c_vc_border_rounded);
+                    HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue()-1);
+                    list.get(position).setSlected(false);
+
+                }
+            });
         }
     }
 
@@ -58,6 +83,7 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView teamA, teamB, wkTv, batTv, arTv, bowlTv, CName, VCname, teamACount, teamBCount, userNameAndTid;
+        ImageView select;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +95,7 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
             bowlTv = itemView.findViewById(R.id.bowlTv);
             CName = itemView.findViewById(R.id.CName);
             VCname = itemView.findViewById(R.id.VCname);
+            select = itemView.findViewById(R.id.select);
             teamACount = itemView.findViewById(R.id.teamACount);
             teamBCount = itemView.findViewById(R.id.teamBCount);
             userNameAndTid = itemView.findViewById(R.id.userNameAndTid);

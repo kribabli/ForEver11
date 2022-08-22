@@ -32,8 +32,6 @@ public class ContestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contest);
         initMethod();
         setAction();
-        
-
 
         pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b, date_start, date_end);
         viewPager.setAdapter(pageAdapter);
@@ -126,6 +124,7 @@ public class ContestActivity extends AppCompatActivity {
     }
 
     private void setAction() {
+
         walletTV.setOnClickListener(view -> {
             Intent intent = new Intent(ContestActivity.this, AddCash.class);
             startActivity(intent);

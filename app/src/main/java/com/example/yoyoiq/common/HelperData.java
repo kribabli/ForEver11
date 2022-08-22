@@ -44,6 +44,7 @@ public class HelperData {
     public static MutableLiveData<Integer> selectedVcap = new MutableLiveData<>(0);
     public static MutableLiveData<Double> creditCounter = new MutableLiveData<>(0.0);
     public static MutableLiveData<List<AllSelectedPlayer>> allSelectedPlayer = new MutableLiveData<>();
+    public static MutableLiveData<Integer> selectSingleTeamCounter = new MutableLiveData<>(0);
 
 
 
@@ -74,6 +75,7 @@ public class HelperData {
     public static  String logoUrlTeamB="";
     public static  String MatchStartTime="";
     public static  String MatchEndTime="";
+    public static  String singleSelectedTeamName="";
 
 
     public static void newTeamMaking() {
