@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.google.gson.Gson;
@@ -37,6 +38,7 @@ public class RecentTransactions extends AppCompatActivity {
     SessionManager sessionManager;
     ArrayList<transection> list = new ArrayList<>();
     MyAdapter myAdapter;
+    DatabaseConnectivity common = DatabaseConnectivity.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class RecentTransactions extends AppCompatActivity {
         listViewNotification.setAdapter(myAdapter);
         backPress.setOnClickListener(view -> onBackPressed());
         loadTransactionDetails();
+        common.setProgressDialog("", "Loading", RecentTransactions.this, RecentTransactions.this);
     }
 
     private void loadTransactionDetails() {
@@ -61,6 +64,7 @@ public class RecentTransactions extends AppCompatActivity {
                 list.clear();
                 if (response.isSuccessful()) {
                     if (viewTransactionHistoryResponse.getDetail() != null) {
+                        common.closeDialog(RecentTransactions.this);
                         String detailsData = new Gson().toJson(viewTransactionHistoryResponse.getDetail());
                         JSONArray jsonArray = null;
                         try {
@@ -126,19 +130,22 @@ public class RecentTransactions extends AppCompatActivity {
                 signConvention.setTextColor(Color.parseColor("#D70101"));
             }
             symbol_rupees.setText(data.getAmount());
-            reason.setText("Deposited Cash");
+            if (list.get(i).getType().equalsIgnoreCase("credit")) {
+                reason.setText("Deposited Cash");
+            } else {
+                reason.setText("Joined A Contest");
+            }
+
             Bill_Image.setOnClickListener(view1 -> {
                 final View deleteDialogView = LayoutInflater.from(RecentTransactions.this).inflate(R.layout.show_transaction_details, null);
                 TextView textView1 = deleteDialogView.findViewById(R.id.transactionId);
                 TextView textView2 = deleteDialogView.findViewById(R.id.transactionDate);
                 TextView textView3 = deleteDialogView.findViewById(R.id.TeamName);
-
                 final AlertDialog deleteDialog = new AlertDialog.Builder(RecentTransactions.this).create();
                 deleteDialog.setView(deleteDialogView);
                 textView1.setText("" + data.getTransection_id());
                 textView2.setText("" + data.getCreated_date());
                 textView3.setText("" + sessionManager.getUserData().getUserName());
-
                 deleteDialog.show();
             });
             return view;

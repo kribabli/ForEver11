@@ -2,6 +2,7 @@ package com.example.yoyoiq.common;
 
 import static android.util.Log.wtf;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -77,6 +78,8 @@ public class HelperData {
     public static  String MatchEndTime="";
     public static  String singleSelectedTeamName="";
 
+    ProgressDialog dialog;
+
 
     public static void newTeamMaking() {
         myTeamList.clear();
@@ -144,5 +147,36 @@ public class HelperData {
 
 
 
+    }
+
+
+    public void setProgressDialog(String title, String message, Context context, Activity activity) {
+        closeDialog(activity);
+        dialog = new ProgressDialog(context);
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.create();
+        dialog.setCancelable(false);
+        dialog.setProgressStyle(dialog.STYLE_SPINNER);
+        if (!dialog.isShowing() && !activity.isFinishing()) {
+            try {
+                dialog.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public void closeDialog(Activity activity) {
+        if (dialog != null) {
+            if (dialog.isShowing() && !activity.isFinishing()) {
+                try {
+                    dialog.dismiss();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

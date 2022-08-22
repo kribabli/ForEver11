@@ -8,6 +8,7 @@ import com.example.yoyoiq.LoginPojo.LoginResponse;
 import com.example.yoyoiq.LoginPojo.RegistrationResponse;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
+import com.example.yoyoiq.WalletPackage.ContestJoinResponse;
 import com.example.yoyoiq.WalletPackage.PostBalanceResponse;
 import com.example.yoyoiq.WalletPackage.ViewBalanceResponse;
 import com.example.yoyoiq.WalletPackage.ViewTransactionHistoryResponse;
@@ -134,5 +135,14 @@ public interface UsersServices {
             @Field("adhar_no") RequestBody adhar_no,
             @Field("pancard_no") RequestBody pan,
             @Field("pancard") RequestBody pancard
+    );
+
+
+    @FormUrlEncoded
+    @POST("contestJoinFee")
+    Call<ContestJoinResponse>requestToJoinFee(
+            @Field("user_id") String user_id,
+            @Field("contest_id") String match_id,
+            @Field("amount") String contest_id
     );
 }

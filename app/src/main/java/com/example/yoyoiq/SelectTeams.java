@@ -5,8 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +24,12 @@ import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
 import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.JoinContest.JoinContestsResponse;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.example.yoyoiq.WalletPackage.AddCash;
+import com.example.yoyoiq.WalletPackage.ContestJoinResponse;
+import com.example.yoyoiq.WalletPackage.ViewBalanceResponse;
+import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.example.yoyoiq.common.HelperData;
+import com.example.yoyoiq.common.SessionManager;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -40,27 +48,23 @@ public class SelectTeams extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<myAllTeamRequest> list = new ArrayList();
     SelectTeamsAdapter selectTeamsAdapter;
-    public static Integer count=0;
+    public static Integer count = 0;
     String contest_id;
     String Entryfee;
+    int netEntryFee = 0;
     String Upto;
     String TeamId;
-   public static String ContestTeamId;
-   ProgressDialog progressDialog;
-
-
-
+    public static String ContestTeamId;
+    ProgressDialog progressDialog;
+    SessionManager sessionManager;
+    DatabaseConnectivity common = DatabaseConnectivity.getInstance();
     public static boolean allSelectedTeam = false;
     public static String selectedSingleTeam;
 
-
     public static void selected_single_Team(String teamId) {
         for (int i = 0; i < HelperData.myCountyPlayer.size(); i++) {
-            if(HelperData.myCountyPlayer.get(i).isSlected()==true){
-               SelectTeams.ContestTeamId=HelperData.myCountyPlayer.get(i).getTeamId();
-               Log.d("Amit","Value "+teamId);
-
-
+            if (HelperData.myCountyPlayer.get(i).isSlected() == true) {
+                SelectTeams.ContestTeamId = HelperData.myCountyPlayer.get(i).getTeamId();
             }
         }
     }
@@ -73,46 +77,121 @@ public class SelectTeams extends AppCompatActivity {
         setAction();
         getMyAllCreatedTeam();
         selectedTeamCounter();
-        progressDialog=new ProgressDialog(SelectTeams.this);
+        sessionManager = new SessionManager(getApplicationContext());
+        progressDialog = new ProgressDialog(SelectTeams.this);
+        progressDialog.setTitle("Please Wait Joining Contest..");
+    }
 
-        progressDialog.setTitle("Please wait Joining Contest..");
+    private void LoadBalanceData() {
+        common.setProgressDialog("", "Loading..", SelectTeams.this, SelectTeams.this);
+        Call<ViewBalanceResponse> call = ApiClient.getInstance().getApi().getBalanceDetails(sessionManager.getUserData().getUser_id());
+        call.enqueue(new Callback<ViewBalanceResponse>() {
+            @Override
+            public void onResponse(Call<ViewBalanceResponse> call, Response<ViewBalanceResponse> response) {
+                ViewBalanceResponse viewBalanceResponse = response.body();
+                if (response.isSuccessful()) {
+                    String balanceData = new Gson().toJson(viewBalanceResponse.getBalance());
+                    JSONArray jsonArray = null;
+                    String balance = null;
+                    String bouns_cash = null;
+                    int netBalnace = 0;
+                    try {
+                        jsonArray = new JSONArray(balanceData);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            balance = jsonObject.getString("balance");
+                            netBalnace = Integer.parseInt(balance);
+                            bouns_cash = jsonObject.getString("add_bonus");
+                        }
+                        if (netBalnace >= netEntryFee) {
+                            CheckBalanceData(balance, bouns_cash);
+                        } else {
+                            Intent intent = new Intent(SelectTeams.this, AddCash.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    common.closeDialog(SelectTeams.this);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ViewBalanceResponse> call, Throwable t) {
+            }
+        });
+    }
+
+    private void CheckBalanceData(String balance, String bouns_cash) {
+        final View deleteDialogView = LayoutInflater.from(SelectTeams.this).inflate(R.layout.customised_dialog_layout, null);
+        TextView textView = deleteDialogView.findViewById(R.id.entryFeeAmount);
+        TextView textView1 = deleteDialogView.findViewById(R.id.cash_bonus);
+        TextView textView2 = deleteDialogView.findViewById(R.id.toPayfee);
+        Button button = deleteDialogView.findViewById(R.id.joinContest);
+        LinearLayout layout = deleteDialogView.findViewById(R.id.layout);
+        final AlertDialog deleteDialog = new AlertDialog.Builder(SelectTeams.this).create();
+        textView.setText("" + Entryfee);
+        textView1.setText("" + bouns_cash);
+        textView2.setText("" + Entryfee);
+        button.setOnClickListener(view -> {
+            requestTOBalanceDeduction();
+        });
+        deleteDialog.setView(deleteDialogView);
+        deleteDialog.show();
+    }
+
+    private void requestTOBalanceDeduction() {
+        Call<ContestJoinResponse> call = ApiClient.getInstance().getApi().requestToJoinFee(sessionManager.getUserData().getUser_id(), contest_id, Entryfee);
+        call.enqueue(new Callback<ContestJoinResponse>() {
+            @Override
+            public void onResponse(Call<ContestJoinResponse> call, Response<ContestJoinResponse> response) {
+                ContestJoinResponse contestJoinResponse = response.body();
+                if (response.isSuccessful()) {
+                    String Data = new Gson().toJson(contestJoinResponse);
+                    if (contestJoinResponse.getResponse().equalsIgnoreCase("successfully amount debited")) {
+                        JoinContestData();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ContestJoinResponse> call, Throwable t) {
+            }
+        });
 
     }
 
     private void JoinContestData() {
+        progressDialog.setTitle("Please Wait Joining Contest..");
         progressDialog.show();
-        Call<JoinContestsResponse>call=ApiClient.getInstance().getApi().getJoinContestResponse(HelperData.UserId,HelperData.matchId,contest_id,SelectTeams.ContestTeamId);
+        Call<JoinContestsResponse> call = ApiClient.getInstance().getApi().getJoinContestResponse(HelperData.UserId, HelperData.matchId, contest_id, SelectTeams.ContestTeamId);
         call.enqueue(new Callback<JoinContestsResponse>() {
-           @Override
-           public void onResponse(Call<JoinContestsResponse> call, Response<JoinContestsResponse> response) {
-               if(response.isSuccessful()){
-                   String Data =new Gson().toJson(response.body());
-                   try {
-                       JSONObject jsonObject=new JSONObject(Data);
-                       if(jsonObject.getString("response").equalsIgnoreCase("successfully added")){
-                           progressDialog.dismiss();
-                           Toast.makeText(SelectTeams.this, "Your Team Join Contest Successfully.", Toast.LENGTH_SHORT).show();
-                           Intent intent=new Intent(SelectTeams.this,MainActivity.class);
-                           startActivity(intent);
-                           finish();
+            @Override
+            public void onResponse(Call<JoinContestsResponse> call, Response<JoinContestsResponse> response) {
+                if (response.isSuccessful()) {
+                    String Data = new Gson().toJson(response.body());
+                    try {
+                        JSONObject jsonObject = new JSONObject(Data);
+                        if (jsonObject.getString("response").equalsIgnoreCase("successfully added")) {
+                            progressDialog.dismiss();
+                            Toast.makeText(SelectTeams.this, "Contest Join Successfully..", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(SelectTeams.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    progressDialog.dismiss();
+                }
+            }
 
-
-                       }
-
-                   } catch (JSONException e) {
-                       e.printStackTrace();
-                   }
-                   progressDialog.dismiss();
-
-
-               }
-           }
-
-           @Override
-           public void onFailure(Call<JoinContestsResponse> call, Throwable t) {
-
-           }
-       });
+            @Override
+            public void onFailure(Call<JoinContestsResponse> call, Throwable t) {
+            }
+        });
     }
 
     private void selectedTeamCounter() {
@@ -125,10 +204,11 @@ public class SelectTeams extends AppCompatActivity {
         joinBtn = findViewById(R.id.JoinTeam);
         team = findViewById(R.id.team);
         selectAll = findViewById(R.id.selectAll);
-        contest_id=getIntent().getStringExtra("Contest_id");
-        Entryfee=getIntent().getStringExtra("EntryFee");
-        Upto=getIntent().getStringExtra("upto");
-     }
+        contest_id = getIntent().getStringExtra("Contest_id");
+        Entryfee = getIntent().getStringExtra("EntryFee");
+        netEntryFee = Integer.parseInt(Entryfee);
+        Upto = getIntent().getStringExtra("upto");
+    }
 
     private void setAction() {
         backPress.setOnClickListener(new View.OnClickListener() {
@@ -138,11 +218,14 @@ public class SelectTeams extends AppCompatActivity {
             }
         });
 
-
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JoinContestData();
+                if (SelectTeams.ContestTeamId != null) {
+                    LoadBalanceData();
+                } else {
+                    Toast.makeText(SelectTeams.this, "Please Select Atleast 1 Team..", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -170,8 +253,7 @@ public class SelectTeams extends AppCompatActivity {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
-
-                                CreatedTeamId=jsonObject.getString("id");
+                                CreatedTeamId = jsonObject.getString("id");
                                 short_squads = jsonObject.getJSONArray("short_squads");
                                 for (int j = 0; j < short_squads.length(); j++) {
                                     try {
@@ -190,7 +272,7 @@ public class SelectTeams extends AppCompatActivity {
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
 
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId,TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount,false);
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false);
                                         list.add(myAllTeamRequest);
                                         HelperData.myCountyPlayer.add(myAllTeamRequest);
                                         selectTeamsAdapter = new SelectTeamsAdapter(SelectTeams.this, list);
@@ -199,28 +281,23 @@ public class SelectTeams extends AppCompatActivity {
                                         selectTeamsAdapter.notifyDataSetChanged();
 
                                     } catch (Exception e) {
-
                                         e.printStackTrace();
                                     }
                                 }
                                 selectAll.setText("Select All (" + list.size() + ")");
                             } catch (Exception e) {
-
                                 e.printStackTrace();
                             }
                         }
                     } catch (Exception e) {
-
                         e.printStackTrace();
                     }
                 } else {
-
                 }
             }
 
             @Override
             public void onFailure(Call<CreatedTeamResponse> call, Throwable t) {
-
             }
         });
     }

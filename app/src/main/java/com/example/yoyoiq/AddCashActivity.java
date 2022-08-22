@@ -18,6 +18,7 @@ import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.WalletPackage.AddCash;
 import com.example.yoyoiq.WalletPackage.ViewBalanceResponse;
+import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.google.android.material.tabs.TabLayout;
@@ -41,6 +42,7 @@ public class AddCashActivity extends AppCompatActivity {
     TextView backPress, teamATv, teamBTv, walletTV;
     TextView total_prize1, entryFee1, totalSports1, leftSports1, winningPer1, upTo1, first_price1;
     int balance=0;
+    DatabaseConnectivity cmn = DatabaseConnectivity.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,12 +143,13 @@ public class AddCashActivity extends AppCompatActivity {
                 .getInstance()
                 .getApi()
                 .getUserTeamCreated(HelperData.UserId, match_id);
-
+        cmn.setProgressDialog("","Loading Data...",AddCashActivity.this,AddCashActivity.this);
         call.enqueue(new Callback<CreatedTeamResponse>() {
             @Override
             public void onResponse(Call<CreatedTeamResponse> call, Response<CreatedTeamResponse> response) {
                 CreatedTeamResponse createdTeamResponse= response.body();
                 if(response.isSuccessful()){
+                    cmn.closeDialog(AddCashActivity.this);
                     String totalData = new Gson().toJson(createdTeamResponse.getResponse());
                     String data=new Gson().toJson(createdTeamResponse.getResponse());
                     if(totalData.length()==2){
