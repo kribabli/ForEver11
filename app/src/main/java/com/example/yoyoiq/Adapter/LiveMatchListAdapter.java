@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.yoyoiq.ContestActivity;
-import com.example.yoyoiq.MainActivity;
 import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.HelperData;
@@ -108,17 +106,6 @@ public class LiveMatchListAdapter extends RecyclerView.Adapter<LiveMatchListAdap
                 }
             };
             handler.postDelayed(runnable, 0);
-        } else if (list.size() == 0) {
-            holder.frameLayout.setVisibility(View.VISIBLE);
-            holder.upcomingMatch.setVisibility(View.VISIBLE);
-            holder.upcomingMatch.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
-            });
         }
     }
 
@@ -128,10 +115,9 @@ public class LiveMatchListAdapter extends RecyclerView.Adapter<LiveMatchListAdap
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle, matchATv, matchBTv, shortNameA, shortNameB, leftTime, done, lineUp, upcomingMatch;
+        TextView textViewTitle, matchATv, matchBTv, shortNameA, shortNameB, leftTime, done, lineUp;
         ImageView matchAImage, matchBImage;
         CardView cardView;
-        FrameLayout frameLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -146,8 +132,6 @@ public class LiveMatchListAdapter extends RecyclerView.Adapter<LiveMatchListAdap
             matchAImage = itemView.findViewById(R.id.matchaImage);
             matchBImage = itemView.findViewById(R.id.matchbImage);
             cardView = itemView.findViewById(R.id.cardViewMatchList);
-            frameLayout = itemView.findViewById(R.id.LinearLayout);
-            upcomingMatch = itemView.findViewById(R.id.upcomingMatch);
         }
     }
 }

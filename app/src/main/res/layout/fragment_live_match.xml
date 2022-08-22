@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".InSideMyMatches.LiveMatchFragment">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/LinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,7 +37,7 @@
 
         </LinearLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swiper"

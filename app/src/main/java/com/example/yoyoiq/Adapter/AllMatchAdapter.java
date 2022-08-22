@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +61,7 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
                 intent.putExtra("logo_url_b", listData.getLogo_url_b());
                 intent.putExtra("date_start", listData.getDate_start());
                 intent.putExtra("date_end", listData.getDate_end());
-                HelperData.matchId= listData.getMatch_id();
+                HelperData.matchId = listData.getMatch_id();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -95,7 +94,8 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
                         long Hours = diff / (60 * 60 * 1000) % 24;
                         long Minutes = diff / (60 * 1000) % 60;
                         long Seconds = diff / 1000 % 60;
-                        holder.leftTime.setText(String.format("%02d", Days) + " " + String.format("%02d", Hours) + "h " + String.format("%02d", Minutes) + "m " + String.format("%02d", Seconds) + "s ");
+                        holder.leftTime.setText(String.format("%02d", Days) + "d " + String.format("%02d", Hours) + "h " + String.format("%02d", Minutes) + "m ");
+                        //+ String.format("%02d", Seconds) + "s "
                     } else {
                         holder.leftTime.setVisibility(View.GONE);
                         holder.done.setVisibility(View.VISIBLE);

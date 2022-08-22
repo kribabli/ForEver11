@@ -52,11 +52,10 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
         if (listData.getPlaying11() == true) {
             holder.isPlaying.setText("Playing");
         }
-        if(listData.getAbbr()==HelperData.team1NameShort){
+        if (listData.getAbbr() == HelperData.team1NameShort) {
             Glide.with(context).load(HelperData.logoUrlTeamA).into(holder.playerImg);
 
-        }
-        else{
+        } else {
             Glide.with(context).load(HelperData.logoUrlTeamB).into(holder.playerImg);
         }
 
@@ -90,7 +89,7 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
             } else {
                 if (HelperData.playerCounter.getValue() < HelperData.limit) {
                     if (HelperData.creditCounter.getValue() >= Double.valueOf(listData.getFantasy_player_rating())) {
-                        if (HelperData.wk.getValue() < 3) {
+                        if (HelperData.wk.getValue() < 4) {
                             if (HelperData.team1NameShort == listData.getAbbr()) {
                                 if (HelperData.conty1.getValue() < 7) {
                                     CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";
@@ -137,7 +136,7 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
 
     private boolean wkSelection() {
         if (HelperData.selected.equalsIgnoreCase("wk")) {
-            return HelperData.wk.getValue() <= 3;
+            return HelperData.wk.getValue() <= 4;
         }
         return false;
     }

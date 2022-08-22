@@ -1,17 +1,21 @@
 package com.example.yoyoiq.InSideMyMatches;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.yoyoiq.Adapter.JoinContestMatchesAdapter;
+import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Model.TotalHomeData;
+import com.example.yoyoiq.OnlyTeamPreView.OnlyTeamPreview;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
@@ -34,9 +38,10 @@ public class UpcomingMatchFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     RecyclerView recyclerView;
-    JoinContestMatchesAdapter joinContestMatchesAdapter;
     ArrayList<TotalHomeData> list = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
+    LinearLayout linearLayout;
+    TextView upcomingMatch;
 
     public UpcomingMatchFragment() {
         // Required empty public constructor
@@ -60,12 +65,16 @@ public class UpcomingMatchFragment extends Fragment {
         }
     }
 
+    AllMatchAdapter allMatchAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_upcoming_match, container, false);
         swipeRefreshLayout = root.findViewById(R.id.swiper);
         recyclerView = root.findViewById(R.id.recyclerViewMatchList);
+        linearLayout = root.findViewById(R.id.LinearLayout);
+        upcomingMatch = root.findViewById(R.id.upcomingMatch);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -118,19 +127,32 @@ public class UpcomingMatchFragment extends Fragment {
 
                             TotalHomeData totalHomeData = new TotalHomeData(title, match_id, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b, date_start, date_end);
                             list.add(totalHomeData);
-
-                            joinContestMatchesAdapter = new JoinContestMatchesAdapter(getContext(), list);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                            recyclerView.setAdapter(joinContestMatchesAdapter);
-                            joinContestMatchesAdapter.notifyDataSetChanged();
+                        }
+                        if (list.size() > 0) {
+                            linearLayout.setVisibility(View.GONE);
+                            upcomingMatch.setVisibility(View.GONE);
+                            allMatchAdapter = new AllMatchAdapter(getContext(), list);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            recyclerView.setAdapter(allMatchAdapter);
+                            allMatchAdapter.notifyDataSetChanged();
                             swipeRefreshLayout.setRefreshing(false);
+                        } else if (list.isEmpty()) {
+                            linearLayout.setVisibility(View.VISIBLE);
+                            upcomingMatch.setVisibility(View.VISIBLE);
+                            swipeRefreshLayout.setRefreshing(false);
+                            linearLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getActivity(), OnlyTeamPreview.class);
+                                    startActivity(intent);
+                                }
+                            });
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     } catch (JSONException e) {
                         swipeRefreshLayout.setRefreshing(false);
                         e.printStackTrace();
                     }
-
                 } else {
                     swipeRefreshLayout.setRefreshing(false);
                 }

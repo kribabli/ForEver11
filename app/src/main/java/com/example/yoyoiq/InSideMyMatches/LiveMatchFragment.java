@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -36,12 +38,11 @@ public class LiveMatchFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-    FrameLayout linearLayout;
+    LinearLayout linearLayout;
     TextView textView;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<TotalHomeData> list = new ArrayList<TotalHomeData>();
-    LiveMatchListAdapter liveMatchListAdapter;
 
     public LiveMatchFragment() {
         // Required empty public constructor
@@ -64,6 +65,8 @@ public class LiveMatchFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+    LiveMatchListAdapter liveMatchListAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,20 +126,26 @@ public class LiveMatchFragment extends Fragment {
 //                            int teamIdb = Integer.parseInt(jsonObject22.getString("team_id"));
                             TotalHomeData totalHomeData = new TotalHomeData(title, match_id, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b, date_start, date_end);
                             list.add(totalHomeData);
-
-                            if (list.size() > 0) {
-                                swipeRefreshLayout.setRefreshing(false);
-                            } else if (list.size() == 0) {
-                                swipeRefreshLayout.setRefreshing(false);
-                                linearLayout.setVisibility(View.VISIBLE);
-                                textView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        Intent intent = new Intent(getContext(), MainActivity.class);
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
+                        }
+                        if (list.size() > 0) {
+                            linearLayout.setVisibility(View.GONE);
+                            textView.setVisibility(View.GONE);
+                            liveMatchListAdapter = new LiveMatchListAdapter(getContext(), list);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            recyclerView.setAdapter(liveMatchListAdapter);
+                            liveMatchListAdapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
+                        } else if (list.isEmpty()) {
+                            swipeRefreshLayout.setRefreshing(false);
+                            linearLayout.setVisibility(View.VISIBLE);
+                            textView.setVisibility(View.VISIBLE);
+                            linearLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getContext(), MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     } catch (JSONException e) {
@@ -150,7 +159,7 @@ public class LiveMatchFragment extends Fragment {
 
             @Override
             public void onFailure(Call<UpcommingResponse> call, Throwable t) {
-
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

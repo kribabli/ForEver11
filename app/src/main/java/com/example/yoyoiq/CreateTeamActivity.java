@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -210,8 +209,8 @@ public class CreateTeamActivity extends AppCompatActivity {
         textViewB.setText(matchB);
         HelperData.team1NameShort = matchA;
         HelperData.team2NameShort = matchB;
-        HelperData.logoUrlTeamA=logo_url_a;
-        HelperData.logoUrlTeamB=logo_url_b;
+        HelperData.logoUrlTeamA = logo_url_a;
+        HelperData.logoUrlTeamB = logo_url_b;
 
         Glide.with(this)
                 .load(logo_url_a)

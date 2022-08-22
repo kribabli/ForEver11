@@ -7,40 +7,6 @@
     android:background="@drawable/border4_green"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/LinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_image_contest"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="150dp"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/upcomingMatch"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/border1_green"
-                android:gravity="center"
-                android:text="VIEW UPCOMING MATCHES"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-    </FrameLayout>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewMatchList"
         android:layout_width="match_parent"
