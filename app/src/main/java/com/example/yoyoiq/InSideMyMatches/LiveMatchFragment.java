@@ -79,8 +79,7 @@ public class LiveMatchFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                getAllLiveMatches();
-                getAllLiveMatches1();
+                getAllLiveMatches();
             }
         });
         return root;
@@ -247,8 +246,7 @@ public class LiveMatchFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-//            getAllLiveMatches();
-            getAllLiveMatches1();
+            getAllLiveMatches();
         }
     }
 }

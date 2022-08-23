@@ -24,4 +24,6 @@
     <color name="light_pink">#F3E5F0</color>
     <color name="bg_color">#5EB7DA</color>
     <color name="text_bg1">#D3EFFA</color>
+    <color name="light_blue">#ECF4FA</color>
+    <color name="light_blue1">#7DB9F5</color>
 </resources>

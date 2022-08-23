@@ -5,9 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".InSideContestActivityFragments.MyContestsFragment">
 
-    <TextView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="MyContestsFragment" />
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_pager"
+            android:layout_gravity="bottom"
+            android:layout_margin="5dp" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>
