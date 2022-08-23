@@ -1,8 +1,7 @@
 package com.example.yoyoiq.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yoyoiq.CreateTeamActivity;
 import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.SelectTeams;
@@ -25,7 +23,7 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
     Context context;
     ArrayList<myAllTeamRequest> list;
     SessionManager sessionManager;
-    boolean selected=false;
+    boolean selected = false;
 
     public SelectTeamsAdapter(Context context, ArrayList<myAllTeamRequest> list) {
         this.context = context;
@@ -40,6 +38,7 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
         return new SelectTeamsAdapter.MyViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull SelectTeamsAdapter.MyViewHolder holder, int position) {
         myAllTeamRequest allTeamRequest = list.get(position);
@@ -57,20 +56,17 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
             holder.teamB.setText(allTeamRequest.getTeamBName());
 
             holder.select.setOnClickListener(view -> {
-                if(selected!=true){
-                    selected=true;
-                    Log.d("Amit","Check1 "+selected);
-                    holder.select.setImageResource(R.drawable.green_circleshape);
+                if (selected != true) {
+                    selected = true;
+                    holder.select.setImageResource(R.drawable.ic_tick3);
                     list.get(position).setSlected(true);
                     SelectTeams.selected_single_Team(list.get(position).getTeamId());
-                    HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue()+1);
-                }
-                else if(selected!=false){
-                    selected=false;
+                    HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue() + 1);
+                } else if (selected != false) {
+                    selected = false;
                     holder.select.setImageResource(R.drawable.c_vc_border_rounded);
-                    HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue()-1);
+                    HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue() - 1);
                     list.get(position).setSlected(false);
-
                 }
             });
         }
