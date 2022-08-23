@@ -155,7 +155,6 @@ public class SelectTeams extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<ContestJoinResponse> call, Throwable t) {
             }
@@ -221,6 +220,7 @@ public class SelectTeams extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("Amit","Value "+SelectTeams.ContestTeamId);
                 if (SelectTeams.ContestTeamId != null) {
                     LoadBalanceData();
                 } else {

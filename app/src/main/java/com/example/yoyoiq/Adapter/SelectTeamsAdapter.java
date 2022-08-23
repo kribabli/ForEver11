@@ -61,12 +61,14 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
                     holder.select.setImageResource(R.drawable.ic_tick3);
                     list.get(position).setSlected(true);
                     SelectTeams.selected_single_Team(list.get(position).getTeamId());
+                    SelectTeams.ContestTeamId=list.get(position).getTeamId();
                     HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue() + 1);
                 } else if (selected != false) {
                     selected = false;
                     holder.select.setImageResource(R.drawable.c_vc_border_rounded);
                     HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue() - 1);
                     list.get(position).setSlected(false);
+                    SelectTeams.ContestTeamId=null;
                 }
             });
         }
