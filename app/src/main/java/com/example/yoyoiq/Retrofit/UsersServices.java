@@ -6,6 +6,7 @@ import com.example.yoyoiq.JoinContest.JoinContestsResponse;
 import com.example.yoyoiq.KYC.KycAddedPostResponse;
 import com.example.yoyoiq.LoginPojo.LoginResponse;
 import com.example.yoyoiq.LoginPojo.RegistrationResponse;
+import com.example.yoyoiq.OnlyMyContestPOJO.MyContest1;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
 import com.example.yoyoiq.WalletPackage.ContestJoinResponse;
@@ -106,6 +107,13 @@ public interface UsersServices {
     );
 
     @FormUrlEncoded
+    @POST("myjoincontest")
+    Call<MyContest1> getJoinContestList(
+            @Field("user_id") String user_id,
+            @Field("match_id") String match_id
+    );
+
+    @FormUrlEncoded
     @POST("addbalance")
     Call<PostBalanceResponse> sendBalanceData(
             @Field("user_id") String user_id,
@@ -137,10 +145,9 @@ public interface UsersServices {
             @Field("pancard") RequestBody pancard
     );
 
-
     @FormUrlEncoded
     @POST("contestJoinFee")
-    Call<ContestJoinResponse>requestToJoinFee(
+    Call<ContestJoinResponse> requestToJoinFee(
             @Field("user_id") String user_id,
             @Field("contest_id") String match_id,
             @Field("amount") String contest_id

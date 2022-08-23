@@ -17,6 +17,9 @@
         android:theme="@style/Theme.YoYoIq"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".InSideScoreActivity.ScoresActivity"
+            android:exported="false" />
+        <activity
             android:name=".HowToPlay"
             android:exported="false" />
         <activity
@@ -123,7 +126,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".Notification"
             android:exported="false">
@@ -131,7 +133,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

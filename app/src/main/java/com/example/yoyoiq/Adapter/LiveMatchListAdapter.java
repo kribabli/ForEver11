@@ -15,7 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.yoyoiq.ContestActivity;
+import com.example.yoyoiq.InSideScoreActivity.ScoresActivity;
 import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.HelperData;
@@ -52,7 +52,7 @@ public class LiveMatchListAdapter extends RecyclerView.Adapter<LiveMatchListAdap
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, ContestActivity.class);
+                    Intent intent = new Intent(context, ScoresActivity.class);
                     intent.putExtra("shortNameA", listData.getShort_name_a());
                     intent.putExtra("shortNameB", listData.getShort_name_b());
                     intent.putExtra("match_id", listData.getMatch_id());
