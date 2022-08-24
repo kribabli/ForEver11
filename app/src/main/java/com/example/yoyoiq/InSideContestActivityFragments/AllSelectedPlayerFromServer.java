@@ -99,4 +99,21 @@ package com.example.yoyoiq.InSideContestActivityFragments;
   public void setPoints(String points) {
    this.points = points;
   }
+
+
+  @Override
+  public String toString() {
+   return "{" +
+           "pid='" + pid + '\'' +
+           ", matchId='" + matchId + '\'' +
+           ", title='" + title + '\'' +
+           ", country='" + country + '\'' +
+           ", playing_role='" + playing_role + '\'' +
+           ", fantasy_player_rating='" + fantasy_player_rating + '\'' +
+           ", added='" + added + '\'' +
+           ", isCap='" + isCap + '\'' +
+           ", isVcap='" + isVcap + '\'' +
+           ", points='" + points + '\'' +
+           '}';
+  }
  }

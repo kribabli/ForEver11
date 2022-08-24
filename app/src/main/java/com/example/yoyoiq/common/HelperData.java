@@ -13,6 +13,7 @@ import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.KYC.KycAddedPostResponse;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.example.yoyoiq.UpComingMatchPOJO.ShortSquadsUploadingPojoClass;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -52,7 +53,7 @@ public class HelperData {
 
     public static String selected = "wk";
     public static ArrayList<AllSelectedPlayer> myTeamList = new ArrayList<>();
-    public static ArrayList<myAllTeamRequest> myCountyPlayer = new ArrayList<>();
+    public static ArrayList<ShortSquadsUploadingPojoClass> myCountyPlayer = new ArrayList<>();
     public static String team1NameShort = "";
     public static String team2NameShort = "";
     public static boolean teamEdt = false;

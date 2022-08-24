@@ -1,13 +1,18 @@
 package com.example.yoyoiq.InSideContestActivityFragments;
 
+import org.json.JSONArray;
+
 public class myAllTeamRequest {
     String TeamName;
     String TeamId;
     String match_id, user_id, captain, vicecaptain, teamAName, teamBName;
     int batsman, boller, allrounder, wkeeper, teamAcount, teamBcount;
     boolean isSlected;
+    JSONArray squads;
 
-    public myAllTeamRequest(String TeamId, String teamName, String match_id, String user_id, String captain, String vicecaptain, String teamAName, String teamBName, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount, boolean isSlected) {
+
+
+    public myAllTeamRequest(String TeamId, String teamName, String match_id, String user_id, String captain, String vicecaptain, String teamAName, String teamBName, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount, boolean isSlected,JSONArray squads) {
         this.TeamId = TeamId;
         TeamName = teamName;
         this.match_id = match_id;
@@ -23,8 +28,16 @@ public class myAllTeamRequest {
         this.teamAcount = teamAcount;
         this.teamBcount = teamBcount;
         this.isSlected = isSlected;
+        this.squads=squads;
     }
 
+    public JSONArray getSquads() {
+        return squads;
+    }
+
+    public void setSquads(JSONArray squads) {
+        this.squads = squads;
+    }
 
     public String getTeamId() {
         return TeamId;

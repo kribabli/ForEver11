@@ -246,6 +246,7 @@ public class SelectTeams extends AppCompatActivity {
 
                     //----------------------for CreatedTeam(Per User)----------------------------
                     JSONArray short_squads = null;
+                    JSONArray squads = null;
                     JSONArray jsonArray = null;
                     String CreatedTeamId;
                     try {
@@ -254,6 +255,7 @@ public class SelectTeams extends AppCompatActivity {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
                                 CreatedTeamId = jsonObject.getString("id");
+                                squads = jsonObject.getJSONArray("squads");
                                 short_squads = jsonObject.getJSONArray("short_squads");
                                 for (int j = 0; j < short_squads.length(); j++) {
                                     try {
@@ -272,9 +274,8 @@ public class SelectTeams extends AppCompatActivity {
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
 
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false);
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false,squads);
                                         list.add(myAllTeamRequest);
-                                        HelperData.myCountyPlayer.add(myAllTeamRequest);
                                         selectTeamsAdapter = new SelectTeamsAdapter(SelectTeams.this, list);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(SelectTeams.this));
                                         recyclerView.setAdapter(selectTeamsAdapter);

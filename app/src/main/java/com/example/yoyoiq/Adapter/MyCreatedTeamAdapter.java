@@ -2,6 +2,8 @@ package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +13,22 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.yoyoiq.InSideContestActivityFragments.AllSelectedPlayerFromServer;
+import com.example.yoyoiq.InSideContestActivityFragments.MyTeamsFragment;
 import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
+import com.example.yoyoiq.OnlyTeamPreView.MyTeamPreview;
 import com.example.yoyoiq.R;
+import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
+import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdapter.MyViewHolder> {
     Context context;
     ArrayList<myAllTeamRequest> list;
+    ArrayList<AllSelectedPlayerFromServer> listdata;
     SessionManager sessionManager;
 
     public MyCreatedTeamAdapter(Context context, ArrayList<myAllTeamRequest> list) {
@@ -50,19 +59,24 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
             holder.userNameAndTid.setText(sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
             holder.teamA.setText(allTeamRequest.getTeamAName());
             holder.teamB.setText(allTeamRequest.getTeamBName());
+            Gson gson = new Gson();
             holder.cardView1.setOnClickListener(view -> {
-
-
-
+                String data =gson.toJson(list);
+                Intent intent=new Intent(context, MyTeamPreview.class);
+                intent.putExtra("position",position);
+                intent.putExtra("listdata",list.get(position).getSquads().toString());
+                intent.putExtra("selectedPosition",position);
+                intent.putExtra("TeamName",sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
+                HelperData.team1NameShort=list.get(position).getTeamAName();
+                HelperData.team2NameShort=list.get(position).getTeamBName();
+                context.startActivity(intent);
             });
         }
     }
-
     @Override
     public int getItemCount() {
         return list.size();
     }
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView teamA, teamB, wkTv, batTv, arTv, bowlTv, CName, VCname, teamACount, teamBCount, userNameAndTid;
         CardView cardView1;

@@ -62,17 +62,14 @@ public class OnlyTeamPreview extends AppCompatActivity {
                 badgeTxtGoru.setText("C");
                 badgeTxtGoru.setVisibility(View.VISIBLE);
             }
-
             if (HelperData.myTeamList.get(i).isVcap()) {
                 VCnameTv.setText("VC");
                 VCnameTv.setVisibility(View.VISIBLE);
             }
-
             String one = "" + HelperData.myTeamList.get(i).getTitle();
             String two = "" + HelperData.myTeamList.get(i).getPoints();
             nameTxt.setText("" + one);
             playerPts.setText("" + two);
-
             try {
                 String currentString = "" + HelperData.myTeamList.get(i).getTitle();
                 String[] separated = currentString.split(" ");

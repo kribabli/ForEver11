@@ -17,10 +17,12 @@ import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.OnlyTeamPreView.OnlyTeamPreview;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.example.yoyoiq.UpComingMatchPOJO.ShortSquadsUploadingPojoClass;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -38,7 +40,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
     Button saveTeam, teamPreView;
     TeamPreviewAdapter teamPreviewAdapter;
     ArrayList<AllSelectedPlayer> arrayList = new ArrayList();
-    ArrayList<myAllTeamRequest> shortSquads = new ArrayList();
+    ArrayList<ShortSquadsUploadingPojoClass> shortSquads = new ArrayList();
     private Handler handler = new Handler();
     private Runnable runnable;
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -116,10 +118,10 @@ public class TeamPreviewActivity extends AppCompatActivity {
                 bowlCount++;
             }
         }
-        myAllTeamRequest dataholderClass = new myAllTeamRequest("","T" + HelperData.TeamCount.getValue(), HelperData.matchId, HelperData.UserId, CaptainName,
+        ShortSquadsUploadingPojoClass dataholderClassnew = new ShortSquadsUploadingPojoClass("","T" + HelperData.TeamCount.getValue(), HelperData.matchId, HelperData.UserId, CaptainName,
                 VCName, HelperData.team1NameShort, HelperData.team2NameShort, batCount, bowlCount, arCount, wkCount, HelperData.conty1.getValue(), HelperData.conty2.getValue(),false);
-        HelperData.myCountyPlayer.add(dataholderClass);
-        shortSquads.add(dataholderClass);
+        HelperData.myCountyPlayer.add(dataholderClassnew);
+        shortSquads.add(dataholderClassnew);
     }
 
     private void inItMethod() {

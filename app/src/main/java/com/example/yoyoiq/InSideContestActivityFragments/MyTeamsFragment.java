@@ -57,16 +57,13 @@ public class MyTeamsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     MyCreatedTeamAdapter myCreatedTeamAdapter;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_my_teams, container, false);
         recyclerView = root.findViewById(R.id.myAllTeamList);
         swipeRefreshLayout = root.findViewById(R.id.swiper);
-
         swipeRefreshLayout.setOnRefreshListener(() -> getMyAllCreatedTeam());
         return root;
     }
@@ -96,22 +93,8 @@ public class MyTeamsFragment extends Fragment {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
                                 CreatedTeamId = jsonObject.getString("id");
+
                                 squads = jsonObject.getJSONArray("squads");
-                                for (int k = 0; k < squads.length(); k++) {
-                                    JSONObject jsonObject1 = squads.getJSONObject(0);
-                                    boolean added = jsonObject1.getBoolean("added");
-                                    String country = jsonObject1.getString("country");
-                                    double fantasy_player_rating = jsonObject1.getDouble("fantasy_player_rating");
-                                    boolean isCap = jsonObject1.getBoolean("isCap");
-                                    boolean isVcap = jsonObject1.getBoolean("isVcap");
-                                    String matchId = jsonObject1.getString("matchId");
-                                    int pid = jsonObject1.getInt("pid");
-                                    String role = jsonObject1.getString("playing_role");
-                                    String points = jsonObject1.getString("points");
-                                    String playername = jsonObject1.getString("title");
-                                    AllSelectedPlayerFromServer allSelectedPlayerFromServer = new AllSelectedPlayerFromServer(pid, matchId, playername, country, role, fantasy_player_rating, added, isCap, isVcap, points);
-                                    listData.add(allSelectedPlayerFromServer);
-                                }
 
                                 short_squads = jsonObject.getJSONArray("short_squads");
                                 for (int j = 0; j < short_squads.length(); j++) {
@@ -130,14 +113,13 @@ public class MyTeamsFragment extends Fragment {
                                         int wkeeper = Integer.parseInt(jsonObjectSquads.getString("wkeeper"));
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false);
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false,squads);
                                         list.add(myAllTeamRequest);
                                         myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                         recyclerView.setAdapter(myCreatedTeamAdapter);
                                         myCreatedTeamAdapter.notifyDataSetChanged();
                                         swipeRefreshLayout.setRefreshing(false);
-
                                     } catch (Exception e) {
                                         swipeRefreshLayout.setRefreshing(false);
                                         e.printStackTrace();
@@ -156,7 +138,6 @@ public class MyTeamsFragment extends Fragment {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
-
             @Override
             public void onFailure(Call<CreatedTeamResponse> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
