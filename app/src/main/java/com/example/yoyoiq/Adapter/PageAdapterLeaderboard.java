@@ -12,12 +12,12 @@ import com.example.yoyoiq.InSideAddCashLeaderboard.WinningFragment;
 
 public class PageAdapterLeaderboard extends FragmentPagerAdapter {
     int tabCount;
-//    String price_contribution = "";
+    String price_contribution = "";
 
-    public PageAdapterLeaderboard(@NonNull FragmentManager fm, int behavior) {
+    public PageAdapterLeaderboard(@NonNull FragmentManager fm, int behavior, String price_contribution) {
         super(fm, behavior);
         tabCount = behavior;
-//        this.price_contribution = price_contribution;
+        this.price_contribution = price_contribution;
     }
 
     @NonNull
@@ -26,7 +26,7 @@ public class PageAdapterLeaderboard extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 Bundle bundle = new Bundle();
-//                bundle.putString("price_contribution", price_contribution);
+                bundle.putString("price_contribution", price_contribution);
                 WinningFragment winningFragment = new WinningFragment();
                 winningFragment.setArguments(bundle);
                 return winningFragment;

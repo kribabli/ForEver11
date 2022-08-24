@@ -137,8 +137,9 @@ public class MyContestsFragment extends Fragment {
                                     String prize_pool = jsonObject2.getString("prize_pool");
                                     String total_team = jsonObject2.getString("total_team");
                                     String join_team = jsonObject2.getString("join_team");
+                                    String price_contribution = jsonObject2.getString("price_contribution");
 
-                                    TotalJoinContestsData totalJoinContestsData = new TotalJoinContestsData(contest_description, contest_id, contest_name, first_price, match_id, prize_pool, total_team, join_team);
+                                    TotalJoinContestsData totalJoinContestsData = new TotalJoinContestsData(contest_description, contest_id, contest_name, first_price, match_id, prize_pool, total_team, join_team,price_contribution);
                                     list.add(totalJoinContestsData);
                                     myJoinContestsAdapter = new MyJoinContestsAdapter(getContext(), list);
                                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

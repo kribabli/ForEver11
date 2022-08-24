@@ -9,8 +9,9 @@ public class TotalJoinContestsData {
     String prize_pool;
     String total_team;
     String join_team;
+    String price_contribution;
 
-    public TotalJoinContestsData(String contest_description, String contest_id, String contest_name, String first_price, String match_id, String prize_pool, String total_team,String join_team) {
+    public TotalJoinContestsData(String contest_description, String contest_id, String contest_name, String first_price, String match_id, String prize_pool, String total_team, String join_team, String price_contribution) {
         this.contest_description = contest_description;
         this.contest_id = contest_id;
         this.contest_name = contest_name;
@@ -19,6 +20,7 @@ public class TotalJoinContestsData {
         this.prize_pool = prize_pool;
         this.total_team = total_team;
         this.join_team = join_team;
+        this.price_contribution = price_contribution;
     }
 
     public String getContest_description() {
@@ -83,5 +85,13 @@ public class TotalJoinContestsData {
 
     public void setJoin_team(String join_team) {
         this.join_team = join_team;
+    }
+
+    public String getPrice_contribution() {
+        return price_contribution;
+    }
+
+    public void setPrice_contribution(String price_contribution) {
+        this.price_contribution = price_contribution;
     }
 }

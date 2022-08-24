@@ -1,6 +1,8 @@
 package com.example.yoyoiq;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -14,6 +16,8 @@ public class LeaderboardActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     SessionManager sessionManager;
+    TextView contestName, bakPress;
+    String contest_description, match_id, price_contribution, contest_id, contest_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +26,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         initMethod();
         setAction();
 
-        pageAdapterLeaderboard = new PageAdapterLeaderboard(getSupportFragmentManager(), tabLayout.getTabCount());
+        pageAdapterLeaderboard = new PageAdapterLeaderboard(getSupportFragmentManager(), tabLayout.getTabCount(), price_contribution);
         viewPager.setAdapter(pageAdapterLeaderboard);
         sessionManager = new SessionManager(getApplicationContext());
 
@@ -47,14 +51,28 @@ public class LeaderboardActivity extends AppCompatActivity {
         });
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
     }
 
     private void initMethod() {
+        contestName = findViewById(R.id.contestName);
+        bakPress = findViewById(R.id.backPress);
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
     }
 
     private void setAction() {
+        contest_description = getIntent().getStringExtra("contest_description");
+        price_contribution = getIntent().getStringExtra("price_contribution");
+        match_id = getIntent().getStringExtra("match_id");
+        contest_id = getIntent().getStringExtra("contest_id");
+        contest_name = getIntent().getStringExtra("contest_name");
+        contestName.setText(contest_name);
+
+        bakPress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }
