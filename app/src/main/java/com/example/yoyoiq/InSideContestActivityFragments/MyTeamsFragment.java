@@ -1,6 +1,9 @@
 package com.example.yoyoiq.InSideContestActivityFragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +37,7 @@ public class MyTeamsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList<myAllTeamRequest> list = new ArrayList();
+    ArrayList<AllSelectedPlayerFromServer> listData=new ArrayList<AllSelectedPlayerFromServer>();
 
     public MyTeamsFragment() {
         // Required empty public constructor
@@ -86,6 +90,7 @@ public class MyTeamsFragment extends Fragment {
 
                     //----------------------for CreatedTeam(Per User)----------------------------
                     JSONArray short_squads = null;
+                    JSONArray squads = null;
                     JSONArray jsonArray = null;
                     String CreatedTeamId;
                     try {
@@ -94,6 +99,23 @@ public class MyTeamsFragment extends Fragment {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
                                 CreatedTeamId = jsonObject.getString("id");
+                                 squads=jsonObject.getJSONArray("squads");
+                                 for(int k=0;k<squads.length();k++){
+                                     JSONObject jsonObject1=squads.getJSONObject(0);
+                                     boolean added=jsonObject1.getBoolean("added");
+                                     String country=jsonObject1.getString("country");
+                                     double fantasy_player_rating=jsonObject1.getDouble("fantasy_player_rating");
+                                     boolean isCap=jsonObject1.getBoolean("isCap");
+                                     boolean isVcap=jsonObject1.getBoolean("isVcap");
+                                     String matchId=jsonObject1.getString("matchId");
+                                     int pid=jsonObject1.getInt("pid");
+                                     String role=jsonObject1.getString("playing_role");
+                                     String points=jsonObject1.getString("points");
+                                     String playername=jsonObject1.getString("title");
+                                     AllSelectedPlayerFromServer allSelectedPlayerFromServer=new AllSelectedPlayerFromServer(pid,matchId,playername,country,role,fantasy_player_rating,added,isCap,isVcap,points);
+                                     listData.add(allSelectedPlayerFromServer);
+                                 }
+
                                 short_squads = jsonObject.getJSONArray("short_squads");
                                 for (int j = 0; j < short_squads.length(); j++) {
                                     try {
@@ -111,7 +133,6 @@ public class MyTeamsFragment extends Fragment {
                                         int wkeeper = Integer.parseInt(jsonObjectSquads.getString("wkeeper"));
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
-
                                         myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false);
                                         list.add(myAllTeamRequest);
                                         myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
@@ -145,6 +166,8 @@ public class MyTeamsFragment extends Fragment {
             }
         });
     }
+
+    
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

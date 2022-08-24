@@ -51,6 +51,7 @@ public class AddCashActivity extends AppCompatActivity {
         initMethod();
         setAction();
         linearLayout.setVisibility(View.VISIBLE);
+        HelperData.selectSingleTeamCounter.setValue(0);
 
         pageAdapterWinnings = new PageAdapterWinnings(getSupportFragmentManager(), tabLayout.getTabCount(), total_prize, entryFee, totalSports, leftSports, winningPer, upTo, match_id, first_price, price_contribution);
         viewPager.setAdapter(pageAdapterWinnings);
@@ -173,6 +174,7 @@ public class AddCashActivity extends AppCompatActivity {
                         intent.putExtra("EntryFee",entryFee);
                         intent.putExtra("upto",upTo);
                         startActivity(intent);
+                        SelectTeams.ContestTeamId=null;
                         finish();
                     }
 

@@ -61,7 +61,7 @@ public class KYCActivity extends AppCompatActivity   {
     TextView backPress, camera1,date_of_birth;
     EditText fullName, accountNo, retypeAccount, bankName, ifscCode, panCard, aadharNo,address_ed;
     Button submit;
-    DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
+    DatabaseConnectivity common=DatabaseConnectivity.getInstance();
     SharedPrefManager sharedPrefManager;
     String loggedInUserNumber;
     ImageView imageViewPan;
@@ -245,7 +245,7 @@ public class KYCActivity extends AppCompatActivity   {
                 isValid = false;
             }
             else if (imageViewPan.getDrawable() == null) {
-                databaseConnectivity.showAlertDialog("Alert", "Click Picture of PANCard", false, this);
+                common.showAlertDialog("Alert", "Click Picture of PANCard", false, this);
                 isValid = false;
             } else if (aadharNo.getText().toString().trim().length() == 0) {
                 aadharNo.setError("Please enter Aadhar");
@@ -258,6 +258,7 @@ public class KYCActivity extends AppCompatActivity   {
                 isValid = false;
             }
             else {
+                common.setProgressDialog("","Loading..",KYCActivity.this,KYCActivity.this);
                 send_kyc_Details_OnServer();
             }
         } catch (Exception e) {
@@ -269,6 +270,7 @@ public class KYCActivity extends AppCompatActivity   {
     private void send_kyc_Details_OnServer() {
         HelperData.uploadFile(KYCActivity.this,sessionManager.getUserData().getUser_id(),fullName.getText().toString(),accountNo.getText().toString(),
                 ifscCode.getText().toString(),bankName.getText().toString(),date_of_birth.getText().toString(),address_ed.getText().toString(),aadharNo.getText().toString(),panCard.getText().toString(),pan_image_path);
+        common.closeDialog(KYCActivity.this);
         showDialog("Details Saved..", true);
         fullName.setText("");
         accountNo.setText("");
@@ -298,13 +300,7 @@ public class KYCActivity extends AppCompatActivity   {
         data.put("aadharNo", aadharNo1);
         data.put("status", 1);
 
-        databaseConnectivity.getDatabasePath(this).child("KYCDetails").child(loggedInUserNumber)
-                .setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        showDialog("Details Saved..", true);
-                    }
-                });
+
     }
 
     public void showDialog(String message, Boolean isFinish) {

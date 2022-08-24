@@ -4,6 +4,7 @@ import com.example.yoyoiq.ContestPOJO.Contests;
 import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
 import com.example.yoyoiq.JoinContest.JoinContestsResponse;
 import com.example.yoyoiq.KYC.KycAddedPostResponse;
+import com.example.yoyoiq.KYC.ViewKycResponse;
 import com.example.yoyoiq.LoginPojo.LoginResponse;
 import com.example.yoyoiq.LoginPojo.RegistrationResponse;
 import com.example.yoyoiq.OnlyMyContestPOJO.MyContest1;
@@ -79,10 +80,9 @@ public interface UsersServices {
     Call<ViewBalanceResponse> getBalanceDetails(
             @Field("user_id") String user_id
     );
-
     @FormUrlEncoded
     @POST("viewkycdetail")
-    Call<JSONObject> getkycDetails(
+    Call<ViewKycResponse> getkycDetails(
             @Field("user_id") String user_id
 
     );
@@ -133,16 +133,16 @@ public interface UsersServices {
     @FormUrlEncoded
     @POST("addkycdetail")
     Call<KycAddedPostResponse> sendKycDetailsOnServer(
-            @Field("user_id") RequestBody userid,
-            @Field("fullname") RequestBody fullName,
-            @Field("account_no") RequestBody accountNo,
-            @Field("ifsc_code") RequestBody ifsc,
-            @Field("bank_name") RequestBody bankName,
-            @Field("dob") RequestBody dob,
-            @Field("address") RequestBody address,
-            @Field("adhar_no") RequestBody adhar_no,
-            @Field("pancard_no") RequestBody pan,
-            @Field("pancard") RequestBody pancard
+            @Field("user_id") String userid,
+            @Field("fullname") String fullName,
+            @Field("account_no") String accountNo,
+            @Field("ifsc_code") String ifsc,
+            @Field("bank_name") String bankName,
+            @Field("dob") String dob,
+            @Field("address") String address,
+            @Field("adhar_no") String adhar_no,
+            @Field("pancard_no") String pan,
+            @Field("pancard") String pancard
     );
 
     @FormUrlEncoded

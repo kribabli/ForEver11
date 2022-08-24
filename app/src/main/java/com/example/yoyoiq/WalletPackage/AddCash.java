@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.yoyoiq.KYC.KYCActivity;
 import com.example.yoyoiq.KYC.ShowKYCDetails;
+import com.example.yoyoiq.KYC.ViewKycResponse;
 import com.example.yoyoiq.NotificationActivity;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
@@ -42,11 +43,17 @@ import retrofit2.Response;
 public class AddCash extends AppCompatActivity implements PaymentResultListener {
     TextView addCash, backPress, myRecentPay, KYCDetails, notification, amountTv, bonusTv, withdrawTv, winningsTV;
     EditText amount;
-    DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
+    DatabaseConnectivity common = DatabaseConnectivity.getInstance();
     String loggedInUserNumber;
     SharedPrefManager sharedPrefManager;
     SessionManager sessionManager;
     SwipeRefreshLayout swipeRefreshLayout;
+    String mobilenumber="";
+    String emailAddress="";
+    String staus1="";
+    String Pancard="";
+    String BankAccount="";
+    boolean status=false;
     List<String> checkId = new ArrayList<>();
 
     @Override
@@ -66,6 +73,36 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     }
 
     private void LoadKycData() {
+        Call<ViewKycResponse> call=ApiClient.getInstance().getApi().getkycDetails(sessionManager.getUserData().getUser_id());
+        call.enqueue(new Callback<ViewKycResponse>() {
+            @Override
+            public void onResponse(Call<ViewKycResponse> call, Response<ViewKycResponse> response) {
+                ViewKycResponse viewKycResponse= response.body();
+                if(response.isSuccessful()){
+                    String data=new Gson().toJson(viewKycResponse.isStatus());
+                    status= Boolean.parseBoolean(data);
+                    JSONArray jsonArray1 = null;
+                    if(status!=false){
+                        String data2=new Gson().toJson(viewKycResponse.getKycDetails());
+                        try {
+                            jsonArray1 = new JSONArray(data2);
+                            Log.d("Amit","Value Check "+jsonArray1);
+                            for(int i=0;i<jsonArray1.length(); i++){
+                                JSONObject jsonObject = jsonArray1.getJSONObject(i);
+                                Pancard=jsonObject.getString("pancard_no");
+                                BankAccount=jsonObject.getString("account_no");
+                                staus1=jsonObject.getString("status");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ViewKycResponse> call, Throwable t) {
+            }
+        });
 
 
     }
@@ -132,10 +169,23 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
 
         addCash.setOnClickListener(view -> addAmountValidation());
         KYCDetails.setOnClickListener(view -> {
-            if (HelperData.kycStatus==true) {
-                Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
-                startActivity(intent);
-                finish();
+            if (status!=false) {
+                int validationStatus= Integer.parseInt(staus1);
+                if(validationStatus==3){
+                    common.showAlertDialog("Alert!","Please Upload Your Kyc Data Again",false,AddCash.this);
+                    Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
+                    startActivity(intent1);
+                    finish();
+                }
+                else{
+                    Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
+                    intent.putExtra("Pancard",Pancard);
+                    intent.putExtra("BankAccount",BankAccount);
+                    intent.putExtra("status",staus1);
+                    startActivity(intent);
+                    finish();
+                }
+
             } else {
                 Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
                 startActivity(intent1);

@@ -1,13 +1,10 @@
 package com.example.yoyoiq.common;
 
-import static android.util.Log.wtf;
+
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
-import android.widget.ProgressBar;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -77,6 +74,7 @@ public class HelperData {
     public static  String MatchStartTime="";
     public static  String MatchEndTime="";
     public static  String singleSelectedTeamName="";
+    DatabaseConnectivity cmn=DatabaseConnectivity.getInstance();
 
     ProgressDialog dialog;
 
@@ -100,6 +98,7 @@ public class HelperData {
     }
 
     public static void uploadFile(Context context, String user_Id, String fullName, String accountNo, String ifsc, String bankName,String date_of_birth,String address_ed, String aadhar, String pan, String pan_img_path){
+
         MultipartBody.Part fileToUpload1 = null;
         ProgressDialog progressDialog=new ProgressDialog(context);
         File myFile1 = new File(pan_img_path);
@@ -122,8 +121,8 @@ public class HelperData {
         RequestBody address = RequestBody.create(MediaType.parse("multipart/form-data"), address_ed);
         RequestBody DOB = RequestBody.create(MediaType.parse("multipart/form-data"), date_of_birth);
 
-        Call<KycAddedPostResponse> call=ApiClient.getInstance().getApi().sendKycDetailsOnServer(user_id,full_name,account_no,
-                ifsc_code,bank_name,DOB,address,aadhar_no,pancard_no,panImage);
+        Call<KycAddedPostResponse> call=ApiClient.getInstance().getApi().sendKycDetailsOnServer(user_Id,fullName,accountNo,
+                ifsc,bankName,date_of_birth,address_ed,aadhar,pan,pan_img_path);
 
         call.enqueue(new Callback<KycAddedPostResponse>() {
             @Override
@@ -131,12 +130,7 @@ public class HelperData {
                 KycAddedPostResponse kycAddedPostResponse= response.body();
                 if(response.isSuccessful()){
                     String data=new Gson().toJson(kycAddedPostResponse.getResponse());
-                    if(kycAddedPostResponse.getResponse().equalsIgnoreCase("added")){
-                        HelperData.kycStatus=true;
-
-
-                    }
-                   progressDialog.dismiss();
+                    progressDialog.dismiss();
                 }
             }
             @Override
@@ -148,25 +142,6 @@ public class HelperData {
 
 
     }
-
-
-    public void setProgressDialog(String title, String message, Context context, Activity activity) {
-        closeDialog(activity);
-        dialog = new ProgressDialog(context);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.create();
-        dialog.setCancelable(false);
-        dialog.setProgressStyle(dialog.STYLE_SPINNER);
-        if (!dialog.isShowing() && !activity.isFinishing()) {
-            try {
-                dialog.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 
     public void closeDialog(Activity activity) {
         if (dialog != null) {

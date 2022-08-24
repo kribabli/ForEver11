@@ -1,12 +1,14 @@
 package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
@@ -48,6 +50,11 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
             holder.userNameAndTid.setText(sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
             holder.teamA.setText(allTeamRequest.getTeamAName());
             holder.teamB.setText(allTeamRequest.getTeamBName());
+            holder.cardView1.setOnClickListener(view -> {
+
+
+
+            });
         }
     }
 
@@ -58,6 +65,7 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView teamA, teamB, wkTv, batTv, arTv, bowlTv, CName, VCname, teamACount, teamBCount, userNameAndTid;
+        CardView cardView1;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +80,7 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
             teamACount = itemView.findViewById(R.id.teamACount);
             teamBCount = itemView.findViewById(R.id.teamBCount);
             userNameAndTid = itemView.findViewById(R.id.userNameAndTid);
+            cardView1=itemView.findViewById(R.id.cardView1);
         }
     }
 }

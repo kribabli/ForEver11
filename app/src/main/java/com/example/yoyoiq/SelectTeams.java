@@ -54,7 +54,7 @@ public class SelectTeams extends AppCompatActivity {
     int netEntryFee = 0;
     String Upto;
     String TeamId;
-    public static String ContestTeamId;
+    public static String ContestTeamId=null;
     ProgressDialog progressDialog;
     SessionManager sessionManager;
     DatabaseConnectivity common = DatabaseConnectivity.getInstance();
@@ -64,7 +64,7 @@ public class SelectTeams extends AppCompatActivity {
     public static void selected_single_Team(String teamId) {
         for (int i = 0; i < HelperData.myCountyPlayer.size(); i++) {
             if (HelperData.myCountyPlayer.get(i).isSlected() == true) {
-                SelectTeams.ContestTeamId = HelperData.myCountyPlayer.get(i).getTeamId();
+                SelectTeams.ContestTeamId = teamId;
             }
         }
     }
