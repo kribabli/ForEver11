@@ -1,6 +1,7 @@
 package com.example.yoyoiq.InSideMyMatches;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,6 +99,7 @@ public class UpcomingMatchFragment extends Fragment {
             public void onResponse(Call<UpcommingResponse> call, Response<UpcommingResponse> response) {
                 UpcommingResponse status = response.body();
                 if (response.isSuccessful()) {
+
                     String jsonArray = new Gson().toJson(status.getResponse().getItems());
                     JSONArray jsonArray1 = null;
                     try {
@@ -169,6 +171,12 @@ public class UpcomingMatchFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                getFragmentManager().beginTransaction().detach(new UpcomingMatchFragment()).commitNow();
+                getFragmentManager().beginTransaction().attach(new UpcomingMatchFragment()).commitNow();
+            } else {
+                getFragmentManager().beginTransaction().detach(new UpcomingMatchFragment()).attach(new UpcomingMatchFragment()).commit();
+            }
             getAllMatches();
         }
     }

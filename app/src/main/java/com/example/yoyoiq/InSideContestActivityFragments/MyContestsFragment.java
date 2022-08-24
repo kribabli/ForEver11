@@ -2,6 +2,7 @@ package com.example.yoyoiq.InSideContestActivityFragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.yoyoiq.BuildConfig;
 import com.example.yoyoiq.OnlyMyContestPOJO.MyContest1;
 import com.example.yoyoiq.OnlyMyContestPOJO.TotalJoinContestsData;
 import com.example.yoyoiq.R;
@@ -107,8 +109,9 @@ public class MyContestsFragment extends Fragment {
                             String match_id = jsonObject1.getString("match_id");
                             String prize_pool = jsonObject1.getString("prize_pool");
                             String total_team = jsonObject1.getString("total_team");
+                            String join_team = jsonObject1.getString("join_team");
 
-                            TotalJoinContestsData totalJoinContestsData = new TotalJoinContestsData(contest_description, contest_id, contest_name, first_price, match_id, prize_pool, total_team);
+                            TotalJoinContestsData totalJoinContestsData = new TotalJoinContestsData(contest_description, contest_id, contest_name, first_price, match_id, prize_pool, total_team, join_team);
                             list.add(totalJoinContestsData);
                             myJoinContestsAdapter = new MyJoinContestsAdapter(getContext(), list);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -168,6 +171,27 @@ public class MyContestsFragment extends Fragment {
                 holder.contestName.setText(listData.getContest_name());
                 holder.totalSports.setText(listData.getTotal_team());
                 holder.first_price.setText(listData.getFirst_price());
+                int totalSize = Integer.parseInt(listData.getTotal_team());
+                int leftSize = Integer.parseInt(listData.getJoin_team());
+                holder.leftSports.setText(String.valueOf(totalSize - leftSize));
+
+                //Contests Share-----------------------------------------
+                holder.share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                            shareIntent.setType("text/plain");
+                            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "YoYoIQ");
+                            String shareMessage = "\nLet me recommend you this application\n\n";
+                            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                            startActivity(Intent.createChooser(shareIntent, "choose one"));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         }
 
@@ -177,7 +201,7 @@ public class MyContestsFragment extends Fragment {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView first_price, contestName, totalSports, share;
+            TextView first_price, contestName, totalSports, share, leftSports;
 
             public MyViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -185,6 +209,7 @@ public class MyContestsFragment extends Fragment {
                 totalSports = itemView.findViewById(R.id.totalSports);
                 first_price = itemView.findViewById(R.id.first_price);
                 share = itemView.findViewById(R.id.share);
+                leftSports = itemView.findViewById(R.id.leftSports);
             }
         }
     }

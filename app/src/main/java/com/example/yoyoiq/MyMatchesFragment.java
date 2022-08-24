@@ -1,6 +1,7 @@
 package com.example.yoyoiq;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,15 +47,20 @@ public class MyMatchesFragment extends Fragment {
         }
     }
 
+    View root;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_my_matches, container, false);
+        root = inflater.inflate(R.layout.fragment_my_matches, container, false);
         viewPager = root.findViewById(R.id.viewPager);
         tabLayout = root.findViewById(R.id.tabLayout);
         selectedFragment = fragment;
         pagerAdapterLiveCompleted = new PagerAdapterLiveCompleted(getFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pagerAdapterLiveCompleted);
+
+        if (viewPager.getAdapter() == null) {
+            viewPager.setAdapter(pagerAdapterLiveCompleted);
+        }
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -84,5 +90,17 @@ public class MyMatchesFragment extends Fragment {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         return root;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                viewPager.setAdapter(pagerAdapterLiveCompleted);
+            }
+        }, 500);
     }
 }
