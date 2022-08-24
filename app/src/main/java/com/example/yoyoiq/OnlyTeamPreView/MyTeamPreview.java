@@ -1,14 +1,13 @@
 package com.example.yoyoiq.OnlyTeamPreView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.yoyoiq.InSideContestActivityFragments.AllSelectedPlayerFromServer;
 import com.example.yoyoiq.R;
@@ -28,26 +27,22 @@ public class MyTeamPreview extends AppCompatActivity {
     FlexboxLayout LL_GroundAR;
     FlexboxLayout LL_GroundBOWL;
     int position;
-    String initialPosition;
-    String finalPosition;
     private List<AllSelectedPlayerFromServer> listData = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_team_preview);
-
         initMethod();
         setAction();
         getAllRequestedData();
     }
+
     private void getAllRequestedData() {
         teamA.setText("" + HelperData.team1NameShort);
         teamB.setText("" + HelperData.team2NameShort);
-
-        if(listData.size()>0){
-            for(int i=0; i<listData.size(); i++){
+        if (listData.size() > 0) {
+            for (int i = 0; i < listData.size(); i++) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View tv = inflater.inflate(R.layout.single_grounder, null);
                 TextView nameTxt = tv.findViewById(R.id.nameTxt);
@@ -84,8 +79,7 @@ public class MyTeamPreview extends AppCompatActivity {
                         LL_GroundWK.addView(tv);
                         teamBCount++;
                     }
-                }
-                else if (listData.get(i).getPlaying_role().equalsIgnoreCase("bat")) {
+                } else if (listData.get(i).getPlaying_role().equalsIgnoreCase("bat")) {
                     LL_GroundBAT.setBackgroundColor(Color.TRANSPARENT);
                     if (HelperData.team1NameShort.equalsIgnoreCase(listData.get(i).getCountry())) {
                         LL_GroundBAT.addView(tv);
@@ -94,8 +88,7 @@ public class MyTeamPreview extends AppCompatActivity {
                         LL_GroundBAT.addView(tv);
                         teamBCount++;
                     }
-                }
-                else if (listData.get(i).getPlaying_role().equalsIgnoreCase("ar")) {
+                } else if (listData.get(i).getPlaying_role().equalsIgnoreCase("ar")) {
                     LL_GroundAR.setBackgroundColor(Color.TRANSPARENT);
                     if (HelperData.team1NameShort.equalsIgnoreCase(listData.get(i).getCountry())) {
                         LL_GroundAR.addView(tv);
@@ -104,8 +97,7 @@ public class MyTeamPreview extends AppCompatActivity {
                         LL_GroundAR.addView(tv);
                         teamBCount++;
                     }
-                }
-                else if (listData.get(i).getPlaying_role().equalsIgnoreCase("bowl")) {
+                } else if (listData.get(i).getPlaying_role().equalsIgnoreCase("bowl")) {
                     LL_GroundBOWL.setBackgroundColor(Color.TRANSPARENT);
                     if (HelperData.team1NameShort.equalsIgnoreCase(listData.get(i).getCountry())) {
                         LL_GroundBOWL.addView(tv);
@@ -118,6 +110,7 @@ public class MyTeamPreview extends AppCompatActivity {
             }
         }
     }
+
     private void initMethod() {
         close = findViewById(R.id.close);
         userNameAndTid = findViewById(R.id.userNameAndTid);
@@ -127,13 +120,14 @@ public class MyTeamPreview extends AppCompatActivity {
         LL_GroundBAT = findViewById(R.id.LL_GroundBAT);
         LL_GroundAR = findViewById(R.id.LL_GroundAR);
         LL_GroundBOWL = findViewById(R.id.LL_GroundBOWL);
-        if(getIntent().hasExtra("position")){
+        if (getIntent().hasExtra("position")) {
             listData = new Gson().fromJson(getIntent().getStringExtra("listdata"), new TypeToken<ArrayList<AllSelectedPlayerFromServer>>() {
             }.getType());
         }
-        userNameAndTid.setText(""+getIntent().getStringExtra("TeamName"));
-        position=getIntent().getIntExtra("selectedPosition",0);
+        userNameAndTid.setText("" + getIntent().getStringExtra("TeamName"));
+        position = getIntent().getIntExtra("selectedPosition", 0);
     }
+
     private void setAction() {
         close.setOnClickListener(v -> finish());
     }

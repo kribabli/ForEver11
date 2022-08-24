@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pitch_bg"
+    android:background="@drawable/pitch_bg1"
     tools:context=".OnlyTeamPreView.OnlyTeamPreview">
 
     <androidx.appcompat.widget.Toolbar
@@ -234,7 +234,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:weightSum="10">
 
                 <View
@@ -250,7 +249,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:weightSum="10">
 
                 <TextView
@@ -289,9 +287,17 @@
             android:layout_weight="1" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_black_small_ball"
+            android:gravity="center" />
+
+        <TextView
             android:id="@+id/teamA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="5dp"
             android:text="TeamA"
             android:textColor="@color/white"
             android:textSize="15sp"
@@ -303,9 +309,16 @@
             android:layout_weight="1" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_white_small_ball"
+            android:gravity="center" />
+
+        <TextView
             android:id="@+id/teamB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="5dp"
             android:text="TeamB"
             android:textColor="@color/white"
             android:textSize="15sp"
