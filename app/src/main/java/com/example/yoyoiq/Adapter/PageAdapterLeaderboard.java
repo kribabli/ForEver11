@@ -10,30 +10,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.yoyoiq.InSideAddCashLeaderboard.LeaderboardFragment;
 import com.example.yoyoiq.InSideAddCashLeaderboard.WinningFragment;
 
-public class PageAdapterWinnings extends FragmentPagerAdapter {
+public class PageAdapterLeaderboard extends FragmentPagerAdapter {
     int tabCount;
-    String total_prize = "";
-    String entryFee = "";
-    String totalSports = "";
-    String leftSports = "";
-    String winningPer = "";
-    String upTo = "";
-    String match_id = "";
-    String first_price = "";
-    String price_contribution = "";
+//    String price_contribution = "";
 
-    public PageAdapterWinnings(@NonNull FragmentManager fm, int behavior, String total_prize, String entryFee, String totalSports, String leftSports, String winningPer, String upTo, String match_id, String first_price, String price_contribution) {
+    public PageAdapterLeaderboard(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
         tabCount = behavior;
-        this.total_prize = total_prize;
-        this.entryFee = entryFee;
-        this.totalSports = totalSports;
-        this.leftSports = leftSports;
-        this.winningPer = winningPer;
-        this.upTo = upTo;
-        this.match_id = match_id;
-        this.first_price = first_price;
-        this.price_contribution = price_contribution;
+//        this.price_contribution = price_contribution;
     }
 
     @NonNull
@@ -42,7 +26,7 @@ public class PageAdapterWinnings extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 Bundle bundle = new Bundle();
-                bundle.putString("price_contribution", price_contribution);
+//                bundle.putString("price_contribution", price_contribution);
                 WinningFragment winningFragment = new WinningFragment();
                 winningFragment.setArguments(bundle);
                 return winningFragment;

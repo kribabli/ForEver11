@@ -2,31 +2,33 @@ package com.example.yoyoiq.OnlyMyContestPOJO;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ResponseMyContest {
     @SerializedName("contest")
-    private JoinContest contest;
+    private List<JoinContest> contest;
 
     @SerializedName("team")
-    private JoinTeamDetails team;
+    private List<JoinTeamDetails> team;
 
-    public ResponseMyContest(JoinContest contest, JoinTeamDetails team) {
+    public ResponseMyContest(List<JoinContest> contest, List<JoinTeamDetails> team) {
         this.contest = contest;
         this.team = team;
     }
 
-    public JoinContest getContest() {
+    public List<JoinContest> getContest() {
         return contest;
     }
 
-    public void setContest(JoinContest contest) {
+    public void setContest(List<JoinContest> contest) {
         this.contest = contest;
     }
 
-    public JoinTeamDetails getTeam() {
+    public List<JoinTeamDetails> getTeam() {
         return team;
     }
 
-    public void setTeam(JoinTeamDetails team) {
+    public void setTeam(List<JoinTeamDetails> team) {
         this.team = team;
     }
 }

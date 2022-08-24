@@ -17,7 +17,10 @@
         android:theme="@style/Theme.YoYoIq"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MyTeamPreview"
+            android:name=".LeaderboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OnlyTeamPreView.MyTeamPreview"
             android:exported="false" />
         <activity
             android:name=".InSideScoreActivity.ScoresActivity"

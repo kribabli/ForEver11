@@ -28,8 +28,9 @@ public class JoinContest {
     public String fourth_prince;
     public String admin_commission;
     public String status;
+    public String price_contribution;
 
-    public JoinContest(String contest_id, String contest_name, String contest_tag, String winners, String prize_pool, String total_team, String join_team, String entry, String contest_description, String contest_note1, String contest_note2, String winning_note, String match_id, String type, String userid, String admin_com, String bonus_cut_percentage, String cancel_contest, String on_per, String winning_percentage, String upto, String first_price, String second_price, String third_price, String fourth_prince, String admin_commission, String status) {
+    public JoinContest(String contest_id, String contest_name, String contest_tag, String winners, String prize_pool, String total_team, String join_team, String entry, String contest_description, String contest_note1, String contest_note2, String winning_note, String match_id, String type, String userid, String admin_com, String bonus_cut_percentage, String cancel_contest, String on_per, String winning_percentage, String upto, String first_price, String second_price, String third_price, String fourth_prince, String admin_commission, String status, String price_contribution) {
         this.contest_id = contest_id;
         this.contest_name = contest_name;
         this.contest_tag = contest_tag;
@@ -57,6 +58,7 @@ public class JoinContest {
         this.fourth_prince = fourth_prince;
         this.admin_commission = admin_commission;
         this.status = status;
+        this.price_contribution = price_contribution;
     }
 
     public String getContest_id() {
@@ -273,5 +275,13 @@ public class JoinContest {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPrice_contribution() {
+        return price_contribution;
+    }
+
+    public void setPrice_contribution(String price_contribution) {
+        this.price_contribution = price_contribution;
     }
 }

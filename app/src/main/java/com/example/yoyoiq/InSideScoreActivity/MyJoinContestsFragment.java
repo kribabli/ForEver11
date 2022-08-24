@@ -2,6 +2,7 @@ package com.example.yoyoiq.InSideScoreActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.yoyoiq.LeaderboardActivity;
 import com.example.yoyoiq.OnlyMyContestPOJO.MyContest1;
 import com.example.yoyoiq.OnlyMyContestPOJO.TotalJoinContestsData;
 import com.example.yoyoiq.R;
@@ -109,7 +112,7 @@ public class MyJoinContestsFragment extends Fragment {
                             String total_team = jsonObject1.getString("total_team");
                             String join_team = jsonObject1.getString("join_team");
 
-                            TotalJoinContestsData totalJoinContestsData = new TotalJoinContestsData(contest_description, contest_id, contest_name, first_price, match_id, prize_pool, total_team,join_team);
+                            TotalJoinContestsData totalJoinContestsData = new TotalJoinContestsData(contest_description, contest_id, contest_name, first_price, match_id, prize_pool, total_team, join_team);
                             list.add(totalJoinContestsData);
                             myJoinContestsAdapter = new MyJoinContestsAdapter(getContext(), list);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -165,10 +168,22 @@ public class MyJoinContestsFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             TotalJoinContestsData listData = list.get(position);
-            holder.contestName.setText(listData.getContest_name());
-            holder.totalSports.setText(listData.getTotal_team() + "  Spots");
-            holder.first_price.setText(listData.getFirst_price());
-            holder.userName.setText(HelperData.UserName + "  T1");
+            if (list.size() > 0) {
+                holder.contestName.setText(listData.getContest_name());
+                holder.totalSports.setText(listData.getTotal_team() + "  Spots");
+                holder.first_price.setText(listData.getFirst_price());
+                holder.userName.setText(HelperData.UserName + "  T1");
+
+                holder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, LeaderboardActivity.class);
+                        intent.putExtra("match_id", listData.getMatch_id());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
+                });
+            }
         }
 
         @Override
@@ -178,6 +193,7 @@ public class MyJoinContestsFragment extends Fragment {
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             TextView userName, getTotalPoints, userRank, first_price, contestName, totalSports;
+            CardView cardView;
 
             public MyViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -187,6 +203,7 @@ public class MyJoinContestsFragment extends Fragment {
                 userName = itemView.findViewById(R.id.userName);
                 getTotalPoints = itemView.findViewById(R.id.getTotalPoints);
                 userRank = itemView.findViewById(R.id.userRank);
+                cardView = itemView.findViewById(R.id.cardView);
             }
         }
     }

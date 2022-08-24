@@ -98,26 +98,58 @@ public class MyContestsFragment extends Fragment {
                     JSONArray jsonArray1 = null;
                     try {
                         jsonArray1 = new JSONArray(jsonArray);
+
+//                        for (int i = 0; i < jsonArray1.length(); i++) {
+//                            Log.d("TAG", "onResponse44: "+jsonArray1);
+//                            JSONObject jsonObject = jsonArray1.getJSONObject(i);
+//                            JSONObject jsonObject1 = jsonObject.getJSONObject("contest");
+//
+//                            Log.d("TAG", "onResponse: "+jsonObject1);
+//                            Log.d("TAG", "onResponse1: "+jsonObject);
+//                            String contest_description = jsonObject1.getString("contest_description");
+//                            String contest_id = jsonObject1.getString("contest_id");
+//                            String contest_name = jsonObject1.getString("contest_name");
+//                            String first_price = jsonObject1.getString("first_price");
+//                            String match_id = jsonObject1.getString("match_id");
+//                            String prize_pool = jsonObject1.getString("prize_pool");
+//                            String total_team = jsonObject1.getString("total_team");
+//                            String join_team = jsonObject1.getString("join_team");
+//
+//                            TotalJoinContestsData totalJoinContestsData = new TotalJoinContestsData(contest_description, contest_id, contest_name, first_price, match_id, prize_pool, total_team, join_team);
+//                            list.add(totalJoinContestsData);
+//                            myJoinContestsAdapter = new MyJoinContestsAdapter(getContext(), list);
+//                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//                            recyclerView.setAdapter(myJoinContestsAdapter);
+//                            myJoinContestsAdapter.notifyDataSetChanged();
+//                            swipeRefreshLayout.setRefreshing(false);
+//                        }
                         for (int i = 0; i < jsonArray1.length(); i++) {
-                            JSONObject jsonObject = jsonArray1.getJSONObject(i);
-                            JSONObject jsonObject1 = jsonObject.getJSONObject("contest");
+                            try {
+                                JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
+                                JSONArray jsonArray2 = jsonObject1.getJSONArray("contest");
+                                for (int j = 0; j < jsonArray2.length(); j++) {
+                                    JSONObject jsonObject2 = jsonArray2.getJSONObject(j);
+                                    String contest_description = jsonObject2.getString("contest_description");
+                                    String contest_id = jsonObject2.getString("contest_id");
+                                    String contest_name = jsonObject2.getString("contest_name");
+                                    String first_price = jsonObject2.getString("first_price");
+                                    String match_id = jsonObject2.getString("match_id");
+                                    String prize_pool = jsonObject2.getString("prize_pool");
+                                    String total_team = jsonObject2.getString("total_team");
+                                    String join_team = jsonObject2.getString("join_team");
 
-                            String contest_description = jsonObject1.getString("contest_description");
-                            String contest_id = jsonObject1.getString("contest_id");
-                            String contest_name = jsonObject1.getString("contest_name");
-                            String first_price = jsonObject1.getString("first_price");
-                            String match_id = jsonObject1.getString("match_id");
-                            String prize_pool = jsonObject1.getString("prize_pool");
-                            String total_team = jsonObject1.getString("total_team");
-                            String join_team = jsonObject1.getString("join_team");
-
-                            TotalJoinContestsData totalJoinContestsData = new TotalJoinContestsData(contest_description, contest_id, contest_name, first_price, match_id, prize_pool, total_team, join_team);
-                            list.add(totalJoinContestsData);
-                            myJoinContestsAdapter = new MyJoinContestsAdapter(getContext(), list);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            recyclerView.setAdapter(myJoinContestsAdapter);
-                            myJoinContestsAdapter.notifyDataSetChanged();
-                            swipeRefreshLayout.setRefreshing(false);
+                                    TotalJoinContestsData totalJoinContestsData = new TotalJoinContestsData(contest_description, contest_id, contest_name, first_price, match_id, prize_pool, total_team, join_team);
+                                    list.add(totalJoinContestsData);
+                                    myJoinContestsAdapter = new MyJoinContestsAdapter(getContext(), list);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    recyclerView.setAdapter(myJoinContestsAdapter);
+                                    myJoinContestsAdapter.notifyDataSetChanged();
+                                    swipeRefreshLayout.setRefreshing(false);
+                                }
+                                swipeRefreshLayout.setRefreshing(false);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     } catch (JSONException e) {
