@@ -1,7 +1,6 @@
 package com.example.yoyoiq;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,11 +67,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         contest_name = getIntent().getStringExtra("contest_name");
         contestName.setText(contest_name);
 
-        bakPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        bakPress.setOnClickListener(v -> onBackPressed());
     }
 }
