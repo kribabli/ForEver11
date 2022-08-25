@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.yoyoiq.InSideContestActivityFragments.MyTeamsFragment;
+import com.example.yoyoiq.InSideScoreActivity.LiveMyTeamFragment;
 import com.example.yoyoiq.InSideScoreActivity.MyJoinContestsFragment;
 
 public class PageAdapterScores extends FragmentPagerAdapter {
@@ -29,7 +30,7 @@ public class PageAdapterScores extends FragmentPagerAdapter {
             case 0:
                 return new MyJoinContestsFragment();
             case 1:
-                return new MyTeamsFragment();
+                return new LiveMyTeamFragment();
             default:
                 return null;
         }
