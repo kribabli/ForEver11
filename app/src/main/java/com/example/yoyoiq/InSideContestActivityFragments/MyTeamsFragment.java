@@ -35,6 +35,8 @@ public class MyTeamsFragment extends Fragment {
     private String mParam2;
     ArrayList<myAllTeamRequest> list = new ArrayList();
     ArrayList<AllSelectedPlayerFromServer> listData = new ArrayList<AllSelectedPlayerFromServer>();
+    String match_id;
+    String matchA, matchB, logo_url_a, logo_url_b, date_start, date_end;
 
     public MyTeamsFragment() {
         // Required empty public constructor
@@ -57,7 +59,9 @@ public class MyTeamsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     MyCreatedTeamAdapter myCreatedTeamAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,6 +74,14 @@ public class MyTeamsFragment extends Fragment {
 
     private void getMyAllCreatedTeam() {
         list.clear();
+        matchA = getArguments().getString("matchA");
+        matchB = getArguments().getString("matchB");
+        match_id = getArguments().getString("match_id");
+        logo_url_a = getArguments().getString("logo_url_a");
+        logo_url_b = getArguments().getString("logo_url_b");
+        date_start = getArguments().getString("date_start");
+        date_end = getArguments().getString("date_end");
+
         Call<CreatedTeamResponse> call = ApiClient
                 .getInstance()
                 .getApi()
@@ -113,7 +125,7 @@ public class MyTeamsFragment extends Fragment {
                                         int wkeeper = Integer.parseInt(jsonObjectSquads.getString("wkeeper"));
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false,squads);
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false, squads, logo_url_a, logo_url_b, date_start, date_end);
                                         list.add(myAllTeamRequest);
                                         myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -138,6 +150,7 @@ public class MyTeamsFragment extends Fragment {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
+
             @Override
             public void onFailure(Call<CreatedTeamResponse> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);

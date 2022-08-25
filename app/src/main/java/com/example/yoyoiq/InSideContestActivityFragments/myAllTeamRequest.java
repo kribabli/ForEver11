@@ -9,12 +9,14 @@ public class myAllTeamRequest {
     int batsman, boller, allrounder, wkeeper, teamAcount, teamBcount;
     boolean isSlected;
     JSONArray squads;
+    String logo_url_a;
+    String logo_url_b;
+    String date_start;
+    String date_end;
 
-
-
-    public myAllTeamRequest(String TeamId, String teamName, String match_id, String user_id, String captain, String vicecaptain, String teamAName, String teamBName, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount, boolean isSlected,JSONArray squads) {
-        this.TeamId = TeamId;
+    public myAllTeamRequest(String teamName, String teamId, String match_id, String user_id, String captain, String vicecaptain, String teamAName, String teamBName, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount, boolean isSlected, JSONArray squads, String logo_url_a, String logo_url_b, String date_start, String date_end) {
         TeamName = teamName;
+        TeamId = teamId;
         this.match_id = match_id;
         this.user_id = user_id;
         this.captain = captain;
@@ -28,7 +30,11 @@ public class myAllTeamRequest {
         this.teamAcount = teamAcount;
         this.teamBcount = teamBcount;
         this.isSlected = isSlected;
-        this.squads=squads;
+        this.squads = squads;
+        this.logo_url_a = logo_url_a;
+        this.logo_url_b = logo_url_b;
+        this.date_start = date_start;
+        this.date_end = date_end;
     }
 
     public JSONArray getSquads() {
@@ -157,5 +163,37 @@ public class myAllTeamRequest {
 
     public void setTeamBcount(int teamBcount) {
         this.teamBcount = teamBcount;
+    }
+
+    public String getLogo_url_a() {
+        return logo_url_a;
+    }
+
+    public void setLogo_url_a(String logo_url_a) {
+        this.logo_url_a = logo_url_a;
+    }
+
+    public String getLogo_url_b() {
+        return logo_url_b;
+    }
+
+    public void setLogo_url_b(String logo_url_b) {
+        this.logo_url_b = logo_url_b;
+    }
+
+    public String getDate_start() {
+        return date_start;
+    }
+
+    public void setDate_start(String date_start) {
+        this.date_start = date_start;
+    }
+
+    public String getDate_end() {
+        return date_end;
+    }
+
+    public void setDate_end(String date_end) {
+        this.date_end = date_end;
     }
 }

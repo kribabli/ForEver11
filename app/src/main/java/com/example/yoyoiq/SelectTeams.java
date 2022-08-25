@@ -4,20 +4,16 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.yoyoiq.Adapter.SelectTeamsAdapter;
 import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
@@ -53,8 +49,7 @@ public class SelectTeams extends AppCompatActivity {
     String Entryfee;
     int netEntryFee = 0;
     String Upto;
-    String TeamId;
-    public static String ContestTeamId=null;
+    public static String ContestTeamId = null;
     ProgressDialog progressDialog;
     SessionManager sessionManager;
     DatabaseConnectivity common = DatabaseConnectivity.getInstance();
@@ -110,7 +105,6 @@ public class SelectTeams extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -155,11 +149,11 @@ public class SelectTeams extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<ContestJoinResponse> call, Throwable t) {
             }
         });
-
     }
 
     private void JoinContestData() {
@@ -220,7 +214,6 @@ public class SelectTeams extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Amit","Value "+SelectTeams.ContestTeamId);
                 if (SelectTeams.ContestTeamId != null) {
                     LoadBalanceData();
                 } else {
@@ -274,7 +267,7 @@ public class SelectTeams extends AppCompatActivity {
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
 
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false,squads);
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false, squads, "", "", "", "");
                                         list.add(myAllTeamRequest);
                                         selectTeamsAdapter = new SelectTeamsAdapter(SelectTeams.this, list);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(SelectTeams.this));
