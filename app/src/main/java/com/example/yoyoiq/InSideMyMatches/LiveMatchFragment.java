@@ -91,7 +91,6 @@ public class LiveMatchFragment extends Fragment {
                 .getInstance()
                 .getApi()
                 .getLiveContestMatchesList(HelperData.UserId);
-
         call.enqueue(new Callback<UpcommingResponse>() {
             @Override
             public void onResponse(Call<UpcommingResponse> call, Response<UpcommingResponse> response) {

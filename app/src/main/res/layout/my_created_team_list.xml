@@ -53,6 +53,7 @@
             android:layout_height="80dp"
             android:layout_marginTop="40dp"
             android:background="@color/green"
+            android:id="@+id/linearLayout1"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="12">

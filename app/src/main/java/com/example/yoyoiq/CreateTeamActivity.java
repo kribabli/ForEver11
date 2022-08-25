@@ -242,6 +242,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                             Intent intent = new Intent(CreateTeamActivity.this, TeamPreviewActivity.class);
                             intent.putExtra("date_start", date_start);
                             startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(this, "Add atleast 3 player in BOWL section", Toast.LENGTH_LONG).show();
                         }

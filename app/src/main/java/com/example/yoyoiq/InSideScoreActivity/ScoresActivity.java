@@ -38,11 +38,9 @@ public class ScoresActivity extends AppCompatActivity {
                     pageAdapterScores.notifyDataSetChanged();
                 }
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 

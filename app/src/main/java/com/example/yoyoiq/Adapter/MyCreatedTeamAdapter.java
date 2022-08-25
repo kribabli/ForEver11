@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.yoyoiq.CreateTeamActivity;
 import com.example.yoyoiq.InSideContestActivityFragments.AllSelectedPlayerFromServer;
 import com.example.yoyoiq.InSideContestActivityFragments.MyTeamsFragment;
 import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
@@ -43,7 +45,6 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_created_team_list, parent, false);
         return new MyCreatedTeamAdapter.MyViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull MyCreatedTeamAdapter.MyViewHolder holder, int position) {
         myAllTeamRequest allTeamRequest = list.get(position);
@@ -59,9 +60,7 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
             holder.userNameAndTid.setText(sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
             holder.teamA.setText(allTeamRequest.getTeamAName());
             holder.teamB.setText(allTeamRequest.getTeamBName());
-            Gson gson = new Gson();
-            holder.cardView1.setOnClickListener(view -> {
-                String data =gson.toJson(list);
+            holder.linearLayout1.setOnClickListener(view -> {
                 Intent intent=new Intent(context, MyTeamPreview.class);
                 intent.putExtra("position",position);
                 intent.putExtra("listdata",list.get(position).getSquads().toString());
@@ -71,6 +70,15 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
                 HelperData.team2NameShort=list.get(position).getTeamBName();
                 context.startActivity(intent);
             });
+            holder.editImg.setOnClickListener(view -> {
+                Intent intent=new Intent(context, CreateTeamActivity.class);
+                intent.putExtra("matchId",list.get(position).getMatch_id());
+                intent.putExtra("matchA",list.get(position).getTeamAName());
+                intent.putExtra("matchB",list.get(position).getTeamBName());
+               context.startActivity(intent);
+
+
+            });
         }
     }
     @Override
@@ -78,9 +86,9 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
         return list.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView teamA, teamB, wkTv, batTv, arTv, bowlTv, CName, VCname, teamACount, teamBCount, userNameAndTid;
+        TextView teamA, teamB, wkTv, batTv, arTv, bowlTv, CName, VCname, teamACount, teamBCount, userNameAndTid,editImg;
         CardView cardView1;
-
+        LinearLayout linearLayout1;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             teamA = itemView.findViewById(R.id.teamA);
@@ -95,6 +103,8 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
             teamBCount = itemView.findViewById(R.id.teamBCount);
             userNameAndTid = itemView.findViewById(R.id.userNameAndTid);
             cardView1=itemView.findViewById(R.id.cardView1);
+            editImg=itemView.findViewById(R.id.editImg);
+            linearLayout1=itemView.findViewById(R.id.linearLayout1);
         }
     }
 }

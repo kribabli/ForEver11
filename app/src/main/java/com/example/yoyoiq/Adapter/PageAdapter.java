@@ -52,7 +52,17 @@ public class PageAdapter extends FragmentPagerAdapter {
             case 1:
                 return new MyContestsFragment();
             case 2:
-                return new MyTeamsFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("match_id", match_id);
+                bundle1.putString("matchA", matchA);
+                bundle1.putString("matchB", matchB);
+                bundle1.putString("logo_url_a", logo_url_a);
+                bundle1.putString("logo_url_b", logo_url_b);
+                bundle1.putString("date_start", date_start);
+                bundle1.putString("date_end", date_end);
+                MyTeamsFragment myTeamsFragment = new MyTeamsFragment();
+                myTeamsFragment.setArguments(bundle1);
+                return myTeamsFragment;
             default:
                 return null;
         }

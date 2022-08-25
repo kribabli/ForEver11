@@ -68,25 +68,6 @@ public class ContestActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
-    private void counterSection() {
-        HelperData.myTeam.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (integer >= 0) {
-                    tabLayout.getTabAt(2).setText("" + integer);
-                }
-            }
-        });
-        HelperData.myContest.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (integer >= 0) {
-                    tabLayout.getTabAt(1).setText("" + integer);
-                }
-            }
-        });
-    }
-
     private void initMethod() {
         walletTV = findViewById(R.id.walletTV);
         backPress = findViewById(R.id.backPress);
