@@ -2,7 +2,6 @@ package com.example.yoyoiq;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,19 +41,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setAction() {
-        backPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        backPress.setOnClickListener(view -> onBackPressed());
 
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userLogout();
-            }
-        });
+        logOut.setOnClickListener(v -> userLogout());
     }
 
     private void upDateProfile() {

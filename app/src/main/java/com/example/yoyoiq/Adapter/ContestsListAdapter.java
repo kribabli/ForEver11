@@ -37,39 +37,40 @@ public class ContestsListAdapter extends RecyclerView.Adapter<ContestsListAdapte
     @Override
     public void onBindViewHolder(@NonNull ContestsListAdapter.MyViewHolder holder, int position) {
         ContestsListPOJO listData = list.get(position);
-        holder.total_prize.setText(listData.getPrize_pool());
-        holder.entryFee.setText(listData.getEntry());
-        holder.totalSports.setText(listData.getTotal_team());
-        int totalS = Integer.parseInt(listData.getTotal_team());
-        int leftS = Integer.parseInt(listData.getJoin_team());
-        holder.leftSports.setText(String.valueOf(totalS - leftS));
+        if (list.size() > 0) {
+            holder.total_prize.setText(listData.getPrize_pool());
+            holder.entryFee.setText(listData.getEntry());
+            holder.totalSports.setText(listData.getTotal_team());
+            int totalS = Integer.parseInt(listData.getTotal_team());
+            int leftS = Integer.parseInt(listData.getJoin_team());
+            holder.leftSports.setText(String.valueOf(totalS - leftS));
 
-        holder.first_price.setText(listData.getFirst_price());
-        holder.winningPer.setText(listData.getWinning_percentage());
-        holder.upTo.setText(listData.getUpto());
+            holder.first_price.setText(listData.getFirst_price());
+            holder.winningPer.setText(listData.getWinning_percentage());
+            holder.upTo.setText(listData.getUpto());
 
-        holder.cardViewContest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, AddCashActivity.class);
-                intent.putExtra("total_prize", listData.getPrize_pool());
-                intent.putExtra("Contest_id", listData.getContest_id());
-                intent.putExtra("entryFee", listData.getEntry());
-                intent.putExtra("totalSports", listData.getTotal_team());
-                intent.putExtra("leftSports", String.valueOf(totalS - leftS));
-                intent.putExtra("winningPer", listData.getWinning_percentage());
-                intent.putExtra("upTo", listData.getUpto());
-                intent.putExtra("matchA", listData.getMatchA());
-                intent.putExtra("matchB", listData.getMatchB());
-                intent.putExtra("match_id", listData.getMatch_id());
-                intent.putExtra("first_price", listData.getFirst_price());
-                intent.putExtra("price_contribution", listData.getPrice_contribution());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                HelperData.contestId=listData.getContest_id();
-
-                context.startActivity(intent);
-            }
-        });
+            holder.cardViewContest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, AddCashActivity.class);
+                    intent.putExtra("total_prize", listData.getPrize_pool());
+                    intent.putExtra("Contest_id", listData.getContest_id());
+                    intent.putExtra("entryFee", listData.getEntry());
+                    intent.putExtra("totalSports", listData.getTotal_team());
+                    intent.putExtra("leftSports", String.valueOf(totalS - leftS));
+                    intent.putExtra("winningPer", listData.getWinning_percentage());
+                    intent.putExtra("upTo", listData.getUpto());
+                    intent.putExtra("matchA", listData.getMatchA());
+                    intent.putExtra("matchB", listData.getMatchB());
+                    intent.putExtra("match_id", listData.getMatch_id());
+                    intent.putExtra("first_price", listData.getFirst_price());
+                    intent.putExtra("price_contribution", listData.getPrice_contribution());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    HelperData.contestId = listData.getContest_id();
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

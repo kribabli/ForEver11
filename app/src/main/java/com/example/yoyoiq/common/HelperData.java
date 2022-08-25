@@ -1,7 +1,5 @@
 package com.example.yoyoiq.common;
 
-
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,7 +7,6 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.yoyoiq.CreateTeamActivity;
-import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.KYC.KycAddedPostResponse;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.Retrofit.ApiClient;
@@ -45,8 +42,6 @@ public class HelperData {
     public static MutableLiveData<List<AllSelectedPlayer>> allSelectedPlayer = new MutableLiveData<>();
     public static MutableLiveData<Integer> selectSingleTeamCounter = new MutableLiveData<>(0);
 
-
-
     public static MutableLiveData<String> refreashLive = new MutableLiveData<>();
     public static MutableLiveData<String> selectedPlayer = new MutableLiveData<>();
     public static MutableLiveData<String> getCall_For_Refrashers = new MutableLiveData<>();
@@ -62,7 +57,7 @@ public class HelperData {
     public static int selectedTeamNo;
     public static boolean vcap = false;
     public static boolean cap = false;
-    public static boolean kycStatus=false;
+    public static boolean kycStatus = false;
     public static String addedPlayerIds;
     public static String matchId;
     public static String contestId;
@@ -70,15 +65,13 @@ public class HelperData {
     public static String UserName = "";
     public static String Usermobile = "";
     public static String UserEmail = "";
-    public static  String logoUrlTeamA="";
-    public static  String logoUrlTeamB="";
-    public static  String MatchStartTime="";
-    public static  String MatchEndTime="";
-    public static  String singleSelectedTeamName="";
-    DatabaseConnectivity cmn=DatabaseConnectivity.getInstance();
-
+    public static String logoUrlTeamA = "";
+    public static String logoUrlTeamB = "";
+    public static String MatchStartTime = "";
+    public static String MatchEndTime = "";
+    public static String singleSelectedTeamName = "";
+    DatabaseConnectivity cmn = DatabaseConnectivity.getInstance();
     ProgressDialog dialog;
-
 
     public static void newTeamMaking() {
         myTeamList.clear();
@@ -98,18 +91,16 @@ public class HelperData {
         CreateTeamActivity.addedPlayerIds = "";
     }
 
-    public static void uploadFile(Context context, String user_Id, String fullName, String accountNo, String ifsc, String bankName,String date_of_birth,String address_ed, String aadhar, String pan, String pan_img_path){
+    public static void uploadFile(Context context, String user_Id, String fullName, String accountNo, String ifsc, String bankName, String date_of_birth, String address_ed, String aadhar, String pan, String pan_img_path) {
 
         MultipartBody.Part fileToUpload1 = null;
-        ProgressDialog progressDialog=new ProgressDialog(context);
+        ProgressDialog progressDialog = new ProgressDialog(context);
         File myFile1 = new File(pan_img_path);
         progressDialog.show();
         progressDialog.setTitle("Please wait..");
 
         RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), myFile1);
-        MultipartBody.Part  fileToUpload2 = MultipartBody.Part.createFormData("pan_img", myFile1.getName(), requestBody1);
-
-
+        MultipartBody.Part fileToUpload2 = MultipartBody.Part.createFormData("pan_img", myFile1.getName(), requestBody1);
 
         RequestBody user_id = RequestBody.create(MediaType.parse("multipart/form-data"), user_Id);
         RequestBody full_name = RequestBody.create(MediaType.parse("multipart/form-data"), fullName);
@@ -122,26 +113,24 @@ public class HelperData {
         RequestBody address = RequestBody.create(MediaType.parse("multipart/form-data"), address_ed);
         RequestBody DOB = RequestBody.create(MediaType.parse("multipart/form-data"), date_of_birth);
 
-        Call<KycAddedPostResponse> call=ApiClient.getInstance().getApi().sendKycDetailsOnServer(user_Id,fullName,accountNo,
-                ifsc,bankName,date_of_birth,address_ed,aadhar,pan,pan_img_path);
+        Call<KycAddedPostResponse> call = ApiClient.getInstance().getApi().sendKycDetailsOnServer(user_Id, fullName, accountNo,
+                ifsc, bankName, date_of_birth, address_ed, aadhar, pan, pan_img_path);
 
         call.enqueue(new Callback<KycAddedPostResponse>() {
             @Override
             public void onResponse(Call<KycAddedPostResponse> call, Response<KycAddedPostResponse> response) {
-                KycAddedPostResponse kycAddedPostResponse= response.body();
-                if(response.isSuccessful()){
-                    String data=new Gson().toJson(kycAddedPostResponse.getResponse());
+                KycAddedPostResponse kycAddedPostResponse = response.body();
+                if (response.isSuccessful()) {
+                    String data = new Gson().toJson(kycAddedPostResponse.getResponse());
                     progressDialog.dismiss();
                 }
             }
+
             @Override
             public void onFailure(Call<KycAddedPostResponse> call, Throwable t) {
 
             }
         });
-
-
-
     }
 
     public void closeDialog(Activity activity) {

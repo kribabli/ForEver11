@@ -7,7 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.PageAdapter;
@@ -86,10 +85,10 @@ public class ContestActivity extends AppCompatActivity {
         date_end = getIntent().getStringExtra("date_end");
         matchATv.setText(matchA);
         matchBTv.setText(matchB);
-        HelperData.logoUrlTeamA=logo_url_a;
-        HelperData.logoUrlTeamB=logo_url_b;
-        HelperData.MatchStartTime=date_start;
-        HelperData.MatchEndTime=date_end;
+        HelperData.logoUrlTeamA = logo_url_a;
+        HelperData.logoUrlTeamB = logo_url_b;
+        HelperData.MatchStartTime = date_start;
+        HelperData.MatchEndTime = date_end;
 
         tabLayout = findViewById(R.id.tabLayout);
         tabItem1 = findViewById(R.id.contests);
@@ -99,9 +98,6 @@ public class ContestActivity extends AppCompatActivity {
         matchList = findViewById(R.id.matchList);
         createTeam = findViewById(R.id.createTeam);
         createTeam1 = findViewById(R.id.createTeam1);
-
-
-
     }
 
     private void setAction() {
