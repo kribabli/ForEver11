@@ -2,19 +2,15 @@ package com.example.yoyoiq;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.yoyoiq.Adapter.MyCreatedTeamAdapter;
 import com.example.yoyoiq.Adapter.PageAdapterWinnings;
 import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
-import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.WalletPackage.AddCash;
 import com.example.yoyoiq.WalletPackage.ViewBalanceResponse;
@@ -25,8 +21,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,10 +32,10 @@ public class AddCashActivity extends AppCompatActivity {
     LinearLayout linearLayout, joinLinearLayout;
     SessionManager sessionManager;
     PageAdapterWinnings pageAdapterWinnings;
-    String total_prize, entryFee, totalSports, leftSports, winningPer, upTo, matchA, matchB, match_id, first_price, price_contribution,contestId;
+    String total_prize, entryFee, totalSports, leftSports, winningPer, upTo, matchA, matchB, match_id, first_price, price_contribution, contestId;
     TextView backPress, teamATv, teamBTv, walletTV;
     TextView total_prize1, entryFee1, totalSports1, leftSports1, winningPer1, upTo1, first_price1;
-    int balance=0;
+    int balance = 0;
     DatabaseConnectivity cmn = DatabaseConnectivity.getInstance();
 
     @Override
@@ -55,7 +49,7 @@ public class AddCashActivity extends AppCompatActivity {
 
         pageAdapterWinnings = new PageAdapterWinnings(getSupportFragmentManager(), tabLayout.getTabCount(), total_prize, entryFee, totalSports, leftSports, winningPer, upTo, match_id, first_price, price_contribution);
         viewPager.setAdapter(pageAdapterWinnings);
-        sessionManager=new SessionManager(getApplicationContext());
+        sessionManager = new SessionManager(getApplicationContext());
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -144,17 +138,17 @@ public class AddCashActivity extends AppCompatActivity {
                 .getInstance()
                 .getApi()
                 .getUserTeamCreated(HelperData.UserId, match_id);
-        cmn.setProgressDialog("","Loading Data...",AddCashActivity.this,AddCashActivity.this);
+        cmn.setProgressDialog("", "Loading Data...", AddCashActivity.this, AddCashActivity.this);
         call.enqueue(new Callback<CreatedTeamResponse>() {
             @Override
             public void onResponse(Call<CreatedTeamResponse> call, Response<CreatedTeamResponse> response) {
-                CreatedTeamResponse createdTeamResponse= response.body();
-                if(response.isSuccessful()){
+                CreatedTeamResponse createdTeamResponse = response.body();
+                if (response.isSuccessful()) {
                     cmn.closeDialog(AddCashActivity.this);
                     String totalData = new Gson().toJson(createdTeamResponse.getResponse());
-                    String data=new Gson().toJson(createdTeamResponse.getResponse());
-                    if(totalData.length()==2){
-                        Intent intent=new Intent(AddCashActivity.this,CreateTeamActivity.class);
+                    String data = new Gson().toJson(createdTeamResponse.getResponse());
+                    if (totalData.length() == 2) {
+                        Intent intent = new Intent(AddCashActivity.this, CreateTeamActivity.class);
                         intent.putExtra("match_id", match_id);
                         intent.putExtra("matchA", matchA);
                         intent.putExtra("matchB", matchB);
@@ -166,21 +160,17 @@ public class AddCashActivity extends AppCompatActivity {
                         finish();
                         JSONArray short_squads = null;
                         JSONArray jsonArray = null;
-                    }
-                    else{
-                        Intent intent=new Intent(AddCashActivity.this,SelectTeams.class);
-                        intent.putExtra("Match_id",match_id);
-                        intent.putExtra("Contest_id",contestId);
-                        intent.putExtra("EntryFee",entryFee);
-                        intent.putExtra("upto",upTo);
+                    } else {
+                        Intent intent = new Intent(AddCashActivity.this, SelectTeams.class);
+                        intent.putExtra("Match_id", match_id);
+                        intent.putExtra("Contest_id", contestId);
+                        intent.putExtra("EntryFee", entryFee);
+                        intent.putExtra("upto", upTo);
                         startActivity(intent);
-                        SelectTeams.ContestTeamId=null;
+                        SelectTeams.ContestTeamId = null;
                         finish();
                     }
-
-
                 }
-
             }
 
             @Override
@@ -191,26 +181,21 @@ public class AddCashActivity extends AppCompatActivity {
     }
 
     private void LoadBalanceData() {
-        Call<ViewBalanceResponse> call=ApiClient.getInstance().getApi().getBalanceDetails(sessionManager.getUserData().getUser_id());
+        Call<ViewBalanceResponse> call = ApiClient.getInstance().getApi().getBalanceDetails(sessionManager.getUserData().getUser_id());
         call.enqueue(new Callback<ViewBalanceResponse>() {
             @Override
             public void onResponse(Call<ViewBalanceResponse> call, Response<ViewBalanceResponse> response) {
-                ViewBalanceResponse viewBalanceResponse= response.body();
-                if(response.isSuccessful()){
-                    Log.d("Amit","Value Check3");
+                ViewBalanceResponse viewBalanceResponse = response.body();
+                if (response.isSuccessful()) {
 //                        balance= Integer.parseInt(viewBalanceResponse.getBalance());
-                    if(balance>=Integer.parseInt(entryFee)){
-
-
-
+                    if (balance >= Integer.parseInt(entryFee)) {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<ViewBalanceResponse> call, Throwable t) {
             }
         });
-
-
     }
 }

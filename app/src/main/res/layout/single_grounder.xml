@@ -58,8 +58,8 @@
 
     <TextView
         android:id="@+id/badgeTxtGoru"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:background="@drawable/button_red_colour_round"
         android:gravity="center"
         android:text="C"
@@ -69,8 +69,8 @@
 
     <TextView
         android:id="@+id/VCnameTv"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:background="@drawable/border2_black"
         android:gravity="center"
         android:text="VC"
