@@ -77,7 +77,10 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
                 intent.putExtra("logo_url_b", list.get(position).getLogo_url_b());
                 intent.putExtra("date_start", list.get(position).getDate_start());
                 intent.putExtra("date_end", list.get(position).getDate_end());
+                intent.putExtra("listdata", list.get(position).getSquads().toString());
+                intent.putExtra("CreatedTeamId", list.get(position).getTeamId());
                 context.startActivity(intent);
+
             });
         }
     }

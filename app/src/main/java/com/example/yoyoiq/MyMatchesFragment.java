@@ -101,6 +101,6 @@ public class MyMatchesFragment extends Fragment {
             public void run() {
                 viewPager.setAdapter(pagerAdapterLiveCompleted);
             }
-        }, 500);
+        }, 300);
     }
 }

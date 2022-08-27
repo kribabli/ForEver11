@@ -21,6 +21,7 @@
             android:weightSum="10">
 
             <ImageView
+                android:id="@+id/userProfile"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_gravity="center"
@@ -28,6 +29,7 @@
                 android:src="@drawable/ic_profile_pic" />
 
             <TextView
+                android:id="@+id/userName"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -43,6 +45,7 @@
                 android:layout_weight="5" />
 
             <TextView
+                android:id="@+id/userTotalPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -57,6 +60,7 @@
                 android:layout_weight="1" />
 
             <TextView
+                android:id="@+id/userRank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

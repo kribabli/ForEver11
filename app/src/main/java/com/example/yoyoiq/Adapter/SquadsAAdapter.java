@@ -3,6 +3,7 @@ package com.example.yoyoiq.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,9 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
         } else {
             Glide.with(context).load(HelperData.logoUrlTeamB).into(holder.playerImg);
         }
+        Log.d("Amit","Check Data "+listData.isSelected());
+
+
 
 
         /*please not Remove this commented code code*/
