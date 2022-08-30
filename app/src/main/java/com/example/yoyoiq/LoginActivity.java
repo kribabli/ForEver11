@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient gsc;
     EditText mobileNo, userPassword;
     TextView login, backPress;
-    DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
+    DatabaseConnectivity cmn=DatabaseConnectivity.getInstance();
     String password, alreadyRegisterMobile;
     SharedPrefManager sharedPrefManager;
     SessionManager sessionManager;
@@ -142,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void LoginValidationFromServer() {
+        cmn.setProgressDialog("","Please wait..",LoginActivity.this,LoginActivity.this);
         String mobile = mobileNo.getText().toString().trim();
         String password1 = userPassword.getText().toString().trim();
         Call<LoginResponse> call = ApiClient.getInstance().getApi().getUserLoginData(mobile, password1);
@@ -172,6 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
+                                cmn.closeDialog(LoginActivity.this);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

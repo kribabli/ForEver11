@@ -46,7 +46,8 @@ public class WKFragment extends Fragment {
     String nameA;
     String player_idA;
     public static String allTruePlayers = "";
-    Integer allselectedPlayerId=0;
+    Integer allselectedPlayerId;
+    ArrayList arrayList = new ArrayList();
 
     private String mParam1;
     private String mParam2;
@@ -96,10 +97,10 @@ public class WKFragment extends Fragment {
                 .getInstance()
                 .getApi()
                 .getMatchPlaying11(getArguments().getString("match_id"));
-
-
-
-
+        for(int k=0; k<allSelectedPlayer.size();k++){
+            String pid= String.valueOf(allSelectedPlayer.get(k).getPid());
+           arrayList.add(pid);
+        }
 
 
         call.enqueue(new Callback<ResponsePlayer>() {
@@ -118,7 +119,6 @@ public class WKFragment extends Fragment {
 
                     //----------------------for TeamB----------------------------
                     JSONObject jsonObjectTeamB = null;
-                    int allSelecetdPlayerId = 0;
                     try {
                         jsonObjectTeamB = new JSONObject(jsonArray1);
                         for (int i = 0; i < jsonObjectTeamB.length(); i++) {
@@ -179,7 +179,6 @@ public class WKFragment extends Fragment {
                     JSONArray teamSquadsA = null;
                     JSONArray teamSquadsB = null;
                     JSONArray teamsInformation = null;
-                    boolean isSelected=false;
                     try {
                         jsonArrayPlayers = new JSONArray(jsonArray3);
                         teamSquadsA = new JSONArray(SquadsA);
@@ -214,8 +213,10 @@ public class WKFragment extends Fragment {
                         }
 
                         for (int i = 0; i < jsonArrayPlayers.length(); i++) {
+                            boolean isSelected=false;
                             jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
                             pidPlayers = jsonObjectPlayers.getString("pid");
+
                             playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
                             if (playing_rolePlayers.equals("wk")) {
                                 short_namePlayers = jsonObjectPlayers.getString("short_name");
@@ -228,21 +229,16 @@ public class WKFragment extends Fragment {
                                 if (myMap.containsKey(pidPlayers)) {
                                     playing11A = myMap.get(pidPlayers);
                                 }
-                                for(int k=0;k<allSelectedPlayer.size();k++){
-                                    if(allSelectedPlayer.get(k).getPid()==Integer.parseInt(pidPlayers)){
-
-
-                                    }
-                                    Log.d("Amit","Check "+pidPlayers);
-
+                                if(arrayList.contains(pidPlayers)){
+                                    isSelected=true;
                                 }
 
                                 SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, isSelected);
                                 list.add(squadsA);
-                                squadsAAdapter = new SquadsAAdapter(getContext(), list);
                             }
 
                         }
+                        squadsAAdapter = new SquadsAAdapter(getContext(), list,allSelectedPlayer);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setAdapter(squadsAAdapter);
                         squadsAAdapter.notifyDataSetChanged();

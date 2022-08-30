@@ -10,17 +10,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.Adapter.ARAdapter;
+import com.example.yoyoiq.InSideContestActivityFragments.AllSelectedPlayerFromServer;
 import com.example.yoyoiq.Model.SquadsA;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -44,6 +47,8 @@ public class ARFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+    ArrayList arrayList = new ArrayList();
+    private List<AllSelectedPlayerFromServer> allSelectedPlayer = new ArrayList<>();
 
     public ARFragment() {
         // Required empty public constructor
@@ -78,10 +83,16 @@ public class ARFragment extends Fragment {
     }
 
     private void getAllPlayer() {
+        allSelectedPlayer=new Gson().fromJson(getArguments().getString("AllSelectedData"), new TypeToken<ArrayList<AllSelectedPlayerFromServer>>() {
+        }.getType());
         list.clear();
         listPlayerIdA.clear();
         matchA = getArguments().getString("matchA");
         matchB = getArguments().getString("matchB");
+        for(int k=0; k<allSelectedPlayer.size();k++){
+            String pid= String.valueOf(allSelectedPlayer.get(k).getPid());
+            arrayList.add(pid);
+        }
 
         Call<ResponsePlayer> call = ApiClient
                 .getInstance()
@@ -192,6 +203,7 @@ public class ARFragment extends Fragment {
                         }
 
                         for (int i = 0; i < jsonArrayPlayers.length(); i++) {
+                            boolean isSelected=false;
                             jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
                             pidPlayers = jsonObjectPlayers.getString("pid");
                             playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
@@ -206,9 +218,13 @@ public class ARFragment extends Fragment {
                                 if (myMap.containsKey(pidPlayers)) {
                                     playing11A = myMap.get(pidPlayers);
                                 }
-                                SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, false);
+                                if(arrayList.contains(pidPlayers)){
+                                    isSelected=true;
+
+                                }
+                                SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, isSelected);
                                 list.add(squadsA);
-                                arAdapter = new ARAdapter(getContext(), list);
+                                arAdapter = new ARAdapter(getContext(), list,allSelectedPlayer);
                             }
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

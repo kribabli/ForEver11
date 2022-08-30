@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.yoyoiq.CreateTeamActivity;
+import com.example.yoyoiq.InSideContestActivityFragments.AllSelectedPlayerFromServer;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.Model.SquadsA;
 import com.example.yoyoiq.R;
@@ -22,16 +23,19 @@ import com.example.yoyoiq.common.HelperData;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
     Context context;
     ArrayList<SquadsA> list;
     boolean isEnable = false;
     private int lastSelectedPosition = -1;
+    private List<AllSelectedPlayerFromServer> allSelectedPlayer = new ArrayList<>();
 
-    public ARAdapter(Context context, ArrayList<SquadsA> list) {
+    public ARAdapter(Context context, ArrayList<SquadsA> list, List<AllSelectedPlayerFromServer> allSelectedPlayer) {
         this.context = context;
         this.list = list;
+        this.allSelectedPlayer=allSelectedPlayer;
     }
 
     @NonNull
@@ -58,6 +62,41 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
         else{
             Glide.with(context).load(HelperData.logoUrlTeamB).into(holder.playerImg);
         }
+
+        if(allSelectedPlayer.size()>0) {
+            if (listData.isSelected() == true) {
+                if (HelperData.team1NameShort == listData.getAbbr()) {
+                    CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";
+                    HelperData.conty1.setValue(HelperData.conty1.getValue() + 1);
+                    HelperData.ar.setValue(HelperData.ar.getValue() + 1);
+                    HelperData.creditCounter.setValue(HelperData.creditCounter.getValue() - Double.valueOf(listData.getFantasy_player_rating()));
+                    HelperData.playerCounter.setValue(HelperData.playerCounter.getValue() + 1);
+                    holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
+                    holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
+                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()), HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "AR", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
+                    HelperData.allSelectedPlayer.setValue(Collections.singletonList(allSelectedPlayer));
+                    HelperData.myTeamList.add(allSelectedPlayer);
+                } else if (HelperData.team2NameShort == listData.getAbbr()) {
+                    CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";
+                    HelperData.conty2.setValue(HelperData.conty2.getValue() + 1);
+                    HelperData.ar.setValue(HelperData.ar.getValue() + 1);
+                    HelperData.creditCounter.setValue(HelperData.creditCounter.getValue() - Double.valueOf(listData.getFantasy_player_rating()));
+                    HelperData.playerCounter.setValue(HelperData.playerCounter.getValue() + 1);
+                    holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
+                    holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
+                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()), HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "AR", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
+                    HelperData.allSelectedPlayer.setValue(Collections.singletonList(allSelectedPlayer));
+                    HelperData.myTeamList.add(allSelectedPlayer);
+
+
+                }
+
+
+            }
+        }
+
+
+
 
         /*please not Remove this commented code code*/
 //        if(listData.getPlaying11()==false){

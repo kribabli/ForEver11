@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.yoyoiq.CreateTeamActivity;
+import com.example.yoyoiq.InSideContestActivityFragments.AllSelectedPlayerFromServer;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.Model.SquadsA;
 import com.example.yoyoiq.R;
@@ -24,16 +25,19 @@ import com.example.yoyoiq.common.HelperData;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHolder> {
     Context context;
     ArrayList<SquadsA> list;
     boolean isEnable = false;
     private int lastSelectedPosition = -1;
+    private List<AllSelectedPlayerFromServer> allSelectedPlayer = new ArrayList<>();
 
-    public SquadsAAdapter(Context context, ArrayList<SquadsA> list) {
+    public SquadsAAdapter(Context context, ArrayList<SquadsA> list,List<AllSelectedPlayerFromServer> allSelectedPlayer) {
         this.context = context;
         this.list = list;
+        this.allSelectedPlayer=allSelectedPlayer;
     }
 
     @NonNull
@@ -59,7 +63,43 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
         } else {
             Glide.with(context).load(HelperData.logoUrlTeamB).into(holder.playerImg);
         }
-        Log.d("Amit","Check Data "+listData.isSelected());
+        // for Team Edit Section only
+        if(allSelectedPlayer.size()>0) {
+            if (listData.isSelected() == true) {
+                if (HelperData.team1NameShort == listData.getAbbr()) {
+                    CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";
+                    HelperData.conty1.setValue(HelperData.conty1.getValue() + 1);
+                    HelperData.wk.setValue(HelperData.wk.getValue() + 1);
+                    HelperData.creditCounter.setValue(HelperData.creditCounter.getValue() - Double.valueOf(listData.getFantasy_player_rating()));
+                    HelperData.playerCounter.setValue(HelperData.playerCounter.getValue() + 1);
+                    holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
+                    holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
+                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()), HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "WK", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
+                    HelperData.allSelectedPlayer.setValue(Collections.singletonList(allSelectedPlayer));
+                    HelperData.myTeamList.add(allSelectedPlayer);
+                } else if (HelperData.team2NameShort == listData.getAbbr()) {
+                    CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";
+                    HelperData.conty2.setValue(HelperData.conty2.getValue() + 1);
+                    HelperData.wk.setValue(HelperData.wk.getValue() + 1);
+                    HelperData.creditCounter.setValue(HelperData.creditCounter.getValue() - Double.valueOf(listData.getFantasy_player_rating()));
+                    HelperData.playerCounter.setValue(HelperData.playerCounter.getValue() + 1);
+                    holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
+                    holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
+                    AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()), HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "WK", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
+                    HelperData.allSelectedPlayer.setValue(Collections.singletonList(allSelectedPlayer));
+                    HelperData.myTeamList.add(allSelectedPlayer);
+
+
+                }
+
+
+            }
+        }
+
+
+
+
+
 
 
 
@@ -69,6 +109,8 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
 //            holder.isPlaying.setText(" Not Playing");
 //            holder.isPlaying.setTextColor(Color.RED);
 //        }
+
+
 
         holder.cardViewSelected.setOnClickListener(view -> {
             if (CreateTeamActivity.addedPlayerIds.contains("_" + list.get(position).getPidPlayers() + "_")) {
@@ -90,6 +132,7 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
                 HelperData.allSelectedPlayer.getValue().remove(listData);
                 int index = HelperData.myTeamList.size() - 1;
                 HelperData.myTeamList.remove(index);
+
             } else {
                 if (HelperData.playerCounter.getValue() < HelperData.limit) {
                     if (HelperData.creditCounter.getValue() >= Double.valueOf(listData.getFantasy_player_rating())) {
@@ -138,12 +181,7 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
         });
     }
 
-    private boolean wkSelection() {
-        if (HelperData.selected.equalsIgnoreCase("wk")) {
-            return HelperData.wk.getValue() <= 4;
-        }
-        return false;
-    }
+
 
     @Override
     public int getItemCount() {

@@ -219,41 +219,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressLint("NonConstantResourceId")
     private void mBottomNavigationBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            boolean bool = false;
-            if (bottomNavigationView.getSelectedItemId() != item.getItemId()) {
-                switch (item.getItemId()) {
-                    case R.id.home:
-                        bool = true;
-                        selectedFragment = new HomeFragment();
-                        mainActivityLayout.setVisibility(View.GONE);
-                        break;
-                    case R.id.my_matches:
-                        bool = true;
-                        selectedFragment = new MyMatchesFragment();
-                        mainActivityLayout.setVisibility(View.GONE);
-                        break;
-                    case R.id.winners:
-                        bool = true;
-                        selectedFragment = new WinnersFragment();
-                        mainActivityLayout.setVisibility(View.GONE);
-                        break;
-                    case R.id.chat:
-                        bool = true;
-                        selectedFragment = new ChatFragment();
-                        mainActivityLayout.setVisibility(View.GONE);
-                        break;
-                    case R.id.rewards:
-                        bool = true;
-                        selectedFragment = new RewardsFragment();
-                        mainActivityLayout.setVisibility(View.GONE);
-                        break;
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                boolean bool = false;
+                if (bottomNavigationView.getSelectedItemId() != item.getItemId()) {
+                    switch (item.getItemId()) {
+                        case R.id.home:
+                            bool = true;
+                            selectedFragment = new HomeFragment();
+                            mainActivityLayout.setVisibility(View.GONE);
+                            break;
+                        case R.id.my_matches:
+                            bool = true;
+                            selectedFragment = new MyMatchesFragment();
+                            mainActivityLayout.setVisibility(View.GONE);
+                            break;
+                        case R.id.winners:
+                            bool = true;
+                            selectedFragment = new WinnersFragment();
+                            mainActivityLayout.setVisibility(View.GONE);
+                            break;
+                        case R.id.chat:
+                            bool = true;
+                            selectedFragment = new ChatFragment();
+                            mainActivityLayout.setVisibility(View.GONE);
+                            break;
+                        case R.id.rewards:
+                            bool = true;
+                            selectedFragment = new RewardsFragment();
+                            mainActivityLayout.setVisibility(View.GONE);
+                            break;
+                    }
                 }
+                if (selectedFragment != null) {
+                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+                }
+                return bool;
             }
-            if (selectedFragment != null) {
-                MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-            }
-            return bool;
         });
     }
 
