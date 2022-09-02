@@ -1,5 +1,6 @@
 package com.example.yoyoiq.Retrofit;
 
+import com.example.yoyoiq.BannerPOJO.Banner;
 import com.example.yoyoiq.ContestPOJO.Contests;
 import com.example.yoyoiq.CreatedTeamPOJO.CreatedTeamResponse;
 import com.example.yoyoiq.JoinContest.JoinContestsResponse;
@@ -17,7 +18,6 @@ import com.example.yoyoiq.WalletPackage.ViewTransactionHistoryResponse;
 
 import org.json.JSONObject;
 
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -28,6 +28,10 @@ public interface UsersServices {
 
     @GET("upcomingMatchesList")
     Call<UpcommingResponse> getMatch(
+    );
+
+    @GET("banner")
+    Call<Banner> getBanner(
     );
 
     @FormUrlEncoded
@@ -80,6 +84,7 @@ public interface UsersServices {
     Call<ViewBalanceResponse> getBalanceDetails(
             @Field("user_id") String user_id
     );
+
     @FormUrlEncoded
     @POST("viewkycdetail")
     Call<ViewKycResponse> getkycDetails(
