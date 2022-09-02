@@ -28,19 +28,27 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
+import com.shreyaspatil.EasyUpiPayment.EasyUpiPayment;
+import com.shreyaspatil.EasyUpiPayment.listener.PaymentStatusListener;
+import com.shreyaspatil.EasyUpiPayment.model.TransactionDetails;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddCash extends AppCompatActivity implements PaymentResultListener {
+public class AddCash extends AppCompatActivity implements  PaymentStatusListener {
     TextView addCash, backPress, myRecentPay, KYCDetails, notification, amountTv, bonusTv, withdrawTv, winningsTV;
     EditText amount;
     DatabaseConnectivity common = DatabaseConnectivity.getInstance();
@@ -48,13 +56,14 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     SharedPrefManager sharedPrefManager;
     SessionManager sessionManager;
     SwipeRefreshLayout swipeRefreshLayout;
-    String mobilenumber="";
-    String emailAddress="";
-    String staus1="";
-    String Pancard="";
-    String BankAccount="";
-    boolean status=false;
+    String mobilenumber = "";
+    String emailAddress = "";
+    String staus1 = "";
+    String Pancard = "";
+    String BankAccount = "";
+    boolean status = false;
     List<String> checkId = new ArrayList<>();
+    private EasyUpiPayment easyUpiPayment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,30 +78,28 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         loadBalanceDataFromServer();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
         setAction();
-
-
     }
 
     private void LoadKycData() {
-        Call<ViewKycResponse> call=ApiClient.getInstance().getApi().getkycDetails(sessionManager.getUserData().getUser_id());
+        Call<ViewKycResponse> call = ApiClient.getInstance().getApi().getkycDetails(sessionManager.getUserData().getUser_id());
         call.enqueue(new Callback<ViewKycResponse>() {
             @Override
             public void onResponse(Call<ViewKycResponse> call, Response<ViewKycResponse> response) {
-                ViewKycResponse viewKycResponse= response.body();
-                if(response.isSuccessful()){
-                    String data=new Gson().toJson(viewKycResponse.isStatus());
-                    status= Boolean.parseBoolean(data);
+                ViewKycResponse viewKycResponse = response.body();
+                if (response.isSuccessful()) {
+                    String data = new Gson().toJson(viewKycResponse.isStatus());
+                    status = Boolean.parseBoolean(data);
                     JSONArray jsonArray1 = null;
-                    if(status!=false){
-                        String data2=new Gson().toJson(viewKycResponse.getKycDetails());
+                    if (status != false) {
+                        String data2 = new Gson().toJson(viewKycResponse.getKycDetails());
                         try {
                             jsonArray1 = new JSONArray(data2);
-                            Log.d("Amit","Value Check "+jsonArray1);
-                            for(int i=0;i<jsonArray1.length(); i++){
+                            Log.d("Amit", "Value Check " + jsonArray1);
+                            for (int i = 0; i < jsonArray1.length(); i++) {
                                 JSONObject jsonObject = jsonArray1.getJSONObject(i);
-                                Pancard=jsonObject.getString("pancard_no");
-                                BankAccount=jsonObject.getString("account_no");
-                                staus1=jsonObject.getString("status");
+                                Pancard = jsonObject.getString("pancard_no");
+                                BankAccount = jsonObject.getString("account_no");
+                                staus1 = jsonObject.getString("status");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -100,6 +107,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<ViewKycResponse> call, Throwable t) {
             }
@@ -170,23 +178,21 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
 
         addCash.setOnClickListener(view -> addAmountValidation());
         KYCDetails.setOnClickListener(view -> {
-            if (status!=false) {
-                int validationStatus= Integer.parseInt(staus1);
-                if(validationStatus==3){
-                    common.showAlertDialog("Alert!","Please Upload Your Kyc Data Again",false,AddCash.this);
+            if (status != false) {
+                int validationStatus = Integer.parseInt(staus1);
+                if (validationStatus == 3) {
+                    common.showAlertDialog("Alert!", "Please Upload Your Kyc Data Again", false, AddCash.this);
                     Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
                     startActivity(intent1);
                     finish();
-                }
-                else{
+                } else {
                     Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
-                    intent.putExtra("Pancard",Pancard);
-                    intent.putExtra("BankAccount",BankAccount);
-                    intent.putExtra("status",staus1);
+                    intent.putExtra("Pancard", Pancard);
+                    intent.putExtra("BankAccount", BankAccount);
+                    intent.putExtra("status", staus1);
                     startActivity(intent);
                     finish();
                 }
-
             } else {
                 Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
                 startActivity(intent1);
@@ -196,6 +202,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     }
 
     private boolean addAmountValidation() {
+        String balance = amount.getText().toString();
         boolean isValid = true;
         try {
             if (amount.getText().toString().trim().length() == 0
@@ -205,12 +212,41 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
                 amount.requestFocus();
                 isValid = false;
             } else {
-                paymentMethod();
+//                paymentMethod();
+                UpiPaymentMethod();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return isValid;
+    }
+
+    private void UpiPaymentMethod() {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("ddMMyyyyHHmmss", Locale.getDefault());
+        String transcId = df.format(c);
+        Float balance = Float.parseFloat(amount.getText().toString());
+        DecimalFormat data1 = new DecimalFormat("0.00");
+        data1.setMaximumFractionDigits(2);
+
+        balance = Float.parseFloat(data1.format(balance));
+
+        try {
+            final EasyUpiPayment easyUpiPayment = new EasyUpiPayment.Builder()
+                    .with(this)
+                    .setPayeeVpa("Q038766212@ybl")
+                    .setPayeeName("YOYOIQ")
+                    .setTransactionId(transcId)
+                    .setTransactionRefId(transcId)
+                    .setDescription("YOYOIQ UPI")
+                    .setAmount(String.valueOf(balance))
+                    .build();
+            easyUpiPayment.startPayment();
+            easyUpiPayment.setPaymentStatusListener(this);
+
+        } catch (Exception e) {
+            e.toString();
+        }
     }
 
     private void paymentMethod() {
@@ -257,17 +293,41 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         });
     }
 
+
+
     @Override
-    public void onPaymentSuccess(String s) {
+    public void onTransactionCompleted(TransactionDetails transactionDetails) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Payment Successfully added..");
-        builder.setMessage(s);
+        builder.setMessage(transactionDetails.toString());
         builder.show();
-        sendBalanceServer(s);
+        sendBalanceServer(transactionDetails.getTransactionId());
+        Log.d("Amit","Check "+transactionDetails.getTransactionId());
+
     }
 
     @Override
-    public void onPaymentError(int i, String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    public void onTransactionSuccess() {
+        Toast.makeText(this, "Transaction successfully completed..", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTransactionSubmitted() {
+        Toast.makeText(this, "Transaction successfully submitted..", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTransactionFailed() {
+        Toast.makeText(this, "Transaction Failed..", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTransactionCancelled() {
+        Toast.makeText(this, "Transaction cancelled...", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAppNotFound() {
+        Toast.makeText(this, "App not found..", Toast.LENGTH_SHORT).show();
     }
 }
