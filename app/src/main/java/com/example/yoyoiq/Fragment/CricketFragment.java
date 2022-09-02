@@ -77,14 +77,15 @@ public class CricketFragment extends Fragment {
     }
 
     private void setAutoSliderBanner() {
-        listItems = new ArrayList<>();
-        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner2));
-        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner3));
-        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner4));
-        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner5));
-        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner6));
-        bannerAdapter = new BannerAdapter(getContext(), listItems);
-        bannerAdapter.notifyDataSetChanged();
+
+//        listItems = new ArrayList<>();
+//        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner2));
+//        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner3));
+//        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner4));
+//        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner5));
+//        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner6));
+//        bannerAdapter = new BannerAdapter(getContext(), listItems);
+//        bannerAdapter.notifyDataSetChanged();
     }
 
     private void getAllMatches() {
