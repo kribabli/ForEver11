@@ -3,6 +3,7 @@ package com.example.yoyoiq;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -180,8 +181,10 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     } else if (loginResponse.getData().trim().toString().equalsIgnoreCase("Username or password something went wrong")) {
                         showDialog("Invalid Mobile or Password", false);
+                        cmn.closeDialog(LoginActivity.this);
                     } else {
                         showDialog("Please Register YourSelf", false);
+                        cmn.closeDialog(LoginActivity.this);
                     }
                 }
             }
