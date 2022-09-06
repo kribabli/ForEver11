@@ -2,12 +2,11 @@ package com.example.yoyoiq.WalletPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -22,12 +21,8 @@ import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.example.yoyoiq.common.SharedPrefManager;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.razorpay.Checkout;
-import com.razorpay.PaymentResultListener;
 import com.shreyaspatil.EasyUpiPayment.EasyUpiPayment;
 import com.shreyaspatil.EasyUpiPayment.listener.PaymentStatusListener;
 import com.shreyaspatil.EasyUpiPayment.model.TransactionDetails;
@@ -48,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddCash extends AppCompatActivity implements  PaymentStatusListener {
+public class AddCash extends AppCompatActivity implements PaymentStatusListener {
     TextView addCash, backPress, myRecentPay, KYCDetails, notification, amountTv, bonusTv, withdrawTv, winningsTV;
     EditText amount;
     DatabaseConnectivity common = DatabaseConnectivity.getInstance();
@@ -56,14 +51,11 @@ public class AddCash extends AppCompatActivity implements  PaymentStatusListener
     SharedPrefManager sharedPrefManager;
     SessionManager sessionManager;
     SwipeRefreshLayout swipeRefreshLayout;
-    String mobilenumber = "";
-    String emailAddress = "";
-    String staus1 = "";
+    String status1 = "";
     String Pancard = "";
     String BankAccount = "";
     boolean status = false;
     List<String> checkId = new ArrayList<>();
-    private EasyUpiPayment easyUpiPayment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +65,6 @@ public class AddCash extends AppCompatActivity implements  PaymentStatusListener
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         sessionManager = new SessionManager(getApplicationContext());
         swipeRefreshLayout = new SwipeRefreshLayout(AddCash.this);
-        LoadKycData();
         initMethod();
         loadBalanceDataFromServer();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
@@ -94,17 +85,44 @@ public class AddCash extends AppCompatActivity implements  PaymentStatusListener
                         String data2 = new Gson().toJson(viewKycResponse.getKycDetails());
                         try {
                             jsonArray1 = new JSONArray(data2);
-                            Log.d("Amit", "Value Check " + jsonArray1);
                             for (int i = 0; i < jsonArray1.length(); i++) {
                                 JSONObject jsonObject = jsonArray1.getJSONObject(i);
                                 Pancard = jsonObject.getString("pancard_no");
                                 BankAccount = jsonObject.getString("account_no");
-                                staus1 = jsonObject.getString("status");
+                                status1 = jsonObject.getString("status");
                             }
+                            KYCDetails.setOnClickListener(view -> {
+                                if (status != false) {
+                                    int validationStatus = Integer.parseInt(status1);
+                                    if (validationStatus == 3) {
+                                        common.showAlertDialog("Alert!", "Please Upload Your Kyc Data Again", false, AddCash.this);
+                                        Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
+                                        startActivity(intent1);
+                                        finish();
+                                    } else {
+                                        Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
+                                        intent.putExtra("Pancard", Pancard);
+                                        intent.putExtra("BankAccount", BankAccount);
+                                        intent.putExtra("status", status1);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
+                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                    } else if (viewKycResponse.isStatus() == false) {
+                        KYCDetails.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
+                                startActivity(intent1);
+                                finish();
+                            }
+                        });
                     }
+                } else {
                 }
             }
 
@@ -112,8 +130,6 @@ public class AddCash extends AppCompatActivity implements  PaymentStatusListener
             public void onFailure(Call<ViewKycResponse> call, Throwable t) {
             }
         });
-
-
     }
 
     private void loadBalanceDataFromServer() {
@@ -151,6 +167,7 @@ public class AddCash extends AppCompatActivity implements  PaymentStatusListener
     }
 
     private void initMethod() {
+        LoadKycData();
         addCash = findViewById(R.id.addCash);
         amountTv = findViewById(R.id.amountTv);
         withdrawTv = findViewById(R.id.withdrawTv);
@@ -177,28 +194,6 @@ public class AddCash extends AppCompatActivity implements  PaymentStatusListener
         });
 
         addCash.setOnClickListener(view -> addAmountValidation());
-        KYCDetails.setOnClickListener(view -> {
-            if (status != false) {
-                int validationStatus = Integer.parseInt(staus1);
-                if (validationStatus == 3) {
-                    common.showAlertDialog("Alert!", "Please Upload Your Kyc Data Again", false, AddCash.this);
-                    Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
-                    startActivity(intent1);
-                    finish();
-                } else {
-                    Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
-                    intent.putExtra("Pancard", Pancard);
-                    intent.putExtra("BankAccount", BankAccount);
-                    intent.putExtra("status", staus1);
-                    startActivity(intent);
-                    finish();
-                }
-            } else {
-                Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
-                startActivity(intent1);
-                finish();
-            }
-        });
     }
 
     private boolean addAmountValidation() {
@@ -294,16 +289,19 @@ public class AddCash extends AppCompatActivity implements  PaymentStatusListener
     }
 
 
-
     @Override
     public void onTransactionCompleted(TransactionDetails transactionDetails) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Payment Successfully added..");
-        builder.setMessage(transactionDetails.toString());
-        builder.show();
-        sendBalanceServer(transactionDetails.getTransactionId());
-        Log.d("Amit","Check "+transactionDetails.getTransactionId());
-
+        if (transactionDetails.getStatus().equalsIgnoreCase("SUCCESS")) {
+            builder.setTitle("Payment Successfully added..");
+            builder.setMessage(transactionDetails.toString());
+            builder.show();
+            sendBalanceServer(transactionDetails.getTransactionId());
+        } else if (transactionDetails.getStatus().equalsIgnoreCase("Failed")) {
+            builder.setTitle("Payment Failed..");
+            builder.setMessage(transactionDetails.toString());
+            builder.show();
+        }
     }
 
     @Override

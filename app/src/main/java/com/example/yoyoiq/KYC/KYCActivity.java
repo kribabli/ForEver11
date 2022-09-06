@@ -1,29 +1,21 @@
 package com.example.yoyoiq.KYC;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.DatabaseConnectivity;
@@ -32,16 +24,9 @@ import com.example.yoyoiq.common.SessionManager;
 import com.example.yoyoiq.common.SharedPrefManager;
 import com.github.drjacky.imagepicker.ImagePicker;
 import com.github.drjacky.imagepicker.constant.ImageProvider;
-import com.github.drjacky.imagepicker.util.FileUriUtils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -52,16 +37,13 @@ import java.util.HashMap;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.internal.Intrinsics;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
-public class KYCActivity extends AppCompatActivity   {
+public class KYCActivity extends AppCompatActivity {
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
-    TextView backPress, camera1,date_of_birth;
-    EditText fullName, accountNo, retypeAccount, bankName, ifscCode, panCard, aadharNo,address_ed;
+    TextView backPress, camera1, date_of_birth;
+    EditText fullName, accountNo, retypeAccount, bankName, ifscCode, panCard, aadharNo, address_ed;
     Button submit;
-    DatabaseConnectivity common=DatabaseConnectivity.getInstance();
+    DatabaseConnectivity common = DatabaseConnectivity.getInstance();
     SharedPrefManager sharedPrefManager;
     String loggedInUserNumber;
     ImageView imageViewPan;
@@ -72,7 +54,7 @@ public class KYCActivity extends AppCompatActivity   {
     SessionManager sessionManager;
     private DatePickerDialog datePickerDialog;
     private Boolean clickable = true;
-    String date="",year="",month="";
+    String date = "", year = "", month = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +63,7 @@ public class KYCActivity extends AppCompatActivity   {
         initMethod();
         setAction();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
-        sessionManager=new SessionManager(getApplicationContext());
+        sessionManager = new SessionManager(getApplicationContext());
 
     }
 
@@ -113,14 +95,13 @@ public class KYCActivity extends AppCompatActivity   {
         submit.setOnClickListener(view -> buttonValidation());
 
         date_of_birth.setOnClickListener(view -> {
-            if(clickable){
-                clickable=false;
+            if (clickable) {
+                clickable = false;
                 final Calendar calender = Calendar.getInstance();
                 int years = calender.get(Calendar.YEAR);
                 int monthInt = calender.get(Calendar.MONTH);
                 int day = calender.get(Calendar.DAY_OF_MONTH);
                 datePickerDialog = new DatePickerDialog(KYCActivity.this, (view1, years1, monthsOfYear, dayOfMonths) -> {
-
                     year = "" + years1;
                     date = (dayOfMonths + "-" + (monthsOfYear + 1) + "-" + year);
                     try {
@@ -130,47 +111,38 @@ public class KYCActivity extends AppCompatActivity   {
                     }
                     try {
                         month = new SimpleDateFormat("MMMM").format(new SimpleDateFormat("yyyy-MM-dd").parse(date));
-
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-
                     date_of_birth.setText(date);
                     clickable = true;
                 }, years, monthInt, day);
                 datePickerDialog.show();
-
-
             }
-
-
         });
     }
 
     private void callCamera() {
         code = "panImage";
         ImagePicker.Companion.with(KYCActivity.this).crop().cropFreeStyle().
-                maxResultSize(1080,1080,true).provider(ImageProvider.BOTH).createIntentFromDialog((Function1)(new Function1(){
-            public Object invoke(Object var1) {
-                this.invoke((Intent) var1);
-                return Unit.INSTANCE;
-            }
+                maxResultSize(1080, 1080, true).provider(ImageProvider.BOTH).createIntentFromDialog((Function1) (new Function1() {
+                    public Object invoke(Object var1) {
+                        this.invoke((Intent) var1);
+                        return Unit.INSTANCE;
+                    }
 
-            public final void invoke(@NotNull Intent it) {
-                Intrinsics.checkNotNullParameter(it, "it");
-                launcher.launch(it);
-            }
-        }));
-
-
+                    public final void invoke(@NotNull Intent it) {
+                        Intrinsics.checkNotNullParameter(it, "it");
+                        launcher.launch(it);
+                    }
+                }));
     }
-
 
     ActivityResultLauncher<Intent> launcher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
                 if (result.getResultCode() == RESULT_OK) {
                     Uri uri = result.getData().getData();
-                    pan_image_path= String.valueOf(uri);
+                    pan_image_path = String.valueOf(uri);
                     InputStream inputStream = null;
                     try {
                         inputStream = getContentResolver().openInputStream(result.getData().getData());
@@ -196,19 +168,15 @@ public class KYCActivity extends AppCompatActivity   {
                 accountNo.setError("Please enter account no.");
                 accountNo.requestFocus();
                 isValid = false;
-            }
-            else if (accountNo.getText().toString().trim().length() <=10) {
+            } else if (accountNo.getText().toString().trim().length() <= 10) {
                 accountNo.setError("Please enter correct account no.");
                 accountNo.requestFocus();
                 isValid = false;
-            }
-            else if(date_of_birth.getText().toString().length()==0){
+            } else if (date_of_birth.getText().toString().length() == 0) {
                 date_of_birth.setError("Please enter correct account no.");
                 date_of_birth.requestFocus();
                 isValid = false;
-
-            }
-            else if (retypeAccount.getText().toString().trim().length() == 0
+            } else if (retypeAccount.getText().toString().trim().length() == 0
                     || retypeAccount.getText().toString().trim() == accountNo.getText().toString().trim()) {
                 retypeAccount.setError("Re-Enter account no.");
                 retypeAccount.requestFocus();
@@ -217,48 +185,39 @@ public class KYCActivity extends AppCompatActivity   {
                 bankName.setError("Please enter Bank Name");
                 bankName.requestFocus();
                 isValid = false;
-            }
-            else if (address_ed.getText().toString().trim().length() == 0) {
+            } else if (address_ed.getText().toString().trim().length() == 0) {
                 address_ed.setError("Please enter address ");
                 address_ed.requestFocus();
                 isValid = false;
-            }
-
-            else if (ifscCode.getText().toString().trim().length() == 0) {
+            } else if (ifscCode.getText().toString().trim().length() == 0) {
                 ifscCode.setError("Please enter IFSC Code");
                 ifscCode.requestFocus();
                 isValid = false;
-            }
-            else if (ifscCode.getText().toString().trim().length() <= 10) {
+            } else if (ifscCode.getText().toString().trim().length() <= 10) {
                 ifscCode.setError("Please enter correct IFSC Code");
                 ifscCode.requestFocus();
                 isValid = false;
-            }
-            else if (panCard.getText().toString().trim().length() == 0) {
+            } else if (panCard.getText().toString().trim().length() == 0) {
                 panCard.setError("Please enter PANCard No.");
                 panCard.requestFocus();
                 isValid = false;
-            }
-            else if (panCard.getText().toString().trim().length() <10) {
+            } else if (panCard.getText().toString().trim().length() < 10) {
                 panCard.setError("Please enter correct PANCard No.");
                 panCard.requestFocus();
                 isValid = false;
-            }
-            else if (imageViewPan.getDrawable() == null) {
+            } else if (imageViewPan.getDrawable() == null) {
                 common.showAlertDialog("Alert", "Click Picture of PANCard", false, this);
                 isValid = false;
             } else if (aadharNo.getText().toString().trim().length() == 0) {
                 aadharNo.setError("Please enter Aadhar");
                 aadharNo.requestFocus();
                 isValid = false;
-            }
-            else if (aadharNo.getText().toString().trim().length() >12) {
+            } else if (aadharNo.getText().toString().trim().length() > 12) {
                 aadharNo.setError("Please enter correct Aadhar");
                 aadharNo.requestFocus();
                 isValid = false;
-            }
-            else {
-                common.setProgressDialog("","Loading..",KYCActivity.this,KYCActivity.this);
+            } else {
+                common.setProgressDialog("", "Loading..", KYCActivity.this, KYCActivity.this);
                 send_kyc_Details_OnServer();
             }
         } catch (Exception e) {
@@ -268,8 +227,8 @@ public class KYCActivity extends AppCompatActivity   {
     }
 
     private void send_kyc_Details_OnServer() {
-        HelperData.uploadFile(KYCActivity.this,sessionManager.getUserData().getUser_id(),fullName.getText().toString(),accountNo.getText().toString(),
-                ifscCode.getText().toString(),bankName.getText().toString(),date_of_birth.getText().toString(),address_ed.getText().toString(),aadharNo.getText().toString(),panCard.getText().toString(),pan_image_path);
+        HelperData.uploadFile(KYCActivity.this, sessionManager.getUserData().getUser_id(), fullName.getText().toString(), accountNo.getText().toString(),
+                ifscCode.getText().toString(), bankName.getText().toString(), date_of_birth.getText().toString(), address_ed.getText().toString(), aadharNo.getText().toString(), panCard.getText().toString(), pan_image_path);
         common.closeDialog(KYCActivity.this);
         showDialog("Details Saved..", true);
         fullName.setText("");
@@ -279,7 +238,6 @@ public class KYCActivity extends AppCompatActivity   {
         ifscCode.setText("");
         panCard.setText("");
         aadharNo.setText("");
-
     }
 
     private void insertKYCDetails() {
@@ -316,6 +274,4 @@ public class KYCActivity extends AppCompatActivity   {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
-
 }

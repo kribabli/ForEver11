@@ -19,22 +19,21 @@ import com.google.firebase.database.ValueEventListener;
 public class ShowKYCDetails extends AppCompatActivity {
     TextView mobileNo, emailId, panCardNo, bankAccountNo, backPress, mobileStatus, emailStatus, panStatus, accountStatus;
     SharedPrefManager sharedPrefManager;
-    DatabaseConnectivity common=DatabaseConnectivity.getInstance();
+    DatabaseConnectivity common = DatabaseConnectivity.getInstance();
     String loggedInUserNumber, loggedInUserEmail;
     String status;
     SharedPreferences sharedPreferences;
     SessionManager sessionManager;
-    String Pancard="";
-    String BankAccount="";
-    private TextView emailId1;
+    String Pancard = "";
+    String BankAccount = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_kycdetails);
         sharedPreferences = getSharedPreferences("path", MODE_PRIVATE);
-        sessionManager=new SessionManager(getApplicationContext());
-        common.setProgressDialog("","Loading..",ShowKYCDetails.this,ShowKYCDetails.this);
+        sessionManager = new SessionManager(getApplicationContext());
+        common.setProgressDialog("", "Loading..", ShowKYCDetails.this, ShowKYCDetails.this);
         initMethod();
         setAction();
         showKYCDetails();
@@ -53,9 +52,9 @@ public class ShowKYCDetails extends AppCompatActivity {
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
         loggedInUserEmail = sharedPrefManager.getUserData().getEmailId();
-        Pancard=getIntent().getStringExtra("Pancard");
-        BankAccount=getIntent().getStringExtra("BankAccount");
-        status= getIntent().getStringExtra("status");
+        Pancard = getIntent().getStringExtra("Pancard");
+        BankAccount = getIntent().getStringExtra("BankAccount");
+        status = getIntent().getStringExtra("status");
     }
 
     private void setAction() {
@@ -63,28 +62,26 @@ public class ShowKYCDetails extends AppCompatActivity {
     }
 
     private void showKYCDetails() {
-        int validation= Integer.parseInt(status);
-        if(validation==1){
+        int validation = Integer.parseInt(status);
+        if (validation == 1) {
             mobileStatus.setTextColor(Color.parseColor("#ECBD15"));
             mobileStatus.setText("Pending");
-            mobileNo.setText(""+sessionManager.getUserData().getMobileNo());
-            emailId.setText(""+sessionManager.getUserData().getEmailId());
-            panCardNo.setText(""+Pancard);
-            bankAccountNo.setText(""+BankAccount);
+            mobileNo.setText("" + sessionManager.getUserData().getMobileNo());
+            emailId.setText("" + sessionManager.getUserData().getEmailId());
+            panCardNo.setText("" + Pancard);
+            bankAccountNo.setText("" + BankAccount);
             emailStatus.setTextColor(Color.parseColor("#ECBD15"));
             emailStatus.setText("Pending");
             panStatus.setTextColor(Color.parseColor("#ECBD15"));
             panStatus.setText("Pending");
             accountStatus.setTextColor(Color.parseColor("#ECBD15"));
             accountStatus.setText("Pending");
-
-        }
-        else  if(validation==2){
+        } else if (validation == 2) {
             mobileStatus.setTextColor(Color.parseColor("#109E38"));
-            mobileNo.setText(""+sessionManager.getUserData().getMobileNo());
-            emailId.setText(""+sessionManager.getUserData().getEmailId());
-            panCardNo.setText(""+Pancard);
-            bankAccountNo.setText(""+BankAccount);
+            mobileNo.setText("" + sessionManager.getUserData().getMobileNo());
+            emailId.setText("" + sessionManager.getUserData().getEmailId());
+            panCardNo.setText("" + Pancard);
+            bankAccountNo.setText("" + BankAccount);
             mobileStatus.setText("Verified");
             emailStatus.setTextColor(Color.parseColor("#109E38"));
             emailStatus.setText("Verified");
@@ -92,14 +89,9 @@ public class ShowKYCDetails extends AppCompatActivity {
             panStatus.setText("Verified");
             accountStatus.setTextColor(Color.parseColor("#109E38"));
             accountStatus.setText("Verified");
+        } else {
+            common.showAlertDialog("Alert!", "Please Upload Your Kyc Data Again", false, ShowKYCDetails.this);
         }
-        else{
-            common.showAlertDialog("Alert!","Please Upload Your Kyc Data Again",false,ShowKYCDetails.this);
-
-        }
-
-
-
 
 //        databaseConnectivity.getDatabasePath(ShowKYCDetails.this).child("KYCDetails")
 //                .addListenerForSingleValueEvent(new ValueEventListener() {
