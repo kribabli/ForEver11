@@ -13,6 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.yoyoiq.R;
 
@@ -20,13 +21,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LeaderboardFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-    String url = "https://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=get_leaderboard_users";
+    String url = "http://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=get_leaderboard_users";
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -66,32 +68,28 @@ public class LeaderboardFragment extends Fragment {
 
     private void getLeaderBoardData(String match_id, String contest_id) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("match_id", match_id);
-        jsonObject.put("contest_id", contest_id);
+        StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
 
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("match_id", match_id);
-        hashMap.put("contest_id", contest_id);
+            @Override
+            public void onResponse(String response) {
+                Log.d("Amit","Value "+response);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("TAG", "onResponse: " + response);
-                        try {
-                            if (response.getString("Result").equalsIgnoreCase("true")) {
-                                JSONObject jsonObject1 = new JSONObject(String.valueOf(response.getJSONObject("UserLogin")));
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("Amit","Value "+error);
+
             }
-        });
-        queue.add(jsonObjectRequest);
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("match_id",match_id);
+                params.put("contest_id",contest_id);
+                return params;
+            }
+        };
+        queue.add(request);
     }
 }
