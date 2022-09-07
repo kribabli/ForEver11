@@ -176,7 +176,7 @@ public class LeaderboardFragment extends Fragment {
             holder.setIsRecyclable(false);
             holder.userName.setText(listData.getName());
             holder.userTotalPoints.setText(String.valueOf(listData.getTotal_points()));
-            holder.userRank.setText(String.valueOf(listData.getRank()));
+            holder.userRank.setText("# "+String.valueOf(listData.getRank()));
         }
 
         @Override
