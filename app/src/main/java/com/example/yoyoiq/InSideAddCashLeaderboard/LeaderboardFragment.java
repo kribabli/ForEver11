@@ -1,25 +1,35 @@
 package com.example.yoyoiq.InSideAddCashLeaderboard;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.yoyoiq.Model.LeaderboardPOJO;
 import com.example.yoyoiq.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +38,11 @@ public class LeaderboardFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
+    String match_id1, contest_id1;
+    String match_id, contest_id;
+    RecyclerView recyclerView;
+    ArrayList<LeaderboardPOJO> listItems = new ArrayList<>();
+    SwipeRefreshLayout swipeRefreshLayout;
     String url = "http://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=get_leaderboard_users";
 
     public LeaderboardFragment() {
@@ -46,50 +61,149 @@ public class LeaderboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            String match_id = String.valueOf(53334);
-            String contest_id = String.valueOf(227);
-
-            getLeaderBoardData(match_id, contest_id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
+    LeaderBoardAdapter leaderBoardAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        recyclerView = root.findViewById(R.id.recyclerView);
+        swipeRefreshLayout = root.findViewById(R.id.swiper);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                try {
+                    getLeaderBoardData(match_id, contest_id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return root;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            try {
+                match_id1 = getArguments().getString("match_id");
+                contest_id1 = getArguments().getString("contestId");
+                match_id = String.valueOf(match_id1);
+                contest_id = String.valueOf(contest_id1);
+                getLeaderBoardData(match_id, contest_id);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void getLeaderBoardData(String match_id, String contest_id) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
-
             @Override
             public void onResponse(String response) {
-                Log.d("Amit","Value "+response);
+                JSONArray jsonArray1 = new JSONArray();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    jsonArray1 = jsonObject.getJSONArray("users");
+                    for (int i = 0; i < jsonArray1.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
+                        Log.d("TAG", "onResponse: " + jsonArray1);
+                        String id = jsonObject1.getString("id");
+                        String user_id = jsonObject1.getString("user_id");
+                        String team_id = jsonObject1.getString("team_id");
+                        String match_id = jsonObject1.getString("match_id");
+                        String contest_id = jsonObject1.getString("contest_id");
+                        String date_time = jsonObject1.getString("date_time");
+                        String name = jsonObject1.getString("name");
+                        String mobile = jsonObject1.getString("mobile");
+                        int rank = Integer.parseInt(jsonObject1.getString("rank"));
+                        int total_points = Integer.parseInt(jsonObject1.getString("total_points"));
+                        Log.d("TAG", "onResponse44: " + rank);
 
+                        LeaderboardPOJO leaderboardPOJO = new LeaderboardPOJO(id, user_id, team_id, match_id, contest_id, date_time, name, mobile, rank, total_points);
+                        listItems.add(leaderboardPOJO);
+                    }
+                    leaderBoardAdapter = new LeaderBoardAdapter(getContext(), listItems);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(leaderBoardAdapter);
+                    leaderBoardAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Amit","Value "+error);
-
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("match_id",match_id);
-                params.put("contest_id",contest_id);
+                params.put("match_id", match_id);
+                params.put("contest_id", contest_id);
                 return params;
             }
         };
         queue.add(request);
+    }
+
+
+    public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.MyViewHolder> {
+        Context context;
+        ArrayList<LeaderboardPOJO> list;
+
+        public LeaderBoardAdapter(Context context, ArrayList<LeaderboardPOJO> list) {
+            this.context = context;
+            this.list = list;
+        }
+
+        @NonNull
+        @Override
+        public LeaderBoardAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.leaderboard_user_ranking_list, parent, false);
+            return new MyViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull LeaderBoardAdapter.MyViewHolder holder, int position) {
+            LeaderboardPOJO listData = list.get(position);
+//            holder.setIsRecyclable(false);
+
+            holder.userName.setText(listData.getName());
+            holder.userTotalPoints.setText(listData.getTotal_points());
+            holder.userRank.setText(listData.getRank());
+
+            Log.d("TAG", "onBindViewHolder: " + list.size());
+
+//            holder.userName.setText(list.get(position).getName());
+//            holder.userTotalPoints.setText(list.get(position).getTotal_points());
+//            holder.userRank.setText(list.get(position).getRank());
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+            TextView userName, userTotalPoints, userRank;
+            ImageView userProfile;
+
+            public MyViewHolder(@NonNull View itemView) {
+                super(itemView);
+                userProfile = itemView.findViewById(R.id.userProfile);
+                userName = itemView.findViewById(R.id.userName);
+                userRank = itemView.findViewById(R.id.userRank);
+                userTotalPoints = itemView.findViewById(R.id.userTotalPoints);
+            }
+        }
     }
 }
