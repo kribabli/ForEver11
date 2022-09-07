@@ -19,6 +19,8 @@ import com.example.yoyoiq.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 public class LeaderboardFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -43,7 +45,10 @@ public class LeaderboardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            getLeaderBoardData("53334","227");
+            String match_id = String.valueOf(53334);
+            String contest_id = String.valueOf(227);
+
+            getLeaderBoardData(match_id, contest_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -62,14 +67,18 @@ public class LeaderboardFragment extends Fragment {
     private void getLeaderBoardData(String match_id, String contest_id) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("match_id", 53334);
-        jsonObject.put("contest_id", 227);
+        jsonObject.put("match_id", match_id);
+        jsonObject.put("contest_id", contest_id);
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("match_id", match_id);
+        hashMap.put("contest_id", contest_id);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("TAG", "onResponse: "+response);
+                        Log.d("TAG", "onResponse: " + response);
                         try {
                             if (response.getString("Result").equalsIgnoreCase("true")) {
                                 JSONObject jsonObject1 = new JSONObject(String.valueOf(response.getJSONObject("UserLogin")));
