@@ -13,11 +13,15 @@ import com.example.yoyoiq.InSideAddCashLeaderboard.WinningFragment;
 public class PageAdapterLeaderboard extends FragmentPagerAdapter {
     int tabCount;
     String price_contribution = "";
+    String match_id = "";
+    String contest_id = "";
 
-    public PageAdapterLeaderboard(@NonNull FragmentManager fm, int behavior, String price_contribution) {
+    public PageAdapterLeaderboard(@NonNull FragmentManager fm, int behavior, String price_contribution, String match_id, String contest_id) {
         super(fm, behavior);
         tabCount = behavior;
         this.price_contribution = price_contribution;
+        this.match_id = match_id;
+        this.contest_id = contest_id;
     }
 
     @NonNull
@@ -31,7 +35,12 @@ public class PageAdapterLeaderboard extends FragmentPagerAdapter {
                 winningFragment.setArguments(bundle);
                 return winningFragment;
             case 1:
-                return new LeaderboardFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("match_id", match_id);
+                bundle1.putString("contestId", contest_id);
+                LeaderboardFragment leaderboardFragment = new LeaderboardFragment();
+                leaderboardFragment.setArguments(bundle1);
+                return leaderboardFragment;
             default:
                 return null;
         }

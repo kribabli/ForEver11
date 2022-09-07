@@ -3,7 +3,6 @@ package com.example.yoyoiq.InSideAddCashLeaderboard;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,6 +104,7 @@ public class LeaderboardFragment extends Fragment {
     }
 
     private void getLeaderBoardData(String match_id, String contest_id) throws JSONException {
+        listItems.clear();
         RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
             @Override
@@ -115,7 +115,6 @@ public class LeaderboardFragment extends Fragment {
                     jsonArray1 = jsonObject.getJSONArray("users");
                     for (int i = 0; i < jsonArray1.length(); i++) {
                         JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
-                        Log.d("TAG", "onResponse: " + jsonArray1);
                         String id = jsonObject1.getString("id");
                         String user_id = jsonObject1.getString("user_id");
                         String team_id = jsonObject1.getString("team_id");
@@ -126,7 +125,6 @@ public class LeaderboardFragment extends Fragment {
                         String mobile = jsonObject1.getString("mobile");
                         int rank = Integer.parseInt(jsonObject1.getString("rank"));
                         int total_points = Integer.parseInt(jsonObject1.getString("total_points"));
-                        Log.d("TAG", "onResponse44: " + rank);
 
                         LeaderboardPOJO leaderboardPOJO = new LeaderboardPOJO(id, user_id, team_id, match_id, contest_id, date_time, name, mobile, rank, total_points);
                         listItems.add(leaderboardPOJO);
@@ -173,19 +171,12 @@ public class LeaderboardFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull LeaderBoardAdapter.MyViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull LeaderBoardAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
             LeaderboardPOJO listData = list.get(position);
-//            holder.setIsRecyclable(false);
-
+            holder.setIsRecyclable(false);
             holder.userName.setText(listData.getName());
-            holder.userTotalPoints.setText(listData.getTotal_points());
-            holder.userRank.setText(listData.getRank());
-
-            Log.d("TAG", "onBindViewHolder: " + list.size());
-
-//            holder.userName.setText(list.get(position).getName());
-//            holder.userTotalPoints.setText(list.get(position).getTotal_points());
-//            holder.userRank.setText(list.get(position).getRank());
+            holder.userTotalPoints.setText(String.valueOf(listData.getTotal_points()));
+            holder.userRank.setText(String.valueOf(listData.getRank()));
         }
 
         @Override

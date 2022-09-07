@@ -25,7 +25,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         initMethod();
         setAction();
 
-        pageAdapterLeaderboard = new PageAdapterLeaderboard(getSupportFragmentManager(), tabLayout.getTabCount(), price_contribution);
+        pageAdapterLeaderboard = new PageAdapterLeaderboard(getSupportFragmentManager(), tabLayout.getTabCount(), price_contribution, match_id, contest_id);
         viewPager.setAdapter(pageAdapterLeaderboard);
         sessionManager = new SessionManager(getApplicationContext());
 
