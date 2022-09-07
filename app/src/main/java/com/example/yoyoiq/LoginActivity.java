@@ -3,13 +3,11 @@ package com.example.yoyoiq;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +15,7 @@ import com.example.yoyoiq.LoginPojo.LoginResponse;
 import com.example.yoyoiq.LoginPojo.userLoginData;
 import com.example.yoyoiq.Model.UserData;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.example.yoyoiq.UpdatePassword.ChangePasswordActivity;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
@@ -28,16 +27,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -50,13 +45,10 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     EditText mobileNo, userPassword;
-    TextView login, backPress;
-    DatabaseConnectivity cmn=DatabaseConnectivity.getInstance();
-    String password, alreadyRegisterMobile;
+    TextView login, backPress, changePassword;
+    DatabaseConnectivity cmn = DatabaseConnectivity.getInstance();
     SharedPrefManager sharedPrefManager;
     SessionManager sessionManager;
-    ArrayList<String> allPhoneNumber = new ArrayList<>();
-    ArrayList<String> allPassword = new ArrayList<>();
     List<userLoginData> list;
     SharedPreferences sharedPreferences;
 
@@ -81,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         mobileNo = findViewById(R.id.mobileNo);
         userPassword = findViewById(R.id.userPassword);
         login = findViewById(R.id.login);
+        changePassword = findViewById(R.id.changePassword);
         backPress = findViewById(R.id.backPress);
     }
 
@@ -90,6 +83,11 @@ public class LoginActivity extends AppCompatActivity {
         backPress.setOnClickListener(view -> onBackPressed());
 
         sign_in_button.setOnClickListener(v -> signIn());
+
+        changePassword.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ChangePasswordActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void signIn() {
@@ -113,12 +111,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void navigateToSecondActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("checkData",true);
+        intent.putExtra("checkData", true);
         startActivity(intent);
         finish();
     }
-
-
 
     private boolean dataValidation() {
         boolean isValid = true;
@@ -143,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void LoginValidationFromServer() {
-        cmn.setProgressDialog("","Please wait..",LoginActivity.this,LoginActivity.this);
+        cmn.setProgressDialog("", "Please wait..", LoginActivity.this, LoginActivity.this);
         String mobile = mobileNo.getText().toString().trim();
         String password1 = userPassword.getText().toString().trim();
         Call<LoginResponse> call = ApiClient.getInstance().getApi().getUserLoginData(mobile, password1);
@@ -194,8 +190,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     public void showDialog(String message, Boolean isFinish) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
