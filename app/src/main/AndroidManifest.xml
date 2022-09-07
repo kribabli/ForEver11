@@ -18,6 +18,9 @@
         android:theme="@style/Theme.YoYoIq"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UpdatePassword.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".WalletPackage.UPIActivity"
             android:exported="false" />
         <activity
