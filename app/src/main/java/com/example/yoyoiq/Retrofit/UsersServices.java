@@ -11,6 +11,7 @@ import com.example.yoyoiq.LoginPojo.RegistrationResponse;
 import com.example.yoyoiq.OnlyMyContestPOJO.MyContest1;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
+import com.example.yoyoiq.UpdatePassword.UpdatePassword;
 import com.example.yoyoiq.WalletPackage.ContestJoinResponse;
 import com.example.yoyoiq.WalletPackage.PostBalanceResponse;
 import com.example.yoyoiq.WalletPackage.ViewBalanceResponse;
@@ -80,6 +81,13 @@ public interface UsersServices {
     );
 
     @FormUrlEncoded
+    @POST("changepasword")
+    Call<UpdatePassword> upDatePassword(
+            @Field("mobile") String mobile,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
     @POST("viewbalance")
     Call<ViewBalanceResponse> getBalanceDetails(
             @Field("user_id") String user_id
@@ -89,14 +97,12 @@ public interface UsersServices {
     @POST("viewkycdetail")
     Call<ViewKycResponse> getkycDetails(
             @Field("user_id") String user_id
-
     );
 
     @FormUrlEncoded
     @POST("viewtransection")
     Call<ViewTransactionHistoryResponse> getTransactionDetails(
             @Field("user_id") String user_id
-
     );
 
     @FormUrlEncoded
