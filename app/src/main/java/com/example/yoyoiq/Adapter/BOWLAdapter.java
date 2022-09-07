@@ -32,10 +32,10 @@ public class BOWLAdapter extends RecyclerView.Adapter<BOWLAdapter.MyViewHolder> 
     private int lastSelectedPosition = -1;
     private List<AllSelectedPlayerFromServer> allSelectedPlayer = new ArrayList<>();
 
-    public BOWLAdapter(Context context, ArrayList<SquadsA> list,List<AllSelectedPlayerFromServer> allSelectedPlayer) {
+    public BOWLAdapter(Context context, ArrayList<SquadsA> list, List<AllSelectedPlayerFromServer> allSelectedPlayer) {
         this.context = context;
         this.list = list;
-        this.allSelectedPlayer=allSelectedPlayer;
+        this.allSelectedPlayer = allSelectedPlayer;
     }
 
     @NonNull
@@ -52,18 +52,24 @@ public class BOWLAdapter extends RecyclerView.Adapter<BOWLAdapter.MyViewHolder> 
         holder.playerCredit.setText(listData.getFantasy_player_rating());
         holder.country.setText(listData.getAbbr());
 
+        if (CreateTeamActivity.addedPlayerIds.contains("" + list.get(position).getPidPlayers() + "")) {
+            holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
+            holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
+        } else {
+            holder.cardViewSelected.setBackgroundColor(Color.WHITE);
+            holder.im_AddPlayer.setImageResource(R.drawable.plus_icon);
+        }
+
         if (listData.getPlaying11() == true) {
             holder.isPlaying.setText("Playing");
         }
-        if(listData.getAbbr()==HelperData.team1NameShort){
+        if (listData.getAbbr() == HelperData.team1NameShort) {
             Glide.with(context).load(HelperData.logoUrlTeamA).into(holder.playerImg);
-
-        }
-        else{
+        } else {
             Glide.with(context).load(HelperData.logoUrlTeamB).into(holder.playerImg);
         }
 
-        if(allSelectedPlayer.size()>0) {
+        if (allSelectedPlayer.size() > 0) {
             if (listData.isSelected() == true) {
                 if (HelperData.team1NameShort == listData.getAbbr()) {
                     CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";
@@ -87,11 +93,7 @@ public class BOWLAdapter extends RecyclerView.Adapter<BOWLAdapter.MyViewHolder> 
                     AllSelectedPlayer allSelectedPlayer = new AllSelectedPlayer(Integer.valueOf(listData.getPidPlayers()), HelperData.matchId, listData.getShort_namePlayers(), listData.getAbbr(), "BOWL", Double.valueOf(listData.getFantasy_player_rating()), false, false, false, "");
                     HelperData.allSelectedPlayer.setValue(Collections.singletonList(allSelectedPlayer));
                     HelperData.myTeamList.add(allSelectedPlayer);
-
-
                 }
-
-
             }
         }
 
@@ -99,7 +101,6 @@ public class BOWLAdapter extends RecyclerView.Adapter<BOWLAdapter.MyViewHolder> 
 //        if(listData.getPlaying11()==false){
 //            holder.isPlaying.setText(" Not Playing");
 //            holder.isPlaying.setTextColor(Color.RED);
-//
 //        }
 
         holder.cardViewSelected.setOnClickListener(view -> {
