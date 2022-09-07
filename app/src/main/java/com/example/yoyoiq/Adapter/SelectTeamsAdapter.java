@@ -2,6 +2,7 @@ package com.example.yoyoiq.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,8 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
                     holder.select.setImageResource(R.drawable.ic_tick3);
                     list.get(position).setSlected(true);
                     SelectTeams.selected_single_Team(list.get(position).getTeamId());
+                    Log.d("amit","Check "+allTeamRequest.getTeamId());
+                    Log.d("Amit","Check "+allTeamRequest.isSlected());
                     SelectTeams.ContestTeamId=list.get(position).getTeamId();
                     HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue() + 1);
                 } else if (selected != false) {

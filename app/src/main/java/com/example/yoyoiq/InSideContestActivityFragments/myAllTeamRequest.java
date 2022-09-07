@@ -15,8 +15,8 @@ public class myAllTeamRequest {
     String date_end;
 
     public myAllTeamRequest(String teamName, String teamId, String match_id, String user_id, String captain, String vicecaptain, String teamAName, String teamBName, int batsman, int boller, int allrounder, int wkeeper, int teamAcount, int teamBcount, boolean isSlected, JSONArray squads, String logo_url_a, String logo_url_b, String date_start, String date_end) {
-        TeamName = teamName;
-        TeamId = teamId;
+      this.TeamName = teamName;
+      this.TeamId = teamId;
         this.match_id = match_id;
         this.user_id = user_id;
         this.captain = captain;

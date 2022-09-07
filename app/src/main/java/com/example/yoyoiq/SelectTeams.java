@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -62,6 +63,7 @@ public class SelectTeams extends AppCompatActivity {
                 SelectTeams.ContestTeamId = teamId;
             }
         }
+
     }
 
     @Override
@@ -159,7 +161,8 @@ public class SelectTeams extends AppCompatActivity {
     private void JoinContestData() {
         progressDialog.setTitle("Please Wait Joining Contest..");
         progressDialog.show();
-        Call<JoinContestsResponse> call = ApiClient.getInstance().getApi().getJoinContestResponse(HelperData.UserId, HelperData.matchId, contest_id, SelectTeams.ContestTeamId);
+
+        Call<JoinContestsResponse> call = ApiClient.getInstance().getApi().getJoinContestResponse(sessionManager.getUserData().getUser_id(), HelperData.matchId, contest_id, SelectTeams.ContestTeamId);
         call.enqueue(new Callback<JoinContestsResponse>() {
             @Override
             public void onResponse(Call<JoinContestsResponse> call, Response<JoinContestsResponse> response) {
@@ -208,6 +211,7 @@ public class SelectTeams extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+                finish();
             }
         });
 
@@ -266,8 +270,7 @@ public class SelectTeams extends AppCompatActivity {
                                         int wkeeper = Integer.parseInt(jsonObjectSquads.getString("wkeeper"));
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
-
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false, squads, "", "", "", "");
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(TeamName, CreatedTeamId, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false, squads, "", "", "", "");
                                         list.add(myAllTeamRequest);
                                         selectTeamsAdapter = new SelectTeamsAdapter(SelectTeams.this, list);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(SelectTeams.this));
