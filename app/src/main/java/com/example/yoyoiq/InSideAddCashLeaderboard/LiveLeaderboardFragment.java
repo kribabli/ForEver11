@@ -27,8 +27,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.yoyoiq.ContestActivity;
 import com.example.yoyoiq.Model.LeaderboardPOJO;
+import com.example.yoyoiq.OnlyTeamPreView.MyTeamPreview;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.HelperData;
+import com.example.yoyoiq.common.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,11 +46,12 @@ public class LiveLeaderboardFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     String match_id1, contest_id1;
-    String match_id, contest_id;
+    String match_id, contest_id,matchB,matchA;
     RecyclerView recyclerView;
     ArrayList<LeaderboardPOJO> listItems = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
     TextView totalTeam;
+    SessionManager sessionManager;
     String url = "http://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=get_leaderboard_users";
 
     public LiveLeaderboardFragment() {
@@ -100,6 +103,9 @@ public class LiveLeaderboardFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
+                matchA = getArguments().getString("matchA");
+                matchB = getArguments().getString("matchB");
+
                 match_id1 = getArguments().getString("match_id");
                 contest_id1 = getArguments().getString("contestId");
                 match_id = String.valueOf(match_id1);
@@ -181,6 +187,7 @@ public class LiveLeaderboardFragment extends Fragment {
         public LeaderBoardAdapter(Context context, ArrayList<LeaderboardPOJO> list) {
             this.context = context;
             this.list = list;
+            sessionManager = new SessionManager(context.getApplicationContext());
         }
 
         @NonNull
@@ -201,9 +208,13 @@ public class LiveLeaderboardFragment extends Fragment {
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ContestActivity.class);
-                    intent.putExtra("shortNameA", listData.getContest_id());
+                    Intent intent = new Intent(context, WhenLiveTeamPreview.class);
+                    intent.putExtra("positionList", position);
+                    intent.putExtra("list", list.get(position).getJsonArray().toString());
+                    intent.putExtra("TeamName", sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
                     HelperData.matchId = listData.getMatch_id();
+                    HelperData.team1NameShort = matchA;
+                    HelperData.team2NameShort = matchB;
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }

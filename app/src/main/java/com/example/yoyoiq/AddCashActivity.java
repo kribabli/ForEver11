@@ -47,7 +47,7 @@ public class AddCashActivity extends AppCompatActivity {
         linearLayout.setVisibility(View.VISIBLE);
         HelperData.selectSingleTeamCounter.setValue(0);
 
-        pageAdapterWinnings = new PageAdapterWinnings(getSupportFragmentManager(), tabLayout.getTabCount(), total_prize, entryFee, totalSports, leftSports, winningPer, upTo, match_id, first_price, price_contribution, contestId);
+        pageAdapterWinnings = new PageAdapterWinnings(getSupportFragmentManager(), tabLayout.getTabCount(), total_prize, entryFee, totalSports, leftSports, winningPer, upTo, match_id, first_price, price_contribution, contestId, matchA, matchB);
         viewPager.setAdapter(pageAdapterWinnings);
         sessionManager = new SessionManager(getApplicationContext());
 

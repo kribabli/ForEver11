@@ -22,8 +22,10 @@ public class PageAdapterWinnings extends FragmentPagerAdapter {
     String first_price = "";
     String price_contribution = "";
     String contestId = "";
+    String matchA = "";
+    String matchB = "";
 
-    public PageAdapterWinnings(@NonNull FragmentManager fm, int behavior, String total_prize, String entryFee, String totalSports, String leftSports, String winningPer, String upTo, String match_id, String first_price, String price_contribution, String contestId) {
+    public PageAdapterWinnings(@NonNull FragmentManager fm, int behavior, String total_prize, String entryFee, String totalSports, String leftSports, String winningPer, String upTo, String match_id, String first_price, String price_contribution, String contestId,String matchA,String matchB) {
         super(fm, behavior);
         tabCount = behavior;
         this.total_prize = total_prize;
@@ -36,6 +38,8 @@ public class PageAdapterWinnings extends FragmentPagerAdapter {
         this.first_price = first_price;
         this.price_contribution = price_contribution;
         this.contestId = contestId;
+        this.matchA = matchA;
+        this.matchB = matchB;
     }
 
     @NonNull
@@ -52,6 +56,8 @@ public class PageAdapterWinnings extends FragmentPagerAdapter {
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("match_id", match_id);
                 bundle1.putString("contestId", contestId);
+                bundle1.putString("matchA", matchA);
+                bundle1.putString("matchB", matchB);
                 LeaderboardFragment leaderboardFragment = new LeaderboardFragment();
                 leaderboardFragment.setArguments(bundle1);
                 return leaderboardFragment;

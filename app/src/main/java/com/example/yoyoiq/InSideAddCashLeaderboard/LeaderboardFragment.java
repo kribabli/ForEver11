@@ -3,11 +3,11 @@ package com.example.yoyoiq.InSideAddCashLeaderboard;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.yoyoiq.Model.LeaderboardPOJO;
 import com.example.yoyoiq.R;
+import com.example.yoyoiq.common.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,12 +39,13 @@ public class LeaderboardFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-    String match_id1, contest_id1;
+    String match_id1, contest_id1, matchA, matchB;
     String match_id, contest_id;
     RecyclerView recyclerView;
     ArrayList<LeaderboardPOJO> listItems = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
     TextView totalTeam;
+    SessionManager sessionManager;
     String url = "http://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=get_leaderboard_users";
 
     public LeaderboardFragment() {
@@ -95,6 +97,8 @@ public class LeaderboardFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
+                matchA = getArguments().getString("matchA");
+                matchB = getArguments().getString("matchB");
                 match_id1 = getArguments().getString("match_id");
                 contest_id1 = getArguments().getString("contestId");
                 match_id = String.valueOf(match_id1);
@@ -176,6 +180,7 @@ public class LeaderboardFragment extends Fragment {
         public LeaderBoardAdapter(Context context, ArrayList<LeaderboardPOJO> list) {
             this.context = context;
             this.list = list;
+            sessionManager = new SessionManager(context.getApplicationContext());
         }
 
         @NonNull
@@ -202,6 +207,7 @@ public class LeaderboardFragment extends Fragment {
         public class MyViewHolder extends RecyclerView.ViewHolder {
             TextView userName, userTotalPoints, userRank;
             ImageView userProfile;
+            RelativeLayout relativeLayout;
 
             public MyViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -209,6 +215,7 @@ public class LeaderboardFragment extends Fragment {
                 userName = itemView.findViewById(R.id.userName);
                 userRank = itemView.findViewById(R.id.userRank);
                 userTotalPoints = itemView.findViewById(R.id.userTotalPoints);
+                relativeLayout = itemView.findViewById(R.id.relativeLayout);
             }
         }
     }
