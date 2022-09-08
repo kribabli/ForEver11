@@ -80,7 +80,7 @@ public class WhenLiveTeamPreview extends AppCompatActivity {
                 String one = "" + listData.get(i).getTitle();
                 String two = "" + listData.get(i).getPoints();
                 nameTxt.setText("" + one);
-                playerPts.setText("" + two);
+                playerPts.setText("" + two +"Pts");
 
                 if (listData.get(i).getCountry().equals(HelperData.team1NameShort)) {
                     nameTxt.setBackgroundColor(Color.BLACK);
