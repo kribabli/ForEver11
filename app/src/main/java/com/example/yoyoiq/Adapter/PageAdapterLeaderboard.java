@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.yoyoiq.InSideAddCashLeaderboard.LeaderboardFragment;
+import com.example.yoyoiq.InSideAddCashLeaderboard.LiveLeaderboardFragment;
 import com.example.yoyoiq.InSideAddCashLeaderboard.WinningFragment;
 
 public class PageAdapterLeaderboard extends FragmentPagerAdapter {
@@ -38,9 +39,9 @@ public class PageAdapterLeaderboard extends FragmentPagerAdapter {
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("match_id", match_id);
                 bundle1.putString("contestId", contest_id);
-                LeaderboardFragment leaderboardFragment = new LeaderboardFragment();
-                leaderboardFragment.setArguments(bundle1);
-                return leaderboardFragment;
+                LiveLeaderboardFragment liveLeaderboardFragment = new LiveLeaderboardFragment();
+                liveLeaderboardFragment.setArguments(bundle1);
+                return liveLeaderboardFragment;
             default:
                 return null;
         }

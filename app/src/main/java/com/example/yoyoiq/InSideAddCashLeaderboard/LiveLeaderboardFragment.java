@@ -3,18 +3,19 @@ package com.example.yoyoiq.InSideAddCashLeaderboard;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LeaderboardFragment extends Fragment {
+public class LiveLeaderboardFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
@@ -46,12 +47,12 @@ public class LeaderboardFragment extends Fragment {
     TextView totalTeam;
     String url = "http://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=get_leaderboard_users";
 
-    public LeaderboardFragment() {
+    public LiveLeaderboardFragment() {
         // Required empty public constructor
     }
 
-    public static LeaderboardFragment newInstance(String param1, String param2) {
-        LeaderboardFragment fragment = new LeaderboardFragment();
+    public static LiveLeaderboardFragment newInstance(String param1, String param2) {
+        LiveLeaderboardFragment fragment = new LiveLeaderboardFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,7 +74,7 @@ public class LeaderboardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_live_leaderboard, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
         totalTeam = root.findViewById(R.id.totalTeam);
         swipeRefreshLayout = root.findViewById(R.id.swiper);
@@ -119,7 +120,6 @@ public class LeaderboardFragment extends Fragment {
                     totalTeam.setText("All Teams " + "( " + jsonArray1.length() + " )");
                     for (int i = 0; i < jsonArray1.length(); i++) {
                         JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
-                        Log.d("TAG", "onResponse: "+jsonObject1);
                         String id = jsonObject1.getString("id");
                         String user_id = jsonObject1.getString("user_id");
                         String team_id = jsonObject1.getString("team_id");
@@ -205,4 +205,5 @@ public class LeaderboardFragment extends Fragment {
             }
         }
     }
+
 }
