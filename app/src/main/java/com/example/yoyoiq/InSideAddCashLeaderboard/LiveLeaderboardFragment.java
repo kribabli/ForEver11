@@ -2,6 +2,7 @@ package com.example.yoyoiq.InSideAddCashLeaderboard;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -23,8 +25,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.yoyoiq.ContestActivity;
 import com.example.yoyoiq.Model.LeaderboardPOJO;
 import com.example.yoyoiq.R;
+import com.example.yoyoiq.common.HelperData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,12 +118,20 @@ public class LiveLeaderboardFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 JSONArray jsonArray1 = new JSONArray();
+                JSONArray jsonArray = new JSONArray();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     jsonArray1 = jsonObject.getJSONArray("users");
                     totalTeam.setText("All Teams " + "( " + jsonArray1.length() + " )");
                     for (int i = 0; i < jsonArray1.length(); i++) {
                         JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
+
+                        try {
+                            jsonArray = jsonObject1.getJSONArray("players_response");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         String id = jsonObject1.getString("id");
                         String user_id = jsonObject1.getString("user_id");
                         String team_id = jsonObject1.getString("team_id");
@@ -131,7 +143,7 @@ public class LiveLeaderboardFragment extends Fragment {
                         int rank = Integer.parseInt(jsonObject1.getString("rank"));
                         int total_points = Integer.parseInt(jsonObject1.getString("total_points"));
 
-                        LeaderboardPOJO leaderboardPOJO = new LeaderboardPOJO(id, user_id, team_id, match_id, contest_id, date_time, name, mobile, rank, total_points);
+                        LeaderboardPOJO leaderboardPOJO = new LeaderboardPOJO(id, user_id, team_id, match_id, contest_id, date_time, name, mobile, rank, total_points, jsonArray);
                         listItems.add(leaderboardPOJO);
                     }
                     swipeRefreshLayout.setRefreshing(false);
@@ -185,6 +197,17 @@ public class LiveLeaderboardFragment extends Fragment {
             holder.userName.setText(listData.getName());
             holder.userTotalPoints.setText(String.valueOf(listData.getTotal_points()));
             holder.userRank.setText("# " + String.valueOf(listData.getRank()));
+
+            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ContestActivity.class);
+                    intent.putExtra("shortNameA", listData.getContest_id());
+                    HelperData.matchId = listData.getMatch_id();
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -195,6 +218,7 @@ public class LiveLeaderboardFragment extends Fragment {
         public class MyViewHolder extends RecyclerView.ViewHolder {
             TextView userName, userTotalPoints, userRank;
             ImageView userProfile;
+            RelativeLayout relativeLayout;
 
             public MyViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -202,6 +226,7 @@ public class LiveLeaderboardFragment extends Fragment {
                 userName = itemView.findViewById(R.id.userName);
                 userRank = itemView.findViewById(R.id.userRank);
                 userTotalPoints = itemView.findViewById(R.id.userTotalPoints);
+                relativeLayout = itemView.findViewById(R.id.relativeLayout);
             }
         }
     }

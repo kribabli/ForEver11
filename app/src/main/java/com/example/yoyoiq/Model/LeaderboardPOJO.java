@@ -1,5 +1,7 @@
 package com.example.yoyoiq.Model;
 
+import org.json.JSONArray;
+
 public class LeaderboardPOJO {
     String id;
     String user_id;
@@ -11,8 +13,9 @@ public class LeaderboardPOJO {
     String mobile;
     int rank;
     int total_points;
+    JSONArray jsonArray;
 
-    public LeaderboardPOJO(String id, String user_id, String team_id, String match_id, String contest_id, String date_time, String name, String mobile, int rank, int total_points) {
+    public LeaderboardPOJO(String id, String user_id, String team_id, String match_id, String contest_id, String date_time, String name, String mobile, int rank, int total_points, JSONArray jsonArray) {
         this.id = id;
         this.user_id = user_id;
         this.team_id = team_id;
@@ -23,6 +26,7 @@ public class LeaderboardPOJO {
         this.mobile = mobile;
         this.rank = rank;
         this.total_points = total_points;
+        this.jsonArray = jsonArray;
     }
 
     public String getId() {
@@ -103,5 +107,13 @@ public class LeaderboardPOJO {
 
     public void setTotal_points(int total_points) {
         this.total_points = total_points;
+    }
+
+    public JSONArray getJsonArray() {
+        return jsonArray;
+    }
+
+    public void setJsonArray(JSONArray jsonArray) {
+        this.jsonArray = jsonArray;
     }
 }

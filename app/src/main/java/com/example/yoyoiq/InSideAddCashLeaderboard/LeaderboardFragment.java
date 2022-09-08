@@ -113,13 +113,20 @@ public class LeaderboardFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 JSONArray jsonArray1 = new JSONArray();
+                JSONArray jsonArray = new JSONArray();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     jsonArray1 = jsonObject.getJSONArray("users");
                     totalTeam.setText("All Teams " + "( " + jsonArray1.length() + " )");
                     for (int i = 0; i < jsonArray1.length(); i++) {
                         JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
-                        Log.d("TAG", "onResponse: "+jsonObject1);
+
+                        try {
+                            jsonArray = jsonObject1.getJSONArray("players_response");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         String id = jsonObject1.getString("id");
                         String user_id = jsonObject1.getString("user_id");
                         String team_id = jsonObject1.getString("team_id");
@@ -131,7 +138,7 @@ public class LeaderboardFragment extends Fragment {
                         int rank = Integer.parseInt(jsonObject1.getString("rank"));
                         int total_points = Integer.parseInt(jsonObject1.getString("total_points"));
 
-                        LeaderboardPOJO leaderboardPOJO = new LeaderboardPOJO(id, user_id, team_id, match_id, contest_id, date_time, name, mobile, rank, total_points);
+                        LeaderboardPOJO leaderboardPOJO = new LeaderboardPOJO(id, user_id, team_id, match_id, contest_id, date_time, name, mobile, rank, total_points, jsonArray);
                         listItems.add(leaderboardPOJO);
                     }
                     swipeRefreshLayout.setRefreshing(false);
