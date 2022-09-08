@@ -1,7 +1,6 @@
 package com.example.yoyoiq.LoginPojo;
 
 public class RegistrationResponse {
-
     String status;
     String response;
 

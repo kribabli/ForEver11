@@ -3,6 +3,7 @@ package com.example.yoyoiq.InSideAddCashLeaderboard;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class LeaderboardFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<LeaderboardPOJO> listItems = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView totalTeam;
     String url = "http://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=get_leaderboard_users";
 
     public LeaderboardFragment() {
@@ -73,6 +75,7 @@ public class LeaderboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
+        totalTeam = root.findViewById(R.id.totalTeam);
         swipeRefreshLayout = root.findViewById(R.id.swiper);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -113,6 +116,7 @@ public class LeaderboardFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     jsonArray1 = jsonObject.getJSONArray("users");
+                    totalTeam.setText("All Teams " + "( " + jsonArray1.length() + " )");
                     for (int i = 0; i < jsonArray1.length(); i++) {
                         JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
                         String id = jsonObject1.getString("id");
@@ -129,17 +133,20 @@ public class LeaderboardFragment extends Fragment {
                         LeaderboardPOJO leaderboardPOJO = new LeaderboardPOJO(id, user_id, team_id, match_id, contest_id, date_time, name, mobile, rank, total_points);
                         listItems.add(leaderboardPOJO);
                     }
+                    swipeRefreshLayout.setRefreshing(false);
                     leaderBoardAdapter = new LeaderBoardAdapter(getContext(), listItems);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     recyclerView.setAdapter(leaderBoardAdapter);
                     leaderBoardAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
+                    swipeRefreshLayout.setRefreshing(false);
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                swipeRefreshLayout.setRefreshing(false);
             }
         }) {
             @Override
@@ -176,7 +183,7 @@ public class LeaderboardFragment extends Fragment {
             holder.setIsRecyclable(false);
             holder.userName.setText(listData.getName());
             holder.userTotalPoints.setText(String.valueOf(listData.getTotal_points()));
-            holder.userRank.setText("# "+String.valueOf(listData.getRank()));
+            holder.userRank.setText("# " + String.valueOf(listData.getRank()));
         }
 
         @Override
