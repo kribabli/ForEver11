@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.yoyoiq.InSideAddCashLeaderboard.LeaderboardFragment;
-import com.example.yoyoiq.InSideContestActivityFragments.MyTeamsFragment;
 import com.example.yoyoiq.InSideScoreActivity.LiveMyTeamFragment;
 import com.example.yoyoiq.InSideScoreActivity.MyJoinContestsFragment;
 

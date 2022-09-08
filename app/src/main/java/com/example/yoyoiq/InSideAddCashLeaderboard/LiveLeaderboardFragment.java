@@ -46,7 +46,7 @@ public class LiveLeaderboardFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     String match_id1, contest_id1;
-    String match_id, contest_id,matchB,matchA;
+    String match_id, contest_id, matchB, matchA;
     RecyclerView recyclerView;
     ArrayList<LeaderboardPOJO> listItems = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
@@ -126,6 +126,7 @@ public class LiveLeaderboardFragment extends Fragment {
                 JSONArray jsonArray1 = new JSONArray();
                 JSONArray jsonArray = new JSONArray();
                 try {
+                    listItems.clear();
                     JSONObject jsonObject = new JSONObject(response);
                     jsonArray1 = jsonObject.getJSONArray("users");
                     totalTeam.setText("All Teams " + "( " + jsonArray1.length() + " )");
@@ -146,8 +147,8 @@ public class LiveLeaderboardFragment extends Fragment {
                         String date_time = jsonObject1.getString("date_time");
                         String name = jsonObject1.getString("name");
                         String mobile = jsonObject1.getString("mobile");
-                        int rank = Integer.parseInt(jsonObject1.getString("rank"));
-                        int total_points = Integer.parseInt(jsonObject1.getString("total_points"));
+                        String rank = jsonObject1.getString("rank");
+                        String total_points = jsonObject1.getString("total_points");
 
                         LeaderboardPOJO leaderboardPOJO = new LeaderboardPOJO(id, user_id, team_id, match_id, contest_id, date_time, name, mobile, rank, total_points, jsonArray);
                         listItems.add(leaderboardPOJO);
@@ -179,7 +180,7 @@ public class LiveLeaderboardFragment extends Fragment {
         queue.add(request);
     }
 
-
+    //When Match is Live then Show the rank and points in Adapter
     public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.MyViewHolder> {
         Context context;
         ArrayList<LeaderboardPOJO> list;
@@ -211,7 +212,7 @@ public class LiveLeaderboardFragment extends Fragment {
                     Intent intent = new Intent(context, WhenLiveTeamPreview.class);
                     intent.putExtra("positionList", position);
                     intent.putExtra("list", list.get(position).getJsonArray().toString());
-                    intent.putExtra("TeamName", sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
+                    intent.putExtra("TeamName", listData.getName());
                     HelperData.matchId = listData.getMatch_id();
                     HelperData.team1NameShort = matchA;
                     HelperData.team2NameShort = matchB;

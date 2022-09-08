@@ -119,6 +119,7 @@ public class LeaderboardFragment extends Fragment {
                 JSONArray jsonArray1 = new JSONArray();
                 JSONArray jsonArray = new JSONArray();
                 try {
+                    listItems.clear();
                     JSONObject jsonObject = new JSONObject(response);
                     jsonArray1 = jsonObject.getJSONArray("users");
                     totalTeam.setText("All Teams " + "( " + jsonArray1.length() + " )");
@@ -139,8 +140,8 @@ public class LeaderboardFragment extends Fragment {
                         String date_time = jsonObject1.getString("date_time");
                         String name = jsonObject1.getString("name");
                         String mobile = jsonObject1.getString("mobile");
-                        int rank = Integer.parseInt(jsonObject1.getString("rank"));
-                        int total_points = Integer.parseInt(jsonObject1.getString("total_points"));
+                        String rank = jsonObject1.getString("rank");
+                        String total_points = jsonObject1.getString("total_points");
 
                         LeaderboardPOJO leaderboardPOJO = new LeaderboardPOJO(id, user_id, team_id, match_id, contest_id, date_time, name, mobile, rank, total_points, jsonArray);
                         listItems.add(leaderboardPOJO);

@@ -11,11 +11,11 @@ public class LeaderboardPOJO {
     String date_time;
     String name;
     String mobile;
-    int rank;
-    int total_points;
+    String rank;
+    String total_points;
     JSONArray jsonArray;
 
-    public LeaderboardPOJO(String id, String user_id, String team_id, String match_id, String contest_id, String date_time, String name, String mobile, int rank, int total_points, JSONArray jsonArray) {
+    public LeaderboardPOJO(String id, String user_id, String team_id, String match_id, String contest_id, String date_time, String name, String mobile, String rank, String total_points, JSONArray jsonArray) {
         this.id = id;
         this.user_id = user_id;
         this.team_id = team_id;
@@ -93,19 +93,19 @@ public class LeaderboardPOJO {
         this.mobile = mobile;
     }
 
-    public int getRank() {
+    public String getRank() {
         return rank;
     }
 
-    public void setRank(int rank) {
+    public void setRank(String rank) {
         this.rank = rank;
     }
 
-    public int getTotal_points() {
+    public String getTotal_points() {
         return total_points;
     }
 
-    public void setTotal_points(int total_points) {
+    public void setTotal_points(String total_points) {
         this.total_points = total_points;
     }
 

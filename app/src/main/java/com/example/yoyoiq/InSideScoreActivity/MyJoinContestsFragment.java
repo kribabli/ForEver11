@@ -102,6 +102,7 @@ public class MyJoinContestsFragment extends Fragment {
                     String jsonArray = new Gson().toJson(status.getResponse());
                     JSONArray jsonArray1 = null;
                     try {
+                        list.clear();
                         jsonArray1 = new JSONArray(jsonArray);
                         for (int i = 0; i < jsonArray1.length(); i++) {
                             try {

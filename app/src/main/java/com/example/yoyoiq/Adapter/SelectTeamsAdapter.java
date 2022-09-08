@@ -62,8 +62,6 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
                     holder.select.setImageResource(R.drawable.ic_tick3);
                     list.get(position).setSlected(true);
                     SelectTeams.selected_single_Team(list.get(position).getTeamId());
-                    Log.d("amit","Check "+allTeamRequest.getTeamId());
-                    Log.d("Amit","Check "+allTeamRequest.isSlected());
                     SelectTeams.ContestTeamId=list.get(position).getTeamId();
                     HelperData.selectSingleTeamCounter.setValue(HelperData.selectSingleTeamCounter.getValue() + 1);
                 } else if (selected != false) {

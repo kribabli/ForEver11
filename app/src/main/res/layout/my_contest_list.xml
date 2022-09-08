@@ -122,7 +122,8 @@
                 android:gravity="right"
                 android:text="700 Pts"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/userRank"
@@ -134,7 +135,8 @@
                 android:text="#110  - "
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
         </LinearLayout>
 

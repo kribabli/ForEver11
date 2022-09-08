@@ -52,6 +52,7 @@ public class WinningFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getAllContests();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -66,14 +67,6 @@ public class WinningFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_winning, container, false);
         recyclerViewContest = root.findViewById(R.id.winningList);
         swipeRefreshLayout = root.findViewById(R.id.swiper);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getAllContests();
-            }
-        });
-
         return root;
     }
 

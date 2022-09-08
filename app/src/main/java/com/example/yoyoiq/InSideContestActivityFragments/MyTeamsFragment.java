@@ -106,7 +106,6 @@ public class MyTeamsFragment extends Fragment {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             try {
                                 CreatedTeamId = jsonObject.getString("id");
-
                                 squads = jsonObject.getJSONArray("squads");
 
                                 short_squads = jsonObject.getJSONArray("short_squads");
