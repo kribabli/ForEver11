@@ -30,6 +30,7 @@ import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.CompletedMatchPOJO.CompletedMatchPOJO;
 import com.example.yoyoiq.ContestActivity;
 import com.example.yoyoiq.InSideAddCashLeaderboard.LeaderboardFragment;
+import com.example.yoyoiq.InSideScoreActivity.ScoresActivity;
 import com.example.yoyoiq.Model.LeaderboardPOJO;
 import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.R;
@@ -72,6 +73,14 @@ public class CompletedMatchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            user_id1 = HelperData.UserId;
+            user_id = String.valueOf(user_id1);
+            getAllCompletedMatch(user_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -99,20 +108,6 @@ public class CompletedMatchFragment extends Fragment {
         return root;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            try {
-                user_id1 = HelperData.UserId;
-                user_id = String.valueOf(user_id1);
-                getAllCompletedMatch(user_id);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private void getAllCompletedMatch(String user_id) throws JSONException {
         listItems.clear();
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -123,26 +118,40 @@ public class CompletedMatchFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     jsonArray1 = jsonObject.getJSONArray("result");
+                    listItems.clear();
                     for (int i = 0; i < jsonArray1.length(); i++) {
                         JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
                         String status = jsonObject1.getString("status");
                         String title = jsonObject1.getString("title");
+                        String match_id = jsonObject1.getString("match_id");
                         String status_note = jsonObject1.getString("status_note");
                         String short_title = jsonObject1.getString("short_title");
-                        String teama = jsonObject1.getString("teama");
-                        String teamb = jsonObject1.getString("teamb");
 
-//                         int team_id;
-//                         String name;
-//                         String short_name;
-//                         String logo_url;
-//                         String thumb_url;
-//                         String scores_full;
-//                         String scores;
-//                         String overs;
+                        JSONObject jsonObject2 = jsonObject1.getJSONObject("teama");
 
-                        CompletedMatchPOJO completedMatchPOJO = new CompletedMatchPOJO(status, title, status_note, short_title);
+                        String team_id = String.valueOf(jsonObject2.getInt("team_id"));
+                        String name = jsonObject2.getString("name");
+                        String short_name = jsonObject2.getString("short_name");
+                        String logo_url = jsonObject2.getString("logo_url");
+                        String thumb_url = jsonObject2.getString("thumb_url");
+                        String scores_full = jsonObject2.getString("scores_full");
+                        String scores = jsonObject2.getString("scores");
+                        String overs = jsonObject2.getString("overs");
+
+                        JSONObject jsonObject3 = jsonObject1.getJSONObject("teamb");
+
+                        String team_idB = String.valueOf(jsonObject3.getInt("team_id"));
+                        String nameB = jsonObject3.getString("name");
+                        String short_nameB = jsonObject3.getString("short_name");
+                        String logo_urlB = jsonObject3.getString("logo_url");
+                        String thumb_urlB = jsonObject3.getString("thumb_url");
+                        String scores_fullB = jsonObject3.getString("scores_full");
+                        String scoresB = jsonObject3.getString("scores");
+                        String oversB = jsonObject3.getString("overs");
+
+                        CompletedMatchPOJO completedMatchPOJO = new CompletedMatchPOJO(match_id, status, title, logo_url, name, short_name, logo_urlB, nameB, short_nameB);
                         listItems.add(completedMatchPOJO);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                     swipeRefreshLayout.setRefreshing(false);
                     completedMatchAdapter = new CompletedMatchAdapter(getContext(), listItems);
@@ -158,6 +167,7 @@ public class CompletedMatchFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                swipeRefreshLayout.setRefreshing(false);
                 swipeRefreshLayout.setRefreshing(false);
             }
         }) {
@@ -184,7 +194,7 @@ public class CompletedMatchFragment extends Fragment {
         @NonNull
         @Override
         public CompletedMatchAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.match_list, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.completed_match_list, parent, false);
             return new MyViewHolder(view);
         }
 
@@ -196,23 +206,32 @@ public class CompletedMatchFragment extends Fragment {
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, ContestActivity.class);
-
-//                    intent.putExtra("shortNameA", listData.getShort_name_a());
-//                    intent.putExtra("shortNameB", listData.getShort_name_b());
-//                    intent.putExtra("match_id", listData.getMatch_id());
-//                    intent.putExtra("logo_url_a", listData.getLogo_url_a());
-//                    intent.putExtra("logo_url_b", listData.getLogo_url_b());
-//                    intent.putExtra("date_start", listData.getDate_start());
-//                    intent.putExtra("date_end", listData.getDate_end());
-//                    HelperData.matchId = listData.getMatch_id();
-
+                    Intent intent = new Intent(context, ScoresActivity.class);
+                    intent.putExtra("shortNameA", listData.getShort_name());
+                    intent.putExtra("shortNameB", listData.getShort_nameB());
+                    intent.putExtra("logo_url_a", listData.getLogo_url());
+                    intent.putExtra("logo_url_b", listData.getLogo_urlB());
+                    intent.putExtra("match_id", listData.getMatch_id());
+                    HelperData.matchId = listData.getMatch_id();
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
             });
+
             holder.textViewTitle.setText(list.get(position).getTitle());
-            holder.shortNameA.setText(listData.getShort_title());
+
+            holder.matchATv.setText(listData.getName());
+            holder.shortNameA.setText(listData.getShort_name());
+            Glide.with(context)
+                    .load(listData.getLogo_url())
+                    .into(holder.matchAImage);
+
+            holder.matchBTv.setText(listData.getNameB());
+            holder.shortNameB.setText(listData.getShort_nameB());
+            Glide.with(context)
+                    .load(listData.getLogo_urlB())
+                    .into(holder.matchBImage);
+            holder.leftTime.setText("COMPLETED");
         }
 
         @Override

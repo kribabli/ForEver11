@@ -108,6 +108,19 @@
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/ic_green_small_ball"/>
+
             <TextView
                 android:id="@+id/leftTime"
                 android:layout_width="wrap_content"
@@ -115,10 +128,16 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:layout_weight="8"
-                android:gravity="center"
-                android:textColor="@color/red"
+                android:layout_weight="3"
+                android:gravity="left"
+                android:textColor="@color/green"
+                android:textSize="10sp"
                 android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/done"
@@ -153,10 +172,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="120dp"
-            android:visibility="gone"
             android:background="#57DBDBDB"
             android:orientation="horizontal"
             android:padding="5dp"
+            android:visibility="gone"
             android:weightSum="10">
 
             <TextView
