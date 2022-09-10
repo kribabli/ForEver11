@@ -26,4 +26,5 @@
     <color name="text_bg1">#D3EFFA</color>
     <color name="light_blue">#ECF4FA</color>
     <color name="light_blue1">#7DB9F5</color>
+    <color name="blue">#0000ff</color>
 </resources>
