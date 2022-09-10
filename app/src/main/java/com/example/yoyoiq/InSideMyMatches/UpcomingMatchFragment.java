@@ -99,7 +99,7 @@ public class UpcomingMatchFragment extends Fragment {
             public void onResponse(Call<UpcommingResponse> call, Response<UpcommingResponse> response) {
                 UpcommingResponse status = response.body();
                 if (response.isSuccessful()) {
-
+                    list.clear();
                     String jsonArray = new Gson().toJson(status.getResponse().getItems());
                     JSONArray jsonArray1 = null;
                     try {
@@ -127,7 +127,7 @@ public class UpcomingMatchFragment extends Fragment {
                             String short_name_b = jsonObject22.getString("short_name");
 //                            int teamIdb = Integer.parseInt(jsonObject22.getString("team_id"));
 
-                            TotalHomeData totalHomeData = new TotalHomeData(title, match_id, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b, date_start, date_end,11);
+                            TotalHomeData totalHomeData = new TotalHomeData(title, match_id, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b, date_start, date_end, 11);
                             list.add(totalHomeData);
                         }
                         if (list.size() > 0) {
