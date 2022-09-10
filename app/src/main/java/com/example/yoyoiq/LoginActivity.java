@@ -2,6 +2,7 @@ package com.example.yoyoiq;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -13,10 +14,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.yoyoiq.LoginPojo.LoginResponse;
 import com.example.yoyoiq.LoginPojo.userLoginData;
 import com.example.yoyoiq.Model.UserData;
 import com.example.yoyoiq.Retrofit.ApiClient;
+import com.example.yoyoiq.UpdatePassword.ChangePasswordActivity;
 import com.example.yoyoiq.common.DatabaseConnectivity;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
@@ -38,7 +45,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,15 +59,14 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     EditText mobileNo, userPassword;
-    TextView login, backPress;
-    DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
-    String password, alreadyRegisterMobile;
+    TextView login, backPress, changePassword;
+    DatabaseConnectivity cmn = DatabaseConnectivity.getInstance();
     SharedPrefManager sharedPrefManager;
     SessionManager sessionManager;
-    ArrayList<String> allPhoneNumber = new ArrayList<>();
-    ArrayList<String> allPassword = new ArrayList<>();
     List<userLoginData> list;
     SharedPreferences sharedPreferences;
+    String url = "http://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=google_login";
+    String userEmail, userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         mobileNo = findViewById(R.id.mobileNo);
         userPassword = findViewById(R.id.userPassword);
         login = findViewById(R.id.login);
+        changePassword = findViewById(R.id.changePassword);
         backPress = findViewById(R.id.backPress);
     }
 
@@ -90,6 +99,11 @@ public class LoginActivity extends AppCompatActivity {
         backPress.setOnClickListener(view -> onBackPressed());
 
         sign_in_button.setOnClickListener(v -> signIn());
+
+        changePassword.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ChangePasswordActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void signIn() {
@@ -104,21 +118,92 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 task.getResult(ApiException.class);
-                navigateToSecondActivity();
+                googleSignInVerification();
             } catch (ApiException e) {
                 Toast.makeText(this, "Something went wrong !", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    private void googleSignInVerification() {
+        cmn.setProgressDialog("Please wait..", "", LoginActivity.this, LoginActivity.this);
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(this, gso);
+        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if (googleSignInAccount != null) {
+            userName = googleSignInAccount.getDisplayName();
+            userEmail = googleSignInAccount.getEmail();
+            Uri photoUrl = googleSignInAccount.getPhotoUrl();
+            String id = googleSignInAccount.getId();
+        }
+
+        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String Message = jsonObject.getString("message") + userName;
+                    if (jsonObject.getString("message").equalsIgnoreCase("Welcome back ")) {
+                        String userId = jsonObject.getString("userid");
+                        HelperData.UserName = userName;
+                        HelperData.UserEmail = userEmail;
+                        HelperData.UserId = userId;
+                        UserData userData = new UserData(userName, "", userEmail, userId);
+                        sessionManager.saveUser(userData);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(LoginActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        cmn.closeDialog(LoginActivity.this);
+                    } else if (jsonObject.getString("message").equalsIgnoreCase("Please update your profile")) {
+                        Intent intent = new Intent(LoginActivity.this, RegisterDetails.class);
+                        startActivity(intent);
+                        gsc.signOut();
+                        Toast.makeText(LoginActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        finish();
+                        cmn.closeDialog(LoginActivity.this);
+                    } else if (jsonObject.getString("message").equalsIgnoreCase("Welcome back " + userName)) {
+                        String userId = jsonObject.getString("userid");
+                        HelperData.UserName = userName;
+                        HelperData.UserEmail = userEmail;
+                        HelperData.UserId = userId;
+                        UserData userData = new UserData(userName, "", userEmail, userId);
+                        sessionManager.saveUser(userData);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(LoginActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        cmn.closeDialog(LoginActivity.this);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                cmn.closeDialog(LoginActivity.this);
+                Toast.makeText(LoginActivity.this, "Somethings Went Wrong....", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", userEmail);
+                return params;
+            }
+
+        };
+        queue.add(stringRequest);
+    }
+
     private void navigateToSecondActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("checkData",true);
+        intent.putExtra("checkData", true);
         startActivity(intent);
         finish();
     }
-
-
 
     private boolean dataValidation() {
         boolean isValid = true;
@@ -143,6 +228,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void LoginValidationFromServer() {
+        cmn.setProgressDialog("", "Please wait..", LoginActivity.this, LoginActivity.this);
         String mobile = mobileNo.getText().toString().trim();
         String password1 = userPassword.getText().toString().trim();
         Call<LoginResponse> call = ApiClient.getInstance().getApi().getUserLoginData(mobile, password1);
@@ -158,7 +244,6 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             jsonArray = new JSONArray(totalData);
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                Log.d("TAG", "onResponse: "+jsonArray);
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 String email_id = jsonObject.getString("email_id");
                                 String mobile_no = jsonObject.getString("mobile_no");
@@ -174,27 +259,26 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
+                                cmn.closeDialog(LoginActivity.this);
                             }
                         } catch (JSONException e) {
-                            Log.d("TAG", "onResponse22: "+jsonArray);
                             e.printStackTrace();
                         }
                     } else if (loginResponse.getData().trim().toString().equalsIgnoreCase("Username or password something went wrong")) {
                         showDialog("Invalid Mobile or Password", false);
+                        cmn.closeDialog(LoginActivity.this);
                     } else {
                         showDialog("Please Register YourSelf", false);
+                        cmn.closeDialog(LoginActivity.this);
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.d("TAG", "onFailure: "+t);
             }
         });
     }
-
-
 
     public void showDialog(String message, Boolean isFinish) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
