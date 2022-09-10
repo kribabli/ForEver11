@@ -24,7 +24,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.yoyoiq.Model.LeaderboardPOJO;
 import com.example.yoyoiq.R;
-import com.example.yoyoiq.common.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,8 +44,7 @@ public class LeaderboardFragment extends Fragment {
     ArrayList<LeaderboardPOJO> listItems = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
     TextView totalTeam;
-    SessionManager sessionManager;
-    String url = "http://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=get_leaderboard_users";
+    String url = "http://adminapp.tech/forever11/ItsMe/all_apis.php?func=get_leaderboard_users";
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -181,7 +179,6 @@ public class LeaderboardFragment extends Fragment {
         public LeaderBoardAdapter(Context context, ArrayList<LeaderboardPOJO> list) {
             this.context = context;
             this.list = list;
-            sessionManager = new SessionManager(context.getApplicationContext());
         }
 
         @NonNull

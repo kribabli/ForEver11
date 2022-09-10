@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -49,6 +50,7 @@ public class SelectTeams extends AppCompatActivity {
     String Entryfee;
     int netEntryFee = 0;
     String Upto;
+    AlertDialog deleteDialog;
     public static String ContestTeamId = null;
     ProgressDialog progressDialog;
     SessionManager sessionManager;
@@ -62,6 +64,7 @@ public class SelectTeams extends AppCompatActivity {
                 SelectTeams.ContestTeamId = teamId;
             }
         }
+
     }
 
     @Override
@@ -125,12 +128,12 @@ public class SelectTeams extends AppCompatActivity {
         TextView textView2 = deleteDialogView.findViewById(R.id.toPayfee);
         Button button = deleteDialogView.findViewById(R.id.joinContest);
         LinearLayout layout = deleteDialogView.findViewById(R.id.layout);
-        final AlertDialog deleteDialog = new AlertDialog.Builder(SelectTeams.this).create();
+        deleteDialog = new AlertDialog.Builder(SelectTeams.this).create();
         textView.setText("" + Entryfee);
         textView1.setText("" + bouns_cash);
         textView2.setText("" + Entryfee);
         button.setOnClickListener(view -> {
-            requestTOBalanceDeduction();
+            JoinContestData();
         });
         deleteDialog.setView(deleteDialogView);
         deleteDialog.show();
@@ -145,11 +148,9 @@ public class SelectTeams extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String Data = new Gson().toJson(contestJoinResponse);
                     if (contestJoinResponse.getResponse().equalsIgnoreCase("successfully amount debited")) {
-                        JoinContestData();
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<ContestJoinResponse> call, Throwable t) {
             }
@@ -159,20 +160,30 @@ public class SelectTeams extends AppCompatActivity {
     private void JoinContestData() {
         progressDialog.setTitle("Please Wait Joining Contest..");
         progressDialog.show();
-        Call<JoinContestsResponse> call = ApiClient.getInstance().getApi().getJoinContestResponse(HelperData.UserId, HelperData.matchId, contest_id, SelectTeams.ContestTeamId);
+        Call<JoinContestsResponse> call = ApiClient.getInstance().getApi().getJoinContestResponse(sessionManager.getUserData().getUser_id(), HelperData.matchId, contest_id, SelectTeams.ContestTeamId);
         call.enqueue(new Callback<JoinContestsResponse>() {
             @Override
             public void onResponse(Call<JoinContestsResponse> call, Response<JoinContestsResponse> response) {
+                JoinContestsResponse joinContestsResponse= response.body();
                 if (response.isSuccessful()) {
+                    Log.d("Amit","Check data"+response.body());
                     String Data = new Gson().toJson(response.body());
                     try {
                         JSONObject jsonObject = new JSONObject(Data);
-                        if (jsonObject.getString("response").equalsIgnoreCase("successfully added")) {
+                        if (joinContestsResponse.getStatus().equalsIgnoreCase("true")) {
                             progressDialog.dismiss();
                             Toast.makeText(SelectTeams.this, "Contest Join Successfully..", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SelectTeams.this, MainActivity.class);
                             startActivity(intent);
                             finish();
+                            requestTOBalanceDeduction();
+                        }
+                        if(joinContestsResponse.getStatus().equalsIgnoreCase("false")){
+                            progressDialog.dismiss();
+                            if(joinContestsResponse.getResponse().equalsIgnoreCase("team_id already exist")){
+                                Toast.makeText(SelectTeams.this, "This Team Already Joined..", Toast.LENGTH_SHORT).show();
+                                deleteDialog.dismiss();
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -183,6 +194,7 @@ public class SelectTeams extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JoinContestsResponse> call, Throwable t) {
+                progressDialog.dismiss();
             }
         });
     }
@@ -208,6 +220,7 @@ public class SelectTeams extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+                finish();
             }
         });
 
@@ -266,8 +279,7 @@ public class SelectTeams extends AppCompatActivity {
                                         int wkeeper = Integer.parseInt(jsonObjectSquads.getString("wkeeper"));
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
-
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false, squads, "", "", "", "");
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(TeamName, CreatedTeamId, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false, squads, "", "", "", "");
                                         list.add(myAllTeamRequest);
                                         selectTeamsAdapter = new SelectTeamsAdapter(SelectTeams.this, list);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(SelectTeams.this));

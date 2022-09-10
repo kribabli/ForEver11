@@ -46,7 +46,7 @@ public class CompletedMatchFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     String user_id, user_id1;
     ArrayList<CompletedMatchPOJO> listItems = new ArrayList<>();
-    String url = "https://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=users_completed_matches";
+    String url = "https://adminapp.tech/forever11/ItsMe/all_apis.php?func=users_completed_matches";
 
     public CompletedMatchFragment() {
         // Required empty public constructor

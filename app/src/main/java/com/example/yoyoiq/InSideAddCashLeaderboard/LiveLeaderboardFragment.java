@@ -49,7 +49,7 @@ public class LiveLeaderboardFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     TextView totalTeam;
     SessionManager sessionManager;
-    String url = "http://adminapp.tech/yoyoiq/ItsMe/all_apis.php?func=get_leaderboard_users";
+    String url = "http://adminapp.tech/forever11/ItsMe/all_apis.php?func=get_leaderboard_users";
 
     public LiveLeaderboardFragment() {
         // Required empty public constructor
