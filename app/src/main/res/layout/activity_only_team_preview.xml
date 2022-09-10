@@ -69,6 +69,29 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/LL_GroundWK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:flexWrap="wrap"
+                app:justifyContent="space_around">
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="10"
+                    android:background="@color/white" />
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,13 +112,28 @@
             </LinearLayout>
 
             <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/LL_GroundWK"
+                android:id="@+id/LL_GroundBAT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:flexWrap="wrap"
                 app:justifyContent="space_around">
 
             </com.google.android.flexbox.FlexboxLayout>
+
+            <LinearLayout
+                android:id="@+id/linerLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_weight="10"
+                    android:background="@color/white" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -113,20 +151,44 @@
                     android:layout_marginEnd="5dp"
                     android:layout_weight="10"
                     android:gravity="center"
-                    android:text="Batters"
+                    android:text="Batsman"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
+
             </LinearLayout>
 
-            <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/LL_GroundBAT"
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fillViewport="true"
+                android:overScrollMode="never"
+                android:scrollbarSize="0.1dp">
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/LL_GroundAR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:flexWrap="wrap"
+                    app:justifyContent="space_around">
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+            </HorizontalScrollView>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:flexWrap="wrap"
-                app:justifyContent="space_around">
+                android:weightSum="10">
 
-            </com.google.android.flexbox.FlexboxLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_toLeftOf="@+id/tvall"
+                    android:layout_weight="10"
+                    android:background="@color/white" />
 
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -159,7 +221,7 @@
                 android:scrollbarSize="0.1dp">
 
                 <com.google.android.flexbox.FlexboxLayout
-                    android:id="@+id/LL_GroundAR"
+                    android:id="@+id/LL_GroundBOWL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:flexWrap="wrap"
@@ -169,6 +231,20 @@
 
             </HorizontalScrollView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/tvbw"
+                    android:layout_alignParentBottom="true"
+                    android:layout_weight="10"
+                    android:background="@color/white" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -191,31 +267,6 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-
-
-
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fillViewport="true"
-                android:overScrollMode="never"
-                android:scrollbarSize="0.1dp">
-
-                <com.google.android.flexbox.FlexboxLayout
-                    android:id="@+id/LL_GroundBOWL"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:flexWrap="wrap"
-                    app:justifyContent="space_around">
-
-                </com.google.android.flexbox.FlexboxLayout>
-
-            </HorizontalScrollView>
-
-
-
-
 
         </LinearLayout>
 
@@ -282,7 +333,7 @@
             android:id="@+id/JoinTeam"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="In YoYoiQ Team"
+            android:text="In Dream Team"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />

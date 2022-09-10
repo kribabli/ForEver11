@@ -30,7 +30,7 @@ import retrofit2.Response;
 public class ContestsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    String match_id,contest_id;
+    String match_id;
     String matchA, matchB, price_contribution;
     ArrayList<ContestsListPOJO> list = new ArrayList<>();
     RecyclerView recyclerViewContest;
@@ -109,7 +109,7 @@ public class ContestsFragment extends Fragment {
                             JSONObject jsonObjectContest = jsonArray1Contest.getJSONObject(i);
                             price_contribution = jsonObjectContest.getString("price_contribution");
 
-                            contest_id = jsonObjectContest.getString("contest_id");
+                            String contest_id = jsonObjectContest.getString("contest_id");
                             String contest_name = jsonObjectContest.getString("contest_name");
                             String entry = jsonObjectContest.getString("entry");
                             String join_team = jsonObjectContest.getString("join_team");

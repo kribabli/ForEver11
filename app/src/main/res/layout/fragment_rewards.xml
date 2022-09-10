@@ -87,23 +87,36 @@
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs"
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/linerLayout"
-        android:background="@color/white"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@color/light_blue"
-        app:tabIndicatorHeight="3dp"
-        app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/purple_700"
-        app:tabTextAppearance="@style/tabText"
-        app:tabTextColor="@color/purple_700" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginTop="200dp"
+        tools:ignore="UnknownId">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_list_price"
+            android:text="Reward Shop"
+            app:tabSelectedTextColor="@color/green"
+            app:tabTextColor="@color/black" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/Live_Match_User"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Rewards"
+            app:tabSelectedTextColor="@color/green"
+            app:tabTextColor="@color/black" />
+
+    </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tabs" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tabLayout"
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>

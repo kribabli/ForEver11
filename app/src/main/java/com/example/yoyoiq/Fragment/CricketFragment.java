@@ -13,12 +13,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.BannerAdapter;
-import com.example.yoyoiq.BannerPOJO.Banner;
 import com.example.yoyoiq.Model.The_Slide_Items_Model_Class;
 import com.example.yoyoiq.Model.TotalHomeData;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
+import com.example.yoyoiq.common.HelperData;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +37,7 @@ public class CricketFragment extends Fragment {
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<TotalHomeData> list = new ArrayList<>();
-    ArrayList<The_Slide_Items_Model_Class> listItems = new ArrayList<>();
+    private List<The_Slide_Items_Model_Class> listItems;
 
     public CricketFragment() {
         // Required empty public constructor
@@ -50,6 +51,7 @@ public class CricketFragment extends Fragment {
         if (getArguments() != null) {
         }
     }
+
 
     public static CricketFragment getInstance() {
         return new CricketFragment();
@@ -65,48 +67,26 @@ public class CricketFragment extends Fragment {
         view_bannerItem = root.findViewById(R.id.view_bannerItem);
         swipeRefreshLayout = root.findViewById(R.id.swiper);
         recyclerView = root.findViewById(R.id.recyclerViewMatchList);
-
+        view_bannerItem.setAdapter(bannerAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getAllMatches();
             }
         });
+        HelperData.limit1 = 11;
         return root;
     }
 
     private void setAutoSliderBanner() {
-        Call<Banner> call = ApiClient.getInstance().getApi().getBanner();
-        call.enqueue(new Callback<Banner>() {
-            @Override
-            public void onResponse(Call<Banner> call, Response<Banner> response) {
-                Banner banner = response.body();
-                if (response.isSuccessful()) {
-                    String bannerData = new Gson().toJson(banner.getResponse());
-                    try {
-                        JSONArray jsonArray = new JSONArray(bannerData);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            String id = jsonObject.getString("id");
-                            String image = jsonObject.getString("image");
-                            The_Slide_Items_Model_Class the_slide_items_model_class = new The_Slide_Items_Model_Class(image);
-                            listItems.add(the_slide_items_model_class);
-                            bannerAdapter = new BannerAdapter(getContext(), listItems);
-                            view_bannerItem.setAdapter(bannerAdapter);
-                            bannerAdapter.notifyDataSetChanged();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Banner> call, Throwable t) {
-
-            }
-        });
+        listItems = new ArrayList<>();
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner2));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner3));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner4));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner5));
+        listItems.add(new The_Slide_Items_Model_Class(R.drawable.banner6));
+        bannerAdapter = new BannerAdapter(getContext(), listItems);
+        bannerAdapter.notifyDataSetChanged();
     }
 
     private void getAllMatches() {
@@ -148,7 +128,7 @@ public class CricketFragment extends Fragment {
                             String short_name_b = jsonObject22.getString("short_name");
                             int teamIdb = Integer.parseInt(jsonObject22.getString("team_id"));
 
-                            TotalHomeData totalHomeData = new TotalHomeData(title, match_id, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b, date_start, date_end);
+                            TotalHomeData totalHomeData = new TotalHomeData(title, match_id, logo_url_a, name_a, short_name_a, logo_url_b, name_b, short_name_b, date_start, date_end, 11);
                             list.add(totalHomeData);
 
                             allMatchAdapter = new AllMatchAdapter(getContext(), list);

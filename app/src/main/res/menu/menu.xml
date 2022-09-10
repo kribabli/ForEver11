@@ -20,13 +20,11 @@
     <item
         android:id="@+id/chat"
         android:enabled="true"
-        android:visible="false"
         android:icon="@drawable/ic_baseline_chat_bubble_24"
         android:title="@string/title_chat" />
     <item
         android:id="@+id/rewards"
         android:enabled="true"
-        android:visible="false"
         android:icon="@drawable/ic_baseline_card_giftcard_24"
         android:title="@string/title_Rewards" />
 </menu>

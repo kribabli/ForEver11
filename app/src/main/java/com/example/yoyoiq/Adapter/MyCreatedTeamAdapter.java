@@ -2,6 +2,7 @@ package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,44 +46,42 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
     public void onBindViewHolder(@NonNull MyCreatedTeamAdapter.MyViewHolder holder, int position) {
         myAllTeamRequest allTeamRequest = list.get(position);
         if (list.size() > 0) {
-            holder.CName.setText(allTeamRequest.getCaptain());
-            holder.VCname.setText(allTeamRequest.getVicecaptain());
-            holder.wkTv.setText(String.valueOf(allTeamRequest.getWkeeper()));
-            holder.batTv.setText(String.valueOf(allTeamRequest.getBatsman()));
-            holder.arTv.setText(String.valueOf(allTeamRequest.getAllrounder()));
-            holder.bowlTv.setText(String.valueOf(allTeamRequest.getBoller()));
-            holder.teamACount.setText(String.valueOf(allTeamRequest.getTeamAcount()));
-            holder.teamBCount.setText(String.valueOf(allTeamRequest.getTeamBcount()));
-            holder.userNameAndTid.setText(sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
-            holder.teamA.setText(allTeamRequest.getTeamAName());
-            holder.teamB.setText(allTeamRequest.getTeamBName());
+            int size=allTeamRequest.getTeamAcount()+allTeamRequest.getTeamBcount();
+                holder.CName.setText(allTeamRequest.getCaptain());
+                holder.VCname.setText(allTeamRequest.getVicecaptain());
+                holder.wkTv.setText(String.valueOf(allTeamRequest.getWkeeper()));
+                holder.batTv.setText(String.valueOf(allTeamRequest.getBatsman()));
+                holder.arTv.setText(String.valueOf(allTeamRequest.getAllrounder()));
+                holder.bowlTv.setText(String.valueOf(allTeamRequest.getBoller()));
+                holder.teamACount.setText(String.valueOf(allTeamRequest.getTeamAcount()));
+                holder.teamBCount.setText(String.valueOf(allTeamRequest.getTeamBcount()));
+                holder.userNameAndTid.setText(sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
+                holder.teamA.setText(allTeamRequest.getTeamAName());
+                holder.teamB.setText(allTeamRequest.getTeamBName());
 
-            holder.linearLayout1.setOnClickListener(view -> {
-                Intent intent = new Intent(context, MyTeamPreview.class);
-                intent.putExtra("position", position);
-                intent.putExtra("listdata", list.get(position).getSquads().toString());
-                intent.putExtra("selectedPosition", position);
-                intent.putExtra("TeamName", sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
-                HelperData.team1NameShort = list.get(position).getTeamAName();
-                HelperData.team2NameShort = list.get(position).getTeamBName();
-                context.startActivity(intent);
-            });
+                holder.linearLayout1.setOnClickListener(view -> {
+                    Intent intent = new Intent(context, MyTeamPreview.class);
+                    intent.putExtra("position", position);
+                    intent.putExtra("listdata", list.get(position).getSquads().toString());
+                    intent.putExtra("selectedPosition", position);
+                    intent.putExtra("TeamName", sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
+                    HelperData.team1NameShort = list.get(position).getTeamAName();
+                    HelperData.team2NameShort = list.get(position).getTeamBName();
+                    context.startActivity(intent);
+                });
 
-            holder.editImg.setOnClickListener(view -> {
-                Intent intent = new Intent(context, CreateTeamActivity.class);
-                intent.putExtra("match_id", list.get(position).getMatch_id());
-                intent.putExtra("matchA", list.get(position).getTeamAName());
-                intent.putExtra("matchB", list.get(position).getTeamBName());
-                intent.putExtra("logo_url_a", list.get(position).getLogo_url_a());
-                intent.putExtra("logo_url_b", list.get(position).getLogo_url_b());
-                intent.putExtra("date_start", list.get(position).getDate_start());
-                intent.putExtra("date_end", list.get(position).getDate_end());
-                intent.putExtra("listdata", list.get(position).getSquads().toString());
-                intent.putExtra("CreatedTeamId", list.get(position).getTeamId());
-                context.startActivity(intent);
-
-            });
-        }
+                holder.editImg.setOnClickListener(view -> {
+                    Intent intent = new Intent(context, CreateTeamActivity.class);
+                    intent.putExtra("match_id", list.get(position).getMatch_id());
+                    intent.putExtra("matchA", list.get(position).getTeamAName());
+                    intent.putExtra("matchB", list.get(position).getTeamBName());
+                    intent.putExtra("logo_url_a", list.get(position).getLogo_url_a());
+                    intent.putExtra("logo_url_b", list.get(position).getLogo_url_b());
+                    intent.putExtra("date_start", list.get(position).getDate_start());
+                    intent.putExtra("date_end", list.get(position).getDate_end());
+                    context.startActivity(intent);
+                });
+            }
     }
 
     @Override

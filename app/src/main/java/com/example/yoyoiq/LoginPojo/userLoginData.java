@@ -1,6 +1,7 @@
 package com.example.yoyoiq.LoginPojo;
 
 public class userLoginData {
+
     String user_id;
     String username;
     String mobile_no;

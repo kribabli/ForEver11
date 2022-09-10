@@ -51,7 +51,6 @@
             android:maxLines="1"
             android:paddingHorizontal="8dp"
             android:text="Player Pts"
-            android:textStyle="bold"
             android:textColor="#ffff"
             android:textSize="10dp" />
 

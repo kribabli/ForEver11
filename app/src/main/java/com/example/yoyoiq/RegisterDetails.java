@@ -46,7 +46,7 @@ import retrofit2.Response;
 public class RegisterDetails extends AppCompatActivity {
     TextView backPress, registerUser;
     DatabaseReference databaseReference;
-    DatabaseConnectivity  cmn=DatabaseConnectivity.getInstance();
+    DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
     TextView userName;
     TextView mobileNo;
     TextView emailId;
@@ -81,6 +81,8 @@ public class RegisterDetails extends AppCompatActivity {
         mobileNo = findViewById(R.id.mobileNo);
         emailId = findViewById(R.id.emailId);
         password = findViewById(R.id.password);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseConnectivity.getDatabasePath(this);
     }
 
     private void setAction() {
@@ -210,8 +212,6 @@ public class RegisterDetails extends AppCompatActivity {
 
 
     private void send_user_Data_onServer() {
-        cmn.setProgressDialog("","Please wait..",RegisterDetails.this,RegisterDetails.this);
-
         Call<RegistrationResponse> call = ApiClient.getInstance().getApi().
                 SendUserDetails_server(mobileNo.getText().toString(), userName.getText().toString(), emailId.getText().toString(), password.getText().toString());
         call.enqueue(new Callback<RegistrationResponse>() {
@@ -221,15 +221,12 @@ public class RegisterDetails extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if(registrationResponse.getResponse().equalsIgnoreCase("Email already exist")){
                         showDialog(""+registrationResponse.getResponse(), true);
-                        cmn.closeDialog(RegisterDetails.this);
                     }
                     if(registrationResponse.getResponse().equalsIgnoreCase("Mobile no already exist")){
                         showDialog(""+registrationResponse.getResponse(), true);
-                        cmn.closeDialog(RegisterDetails.this);
                     }
                     if(registrationResponse.getResponse().equalsIgnoreCase("successfully registered")){
                         showDialog("User Register Successfully..", true);
-                        cmn.closeDialog(RegisterDetails.this);
                     }
 
                 }

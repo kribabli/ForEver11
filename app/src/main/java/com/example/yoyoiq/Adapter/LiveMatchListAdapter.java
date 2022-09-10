@@ -63,7 +63,6 @@ public class LiveMatchListAdapter extends RecyclerView.Adapter<LiveMatchListAdap
                     HelperData.matchId = listData.getMatch_id();
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-
                 }
             });
             holder.textViewTitle.setText(list.get(position).getTitle());

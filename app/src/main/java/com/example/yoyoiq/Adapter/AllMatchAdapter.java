@@ -49,10 +49,10 @@ public class AllMatchAdapter extends RecyclerView.Adapter<AllMatchAdapter.MyView
         TotalHomeData listData = list.get(position);
         holder.setIsRecyclable(false);
 
-
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                HelperData.limit1 = listData.getType();
                 Intent intent = new Intent(context, ContestActivity.class);
                 intent.putExtra("shortNameA", listData.getShort_name_a());
                 intent.putExtra("shortNameB", listData.getShort_name_b());

@@ -27,6 +27,7 @@ import retrofit2.Response;
 public class HelperData {
     public static MutableLiveData<Integer> playerCounter = new MutableLiveData<>(0);
     public static String type_selected = "Cricket";
+    public static String type_selected1 = "Champion";
     public static MutableLiveData<Integer> conty1 = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> TeamCount = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> conty2 = new MutableLiveData<>(0);
@@ -52,7 +53,8 @@ public class HelperData {
     public static String team1NameShort = "";
     public static String team2NameShort = "";
     public static boolean teamEdt = false;
-    public static int limit = 11;
+    //    public static int limit = 11;
+    public static int limit1 = 4;
     public static boolean lineUp = false;
     public static int selectedTeamNo;
     public static boolean vcap = false;

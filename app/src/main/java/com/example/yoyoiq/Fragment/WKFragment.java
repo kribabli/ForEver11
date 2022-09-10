@@ -1,7 +1,6 @@
 package com.example.yoyoiq.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.Adapter.SquadsAAdapter;
-import com.example.yoyoiq.InSideContestActivityFragments.AllSelectedPlayerFromServer;
 import com.example.yoyoiq.Model.SquadsA;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -46,12 +42,9 @@ public class WKFragment extends Fragment {
     String nameA;
     String player_idA;
     public static String allTruePlayers = "";
-    Integer allselectedPlayerId;
-    ArrayList arrayList = new ArrayList();
 
     private String mParam1;
     private String mParam2;
-    private List<AllSelectedPlayerFromServer> allSelectedPlayer = new ArrayList<>();
 
     public WKFragment() {
         // Required empty public constructor
@@ -83,25 +76,18 @@ public class WKFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_w_k, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         return view;
-
     }
 
     private void getAllPlayer() {
-        allSelectedPlayer=new Gson().fromJson(getArguments().getString("AllSelectedData"), new TypeToken<ArrayList<AllSelectedPlayerFromServer>>() {
-        }.getType());
         list.clear();
         listPlayerIdA.clear();
         matchA = getArguments().getString("matchA");
         matchB = getArguments().getString("matchB");
+
         Call<ResponsePlayer> call = ApiClient
                 .getInstance()
                 .getApi()
                 .getMatchPlaying11(getArguments().getString("match_id"));
-        for(int k=0; k<allSelectedPlayer.size();k++){
-            String pid= String.valueOf(allSelectedPlayer.get(k).getPid());
-           arrayList.add(pid);
-        }
-
 
         call.enqueue(new Callback<ResponsePlayer>() {
             @Override
@@ -213,10 +199,8 @@ public class WKFragment extends Fragment {
                         }
 
                         for (int i = 0; i < jsonArrayPlayers.length(); i++) {
-                            boolean isSelected=false;
                             jsonObjectPlayers = jsonArrayPlayers.getJSONObject(i);
                             pidPlayers = jsonObjectPlayers.getString("pid");
-
                             playing_rolePlayers = jsonObjectPlayers.getString("playing_role");
                             if (playing_rolePlayers.equals("wk")) {
                                 short_namePlayers = jsonObjectPlayers.getString("short_name");
@@ -229,16 +213,11 @@ public class WKFragment extends Fragment {
                                 if (myMap.containsKey(pidPlayers)) {
                                     playing11A = myMap.get(pidPlayers);
                                 }
-                                if(arrayList.contains(pidPlayers)){
-                                    isSelected=true;
-                                }
-
-                                SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, isSelected);
+                                SquadsA squadsA = new SquadsA(player_idA, roleA, substituteA, role_strA, playing11A, nameA, matchA, fantasy_player_ratingPlayers, short_namePlayers, pidPlayers, abbrA, false);
                                 list.add(squadsA);
+                                squadsAAdapter = new SquadsAAdapter(getContext(), list);
                             }
-
                         }
-                        squadsAAdapter = new SquadsAAdapter(getContext(), list,allSelectedPlayer);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setAdapter(squadsAAdapter);
                         squadsAAdapter.notifyDataSetChanged();
@@ -248,6 +227,7 @@ public class WKFragment extends Fragment {
                 } else {
                 }
             }
+
             @Override
             public void onFailure(Call<ResponsePlayer> call, Throwable t) {
 

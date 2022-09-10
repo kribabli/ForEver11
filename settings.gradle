@@ -17,5 +17,5 @@ dependencyResolutionManagement {
         maven { url "https://jitpack.io" }
     }
 }
-rootProject.name = "YoYo Iq"
+rootProject.name = "ForEver11"
 include ':app'

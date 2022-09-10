@@ -38,7 +38,6 @@ import retrofit2.Response;
 public class MyJoinContestsFragment extends Fragment {
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
-    String matchA = "", matchB = "", match_id;
     ArrayList<TotalJoinContestsData> list = new ArrayList<>();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -75,9 +74,6 @@ public class MyJoinContestsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my_join_contests, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
         swipeRefreshLayout = root.findViewById(R.id.swiper);
-        match_id = getArguments().getString("match_id");
-        matchA = getArguments().getString("matchA");
-        matchB = getArguments().getString("matchB");
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -102,7 +98,6 @@ public class MyJoinContestsFragment extends Fragment {
                     String jsonArray = new Gson().toJson(status.getResponse());
                     JSONArray jsonArray1 = null;
                     try {
-                        list.clear();
                         jsonArray1 = new JSONArray(jsonArray);
                         for (int i = 0; i < jsonArray1.length(); i++) {
                             try {
@@ -194,8 +189,6 @@ public class MyJoinContestsFragment extends Fragment {
                         intent.putExtra("contest_description", listData.getContest_description());
                         intent.putExtra("contest_id", listData.getContest_id());
                         intent.putExtra("match_id", listData.getMatch_id());
-                        intent.putExtra("matchA", matchA);
-                        intent.putExtra("matchB", matchB);
                         intent.putExtra("price_contribution", listData.getPrice_contribution());
                         intent.putExtra("contest_name", listData.getContest_name());
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

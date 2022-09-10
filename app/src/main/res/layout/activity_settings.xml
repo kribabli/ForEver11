@@ -50,10 +50,9 @@
             android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:background="@color/light_gray"
-            android:gravity="left"
-            android:padding="12dp"
             android:text="User Name"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -73,8 +72,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:background="@color/light_gray"
-            android:gravity="left"
-            android:padding="12dp"
             android:text="Email"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -99,7 +96,6 @@
             android:layout_weight="10"
             android:background="@color/light_gray"
             android:gravity="left"
-            android:padding="12dp"
             android:text="9090808899"
             android:textColor="@color/black"
             android:textSize="17sp"
@@ -112,8 +108,7 @@
             android:layout_marginRight="5dp"
             android:background="@color/light_gray"
             android:drawableRight="@drawable/ic_baseline_mode_edit_black"
-            android:textSize="20sp"
-            android:visibility="gone" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -124,14 +119,12 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/date_of_birth"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="200dp"
             android:backgroundTint="@color/light_gray"
-            android:hint="Date of Birth"
-            android:textColor="@color/black" />
+            android:hint="Date of Birth" />
 
     </LinearLayout>
 
@@ -139,8 +132,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <RadioGroup
             android:id="@+id/radioGrp"
@@ -195,12 +187,10 @@
         android:weightSum="10">
 
         <TextView
-            android:id="@+id/city"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/light_gray"
             android:gravity="left"
-            android:padding="12dp"
             android:text="City"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -223,7 +213,6 @@
             android:layout_height="50dp"
             android:background="@color/light_gray"
             android:gravity="left"
-            android:padding="12dp"
             android:text="Country"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -265,8 +254,7 @@
             android:layout_marginLeft="100dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="100dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"

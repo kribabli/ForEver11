@@ -13,72 +13,72 @@ import java.util.ArrayList;
 
 public class LocalDataBase extends SQLiteOpenHelper {
 
- private static final int DATABASE_VERSION = 1;
- private static final String DATABASE_NAME = "MyLocalDataBase";
- private static final String MY_TEAM = "MyTeam";
- private static final String Userid = "user_id";
- private static final String TeamName = "team_Name";
- private static final String Contest_id = "contest_id";
- private static final String TeamId = "Team_id";
- private static final String MATCH_ID = "Match_id";
+ public static final String DATABASE_NAME = "myTeamlist.db";
+ public static final String MYTEAM_TABLE_NAME = "myteam";
+ public static final String MYTEAM_COLUMN_ID = "id";
+ public static final String MYTEAM_COLUMN_NAME = "playername";
+ public static final String MYTEAM_COLUMN_COUNTRY = "country";
+ public static final String MYTEAM_COLUMN_FANTASY_RATING = "fantasy_rating";
+ public static final String MYTEAM_COLUMN_ROLE = "role";
+ public static final String MYTEAM_COLUMN_CAP = "cap";
+ public static final String MYTEAM_COLUMN_VCAP = "vcap";
+ public static final String MYTEAM_COLUMN_PHONE = "point";
 
 
-
- public LocalDataBase(@Nullable Context context) {
-  super(context, DATABASE_NAME, null, DATABASE_VERSION);
+ public LocalDataBase(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+  super(context, name, factory, version);
  }
 
  @Override
  public void onCreate(SQLiteDatabase db) {
-
-  String CREATE_MYTEAM_TABLE = " CREATE TABLE " + MY_TEAM + "(" + TeamName + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-          + Userid + " TEXT, " + TeamId + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Contest_id + " TEXT, "+MATCH_ID + ")";
-
-  db.execSQL(CREATE_MYTEAM_TABLE);
+  db.execSQL(
+          "create table contacts " +
+                  "(id integer primary key, playername text,country text,fantasy_rating text, role text,cap text,vcap text,point text)"
+  );
 
  }
 
  @Override
- public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+ public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
-  db.execSQL(" DROP TABLE IF EXISTS "+ MY_TEAM);
-
-  onCreate(db);
  }
 
- public void AddTeam(String self_user,   String contest_id){
-  SQLiteDatabase db = this.getReadableDatabase();
+ public boolean insertContact (String playername, String country, String fantasy_rating, String role,String cap,String vcap,String point) {
+  SQLiteDatabase db = this.getWritableDatabase();
   ContentValues contentValues = new ContentValues();
-  contentValues.put(Userid,self_user);
-  contentValues.put(Contest_id,contest_id);
-  db.insert(MY_TEAM,null,contentValues);
-  db.close();
+  contentValues.put("name", playername);
+  contentValues.put("phone", country);
+  contentValues.put("fantasy_rating", fantasy_rating);
+  contentValues.put("role", role);
+  contentValues.put("cap", cap);
+  contentValues.put("vacap", vcap);
+  contentValues.put("point", point);
+  db.insert("contacts", null, contentValues);
+  return true;
+ }
+ public Cursor getData(int id) {
+  SQLiteDatabase db = this.getReadableDatabase();
+  Cursor res =  db.rawQuery( "select * from myteam where id="+id+"", null );
+  return res;
  }
 
- public void getTeamInformation(int id){
-  SQLiteDatabase db = this.getReadableDatabase();
-  Cursor cursor = db.rawQuery("select * from " + MY_TEAM + " where id="+id+"", null);
- }
 
  @SuppressLint("Range")
- public int getLastStudentsId(){
-  int count = 0;
+ public ArrayList<String> get_All_Team() {
+  ArrayList<String> array_list = new ArrayList<String>();
+
+  //hp = new HashMap();
   SQLiteDatabase db = this.getReadableDatabase();
-  String query = "SELECT * FROM " +MY_TEAM ;
-  Cursor cursor = db.rawQuery(query,null);
-  if(cursor != null && !cursor.isClosed()){
-   cursor.moveToLast();
+  Cursor res =  db.rawQuery( "select * from myteam", null );
+  res.moveToFirst();
 
-   if(cursor.getCount() == 0) {
-    count = 1;
-   }else{
-    count = cursor.getInt(cursor.getColumnIndex(TeamName));
-   }
+  while(res.isAfterLast() == false){
+   array_list.add(res.getString(res.getColumnIndex(MYTEAM_COLUMN_NAME)));
+   res.moveToNext();
   }
-
-  return count;
-
+  return array_list;
  }
+
 
 
 }

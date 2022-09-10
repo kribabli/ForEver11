@@ -1,12 +1,11 @@
 package com.example.yoyoiq;
 
-import static com.example.yoyoiq.common.HelperData.limit;
+import static com.example.yoyoiq.common.HelperData.limit1;
 import static com.example.yoyoiq.common.HelperData.newTeamMaking;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,21 +20,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.yoyoiq.Adapter.PageAdapterPlayer;
-import com.example.yoyoiq.InSideContestActivityFragments.AllSelectedPlayerFromServer;
 import com.example.yoyoiq.OnlyTeamPreView.OnlyTeamPreview;
 import com.example.yoyoiq.common.HelperData;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -59,8 +51,6 @@ public class CreateTeamActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Runnable runnable;
     public static String addedPlayerIds;
-    public static  String CreatedTeamId;
-    private List<AllSelectedPlayerFromServer> listData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +60,8 @@ public class CreateTeamActivity extends AppCompatActivity {
         setAction();
         countDownStart();
         linearLayout1.setVisibility(View.VISIBLE);
-        if(getIntent().hasExtra("CreatedTeamId")){
-            listData = new Gson().fromJson(getIntent().getStringExtra("listdata"), new TypeToken<ArrayList<AllSelectedPlayerFromServer>>() {
-            }.getType());
 
-        }
-
-        pageAdapterPlayer = new PageAdapterPlayer(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b,listData);
+        pageAdapterPlayer = new PageAdapterPlayer(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b);
         viewPager.setAdapter(pageAdapterPlayer);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -118,11 +103,13 @@ public class CreateTeamActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         if (!HelperData.teamEdt) {
             newTeamMaking();
         }
+
         HelperData.conty1 = new MutableLiveData<>();
         HelperData.conty2 = new MutableLiveData<>();
         HelperData.conty1.setValue(0);
@@ -197,8 +184,6 @@ public class CreateTeamActivity extends AppCompatActivity {
         date_start = getIntent().getStringExtra("date_start");
         date_end = getIntent().getStringExtra("date_end");
 
-
-
         tabLayout = findViewById(R.id.tabLayout);
         tabItem1 = findViewById(R.id.WK);
         tabItem2 = findViewById(R.id.BAT);
@@ -219,6 +204,7 @@ public class CreateTeamActivity extends AppCompatActivity {
 
     private void setAction() {
         backPress.setOnClickListener(view -> onBackPressed());
+
         textViewA.setText(matchA);
         textViewB.setText(matchB);
         HelperData.team1NameShort = matchA;
@@ -248,29 +234,29 @@ public class CreateTeamActivity extends AppCompatActivity {
     }
 
     private void handleAfterContinueButton() {
-        if (HelperData.playerCounter.getValue() == limit) {
+        if (HelperData.playerCounter.getValue() == limit1) {
             if (HelperData.wk.getValue() >= 1) {
-                if (HelperData.bat.getValue() >= 3) {
+                if (HelperData.bat.getValue() >= 1) {
                     if (HelperData.ar.getValue() >= 1) {
-                        if (HelperData.bowl.getValue() >= 3) {
+                        if (HelperData.bowl.getValue() >= 1) {
                             Intent intent = new Intent(CreateTeamActivity.this, TeamPreviewActivity.class);
                             intent.putExtra("date_start", date_start);
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(this, "Add atleast 3 player in BOWL section", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "Add atleast 1 player in BOWL section", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(this, "Add atleast 1 player in AlRounder section", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Add atleast 3 player in AlRounder section", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(this, "Add atleast 3 player in Batting section", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Add atleast 1 player in Batting section", Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(this, "Add atleast 1 player in WicketKeeper section", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Add atleast 3 player in WicketKeeper section", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(this, "You have selected " + HelperData.playerCounter.getValue() + " it required " + limit + " players", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "You have selected " + HelperData.playerCounter.getValue() + " it required " + limit1 + " players", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -299,12 +285,8 @@ public class CreateTeamActivity extends AppCompatActivity {
 
     private void playerCounter() {
         HelperData.playerCounter.observe(this, integer -> {
-            int limit = 0;
-            if (HelperData.type_selected.equalsIgnoreCase("Cricket")) {
-                limit = 11;
-            } else {
-                limit = 5;
-            }
+            int limit = integer;
+
             tv_TotalSelectedPlayer.setText("" + integer + "/" + limit);
             LinearProgressIndicator maxPlayerSelected = new LinearProgressIndicator(CreateTeamActivity.this);
             try {

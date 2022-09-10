@@ -19,7 +19,6 @@ import com.example.yoyoiq.OnlyTeamPreView.OnlyTeamPreview;
 import com.example.yoyoiq.Retrofit.ApiClient;
 import com.example.yoyoiq.UpComingMatchPOJO.ShortSquadsUploadingPojoClass;
 import com.example.yoyoiq.common.HelperData;
-import com.example.yoyoiq.common.LocalDataBase;
 import com.example.yoyoiq.common.SessionManager;
 import com.google.gson.Gson;
 
@@ -50,7 +49,6 @@ public class TeamPreviewActivity extends AppCompatActivity {
     SessionManager sessionManager;
     String CaptainName, VCName;
     int batCount, arCount, bowlCount, wkCount = 0;
-    private LocalDataBase dbHandler;
 
     public static void makeAllCaptainFalse(int no) {
         captainSelected = false;
@@ -97,7 +95,6 @@ public class TeamPreviewActivity extends AppCompatActivity {
         setAction();
         countDownStart();
         sessionManager=new SessionManager(getApplicationContext());
-        dbHandler=new LocalDataBase(TeamPreviewActivity.this);
     }
 
     private void saveTeamLocally() {
@@ -121,8 +118,6 @@ public class TeamPreviewActivity extends AppCompatActivity {
                 bowlCount++;
             }
         }
-
-
         ShortSquadsUploadingPojoClass dataholderClassnew = new ShortSquadsUploadingPojoClass("","T" + HelperData.TeamCount.getValue(), HelperData.matchId, HelperData.UserId, CaptainName,
                 VCName, HelperData.team1NameShort, HelperData.team2NameShort, batCount, bowlCount, arCount, wkCount, HelperData.conty1.getValue(), HelperData.conty2.getValue(),false);
         HelperData.myCountyPlayer.add(dataholderClassnew);
@@ -153,9 +148,12 @@ public class TeamPreviewActivity extends AppCompatActivity {
             Handle_And_UploadTeamOnServer();
         });
 
-        teamPreView.setOnClickListener(v -> {
-            Intent intent = new Intent(TeamPreviewActivity.this, OnlyTeamPreview.class);
-            startActivity(intent);
+        teamPreView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TeamPreviewActivity.this, OnlyTeamPreview.class);
+                startActivity(intent);
+            }
         });
     }
 

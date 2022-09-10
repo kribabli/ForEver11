@@ -1,17 +1,17 @@
 package com.example.yoyoiq.Model;
 
 public class The_Slide_Items_Model_Class {
-    String Uri;
+    int Uri;
 
-    public The_Slide_Items_Model_Class(String uri) {
+    public The_Slide_Items_Model_Class(int uri) {
         Uri = uri;
     }
 
-    public String getUri() {
+    public int getUri() {
         return Uri;
     }
 
-    public void setUri(String uri) {
+    public void setUri(int uri) {
         Uri = uri;
     }
 }
