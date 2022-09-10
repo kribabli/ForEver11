@@ -16,7 +16,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     TabLayout tabLayout;
     SessionManager sessionManager;
     TextView contestName, bakPress;
-    String contest_description, match_id, price_contribution, contest_id, contest_name;
+    String contest_description, match_id, price_contribution, contest_id, contest_name, matchA, matchB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         initMethod();
         setAction();
 
-        pageAdapterLeaderboard = new PageAdapterLeaderboard(getSupportFragmentManager(), tabLayout.getTabCount(), price_contribution);
+        pageAdapterLeaderboard = new PageAdapterLeaderboard(getSupportFragmentManager(), tabLayout.getTabCount(), price_contribution, match_id, contest_id, matchA, matchB);
         viewPager.setAdapter(pageAdapterLeaderboard);
         sessionManager = new SessionManager(getApplicationContext());
 
@@ -63,10 +63,11 @@ public class LeaderboardActivity extends AppCompatActivity {
         contest_description = getIntent().getStringExtra("contest_description");
         price_contribution = getIntent().getStringExtra("price_contribution");
         match_id = getIntent().getStringExtra("match_id");
+        matchA = getIntent().getStringExtra("matchA");
+        matchB = getIntent().getStringExtra("matchB");
         contest_id = getIntent().getStringExtra("contest_id");
         contest_name = getIntent().getStringExtra("contest_name");
         contestName.setText(contest_name);
-
         bakPress.setOnClickListener(v -> onBackPressed());
     }
 }

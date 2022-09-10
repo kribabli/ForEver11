@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.yoyoiq.ContestActivity;
 import com.example.yoyoiq.Model.LeaderboardPOJO;
-import com.example.yoyoiq.OnlyTeamPreView.MyTeamPreview;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
@@ -147,7 +144,7 @@ public class LiveLeaderboardFragment extends Fragment {
                         String date_time = jsonObject1.getString("date_time");
                         String name = jsonObject1.getString("name");
                         String mobile = jsonObject1.getString("mobile");
-                        String rank = jsonObject1.getString("rank");
+                        String rank = String.valueOf((i + 1));
                         String total_points = jsonObject1.getString("total_points");
 
                         LeaderboardPOJO leaderboardPOJO = new LeaderboardPOJO(id, user_id, team_id, match_id, contest_id, date_time, name, mobile, rank, total_points, jsonArray);

@@ -43,6 +43,7 @@ public class MyJoinContestsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
+    String matchA = "", matchB = "";
 
     public MyJoinContestsFragment() {
         // Required empty public constructor
@@ -74,6 +75,8 @@ public class MyJoinContestsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my_join_contests, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
         swipeRefreshLayout = root.findViewById(R.id.swiper);
+        matchA = getArguments().getString("matchA");
+        matchB = getArguments().getString("matchB");
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -189,6 +192,8 @@ public class MyJoinContestsFragment extends Fragment {
                         intent.putExtra("contest_description", listData.getContest_description());
                         intent.putExtra("contest_id", listData.getContest_id());
                         intent.putExtra("match_id", listData.getMatch_id());
+                        intent.putExtra("matchA", matchA);
+                        intent.putExtra("matchB", matchB);
                         intent.putExtra("price_contribution", listData.getPrice_contribution());
                         intent.putExtra("contest_name", listData.getContest_name());
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

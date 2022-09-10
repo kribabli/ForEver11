@@ -21,6 +21,12 @@
             android:name=".LeaderboardActivity"
             android:exported="false" />
         <activity
+            android:name=".InSideAddCashLeaderboard.WhenLiveTeamPreview"
+            android:exported="false" />
+        <activity
+            android:name=".UpdatePassword.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".OnlyTeamPreView.MyTeamPreview"
             android:exported="false" />
         <activity
