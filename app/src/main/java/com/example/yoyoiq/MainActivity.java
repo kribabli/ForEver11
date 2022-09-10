@@ -25,6 +25,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.yoyoiq.Adapter.AllMatchAdapter;
 import com.example.yoyoiq.Adapter.BannerAdapter;
+import com.example.yoyoiq.BannerPOJO.Banner;
 import com.example.yoyoiq.LoginPojo.RegistrationResponse;
 import com.example.yoyoiq.Model.The_Slide_Items_Model_Class;
 import com.example.yoyoiq.Model.TotalHomeData;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     LinearLayout mainActivityLayout;
     TextView textView, notification, profileView;
     ViewPager view_bannerItem;
-    private List<The_Slide_Items_Model_Class> listItems;
+    ArrayList<The_Slide_Items_Model_Class> listItems = new ArrayList<>();
     DatabaseConnectivity databaseConnectivity;
     SharedPreferences pathSharedPreferences;
     SharedPrefManager sharedPrefManager;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SwipeRefreshLayout swipeRefreshLayout;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+    BannerAdapter bannerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,35 +167,69 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setAutoSliderBanner() {
-        databaseConnectivity.getDatabaseStorage(this).child("BannerImages/BannerImageUri.json").getMetadata().addOnSuccessListener(storageMetadata -> {
-            long fileCreationTime = storageMetadata.getCreationTimeMillis();
-            long fileDownloadTime = pathSharedPreferences.getLong("bannerImageDownloadTime", 0);
-            databaseConnectivity.getDatabaseStorage(this).child("BannerImages/BannerImageUri.json").getBytes(10000000).addOnSuccessListener(taskSnapshot -> {
-                String str = new String(taskSnapshot, StandardCharsets.UTF_8);
-                pathSharedPreferences.edit().putString("bannerImagesDetails", str).apply();
-                pathSharedPreferences.edit().putLong("bannerImageDownloadTime", fileCreationTime).apply();
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = new JSONArray(str);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+        Call<Banner> call = ApiClient.getInstance().getApi().getBanner();
+        call.enqueue(new Callback<Banner>() {
+            @Override
+            public void onResponse(Call<Banner> call, Response<Banner> response) {
+                Banner banner = response.body();
+                if (response.isSuccessful()) {
+                    String bannerData = new Gson().toJson(banner.getResponse());
+                    try {
+                        JSONArray jsonArray = new JSONArray(bannerData);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String id = jsonObject.getString("id");
+                            String image = jsonObject.getString("image");
+                            The_Slide_Items_Model_Class the_slide_items_model_class = new The_Slide_Items_Model_Class(image);
+                            listItems.add(the_slide_items_model_class);
+                            bannerAdapter = new BannerAdapter(getApplicationContext(), listItems);
+                            view_bannerItem.setAdapter(bannerAdapter);
+                            bannerAdapter.notifyDataSetChanged();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    listItems = new ArrayList<>();
-                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group1));
-                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group2));
-                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group3));
-                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group4));
-                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group5));
-                    BannerAdapter bannerAdapter = new BannerAdapter(this, listItems);
-                    java.util.Timer timer = new java.util.Timer();
-                    timer.scheduleAtFixedRate(new The_slide_timer(), 1000, 2000);
-                    view_bannerItem.setAdapter(bannerAdapter);
-                    bannerAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } else {
                 }
-            });
+            }
+
+            @Override
+            public void onFailure(Call<Banner> call, Throwable t) {
+
+            }
         });
+
+
+//        databaseConnectivity.getDatabaseStorage(this).child("BannerImages/BannerImageUri.json").getMetadata().addOnSuccessListener(storageMetadata -> {
+//            long fileCreationTime = storageMetadata.getCreationTimeMillis();
+//            long fileDownloadTime = pathSharedPreferences.getLong("bannerImageDownloadTime", 0);
+//            databaseConnectivity.getDatabaseStorage(this).child("BannerImages/BannerImageUri.json").getBytes(10000000).addOnSuccessListener(taskSnapshot -> {
+//                String str = new String(taskSnapshot, StandardCharsets.UTF_8);
+//                pathSharedPreferences.edit().putString("bannerImagesDetails", str).apply();
+//                pathSharedPreferences.edit().putLong("bannerImageDownloadTime", fileCreationTime).apply();
+//                JSONArray jsonArray = null;
+//                try {
+//                    jsonArray = new JSONArray(str);
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                    }
+//                    listItems = new ArrayList<>();
+//                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group1));
+//                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group2));
+//                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group3));
+//                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group4));
+//                    listItems.add(new The_Slide_Items_Model_Class(R.drawable.group5));
+//                    BannerAdapter bannerAdapter = new BannerAdapter(this, listItems);
+//                    java.util.Timer timer = new java.util.Timer();
+//                    timer.scheduleAtFixedRate(new The_slide_timer(), 1000, 2000);
+//                    view_bannerItem.setAdapter(bannerAdapter);
+//                    bannerAdapter.notifyDataSetChanged();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//        });
+
     }
 
     public class The_slide_timer extends TimerTask {
