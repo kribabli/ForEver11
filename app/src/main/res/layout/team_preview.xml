@@ -135,24 +135,22 @@
 
                     <TextView
                         android:id="@+id/c_points"
-                        android:layout_width="0dp"
+                        android:layout_width="35dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginRight="15dp"
-                        android:layout_weight="1"
+                        android:layout_marginRight="22dp"
                         android:gravity="center"
-                        android:text="2.0x"
+                        android:text="0%"
                         android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/vc_points"
-                        android:layout_width="0dp"
+                        android:layout_width="35dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:gravity="start"
-                        android:text="1.5x"
+                        android:gravity="center"
+                        android:text="0%"
                         android:textColor="@color/black" />
 
                 </LinearLayout>
