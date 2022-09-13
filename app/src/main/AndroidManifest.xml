@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YoYoIq"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".LeaderboardActivity"
             android:exported="false" />
