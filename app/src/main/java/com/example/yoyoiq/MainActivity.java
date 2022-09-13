@@ -185,6 +185,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent4 = new Intent(MainActivity.this, AboutUsActivity.class);
                 startActivity(intent4);
                 break;
+            case R.id.referAndEarn:
+                Intent intent7 = new Intent(MainActivity.this, InviteFriends.class);
+                startActivity(intent7);
+                break;
             case R.id.logOut:
                 userLogout();
                 break;

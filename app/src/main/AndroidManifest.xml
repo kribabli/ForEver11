@@ -17,7 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YoYoIq"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".InviteFriends"
+            android:exported="false" />
         <activity
             android:name=".LeaderboardActivity"
             android:exported="false" />
