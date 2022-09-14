@@ -139,12 +139,6 @@ public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHo
         });
     }
 
-    private boolean wkSelection() {
-        if (HelperData.selected.equalsIgnoreCase("wk")) {
-            return HelperData.wk.getValue() <= 4;
-        }
-        return false;
-    }
 
     @Override
     public int getItemCount() {

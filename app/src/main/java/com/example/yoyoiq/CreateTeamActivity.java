@@ -139,7 +139,6 @@ public class CreateTeamActivity extends AppCompatActivity {
         if (!HelperData.teamEdt) {
             newTeamMaking();
         }
-
         playerCounter();
         creditCounter();
         playerSectionCounter();
