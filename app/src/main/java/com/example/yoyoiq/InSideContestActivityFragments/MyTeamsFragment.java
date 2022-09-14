@@ -125,7 +125,7 @@ public class MyTeamsFragment extends Fragment {
                                         int wkeeper = Integer.parseInt(jsonObjectSquads.getString("wkeeper"));
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false, squads, logo_url_a, logo_url_b, date_start, date_end);
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(TeamName, CreatedTeamId, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false, squads, logo_url_a, logo_url_b, date_start, date_end);
                                         list.add(myAllTeamRequest);
                                         myCreatedTeamAdapter = new MyCreatedTeamAdapter(getContext(), list);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

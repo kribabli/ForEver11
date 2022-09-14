@@ -86,9 +86,8 @@ public class SquadsBAdapter extends RecyclerView.Adapter<SquadsBAdapter.MyViewHo
                     HelperData.conty2.setValue(HelperData.conty2.getValue() - 1);
                 }
                 holder.cardViewSelected.setBackgroundColor(Color.WHITE);
-                HelperData.allSelectedPlayer.getValue().remove(listData);
                 int index = HelperData.myTeamList.size() - 1;
-                HelperData.myTeamList.remove(index);
+                CreateTeamActivity.removedPlayerFromAddedList(Integer.parseInt(list.get(position).getPidPlayers()));
             } else {
                 if (HelperData.playerCounter.getValue() < HelperData.limit1) {
                     if (HelperData.creditCounter.getValue() >= Double.valueOf(listData.getFantasy_player_rating())) {

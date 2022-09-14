@@ -69,7 +69,6 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
                     HelperData.team2NameShort = list.get(position).getTeamBName();
                     context.startActivity(intent);
                 });
-
                 holder.editImg.setOnClickListener(view -> {
                     Intent intent = new Intent(context, CreateTeamActivity.class);
                     intent.putExtra("match_id", list.get(position).getMatch_id());
@@ -79,6 +78,18 @@ public class MyCreatedTeamAdapter extends RecyclerView.Adapter<MyCreatedTeamAdap
                     intent.putExtra("logo_url_b", list.get(position).getLogo_url_b());
                     intent.putExtra("date_start", list.get(position).getDate_start());
                     intent.putExtra("date_end", list.get(position).getDate_end());
+                    CreateTeamActivity.CreatedTeamId=list.get(position).getTeamId();
+                    HelperData.wk.setValue(list.get(position).getWkeeper());
+                    HelperData.ar.setValue(list.get(position).getAllrounder());
+                    HelperData.bat.setValue(list.get(position).getBatsman());
+                    HelperData.bowl.setValue(list.get(position).getBoller());
+                    HelperData.playerCounter.setValue(11);
+                    HelperData.creditCounter.setValue(0.00);
+                    HelperData.Selectedcap.setValue("Cap");
+                    HelperData.selectedVcap.setValue("Vcap");
+                    HelperData.teamEdt=true;
+                    HelperData.conty1.setValue(list.get(position).getTeamAcount());
+                    HelperData.conty2.setValue(list.get(position).getTeamBcount());
                     context.startActivity(intent);
                 });
             }

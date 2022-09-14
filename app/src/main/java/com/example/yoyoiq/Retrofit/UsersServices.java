@@ -8,6 +8,7 @@ import com.example.yoyoiq.KYC.KycAddedPostResponse;
 import com.example.yoyoiq.KYC.ViewKycResponse;
 import com.example.yoyoiq.LoginPojo.LoginResponse;
 import com.example.yoyoiq.LoginPojo.RegistrationResponse;
+import com.example.yoyoiq.Model.UpdatedTeamResponse;
 import com.example.yoyoiq.OnlyMyContestPOJO.MyContest1;
 import com.example.yoyoiq.PlayerPOJO.ResponsePlayer;
 import com.example.yoyoiq.UpcommingReq.UpcommingResponse;
@@ -50,6 +51,17 @@ public interface UsersServices {
     @FormUrlEncoded
     @POST("userTeam")
     Call<JSONObject> Send_myteam_list_Server(
+            @Field("user_id") String User_id,
+            @Field("match_id") String match_id,
+            @Field("squads") String squads,
+            @Field("short_squads") String short_squads
+//            @Body SendCreatedTeamServer sendCreatedTeamServer
+    );
+
+    @FormUrlEncoded
+    @POST("updateuserTeam")
+    Call<UpdatedTeamResponse> updateTeamOnServer(
+            @Field("id") String id,
             @Field("user_id") String User_id,
             @Field("match_id") String match_id,
             @Field("squads") String squads,

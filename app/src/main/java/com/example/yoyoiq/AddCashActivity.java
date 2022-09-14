@@ -156,6 +156,7 @@ public class AddCashActivity extends AppCompatActivity {
                         intent.putExtra("logo_url_b", HelperData.logoUrlTeamB);
                         intent.putExtra("date_start", HelperData.MatchStartTime);
                         intent.putExtra("date_end", HelperData.MatchEndTime);
+                        HelperData.teamEdt=false;
                         startActivity(intent);
                         finish();
                         JSONArray short_squads = null;

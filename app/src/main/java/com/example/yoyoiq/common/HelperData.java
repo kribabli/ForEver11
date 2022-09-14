@@ -37,8 +37,8 @@ public class HelperData {
     public static MutableLiveData<Integer> bowl = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> myTeam = new MutableLiveData<>(0);
     public static MutableLiveData<Integer> myContest = new MutableLiveData<>(0);
-    public static MutableLiveData<Integer> Selectedcap = new MutableLiveData<>(0);
-    public static MutableLiveData<Integer> selectedVcap = new MutableLiveData<>(0);
+    public static MutableLiveData<String> Selectedcap = new MutableLiveData<>("");
+    public static MutableLiveData<String> selectedVcap = new MutableLiveData<>("");
     public static MutableLiveData<Double> creditCounter = new MutableLiveData<>(0.0);
     public static MutableLiveData<List<AllSelectedPlayer>> allSelectedPlayer = new MutableLiveData<>();
     public static MutableLiveData<Integer> selectSingleTeamCounter = new MutableLiveData<>(0);
@@ -85,9 +85,11 @@ public class HelperData {
         bowl.setValue(0);
         conty1.setValue(0);
         conty2.setValue(0);
-        Selectedcap.setValue(0);
-        selectedVcap.setValue(0);
+        Selectedcap.setValue("");
+        selectedVcap.setValue("");
         creditCounter.setValue(100.0);
+        HelperData.teamEdt=false;
+        CreateTeamActivity.CreatedTeamId="";
         vcap = false;
         cap = false;
         CreateTeamActivity.addedPlayerIds = "";

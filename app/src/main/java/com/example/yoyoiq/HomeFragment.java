@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment {
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             View tab = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(i);
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
-            p.setMargins(20, 0, 20, 0);
+            p.setMargins(70, 0, 10, 0);
             tab.requestLayout();
         }
 

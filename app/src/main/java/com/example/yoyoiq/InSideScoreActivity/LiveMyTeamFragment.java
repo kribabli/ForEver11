@@ -124,7 +124,7 @@ public class LiveMyTeamFragment extends Fragment {
                                         int wkeeper = Integer.parseInt(jsonObjectSquads.getString("wkeeper"));
                                         String teamAName = jsonObjectSquads.getString("teamAName");
                                         String teamBName = jsonObjectSquads.getString("teamBName");
-                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(CreatedTeamId, TeamName, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false, squads, "", "", "", "");
+                                        myAllTeamRequest myAllTeamRequest = new myAllTeamRequest(TeamName, CreatedTeamId, match_id, user_id, captain, vicecaptain, teamAName, teamBName, batsman, boller, allrounder, wkeeper, teamAcount, teamBcount, false, squads, "", "", "", "");
                                         list.add(myAllTeamRequest);
                                         myLiveTeamAdapter = new MyLiveTeamAdapter(getContext(), list);
                                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
