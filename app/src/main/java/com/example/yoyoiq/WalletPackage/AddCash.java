@@ -48,13 +48,10 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
     SharedPrefManager sharedPrefManager;
     SessionManager sessionManager;
     SwipeRefreshLayout swipeRefreshLayout;
-    String mobilenumber="";
-    String emailAddress="";
-    String staus1="";
-    String Pancard="";
-    String BankAccount="";
-    boolean status=false;
-    List<String> checkId = new ArrayList<>();
+    String staus1 = "";
+    String Pancard = "";
+    String BankAccount = "";
+    boolean status = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,29 +66,27 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         loadBalanceDataFromServer();
         loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
         setAction();
-
     }
 
     private void LoadKycData() {
-        Call<ViewKycResponse> call=ApiClient.getInstance().getApi().getkycDetails(sessionManager.getUserData().getUser_id());
+        Call<ViewKycResponse> call = ApiClient.getInstance().getApi().getkycDetails(sessionManager.getUserData().getUser_id());
         call.enqueue(new Callback<ViewKycResponse>() {
             @Override
             public void onResponse(Call<ViewKycResponse> call, Response<ViewKycResponse> response) {
-                ViewKycResponse viewKycResponse= response.body();
-                if(response.isSuccessful()){
-                    String data=new Gson().toJson(viewKycResponse.isStatus());
-                    status= Boolean.parseBoolean(data);
+                ViewKycResponse viewKycResponse = response.body();
+                if (response.isSuccessful()) {
+                    String data = new Gson().toJson(viewKycResponse.isStatus());
+                    status = Boolean.parseBoolean(data);
                     JSONArray jsonArray1 = null;
-                    if(status!=false){
-                        String data2=new Gson().toJson(viewKycResponse.getKycDetails());
+                    if (status != false) {
+                        String data2 = new Gson().toJson(viewKycResponse.getKycDetails());
                         try {
                             jsonArray1 = new JSONArray(data2);
-                            Log.d("Amit","Value Check "+jsonArray1);
-                            for(int i=0;i<jsonArray1.length(); i++){
+                            for (int i = 0; i < jsonArray1.length(); i++) {
                                 JSONObject jsonObject = jsonArray1.getJSONObject(i);
-                                Pancard=jsonObject.getString("pancard_no");
-                                BankAccount=jsonObject.getString("account_no");
-                                staus1=jsonObject.getString("status");
+                                Pancard = jsonObject.getString("pancard_no");
+                                BankAccount = jsonObject.getString("account_no");
+                                staus1 = jsonObject.getString("status");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -99,12 +94,11 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<ViewKycResponse> call, Throwable t) {
             }
         });
-
-
     }
 
     private void loadBalanceDataFromServer() {
@@ -169,23 +163,21 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
 
         addCash.setOnClickListener(view -> addAmountValidation());
         KYCDetails.setOnClickListener(view -> {
-            if (status!=false) {
-                int validationStatus= Integer.parseInt(staus1);
-                if(validationStatus==3){
-                    common.showAlertDialog("Alert!","Please Upload Your Kyc Data Again",false,AddCash.this);
+            if (status != false) {
+                int validationStatus = Integer.parseInt(staus1);
+                if (validationStatus == 3) {
+                    common.showAlertDialog("Alert!", "Please Upload Your Kyc Data Again", false, AddCash.this);
                     Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
                     startActivity(intent1);
                     finish();
-                }
-                else{
+                } else {
                     Intent intent = new Intent(AddCash.this, ShowKYCDetails.class);
-                    intent.putExtra("Pancard",Pancard);
-                    intent.putExtra("BankAccount",BankAccount);
-                    intent.putExtra("status",staus1);
+                    intent.putExtra("Pancard", Pancard);
+                    intent.putExtra("BankAccount", BankAccount);
+                    intent.putExtra("status", staus1);
                     startActivity(intent);
                     finish();
                 }
-
             } else {
                 Intent intent1 = new Intent(AddCash.this, KYCActivity.class);
                 startActivity(intent1);
@@ -222,8 +214,8 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("name", "YoYoIq");
-            jsonObject.put("description", "Test Payment");
+            jsonObject.put("name", "ForEver11");
+            jsonObject.put("description", "ForEver Payment");
             jsonObject.put("theme.color", "#0093DD");
             jsonObject.put("currency", "INR");
             jsonObject.put("amount", amount);
