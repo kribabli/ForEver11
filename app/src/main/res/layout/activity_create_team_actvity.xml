@@ -578,7 +578,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="5"
-                    android:text="Select 3-6 Batsman"
+                    android:text="Select 2-6 Batsman"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -672,7 +672,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="5"
-                    android:text="Select 1-4 All-Rounders"
+                    android:text="Select 1-6 All-Rounders"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -766,7 +766,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="5"
-                    android:text="Select 3-6 Bowlers"
+                    android:text="Select 2-6 Bowlers"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -841,9 +841,9 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="45dp"
         android:layout_below="@+id/relativeLayout1"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="45dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

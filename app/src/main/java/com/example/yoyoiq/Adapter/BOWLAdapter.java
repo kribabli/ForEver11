@@ -26,8 +26,6 @@ import java.util.Collections;
 public class BOWLAdapter extends RecyclerView.Adapter<BOWLAdapter.MyViewHolder> {
     Context context;
     ArrayList<SquadsA> list;
-    boolean isEnable = false;
-    private int lastSelectedPosition = -1;
 
     public BOWLAdapter(Context context, ArrayList<SquadsA> list) {
         this.context = context;
