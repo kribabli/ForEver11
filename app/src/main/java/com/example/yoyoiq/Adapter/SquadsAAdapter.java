@@ -27,8 +27,6 @@ import java.util.Collections;
 public class SquadsAAdapter extends RecyclerView.Adapter<SquadsAAdapter.MyViewHolder> {
     Context context;
     ArrayList<SquadsA> list;
-    boolean isEnable = false;
-    private int lastSelectedPosition = -1;
 
     public SquadsAAdapter(Context context, ArrayList<SquadsA> list) {
         this.context = context;

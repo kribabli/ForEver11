@@ -26,8 +26,6 @@ import java.util.Collections;
 public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
     Context context;
     ArrayList<SquadsA> list;
-    boolean isEnable = false;
-    private int lastSelectedPosition = -1;
 
     public ARAdapter(Context context, ArrayList<SquadsA> list) {
         this.context = context;
@@ -95,7 +93,7 @@ public class ARAdapter extends RecyclerView.Adapter<ARAdapter.MyViewHolder> {
             } else {
                 if (HelperData.playerCounter.getValue() < HelperData.limit1) {
                     if (HelperData.creditCounter.getValue() >= Double.valueOf(listData.getFantasy_player_rating())) {
-                        if (HelperData.ar.getValue() < 4) {
+                        if (HelperData.ar.getValue() < 6) {
                             if (HelperData.team1NameShort == listData.getAbbr()) {
                                 if (HelperData.conty1.getValue() < 7) {
                                     CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";

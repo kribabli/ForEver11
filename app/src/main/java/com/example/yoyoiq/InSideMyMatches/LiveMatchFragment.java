@@ -99,6 +99,7 @@ public class LiveMatchFragment extends Fragment {
                     String jsonArray = new Gson().toJson(status.getResponse().getItems());
                     JSONArray jsonArray1 = null;
                     try {
+                        list.clear();
                         jsonArray1 = new JSONArray(jsonArray);
                         for (int i = 0; i < jsonArray1.length(); i++) {
                             JSONObject jsonObject = jsonArray1.getJSONObject(i);

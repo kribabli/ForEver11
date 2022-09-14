@@ -41,7 +41,6 @@ public class CreateTeamActivity extends AppCompatActivity {
     PageAdapterPlayer pageAdapterPlayer;
     LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
     CircleImageView imageViewA, imageViewB;
-    LinearProgressIndicator maxPlayerSelected;
     RecyclerView ball_recyclerView;
     TextView textViewA, textViewB, tv_TotalSelectedPlayer, tv_TotalCredit, tv_TeamOneSize, tv_TeamTwoSize;
     TextView text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11;
@@ -244,16 +243,16 @@ public class CreateTeamActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(this, "Add atleast 1 player in BOWL section", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "Add atleast 2 player in BOWL section", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(this, "Add atleast 3 player in AlRounder section", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Add atleast 1 player in AlRounder section", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(this, "Add atleast 1 player in Batting section", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Add atleast 2 player in Batting section", Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(this, "Add atleast 3 player in WicketKeeper section", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Add atleast 1 player in WicketKeeper section", Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(this, "You have selected " + HelperData.playerCounter.getValue() + " it required " + limit1 + " players", Toast.LENGTH_LONG).show();

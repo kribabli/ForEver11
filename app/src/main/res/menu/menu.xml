@@ -25,6 +25,7 @@
         android:title="@string/title_chat" />
     <item
         android:id="@+id/rewards"
+        android:visible="false"
         android:enabled="true"
         android:visible="false"
         android:icon="@drawable/ic_baseline_card_giftcard_24"
