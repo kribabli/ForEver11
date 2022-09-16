@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yoyoiq.Adapter.TeamPreviewAdapter;
-import com.example.yoyoiq.InSideContestActivityFragments.myAllTeamRequest;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.Model.UpdatedTeamResponse;
 import com.example.yoyoiq.OnlyTeamPreView.OnlyTeamPreview;
@@ -24,7 +23,6 @@ import com.example.yoyoiq.common.HelperData;
 import com.example.yoyoiq.common.SessionManager;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -51,7 +49,6 @@ public class TeamPreviewActivity extends AppCompatActivity {
     SessionManager sessionManager;
     String CaptainName, VCName;
     DatabaseConnectivity cmn = DatabaseConnectivity.getInstance();
-    int batCount, arCount, bowlCount, wkCount = 0;
     boolean teamStatus;
 
     public static void makeAllCaptainFalse(int no) {
@@ -98,9 +95,9 @@ public class TeamPreviewActivity extends AppCompatActivity {
         inItMethod();
         setAction();
         countDownStart();
-        sessionManager=new SessionManager(getApplicationContext());
-        if(getIntent().hasExtra("updateTeam")){
-            teamStatus=getIntent().getBooleanExtra("updateTeam",false);
+        sessionManager = new SessionManager(getApplicationContext());
+        if (getIntent().hasExtra("updateTeam")) {
+            teamStatus = getIntent().getBooleanExtra("updateTeam", false);
         }
     }
 
@@ -114,8 +111,8 @@ public class TeamPreviewActivity extends AppCompatActivity {
             }
         }
 
-        ShortSquadsUploadingPojoClass dataholderClassnew = new ShortSquadsUploadingPojoClass("","T" + HelperData.TeamCount.getValue(), HelperData.matchId, HelperData.UserId, CaptainName,
-                VCName, HelperData.team1NameShort, HelperData.team2NameShort, HelperData.bat.getValue(), HelperData.bowl.getValue(), HelperData.ar.getValue(), HelperData.wk.getValue(), HelperData.conty1.getValue(), HelperData.conty2.getValue(),false);
+        ShortSquadsUploadingPojoClass dataholderClassnew = new ShortSquadsUploadingPojoClass("", "T" + HelperData.TeamCount.getValue(), HelperData.matchId, HelperData.UserId, CaptainName,
+                VCName, HelperData.team1NameShort, HelperData.team2NameShort, HelperData.bat.getValue(), HelperData.bowl.getValue(), HelperData.ar.getValue(), HelperData.wk.getValue(), HelperData.conty1.getValue(), HelperData.conty2.getValue(), false);
         HelperData.myCountyPlayer.add(dataholderClassnew);
         shortSquads.add(dataholderClassnew);
     }
@@ -130,36 +127,36 @@ public class TeamPreviewActivity extends AppCompatActivity {
         leftTime1 = getIntent().getStringExtra("date_start");
     }
 
-    private void UpdateTeamOnServer(){
+    private void UpdateTeamOnServer() {
         if (HelperData.Selectedcap.getValue().equalsIgnoreCase("Cap")) {
             if (HelperData.selectedVcap.getValue().equalsIgnoreCase("Vcap")) {
-                cmn.setProgressDialog("","Team Updating..",TeamPreviewActivity.this,TeamPreviewActivity.this);
+                cmn.setProgressDialog("", "Team Updating..", TeamPreviewActivity.this, TeamPreviewActivity.this);
                 Gson gson = new Gson();
                 String data = gson.toJson(arrayList);
                 String shortData = gson.toJson(shortSquads);
-                Call<UpdatedTeamResponse>call=ApiClient.getInstance().getApi().updateTeamOnServer(CreateTeamActivity.CreatedTeamId,sessionManager.getUserData().getUser_id(),HelperData.matchId,data,shortData);
+                Call<UpdatedTeamResponse> call = ApiClient.getInstance().getApi().updateTeamOnServer(CreateTeamActivity.CreatedTeamId, sessionManager.getUserData().getUser_id(), HelperData.matchId, data, shortData);
                 call.enqueue(new Callback<UpdatedTeamResponse>() {
                     @Override
                     public void onResponse(Call<UpdatedTeamResponse> call, Response<UpdatedTeamResponse> response) {
-                        UpdatedTeamResponse updatedTeamResponse= response.body();
-                        if(response.isSuccessful()){
-                            if(updatedTeamResponse.isStatus()==true){
+                        UpdatedTeamResponse updatedTeamResponse = response.body();
+                        if (response.isSuccessful()) {
+                            if (updatedTeamResponse.isStatus() == true) {
                                 cmn.closeDialog(TeamPreviewActivity.this);
                                 Intent intent = new Intent(TeamPreviewActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
-                                HelperData.teamEdt=false;
-                                CreateTeamActivity.CreatedTeamId="";
+                                HelperData.teamEdt = false;
+                                CreateTeamActivity.CreatedTeamId = "";
                                 Toast.makeText(TeamPreviewActivity.this, "Team Updated Successfully..", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                if(updatedTeamResponse.isStatus()==false){
+                            } else {
+                                if (updatedTeamResponse.isStatus() == false) {
                                     cmn.closeDialog(TeamPreviewActivity.this);
                                     Toast.makeText(TeamPreviewActivity.this, "Somethings went wrong please try again later..", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
                     }
+
                     @Override
                     public void onFailure(Call<UpdatedTeamResponse> call, Throwable t) {
                         cmn.closeDialog(TeamPreviewActivity.this);
@@ -167,12 +164,10 @@ public class TeamPreviewActivity extends AppCompatActivity {
 
                     }
                 });
-            }
-            else{
+            } else {
                 Toast.makeText(this, "Please Select Your Vice Captain", Toast.LENGTH_SHORT).show();
             }
-        }
-        else{
+        } else {
             Toast.makeText(this, "Please Select Your Captain", Toast.LENGTH_SHORT).show();
         }
 
@@ -189,10 +184,10 @@ public class TeamPreviewActivity extends AppCompatActivity {
         backPress.setOnClickListener(view -> onBackPressed());
 
         saveTeam.setOnClickListener(view -> {
-            if(teamStatus==true){
+            if (teamStatus == true) {
                 saveTeamLocally();
-                UpdateTeamOnServer();}
-            else if(teamStatus==false){
+                UpdateTeamOnServer();
+            } else if (teamStatus == false) {
                 saveTeamLocally();
                 Handle_And_UploadTeamOnServer();
             }
@@ -210,7 +205,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
     private void Handle_And_UploadTeamOnServer() {
         if (HelperData.Selectedcap.getValue().equalsIgnoreCase("Cap")) {
             if (HelperData.selectedVcap.getValue().equalsIgnoreCase("Vcap")) {
-                cmn.setProgressDialog("","Please Wait Your Team Creating...",TeamPreviewActivity.this,TeamPreviewActivity.this);
+                cmn.setProgressDialog("", "Please Wait Your Team Creating...", TeamPreviewActivity.this, TeamPreviewActivity.this);
                 Gson gson = new Gson();
                 String data = gson.toJson(arrayList);
                 String shortData = gson.toJson(shortSquads);
@@ -229,6 +224,7 @@ public class TeamPreviewActivity extends AppCompatActivity {
                             HelperData.myTeam.setValue(HelperData.TeamCount.getValue() + 1);
                         }
                     }
+
                     @Override
                     public void onFailure(Call<JSONObject> call, Throwable t) {
                         cmn.closeDialog(TeamPreviewActivity.this);
