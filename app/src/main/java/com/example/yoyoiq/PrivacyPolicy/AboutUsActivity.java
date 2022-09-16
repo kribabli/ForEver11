@@ -19,7 +19,7 @@ public class AboutUsActivity extends AppCompatActivity {
 
         webView = findViewById(R.id.WebView);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://www.privacypolicygenerator.info/live.php?token=UgE7uZvQpSEjiHoukVW39Q88whg7m2IB");
+        webView.loadUrl("https://www.privacypolicygenerator.info/live.php?token=k29rcqN5vrmeKCvbESEoiUl8ImsTqfi5");
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
