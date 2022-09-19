@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,16 +33,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                         HelperData.UserName = userName;
                         HelperData.UserEmail = userEmail;
                         HelperData.UserId = userId;
+                        HelperData.referral_code = jsonObject.getString("referral_code");
                         UserData userData = new UserData(userName, "", userEmail, userId);
                         sessionManager.saveUser(userData);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -168,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                         HelperData.UserName = userName;
                         HelperData.UserEmail = userEmail;
                         HelperData.UserId = userId;
+                        HelperData.referral_code = jsonObject.getString("referral_code");
                         UserData userData = new UserData(userName, "", userEmail, userId);
                         sessionManager.saveUser(userData);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -196,13 +192,6 @@ public class LoginActivity extends AppCompatActivity {
 
         };
         queue.add(stringRequest);
-    }
-
-    private void navigateToSecondActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("checkData", true);
-        startActivity(intent);
-        finish();
     }
 
     private boolean dataValidation() {
@@ -249,6 +238,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String mobile_no = jsonObject.getString("mobile_no");
                                 String user_id = jsonObject.getString("user_id");
                                 String username = jsonObject.getString("username");
+                                HelperData.referral_code = jsonObject.getString("referral_code");
                                 HelperData.UserId = user_id;
                                 HelperData.UserName = username;
                                 HelperData.Usermobile = mobile_no;

@@ -1,6 +1,5 @@
 package com.example.yoyoiq.common;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 
@@ -43,10 +42,6 @@ public class HelperData {
     public static MutableLiveData<List<AllSelectedPlayer>> allSelectedPlayer = new MutableLiveData<>();
     public static MutableLiveData<Integer> selectSingleTeamCounter = new MutableLiveData<>(0);
 
-    public static MutableLiveData<String> refreashLive = new MutableLiveData<>();
-    public static MutableLiveData<String> selectedPlayer = new MutableLiveData<>();
-    public static MutableLiveData<String> getCall_For_Refrashers = new MutableLiveData<>();
-
     public static String selected = "wk";
     public static ArrayList<AllSelectedPlayer> myTeamList = new ArrayList<>();
     public static ArrayList<ShortSquadsUploadingPojoClass> myCountyPlayer = new ArrayList<>();
@@ -55,25 +50,19 @@ public class HelperData {
     public static boolean teamEdt = false;
     //    public static int limit = 11;
     public static int limit1 = 4;
-    public static boolean lineUp = false;
-    public static int selectedTeamNo;
     public static boolean vcap = false;
     public static boolean cap = false;
-    public static boolean kycStatus = false;
-    public static String addedPlayerIds;
     public static String matchId;
     public static String contestId;
     public static String UserId = "";
     public static String UserName = "";
+    public static String referral_code = "";
     public static String Usermobile = "";
     public static String UserEmail = "";
     public static String logoUrlTeamA = "";
     public static String logoUrlTeamB = "";
     public static String MatchStartTime = "";
     public static String MatchEndTime = "";
-    public static String singleSelectedTeamName = "";
-    DatabaseConnectivity cmn = DatabaseConnectivity.getInstance();
-    ProgressDialog dialog;
 
     public static void newTeamMaking() {
         myTeamList.clear();
@@ -88,8 +77,8 @@ public class HelperData {
         Selectedcap.setValue("");
         selectedVcap.setValue("");
         creditCounter.setValue(100.0);
-        HelperData.teamEdt=false;
-        CreateTeamActivity.CreatedTeamId="";
+        HelperData.teamEdt = false;
+        CreateTeamActivity.CreatedTeamId = "";
         vcap = false;
         cap = false;
         CreateTeamActivity.addedPlayerIds = "";
@@ -135,17 +124,5 @@ public class HelperData {
 
             }
         });
-    }
-
-    public void closeDialog(Activity activity) {
-        if (dialog != null) {
-            if (dialog.isShowing() && !activity.isFinishing()) {
-                try {
-                    dialog.dismiss();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 }
