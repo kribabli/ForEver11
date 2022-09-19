@@ -59,7 +59,8 @@ public class LoginActivity extends AppCompatActivity {
     SessionManager sessionManager;
     List<userLoginData> list;
     SharedPreferences sharedPreferences;
-    String url = "http://adminapp.tech/forever11/ItsMe/all_apis.php?func=google_login";
+    //    String url = "http://adminapp.tech/forever11/ItsMe/all_apis.php?func=google_login";
+    String url = "https://adminapp.tech/forever11/ItsMe/all_apis.php?func=google_login&email=rea@gmail.com";
     String userEmail, userName;
 
     @Override
