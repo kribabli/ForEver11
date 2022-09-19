@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +44,6 @@ public class SelectTeams extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<myAllTeamRequest> list = new ArrayList();
     SelectTeamsAdapter selectTeamsAdapter;
-    public static Integer count = 0;
     String contest_id;
     String Entryfee;
     int netEntryFee = 0;
@@ -55,8 +53,6 @@ public class SelectTeams extends AppCompatActivity {
     ProgressDialog progressDialog;
     SessionManager sessionManager;
     DatabaseConnectivity common = DatabaseConnectivity.getInstance();
-    public static boolean allSelectedTeam = false;
-    public static String selectedSingleTeam;
 
     public static void selected_single_Team(String teamId) {
         for (int i = 0; i < HelperData.myCountyPlayer.size(); i++) {
@@ -127,7 +123,6 @@ public class SelectTeams extends AppCompatActivity {
         TextView textView1 = deleteDialogView.findViewById(R.id.cash_bonus);
         TextView textView2 = deleteDialogView.findViewById(R.id.toPayfee);
         Button button = deleteDialogView.findViewById(R.id.joinContest);
-        LinearLayout layout = deleteDialogView.findViewById(R.id.layout);
         deleteDialog = new AlertDialog.Builder(SelectTeams.this).create();
         textView.setText("" + Entryfee);
         textView1.setText("" + bouns_cash);
@@ -151,6 +146,7 @@ public class SelectTeams extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<ContestJoinResponse> call, Throwable t) {
             }
@@ -164,9 +160,9 @@ public class SelectTeams extends AppCompatActivity {
         call.enqueue(new Callback<JoinContestsResponse>() {
             @Override
             public void onResponse(Call<JoinContestsResponse> call, Response<JoinContestsResponse> response) {
-                JoinContestsResponse joinContestsResponse= response.body();
+                JoinContestsResponse joinContestsResponse = response.body();
                 if (response.isSuccessful()) {
-                    Log.d("Amit","Check data"+response.body());
+                    Log.d("Amit", "Check data" + response.body());
                     String Data = new Gson().toJson(response.body());
                     try {
                         JSONObject jsonObject = new JSONObject(Data);
@@ -178,9 +174,9 @@ public class SelectTeams extends AppCompatActivity {
                             finish();
                             requestTOBalanceDeduction();
                         }
-                        if(joinContestsResponse.getStatus().equalsIgnoreCase("false")){
+                        if (joinContestsResponse.getStatus().equalsIgnoreCase("false")) {
                             progressDialog.dismiss();
-                            if(joinContestsResponse.getResponse().equalsIgnoreCase("team_id already exist")){
+                            if (joinContestsResponse.getResponse().equalsIgnoreCase("team_id already exist")) {
                                 Toast.makeText(SelectTeams.this, "This Team Already Joined..", Toast.LENGTH_SHORT).show();
                                 deleteDialog.dismiss();
                             }

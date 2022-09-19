@@ -123,9 +123,6 @@
             android:name=".MyCoupons"
             android:exported="true" />
         <activity
-            android:name=".FantasyIPL"
-            android:exported="true" />
-        <activity
             android:name=".PointSystem"
             android:exported="true" />
         <activity
