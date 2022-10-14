@@ -14,6 +14,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="17dp"
         android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
         app:cardCornerRadius="8dp"
         tools:ignore="MissingConstraints">
 
@@ -121,9 +123,9 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="700 Pts"
-                android:visibility="gone"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/userRank"
@@ -132,11 +134,11 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:visibility="gone"
                 android:text="#110  - "
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
         </LinearLayout>
 

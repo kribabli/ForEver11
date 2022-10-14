@@ -278,7 +278,7 @@
             android:id="@+id/JoinTeam"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="In YoYoiQ Team"
+            android:text="In ForEver Team"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />

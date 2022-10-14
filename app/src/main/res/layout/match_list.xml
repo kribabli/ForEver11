@@ -16,6 +16,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
+        android:foreground="?selectableItemBackground"
         app:cardCornerRadius="6dp"
         tools:ignore="MissingConstraints">
 
@@ -152,11 +153,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginTop="120dp"
             android:background="#57DBDBDB"
             android:orientation="horizontal"
             android:padding="5dp"
+            android:visibility="gone"
             android:weightSum="10">
 
             <TextView

@@ -6,10 +6,12 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView1"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_margin="12dp"
-        android:id="@+id/cardView1"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
         app:cardCornerRadius="8dp">
 
         <LinearLayout
@@ -49,11 +51,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="40dp"
             android:background="@color/green"
-            android:id="@+id/linearLayout1"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="12">
