@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +38,6 @@ public class NotificationActivity extends AppCompatActivity {
                             return;
                         }
                         String token = task.getResult();
-                        Toast.makeText(NotificationActivity.this, token, Toast.LENGTH_SHORT).show();
                         editText.setText(token);
                     }
                 });
