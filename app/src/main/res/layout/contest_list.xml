@@ -179,7 +179,7 @@
 
             <TextView
                 android:id="@+id/winningPer"
-                android:layout_width="20dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center" />
@@ -214,7 +214,7 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2" />
+                android:layout_weight="1" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -223,6 +223,17 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="Guaranteed" />
+
+            <TextView
+                android:id="@+id/contestInfo"
+                android:layout_width="14dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_baseline_info_24"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center" />
 
         </LinearLayout>
 

@@ -1,10 +1,12 @@
 package com.example.yoyoiq.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.yoyoiq.AddCashActivity;
 import com.example.yoyoiq.Model.ContestsListPOJO;
 import com.example.yoyoiq.R;
+import com.example.yoyoiq.SelectTeams;
 import com.example.yoyoiq.common.HelperData;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 public class ContestsListAdapter extends RecyclerView.Adapter<ContestsListAdapter.MyViewHolder> {
     Context context;
     ArrayList<ContestsListPOJO> list;
+    AlertDialog dialog;
 
     public ContestsListAdapter(Context context, ArrayList<ContestsListPOJO> list) {
         this.context = context;
@@ -48,6 +52,18 @@ public class ContestsListAdapter extends RecyclerView.Adapter<ContestsListAdapte
             holder.first_price.setText(listData.getFirst_price());
             holder.winningPer.setText(listData.getWinning_percentage());
             holder.upTo.setText(listData.getUpto());
+
+            holder.contestInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final View deleteDialogView = LayoutInflater.from(context).inflate(R.layout.contest_description_dialog, null);
+                    TextView descriptionTV = deleteDialogView.findViewById(R.id.description);
+                    dialog = new AlertDialog.Builder(context).create();
+                    descriptionTV.setText("" + listData.getContest_description());
+                    dialog.setView(deleteDialogView);
+                    dialog.show();
+                }
+            });
 
             holder.cardViewContest.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,7 +95,7 @@ public class ContestsListAdapter extends RecyclerView.Adapter<ContestsListAdapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView total_prize, entryFee, totalSports, leftSports, first_price, winningPer, upTo;
+        TextView total_prize, entryFee, totalSports, leftSports, first_price, winningPer, upTo, contestInfo;
         CardView cardViewContest;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -92,6 +108,7 @@ public class ContestsListAdapter extends RecyclerView.Adapter<ContestsListAdapte
             winningPer = itemView.findViewById(R.id.winningPer);
             upTo = itemView.findViewById(R.id.upTo);
             cardViewContest = itemView.findViewById(R.id.cardViewContest);
+            contestInfo = itemView.findViewById(R.id.contestInfo);
         }
     }
 }
