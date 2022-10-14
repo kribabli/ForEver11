@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
 import com.example.yoyoiq.R;
 import com.example.yoyoiq.TeamPreviewActivity;
@@ -69,6 +70,16 @@ public class TeamPreviewAdapter extends RecyclerView.Adapter<TeamPreviewAdapter.
                 notifyDataSetChanged();
             }
         });
+
+        if (list.get(position).getCountry().equalsIgnoreCase(HelperData.team1NameShort)){
+            Glide.with(context)
+                    .load(HelperData.logoUrlTeamA)
+                    .into(holder.playerImg);
+        }else if (list.get(position).getCountry().equalsIgnoreCase(HelperData.team2NameShort)){
+            Glide.with(context)
+                    .load(HelperData.logoUrlTeamB)
+                    .into(holder.playerImg);
+        }
     }
 
     @Override
