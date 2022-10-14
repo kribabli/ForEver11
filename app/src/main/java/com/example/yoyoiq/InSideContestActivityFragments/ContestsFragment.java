@@ -109,6 +109,8 @@ public class ContestsFragment extends Fragment {
                             JSONObject jsonObjectContest = jsonArray1Contest.getJSONObject(i);
                             price_contribution = jsonObjectContest.getString("price_contribution");
 
+                            Log.d("TAG", "onResponse: "+price_contribution);
+
                             String contest_id = jsonObjectContest.getString("contest_id");
                             String contest_name = jsonObjectContest.getString("contest_name");
                             String entry = jsonObjectContest.getString("entry");
@@ -116,12 +118,13 @@ public class ContestsFragment extends Fragment {
                             String prize_pool = jsonObjectContest.getString("prize_pool");
                             String total_team = jsonObjectContest.getString("total_team");
                             String winners = jsonObjectContest.getString("winners");
-                            String first_price = jsonObjectContest.getString("first_price");
                             String winning_percentage = jsonObjectContest.getString("winning_percentage");
                             String upto = jsonObjectContest.getString("upto");
                             String contest_description = jsonObjectContest.getString("contest_description");
 
-                            ContestsListPOJO contestsListPOJO = new ContestsListPOJO(contest_id, contest_name, entry, join_team, prize_pool, total_team, winners, first_price, winning_percentage, upto, contest_description, matchA, matchB, match_id, price_contribution);
+                            Log.d("TAG", "onResponse22: "+contest_id);
+
+                            ContestsListPOJO contestsListPOJO = new ContestsListPOJO(contest_id, contest_name, entry, join_team, prize_pool, total_team, winners, winning_percentage, upto, contest_description, matchA, matchB, match_id, price_contribution);
                             list.add(contestsListPOJO);
                             contestsListAdapter = new ContestsListAdapter(getContext(), list);
                             recyclerViewContest.setLayoutManager(new LinearLayoutManager(getContext()));

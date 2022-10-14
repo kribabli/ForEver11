@@ -65,18 +65,6 @@ public class ContestsList {
     @SerializedName("status")
     private String status;
 
-    @SerializedName("first_price")
-    private String first_price;
-
-    @SerializedName("second_price")
-    private String second_price;
-
-    @SerializedName("third_price")
-    private String third_price;
-
-    @SerializedName("fourth_prince")
-    private String fourth_prince;
-
     @SerializedName("admin_commission")
     private String admin_commission;
 
@@ -86,10 +74,19 @@ public class ContestsList {
     @SerializedName("upto")
     private String upto;
 
+    @SerializedName("bonus")
+    private String bonus;
+
+    @SerializedName("rank")
+    private String rank;
+
+    @SerializedName("price")
+    private String price;
+
     @SerializedName("price_contribution")
     private ArrayList<PriceContribution> price_contribution;
 
-    public ContestsList(String contest_id, String contest_name, String contest_tag, String winners, String prize_pool, String total_team, String join_team, String entry, String contest_description, String contest_note1, String contest_note2, String winning_note, String match_id, String type, String userid, String admin_com, String bonus_cut_percentage, String cancel_contest, String on_per, String status, String first_price, String second_price, String third_price, String fourth_prince, String admin_commission, String winning_percentage, String upto, ArrayList<PriceContribution> price_contribution) {
+    public ContestsList(String contest_id, String contest_name, String contest_tag, String winners, String prize_pool, String total_team, String join_team, String entry, String contest_description, String contest_note1, String contest_note2, String winning_note, String match_id, String type, String userid, String admin_com, String bonus_cut_percentage, String cancel_contest, String on_per, String status, String admin_commission, String winning_percentage, String upto, String bonus, String rank, String price, ArrayList<PriceContribution> price_contribution) {
         this.contest_id = contest_id;
         this.contest_name = contest_name;
         this.contest_tag = contest_tag;
@@ -110,13 +107,12 @@ public class ContestsList {
         this.cancel_contest = cancel_contest;
         this.on_per = on_per;
         this.status = status;
-        this.first_price = first_price;
-        this.second_price = second_price;
-        this.third_price = third_price;
-        this.fourth_prince = fourth_prince;
         this.admin_commission = admin_commission;
         this.winning_percentage = winning_percentage;
         this.upto = upto;
+        this.bonus = bonus;
+        this.rank = rank;
+        this.price = price;
         this.price_contribution = price_contribution;
     }
 
@@ -280,38 +276,6 @@ public class ContestsList {
         this.status = status;
     }
 
-    public String getFirst_price() {
-        return first_price;
-    }
-
-    public void setFirst_price(String first_price) {
-        this.first_price = first_price;
-    }
-
-    public String getSecond_price() {
-        return second_price;
-    }
-
-    public void setSecond_price(String second_price) {
-        this.second_price = second_price;
-    }
-
-    public String getThird_price() {
-        return third_price;
-    }
-
-    public void setThird_price(String third_price) {
-        this.third_price = third_price;
-    }
-
-    public String getFourth_prince() {
-        return fourth_prince;
-    }
-
-    public void setFourth_prince(String fourth_prince) {
-        this.fourth_prince = fourth_prince;
-    }
-
     public String getAdmin_commission() {
         return admin_commission;
     }
@@ -334,6 +298,30 @@ public class ContestsList {
 
     public void setUpto(String upto) {
         this.upto = upto;
+    }
+
+    public String getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(String bonus) {
+        this.bonus = bonus;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public ArrayList<PriceContribution> getPrice_contribution() {

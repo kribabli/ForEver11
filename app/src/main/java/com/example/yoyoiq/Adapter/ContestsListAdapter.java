@@ -49,7 +49,7 @@ public class ContestsListAdapter extends RecyclerView.Adapter<ContestsListAdapte
             int leftS = Integer.parseInt(listData.getJoin_team());
             holder.leftSports.setText(String.valueOf(totalS - leftS));
 
-            holder.first_price.setText(listData.getFirst_price());
+//            holder.first_price.setText(listData.getFirst_price());
             holder.winningPer.setText(listData.getWinning_percentage());
             holder.upTo.setText(listData.getUpto());
 
@@ -79,7 +79,7 @@ public class ContestsListAdapter extends RecyclerView.Adapter<ContestsListAdapte
                     intent.putExtra("matchA", listData.getMatchA());
                     intent.putExtra("matchB", listData.getMatchB());
                     intent.putExtra("match_id", listData.getMatch_id());
-                    intent.putExtra("first_price", listData.getFirst_price());
+//                    intent.putExtra("first_price", listData.getFirst_price());
                     intent.putExtra("price_contribution", listData.getPrice_contribution());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     HelperData.contestId = listData.getContest_id();

@@ -103,7 +103,7 @@ public class AddCashActivity extends AppCompatActivity {
         matchA = getIntent().getStringExtra("matchA");
         matchB = getIntent().getStringExtra("matchB");
         match_id = getIntent().getStringExtra("match_id");
-        first_price = getIntent().getStringExtra("first_price");
+//        first_price = getIntent().getStringExtra("first_price");
         contestId = getIntent().getStringExtra("Contest_id");
         price_contribution = getIntent().getStringExtra("price_contribution");
 
