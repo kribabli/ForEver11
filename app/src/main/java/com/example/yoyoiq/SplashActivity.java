@@ -70,7 +70,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(() -> {
             if (sessionManager.isLoggedIn() || googleSignInAccount != null) {
                 HelperData.UserId = sessionManager.getUserData().getUser_id();
-                HelperData.UserName = sessionManager.getUserData().getUserName();
+                HelperData.UserName = sessionManager.getUserData().getUsername();
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

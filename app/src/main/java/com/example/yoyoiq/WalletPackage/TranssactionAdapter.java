@@ -63,7 +63,7 @@ public class TranssactionAdapter extends RecyclerView.Adapter<TranssactionAdapte
 
             textView1.setText("" + list.get(position).getTransection_id());
             textView2.setText("" + list.get(position).getCreated_date());
-            textView3.setText("" + sessionManager.getUserData().getUserName());
+            textView3.setText("" + sessionManager.getUserData().getUsername());
 
             builder = new AlertDialog.Builder(context);
             builder.setView(view1);
@@ -80,7 +80,7 @@ public class TranssactionAdapter extends RecyclerView.Adapter<TranssactionAdapte
 
             textView1.setText("" + list.get(position).getTransection_id());
             textView2.setText("" + list.get(position).getCreated_date());
-            textView3.setText("" + sessionManager.getUserData().getUserName());
+            textView3.setText("" + sessionManager.getUserData().getUsername());
         });
     }
 

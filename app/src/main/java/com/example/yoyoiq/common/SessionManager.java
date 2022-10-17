@@ -22,9 +22,10 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editor.putString("userId", userData.getUser_id());
-        editor.putString("mobileNoServer", userData.getMobileNo());
-        editor.putString("emailIdServer", userData.getEmailId());
-        editor.putString("userNameServer", userData.getUserName());
+        editor.putString("mobileNoServer", userData.getMobile_no());
+        editor.putString("emailIdServer", userData.getEmail_id());
+        editor.putString("userNameServer", userData.getUsername());
+        editor.putString("referral_code", userData.getReferral_code());
         editor.putBoolean("logged", true);
         editor.apply();
     }
@@ -32,7 +33,7 @@ public class SessionManager {
     public UserData getUserData() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
         return new UserData(sharedPreferences.getString("userNameServer", ""), sharedPreferences.getString("mobileNoServer", ""),
-                sharedPreferences.getString("emailIdServer", ""), sharedPreferences.getString("userId", ""));
+                sharedPreferences.getString("emailIdServer", ""), sharedPreferences.getString("userId", ""),sharedPreferences.getString("referral_code", ""));
     }
 
     public boolean isLoggedIn() {

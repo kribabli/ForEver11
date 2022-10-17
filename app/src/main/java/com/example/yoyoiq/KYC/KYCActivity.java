@@ -80,7 +80,7 @@ public class KYCActivity extends AppCompatActivity   {
         setContentView(R.layout.activity_kycactivity);
         initMethod();
         setAction();
-        loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
+        loggedInUserNumber = sharedPrefManager.getUserData().getMobile_no();
         sessionManager=new SessionManager(getApplicationContext());
 
     }

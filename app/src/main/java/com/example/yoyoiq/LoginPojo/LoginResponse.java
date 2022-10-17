@@ -1,27 +1,28 @@
 package com.example.yoyoiq.LoginPojo;
 
-import com.example.yoyoiq.CreatedTeamPOJO.TeamResponse;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
 public class LoginResponse {
-    String status;
-    String data;
+
+
+    public boolean status;
+    public String data;
     @SerializedName("response")
     private ArrayList<userLoginData> userLoginDataArrayList;
 
-    public LoginResponse(String status, String data, ArrayList<userLoginData> userLoginDataArrayList) {
+    public LoginResponse(boolean status, String data, ArrayList<userLoginData> userLoginDataArrayList) {
         this.status = status;
         this.data = data;
         this.userLoginDataArrayList = userLoginDataArrayList;
     }
 
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

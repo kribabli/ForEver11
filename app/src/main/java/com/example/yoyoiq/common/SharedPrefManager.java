@@ -18,18 +18,19 @@ public class SharedPrefManager {
     public void saveUser(UserData userData) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.putString("userName", userData.getUserName());
-        editor.putString("mobileNo", userData.getMobileNo());
-        editor.putString("emailId", userData.getEmailId());
-        editor.putString("user_id", userData.getUser_id());
+        editor.putString("userId", userData.getUser_id());
+        editor.putString("mobileNoServer", userData.getMobile_no());
+        editor.putString("emailIdServer", userData.getEmail_id());
+        editor.putString("userNameServer", userData.getUsername());
+        editor.putString("referral_code", userData.getReferral_code());
         editor.putBoolean("logged", true);
         editor.apply();
     }
 
     public UserData getUserData() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return new UserData(sharedPreferences.getString("userName", ""), sharedPreferences.getString("mobileNo", ""),
-                sharedPreferences.getString("emailId", ""), sharedPreferences.getString("user_id", ""));
+        return new UserData(sharedPreferences.getString("userNameServer", ""), sharedPreferences.getString("mobileNoServer", ""),
+                sharedPreferences.getString("emailIdServer", ""), sharedPreferences.getString("userId", ""),sharedPreferences.getString("referral_code", ""));
     }
 
     public boolean isLoggedIn() {

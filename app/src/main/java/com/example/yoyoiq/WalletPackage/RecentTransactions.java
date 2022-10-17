@@ -145,7 +145,7 @@ public class RecentTransactions extends AppCompatActivity {
                 deleteDialog.setView(deleteDialogView);
                 textView1.setText("" + data.getTransection_id());
                 textView2.setText("" + data.getCreated_date());
-                textView3.setText("" + sessionManager.getUserData().getUserName());
+                textView3.setText("" + sessionManager.getUserData().getUsername());
                 deleteDialog.show();
             });
             return view;

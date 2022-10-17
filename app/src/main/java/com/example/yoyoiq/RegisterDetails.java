@@ -114,11 +114,9 @@ public class RegisterDetails extends AppCompatActivity {
                 isValid = false;
             } else {
                 send_user_Data_onServer();
-                Log.d("Amit","Value 1");
 
             }
         } catch (Exception e) {
-
             e.printStackTrace();
         }
         return isValid;
@@ -130,35 +128,42 @@ public class RegisterDetails extends AppCompatActivity {
     private void send_user_Data_onServer() {
         registerUser.setVisibility(View.GONE);
         progress_circular.setVisibility(View.VISIBLE);
+        Log.d("Amit","Value "+mobileNo.getText().toString()+" "+userName.getText().toString()+""+emailId.getText().toString()+" "+password.getText().toString());
         Call<RegistrationResponse> call = ApiClient.getInstance().getApi().
-                SendUserDetails_server(mobileNo.getText().toString(), userName.getText().toString(), emailId.getText().toString(), password.getText().toString());
+                SendUserDetails_server(userName.getText().toString(), mobileNo.getText().toString(), password.getText().toString(), emailId.getText().toString());
 
         call.enqueue(new Callback<RegistrationResponse>() {
             @Override
             public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
                 Log.d("Amit","Value 1"+response);
                 RegistrationResponse registrationResponse= response.body();
+                String Data=new Gson().toJson(registrationResponse.getResponse());
+                Boolean data1= Boolean.valueOf(new Gson().toJson(registrationResponse.isStatus()));
+                Log.d("Amit","Value "+data1);
                 if (response.isSuccessful()) {
-                    if(registrationResponse.getResponse().equalsIgnoreCase("Email already exist")){
-                        registerUser.setVisibility(View.VISIBLE);
-                        progress_circular.setVisibility(View.GONE);
-                        showDialog(""+registrationResponse.getResponse(), true);
-                    }
                     if(registrationResponse.getResponse().equalsIgnoreCase("Mobile already exist")){
                         registerUser.setVisibility(View.VISIBLE);
                         progress_circular.setVisibility(View.GONE);
-                        showDialog(""+registrationResponse.getResponse(), true);
+                        showDialog(""+registrationResponse.getResponse(), false);
+
                     }
-                    if(registrationResponse.getResponse().equalsIgnoreCase("successfully registered")){
+                    else if(registrationResponse.getResponse().equalsIgnoreCase("Registration Successfully")){
                         registerUser.setVisibility(View.VISIBLE);
                         progress_circular.setVisibility(View.GONE);
-                        showDialog("User Register Successfully..", true);
+                        showDialog("User Register Successfully.", true);
+                    }
+                    else{
+                        registerUser.setVisibility(View.VISIBLE);
+                        progress_circular.setVisibility(View.GONE);
+                        showDialog(""+registrationResponse.getResponse(), false);
+
                     }
 
                 }
             }
             @Override
             public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+                Log.d("Amit","Value error "+t.toString());
                 registerUser.setVisibility(View.VISIBLE);
                 progress_circular.setVisibility(View.GONE);
             }

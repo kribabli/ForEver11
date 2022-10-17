@@ -100,9 +100,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void upDateProfile() {
-        userName.setText(sessionManager.getUserData().getUserName());
-        email.setText(sessionManager.getUserData().getEmailId());
-        mobileNo.setText(sessionManager.getUserData().getMobileNo());
+        userName.setText(sessionManager.getUserData().getUsername());
+        email.setText(sessionManager.getUserData().getEmail_id());
+        mobileNo.setText(sessionManager.getUserData().getUser_id());
         Country.setText("India");
     }
 

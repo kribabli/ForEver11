@@ -28,7 +28,7 @@ public class FrontActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FrontActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(FrontActivity.this, RegisterDetails.class);
                 startActivity(intent);
             }
         });

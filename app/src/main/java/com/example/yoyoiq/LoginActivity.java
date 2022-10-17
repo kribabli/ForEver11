@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -141,11 +142,12 @@ public class LoginActivity extends AppCompatActivity {
                     String Message = jsonObject.getString("message") + userName;
                     if (jsonObject.getString("message").equalsIgnoreCase("Welcome back ")) {
                         String userId = jsonObject.getString("userid");
+                        String mobile_no1 = jsonObject.getString("mobile_no");
                         HelperData.UserName = userName;
                         HelperData.UserEmail = userEmail;
                         HelperData.UserId = userId;
                         HelperData.referral_code = jsonObject.getString("referral_code");
-                        UserData userData = new UserData(userName, "", userEmail, userId);
+                        UserData userData = new UserData(userId,jsonObject.getString("referral_code"),userName,userEmail,mobile_no1);
                         sessionManager.saveUser(userData);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
@@ -161,11 +163,12 @@ public class LoginActivity extends AppCompatActivity {
                         cmn.closeDialog(LoginActivity.this);
                     } else if (jsonObject.getString("message").equalsIgnoreCase("Welcome back " + userName)) {
                         String userId = jsonObject.getString("userid");
+                        String mobile_no1 = jsonObject.getString("mobile_no");
                         HelperData.UserName = userName;
                         HelperData.UserEmail = userEmail;
                         HelperData.UserId = userId;
                         HelperData.referral_code = jsonObject.getString("referral_code");
-                        UserData userData = new UserData(userName, "", userEmail, userId);
+                        UserData userData = new UserData(userId,jsonObject.getString("referral_code"),userName,userEmail,mobile_no1);
                         sessionManager.saveUser(userData);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
@@ -227,6 +230,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse loginResponse = response.body();
                 if (response.isSuccessful()) {
+                    Log.d("Amit","Value "+response);
                     if (loginResponse.getData().trim().toString().equalsIgnoreCase("Login successful")) {
                         list = loginResponse.getUserLoginDataArrayList();
                         String totalData = new Gson().toJson(loginResponse.getUserLoginDataArrayList());
@@ -244,7 +248,7 @@ public class LoginActivity extends AppCompatActivity {
                                 HelperData.UserName = username;
                                 HelperData.Usermobile = mobile_no;
                                 HelperData.UserEmail = email_id;
-                                UserData userData = new UserData(username, mobile_no, email_id, user_id);
+                                UserData userData = new UserData(user_id,HelperData.referral_code,username,mobile_no,email_id);
                                 sessionManager.saveUser(userData);
                                 Toast.makeText(LoginActivity.this, "Login Successfully..", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);

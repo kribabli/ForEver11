@@ -197,7 +197,7 @@ public class LiveMyTeamFragment extends Fragment {
                 holder.bowlTv.setText(String.valueOf(allTeamRequest.getBoller()));
                 holder.teamACount.setText(String.valueOf(allTeamRequest.getTeamAcount()));
                 holder.teamBCount.setText(String.valueOf(allTeamRequest.getTeamBcount()));
-                holder.userNameAndTid.setText(sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
+                holder.userNameAndTid.setText(sessionManager.getUserData().getUsername() + "(T" + (position + 1) + ")");
                 holder.teamA.setText(allTeamRequest.getTeamAName());
                 holder.teamB.setText(allTeamRequest.getTeamBName());
                 holder.linearLayout1.setOnClickListener(view -> {
@@ -205,7 +205,7 @@ public class LiveMyTeamFragment extends Fragment {
                     intent.putExtra("position", position);
                     intent.putExtra("listdata", list.get(position).getSquads().toString());
                     intent.putExtra("selectedPosition", position);
-                    intent.putExtra("TeamName", sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
+                    intent.putExtra("TeamName", sessionManager.getUserData().getUsername() + "(T" + (position + 1) + ")");
                     HelperData.team1NameShort = list.get(position).getTeamAName();
                     HelperData.team2NameShort = list.get(position).getTeamBName();
                     context.startActivity(intent);

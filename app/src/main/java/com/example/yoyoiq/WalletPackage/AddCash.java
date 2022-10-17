@@ -64,7 +64,7 @@ public class AddCash extends AppCompatActivity implements PaymentResultListener 
         LoadKycData();
         initMethod();
         loadBalanceDataFromServer();
-        loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
+        loggedInUserNumber = sharedPrefManager.getUserData().getMobile_no();
         setAction();
     }
 

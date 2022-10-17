@@ -51,7 +51,7 @@ public class SelectTeamsAdapter extends RecyclerView.Adapter<SelectTeamsAdapter.
             holder.bowlTv.setText(String.valueOf(allTeamRequest.getBoller()));
             holder.teamACount.setText(String.valueOf(allTeamRequest.getTeamAcount()));
             holder.teamBCount.setText(String.valueOf(allTeamRequest.getTeamBcount()));
-            holder.userNameAndTid.setText(sessionManager.getUserData().getUserName() + "(T" + (position + 1) + ")");
+            holder.userNameAndTid.setText(sessionManager.getUserData().getUsername() + "(T" + (position + 1) + ")");
             holder.teamA.setText(allTeamRequest.getTeamAName());
             holder.teamB.setText(allTeamRequest.getTeamBName());
 

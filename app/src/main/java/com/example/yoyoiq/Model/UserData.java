@@ -1,40 +1,19 @@
 package com.example.yoyoiq.Model;
 
 public class UserData {
-    String userName;
-    String mobileNo;
-    String emailId;
     String user_id;
+    String referral_code;
+    String username;
+    String mobile_no;
+    String email_id;
 
-    public UserData(String userName, String mobileNo, String emailId, String user_id) {
-        this.userName = userName;
-        this.mobileNo = mobileNo;
-        this.emailId = emailId;
+
+    public UserData(String user_id, String referral_code, String username, String mobile_no, String email_id) {
         this.user_id = user_id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getMobileNo() {
-        return mobileNo;
-    }
-
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
-    }
-
-    public String getEmailId() {
-        return emailId;
-    }
-
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+        this.referral_code = referral_code;
+        this.username = username;
+        this.mobile_no = mobile_no;
+        this.email_id = email_id;
     }
 
     public String getUser_id() {
@@ -43,5 +22,37 @@ public class UserData {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public String getReferral_code() {
+        return referral_code;
+    }
+
+    public void setReferral_code(String referral_code) {
+        this.referral_code = referral_code;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getMobile_no() {
+        return mobile_no;
+    }
+
+    public void setMobile_no(String mobile_no) {
+        this.mobile_no = mobile_no;
+    }
+
+    public String getEmail_id() {
+        return email_id;
+    }
+
+    public void setEmail_id(String email_id) {
+        this.email_id = email_id;
     }
 }

@@ -51,8 +51,8 @@ public class ShowKYCDetails extends AppCompatActivity {
         panStatus = findViewById(R.id.panStatus);
         accountStatus = findViewById(R.id.accountStatus);
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
-        loggedInUserNumber = sharedPrefManager.getUserData().getMobileNo();
-        loggedInUserEmail = sharedPrefManager.getUserData().getEmailId();
+        loggedInUserNumber = sharedPrefManager.getUserData().getMobile_no();
+        loggedInUserEmail = sharedPrefManager.getUserData().getEmail_id();
         Pancard=getIntent().getStringExtra("Pancard");
         BankAccount=getIntent().getStringExtra("BankAccount");
         status= getIntent().getStringExtra("status");
@@ -67,8 +67,8 @@ public class ShowKYCDetails extends AppCompatActivity {
         if(validation==1){
             mobileStatus.setTextColor(Color.parseColor("#ECBD15"));
             mobileStatus.setText("Pending");
-            mobileNo.setText(""+sessionManager.getUserData().getMobileNo());
-            emailId.setText(""+sessionManager.getUserData().getEmailId());
+            mobileNo.setText(""+sessionManager.getUserData().getMobile_no());
+            emailId.setText(""+sessionManager.getUserData().getEmail_id());
             panCardNo.setText(""+Pancard);
             bankAccountNo.setText(""+BankAccount);
             emailStatus.setTextColor(Color.parseColor("#ECBD15"));
@@ -81,8 +81,8 @@ public class ShowKYCDetails extends AppCompatActivity {
         }
         else  if(validation==2){
             mobileStatus.setTextColor(Color.parseColor("#109E38"));
-            mobileNo.setText(""+sessionManager.getUserData().getMobileNo());
-            emailId.setText(""+sessionManager.getUserData().getEmailId());
+            mobileNo.setText(""+sessionManager.getUserData().getMobile_no());
+            emailId.setText(""+sessionManager.getUserData().getEmail_id());
             panCardNo.setText(""+Pancard);
             bankAccountNo.setText(""+BankAccount);
             mobileStatus.setText("Verified");

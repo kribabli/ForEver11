@@ -3,17 +3,18 @@ package com.example.yoyoiq.LoginPojo;
 public class userLoginData {
 
     String user_id;
+    String referral_code;
     String username;
     String mobile_no;
     String email_id;
 
-    public userLoginData(String user_id, String username, String mobile_no, String email_id) {
+    public userLoginData(String user_id, String referral_code, String username, String mobile_no, String email_id) {
         this.user_id = user_id;
+        this.referral_code = referral_code;
         this.username = username;
         this.mobile_no = mobile_no;
         this.email_id = email_id;
     }
-
 
     public String getUser_id() {
         return user_id;
@@ -21,6 +22,14 @@ public class userLoginData {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public String getReferral_code() {
+        return referral_code;
+    }
+
+    public void setReferral_code(String referral_code) {
+        this.referral_code = referral_code;
     }
 
     public String getUsername() {
