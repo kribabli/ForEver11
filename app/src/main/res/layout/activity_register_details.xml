@@ -106,6 +106,20 @@
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
+
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
